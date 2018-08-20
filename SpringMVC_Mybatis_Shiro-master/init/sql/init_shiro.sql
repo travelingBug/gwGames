@@ -96,3 +96,23 @@ insert  into `u_user_role`(`uid`,`rid`) values (12,4),(11,3),(11,4),(1,1);
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+
+drop table if exists tb_player;
+
+/*==============================================================*/
+/* Table: tb_player                                             */
+/*==============================================================*/
+create table tb_player
+(
+   ID                   varchar(32) not null,
+   NAME                 varchar(20) not null,
+   ID_CARD              varchar(20) not null,
+   TEL_PHONE            varchar(20) not null,
+   DEL_FLAG             tinyint not null,
+   AUDIT_FLAG           tinyint not null,
+   ACCOUNT_NAME         varchar(20) not null,
+   CRT_TIME             datetime,
+   MOD_TIME             datetime,
+   primary key (ID)
+);
