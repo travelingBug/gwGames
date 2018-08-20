@@ -5,32 +5,18 @@ import net.sf.json.JSONObject;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 
- * 开发公司：itboy.net<br/>
- * 版权：itboy.net<br/>
- * <p>
- * 
- * 用户
- * 
- * <p>
- * 
- * 区分　责任人　日期　　　　说明<br/>
- * 创建　周柏成　2016年5月25日 　<br/>
- * <p>
- * *******
- * <p>
- * @author zhou-baicheng
- * @email  i@itboy.net
- * @version 1.0,2016年5月25日 <br/>
- * 
- */
+
 public class TbPlayer implements Serializable{
 	private static final long serialVersionUID = 1L;
     /**
      * 主键
      */
 	private String id;
+
+    /**
+     * 账户名称
+     */
+	private String accountName;
 
     /**
      * 参赛者名称
@@ -131,5 +117,13 @@ public class TbPlayer implements Serializable{
 
     public void setModTime(Date modTime) {
         this.modTime = modTime;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 }

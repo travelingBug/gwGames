@@ -3,6 +3,7 @@
 <mapper namespace="com.sojson.common.dao.UTbPlayerMapper" >
   <resultMap id="BaseResultMap" type="com.sojson.common.model.TbPlayer" >
     <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_NAME" property="accountName" jdbcType="VARCHAR" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="ID_CARD" property="idCard" jdbcType="VARCHAR" />
     <result column="TEL_PHONE" property="telPhone" jdbcType="VARCHAR" />
@@ -12,7 +13,7 @@
     <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    t.ID,t.NAME,t.ID_CARD,t.TEL_PHONE,t.DEL_FLAG,t.AUDIT_FLAG
+    t.ID,t.ACCOUNT_NAME,t.NAME,t.ID_CARD,t.TEL_PHONE,t.DEL_FLAG,t.AUDIT_FLAG
   </sql>
   <sql id="limit_sql">
   	   <if test="page_sql != null and page_sql != ''">
@@ -22,11 +23,9 @@
   
   <sql id="where_all">
   	<where>
-  	<if test="findContent != null and findContent !='' " >
-        and (
-        LOWER(nickname) like  LOWER(CONCAT("%",#{findContent,jdbcType=VARCHAR},"%")) or
-        LOWER(email) like  LOWER(CONCAT("%",#{findContent,jdbcType=VARCHAR},"%"))
-        )
+  	  <if test="name != null and name !='' " >
+        and name like  LOWER(CONCAT("%",#{name,jdbcType=VARCHAR},"%"))
+
       </if>
       </where>
   </sql>
@@ -43,23 +42,23 @@
   </select>
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbPlayer" >
-    insert into tb_player (ID,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,CRT_TIME)
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR},
+    insert into tb_player (ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,CRT_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{accountName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR},
       #{telPhone,jdbcType=VARCHAR}, #{delFlag,jdbcType=TINYINT}, #{auditFlag,jdbcType=TINYINT}, #{crtTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.sojson.common.model.TbPlayer" >
     update tb_player
     <set >
-      <if test="name != null" >
-        NAME = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="idCard != null" >
-        ID_CARD = #{idCard,jdbcType=VARCHAR},
-      </if>
-      <if test="telPhone != null" >
-        TEL_PHONE = #{telPhone,jdbcType=VARCHAR},
-      </if>
+      <!--<if test="name != null" >-->
+        <!--NAME = #{name,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="idCard != null" >-->
+        <!--ID_CARD = #{idCard,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="telPhone != null" >-->
+        <!--TEL_PHONE = #{telPhone,jdbcType=VARCHAR},-->
+      <!--</if>-->
       <if test="delFlag != null" >
         DEL_FLAG = #{delFlag,jdbcType=TINYINT},
       </if>

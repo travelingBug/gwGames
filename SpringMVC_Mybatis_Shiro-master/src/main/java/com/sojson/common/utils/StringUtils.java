@@ -2,13 +2,7 @@ package com.sojson.common.utils;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -401,5 +395,10 @@ public class StringUtils extends org.apache.commons.lang.StringUtils{
 			return serializable.toString();
 		}
 	}
-   
+
+	//获取UUID
+	public static String getUUID32(){
+		String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
+		return uuid;
+	}
 }

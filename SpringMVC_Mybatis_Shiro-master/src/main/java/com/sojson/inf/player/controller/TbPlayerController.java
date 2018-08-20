@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @Scope(value="prototype")
-@RequestMapping("interface")
+@RequestMapping("interface/player")
 public class TbPlayerController extends BaseController {
 
 	@Autowired
