@@ -49,10 +49,14 @@ public class ResultMessage implements Serializable {
     	this.level = level;
         this.messageText = messageText;
     }
-    
-    
 
-    /**
+	public ResultMessage(byte level, String messageText, Object data) {
+		this.level = level;
+		this.messageText = messageText;
+		this.data = data;
+	}
+
+	/**
      * 消息信息
      */
     public String getMessageText() {
