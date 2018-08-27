@@ -3,10 +3,10 @@ package com.sojson.inf.player.service.impl;
 import com.sojson.common.IConstant;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.dao.UTbPlayerMapper;
+import com.sojson.common.model.TbPlayer;
 import com.sojson.common.utils.StringUtils;
 import com.sojson.common.utils.VaildUtils;
 import com.sojson.core.mybatis.BaseMybatisDao;
-import com.sojson.inf.player.model.dto.TbPlayerDto;
 import com.sojson.inf.player.service.TbPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class TbPlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> impleme
 
 
 	@Override
-	public ResultMessage insert(TbPlayerDto entity) {
+	public ResultMessage insert(TbPlayer entity) {
 		//数据验证
 		ResultMessage msg = beforeAddVaild(entity);
 		if (msg.getLevel() == ResultMessage.MSG_LEVEL.SUCC.v) {
@@ -40,7 +40,7 @@ public class TbPlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> impleme
 	 * @param dto 会员信息
 	 * @return ResultMessage 返回结果
 	 */
-	private ResultMessage beforeAddVaild(TbPlayerDto dto){
+	private ResultMessage beforeAddVaild(TbPlayer dto){
 
 		//验证用户名
 		if (StringUtils.isEmpty(dto.getName())
@@ -68,7 +68,7 @@ public class TbPlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> impleme
 	 * @return
 	 */
 	@Override
-	public ResultMessage updateByPrimaryKeySelective(TbPlayerDto entity) {
+	public ResultMessage updateByPrimaryKeySelective(TbPlayer entity) {
 		//数据验证
 		ResultMessage msg = beforeUpdateVaild(entity);
 		if (msg.getLevel() == ResultMessage.MSG_LEVEL.SUCC.v) {
@@ -79,7 +79,7 @@ public class TbPlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> impleme
 		return new ResultMessage();
 	}
 
-	private ResultMessage beforeUpdateVaild(TbPlayerDto dto){
+	private ResultMessage beforeUpdateVaild(TbPlayer dto){
 		//修改ID验证
 		if (StringUtils.isBlank(dto.getId())) {
 			return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"修改人信息错误！");

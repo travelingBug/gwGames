@@ -17,16 +17,11 @@ import com.sojson.permission.service.RoleService;
 @Component
 public class ToTimer{
 	
-	@Resource
-	RoleService roleService;
-	@Scheduled(cron = "0/20 * * * * ? ")
-	public void run() {
-		/**
-		 * 调用存储过程，重新创建表，插入初始化数据。
-		 */
-		roleService.initData();
-		System.out.println(new Date().getTime());
-	}
+//	@Resource
+//	RoleService roleService;
+//	@Scheduled(cron = "0/20 * * * * ? ")
+//	public void run() {
+//	}
 
 	
 	

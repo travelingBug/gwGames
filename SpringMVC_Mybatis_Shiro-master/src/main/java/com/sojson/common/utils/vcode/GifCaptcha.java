@@ -7,10 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 /**
- * <p>Gif验证码类</p>
- *
- * @author: wuhongjun
- * @version:1.0
+ * 验证码
  */
 public class GifCaptcha extends Captcha
 {
@@ -39,7 +36,7 @@ public class GifCaptcha extends Captcha
     {
         try
         {
-            GifEncoder gifEncoder = new GifEncoder();   // gif编码类，这个利用了洋人写的编码类，所有类都在附件中
+            GifEncoder gifEncoder = new GifEncoder();   // gif编码类
             //生成字符
             gifEncoder.start(os);
             gifEncoder.setQuality(180);

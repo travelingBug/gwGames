@@ -1,6 +1,5 @@
  
 /**
- * @author sojson.com
  * @ps 你可以当作是一个闭包 | 封装的Demo
  */
 (function(o,w){
