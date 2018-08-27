@@ -70,7 +70,7 @@ public class TbPlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> impleme
 	@Override
 	public ResultMessage updateByPrimaryKeySelective(TbPlayerDto entity) {
 		//数据验证
-		ResultMessage msg = beforeAddVaild(entity);
+		ResultMessage msg = beforeUpdateVaild(entity);
 		if (msg.getLevel() == ResultMessage.MSG_LEVEL.SUCC.v) {
 			entity.setModTime(new Date()); //设置修改时间
 			uTbPlayerMapper.updateByPrimaryKeySelective(entity);

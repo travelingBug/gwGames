@@ -59,13 +59,13 @@
       <!--<if test="telPhone != null" >-->
         <!--TEL_PHONE = #{telPhone,jdbcType=VARCHAR},-->
       <!--</if>-->
-      <if test="delFlag != null" >
+      <if test="delFlag != null and delFlag != ''" >
         DEL_FLAG = #{delFlag,jdbcType=TINYINT},
       </if>
-      <if test="auditFlag != null" >
+      <if test="auditFlag != null and auditFlag != ''" >
         AUDIT_FLAG = #{auditFlag,jdbcType=TINYINT},
       </if>
-      <if test="modTime != null" >
+      <if test="modTime != null and modTime != ''" >
         MOD_TIME = #{modTime,jdbcType=TIMESTAMP},
       </if>
     </set>
