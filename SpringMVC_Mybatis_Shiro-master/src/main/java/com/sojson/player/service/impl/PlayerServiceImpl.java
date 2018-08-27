@@ -8,6 +8,7 @@ import com.sojson.core.mybatis.BaseMybatisDao;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.player.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Map;
@@ -15,6 +16,7 @@ import java.util.Map;
 /**
  * Created by lx on 2018/8/27.
  */
+@Service
 public class PlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> implements PlayerService{
 
     @Autowired

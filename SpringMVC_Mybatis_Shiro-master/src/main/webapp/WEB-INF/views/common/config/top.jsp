@@ -67,8 +67,21 @@
 							</shiro:hasPermission>
 						</ul>
 					</li>	
-				</shiro:hasAnyRoles>    
-				<li>
+				</shiro:hasAnyRoles>
+			    <%--拥有 角色888888（管理员） ||  100002（用户中心）--%>
+			    <shiro:hasAnyRoles name='888888,100002'>
+				  <li class="dropdown ">
+					  <a aria-expanded="false" aria-haspopup="true"  role="button" data-toggle="dropdown" class="dropdown-toggle" href="<%=basePath%>/member/list.shtml">
+						  参赛人员<span class="caret"></span>
+					  </a>
+					  <ul class="dropdown-menu">
+						  <shiro:hasPermission name="player/list.shtml">
+							  <li><a href="<%=basePath%>/player/list.shtml">参赛人员列表</a></li>
+						  </shiro:hasPermission>
+					  </ul>
+				  </li>
+			    </shiro:hasAnyRoles>
+				  <li>
 					<a class="dropdown-toggle" target="_blank" href="http://www.sojson.com/tag_shiro.html" target="_blank">
 						Shiro相关博客<span class="collapsing"></span>
 					</a>
