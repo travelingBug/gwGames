@@ -15,6 +15,11 @@
 	    	 <i class="glyphicon glyphicon-chevron-right"></i>我的权限
 	      </a>
 	  </li>
+	  <li class="${(index==3)?string('active',' ')} dropdown">
+		<a href="${basePath}/player/list.shtml">
+			<i class="glyphicon glyphicon-chevron-right"></i>参赛人员
+		</a>
+	  </li>
 	</ul>
 </div>
 </#macro>

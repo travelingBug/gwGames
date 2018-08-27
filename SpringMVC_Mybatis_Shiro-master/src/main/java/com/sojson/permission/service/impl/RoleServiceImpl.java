@@ -116,12 +116,5 @@ public class RoleServiceImpl extends BaseMybatisDao<URoleMapper> implements Role
 		map.put("userId", TokenManager.getUserId());
 		return roleMapper.findNowAllPermission(map);
 	}
-	/**
-	 * 每20分钟执行一次
-	 */
-	@Override
-	public void initData() {
-		roleMapper.initData();
-	}
-	
+
 }

@@ -2,10 +2,8 @@ package com.sojson.inf.player.controller;
 
 import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
-import com.sojson.inf.player.model.dto.TbPlayerDto;
+import com.sojson.common.model.TbPlayer;
 import com.sojson.inf.player.service.TbPlayerService;
-import com.sojson.inf.testInf.dto.TestInfDto;
-import com.sojson.user.bo.SubmitDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -24,7 +22,7 @@ public class TbPlayerController extends BaseController {
 
 	@RequestMapping(value="save",method=RequestMethod.POST)
 	@ResponseBody
-	public ResultMessage save(TbPlayerDto dto){
+	public ResultMessage save(TbPlayer dto){
 		return tbPlayerService.insert(dto);
 	}
 

@@ -32,13 +32,6 @@ import com.sojson.permission.service.RoleService;
 public class CommonController extends BaseController {
 	@Resource
 	RoleService roleService;
-	@RequestMapping("refreshDB")
-	@ResponseBody
-	public Map<String,Object> refreshDB(){
-		roleService.initData();
-		resultMap.put("status", 200);
-		return resultMap;
-	}
 	/**
 	 * 404错误
 	 * @param request
@@ -110,7 +103,7 @@ public class CommonController extends BaseController {
 	}
 	
 	/**
-	 * 获取验证码（Gif版本）
+	 * 获取验证码 GIF
 	 * @param response
 	 */
 	@RequestMapping(value="getGifCode",method=RequestMethod.GET)
@@ -131,7 +124,7 @@ public class CommonController extends BaseController {
 	        out.flush();
 	       //存入Shiro会话session  
 	        System.out.println( captcha.text().toLowerCase());
-	        TokenManager.setVal2Session(VerifyCodeUtils.V_CODE, captcha.text().toLowerCase());  
+	        TokenManager.setVal2Session(VerifyCodeUtils.V_CODE, captcha.text().toLowerCase());
 		} catch (Exception e) {
 			LoggerUtils.fmtError(getClass(),e, "获取验证码异常：%s",e.getMessage());
 		}
@@ -177,7 +170,7 @@ public class CommonController extends BaseController {
 	 */
 	@RequestMapping(value="kickedOut",method=RequestMethod.GET)
 	public ModelAndView kickedOut(HttpServletRequest request,UrlPathHelper pp){
-		//如果是踢出后，来源地址是：http://shiro.itboy.net/u/login.shtml;JSESSIONID=4f1538d9-df19-48c8-b4b1-aadacadde23a
+		//如果是踢出后，来源地址是本地
 		//如果来源是null，那么就重定向到首页。这个时候，如果首页是要登录，那就会跳转到登录页
 		if(StringUtils.isBlank(request.getHeader("Referer"))){
 			return redirect("/");

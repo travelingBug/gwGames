@@ -1,8 +1,6 @@
 package com.sojson.core.statics;
 /**
- * 不可变参数定义
  * 第三方参数
- * @author zhou-baicheng
  *
  */
 public interface APPKEY {
@@ -16,6 +14,7 @@ public interface APPKEY {
 	String  SINA_SECRET_KEY = "";
 	String 	SINA_TOKEN = "";
 	/**新浪*/
+
 	/**QQ*/
 	String  QQ_OPEN_ID = "";
 	String  QQ_SECRET_KEY = "";

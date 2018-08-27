@@ -6,7 +6,6 @@ import java.util.Date;
 import com.sojson.common.model.UUser;
 /**
  * Session  + User Bo
- * @author sojson.com
  *
  */
 public class UserOnlineBo extends UUser implements Serializable {
