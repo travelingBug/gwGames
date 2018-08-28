@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sojson.common.dao.UTbPlayerMapper" >
-  <resultMap id="BaseResultMap" type="com.sojson.common.model.TbPlayer" >
+  <resultMap id="PlayerResultMap" type="com.sojson.common.model.TbPlayer" >
     <id column="ID" property="id" jdbcType="VARCHAR" />
     <result column="ACCOUNT_NAME" property="accountName" jdbcType="VARCHAR" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
@@ -12,8 +12,8 @@
     <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
     <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    t.ID,t.ACCOUNT_NAME,t.NAME,t.ID_CARD,t.TEL_PHONE,t.DEL_FLAG,t.AUDIT_FLAG
+  <sql id="Player_Column_List" >
+    ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG
   </sql>
   <sql id="limit_sql">
   	   <if test="page_sql != null and page_sql != ''">
@@ -24,19 +24,21 @@
   <sql id="where_all">
   	<where>
   	  <if test="name != null and name !='' " >
-        and name like  LOWER(CONCAT("%",#{name,jdbcType=VARCHAR},"%"))
-
+        and name like LOWER(CONCAT("%",#{name,jdbcType=VARCHAR},"%"))
       </if>
-      </where>
+      <if test="accountName != null and accountName !=''">
+        and ACCOUNT_NAME = #{accountName}
+      </if>
+     </where>
   </sql>
-  <select id="findAll" resultMap="BaseResultMap" >
-  	 select 
-    <include refid="Base_Column_List" />
+  <select id="findAll" resultMap="PlayerResultMap" >
+  	select
+    <include refid="Player_Column_List" />
     from tb_player
     <include refid="where_all"/>
     <include refid="limit_sql" />
   </select>
-  <select id="findCount" resultMap="BaseResultMap" >
+  <select id="findCount" resultMap="PlayerResultMap" >
  	 select count(id) from  tb_player
   	<include refid="where_all" />
   </select>

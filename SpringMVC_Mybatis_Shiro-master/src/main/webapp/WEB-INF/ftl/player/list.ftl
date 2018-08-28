@@ -16,49 +16,15 @@
 			so.init(function(){
 				//初始化全选。
 				so.checkBoxInit('#checkAll','[check=box]');
-				<@shiro.hasPermission name="/member/deleteUserById.shtml">
-				//全选
-				so.id('deleteAll').on('click',function(){
-					var checkeds = $('[check=box]:checked');
-					if(!checkeds.length){
-						return layer.msg('请选择要删除的选项。',so.default),!0;
-					}
-					var array = [];
-					checkeds.each(function(){
-						array.push(this.value);
-					});
-					return _delete(array);
-				});
-				</@shiro.hasPermission>
 			});
-			<@shiro.hasPermission name="/member/deleteUserById.shtml">
-			//根据ID数组，删除
-			function _delete(ids){
-				var index = layer.confirm("确定这"+ ids.length +"个用户？",function(){
-					var load = layer.load();
-					$.post('${basePath}/member/deleteUserById.shtml',{ids:ids.join(',')},function(result){
-						layer.close(load);
-						if(result && result.status != 200){
-							return layer.msg(result.message,so.default),!0;
-						}else{
-							layer.msg('删除成功');
-							setTimeout(function(){
-								$('#formId').submit();
-							},1000);
-						}
-					},'json');
-					layer.close(index);
-				});
-			}
-			</@shiro.hasPermission>
 		</script>
 	</head>
 	<body data-target="#one" data-spy="scroll">
 		
-		<@_top.top 2/>
+		<@_top.top 4/>
 		<div class="container" style="padding-bottom: 15px;min-height: 300px; margin-top: 40px;">
 			<div class="row">
-				<@_left.member 1/>
+				<@_left.player 1/>
 				<div class="col-md-10">
 					<h2>参赛人员列表</h2>
 					<hr>
@@ -70,9 +36,6 @@
 					      </div>
 					     <span class=""> <#--pull-right -->
 				         	<button type="submit" class="btn btn-primary">查询</button>
-				         	<@shiro.hasPermission name="/member/deleteUserById.shtml">
-				         		<button type="button" id="deleteAll" class="btn  btn-danger">Delete</button>
-				         	</@shiro.hasPermission>
 				         </span>    
 				        </div>
 					<hr>
@@ -96,21 +59,21 @@
 									<td>${it.createTime?string('yyyy-MM-dd HH:mm')}</td>
 									<td>${it.lastLoginTime?string('yyyy-MM-dd HH:mm')}</td>
 									<td>
-										<@shiro.hasPermission name="/member/forbidUserById.shtml">
-										${(it.status==1)?string('<i class="glyphicon glyphicon-eye-close"></i>&nbsp;','<i class="glyphicon glyphicon-eye-open"></i>&nbsp;')}
-										<a href="javascript:forbidUserById(${(it.status==1)?string(0,1)},${it.id})">
-											${(it.status==1)?string('禁止登录','激活登录')}
-										</a>
-										</@shiro.hasPermission>
-										<@shiro.hasPermission name="/member/deleteUserById.shtml">
-										<a href="javascript:_delete([${it.id}]);">删除</a>
-										</@shiro.hasPermission>
+										<#--<@shiro.hasPermission name="/member/forbidUserById.shtml">-->
+										<#--${(it.status==1)?string('<i class="glyphicon glyphicon-eye-close"></i>&nbsp;','<i class="glyphicon glyphicon-eye-open"></i>&nbsp;')}-->
+										<#--<a href="javascript:forbidUserById(${(it.status==1)?string(0,1)},${it.id})">-->
+											<#--${(it.status==1)?string('禁止登录','激活登录')}-->
+										<#--</a>-->
+										<#--</@shiro.hasPermission>-->
+										<#--<@shiro.hasPermission name="/member/deleteUserById.shtml">-->
+										<#--<a href="javascript:_delete([${it.id}]);">删除</a>-->
+										<#--</@shiro.hasPermission>-->
 									</td>
 								</tr>
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="6">没有找到用户</td>
+								<td class="text-center danger" colspan="6">没有找到参赛人员</td>
 							</tr>
 						</#if>
 					</table>

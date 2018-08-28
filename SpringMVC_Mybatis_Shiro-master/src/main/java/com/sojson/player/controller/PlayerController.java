@@ -47,7 +47,7 @@ public class PlayerController extends BaseController {
     @RequestMapping(value="list")
     public ModelAndView list(ModelMap map, Integer pageNo, String findContent){
 
-        map.put("findContent", findContent);
+//        map.put("findContent", findContent);
         Pagination<TbPlayer> page = playerService.findByPage(map,pageNo,pageSize);
         map.put("page", page);
         return new ModelAndView("player/list");

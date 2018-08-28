@@ -73,3 +73,21 @@
 		</div>
 	</@shiro.hasAnyRoles>   
 </#macro>
+<#macro player index>
+	<@shiro.hasAnyRoles name='888888,100002'>
+    <div  id="one" class="col-md-2">
+        <ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
+            <li class="${(index==1)?string('active',' ')}">
+                <a href="${basePath}/player/list.shtml">
+                    <i class="glyphicon glyphicon-chevron-right"></i>参赛人员列表
+                </a>
+            </li>
+            <#--<li class="${(index==2)?string('active',' ')} dropdown">-->
+                <#--<a href="${basePath}/member/online.shtml">-->
+                    <#--<i class="glyphicon glyphicon-chevron-right"></i>在线用户-->
+                <#--</a>-->
+            <#--</li>-->
+        </ul>
+    </div>
+	</@shiro.hasAnyRoles>
+</#macro>
