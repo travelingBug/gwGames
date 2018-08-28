@@ -104,20 +104,19 @@ drop table if exists tb_player;
 /* Table: tb_player                                             */
 /*==============================================================*/
 drop table if exists tb_player;
-
-/*==============================================================*/
-/* Table: tb_player                                             */
-/*==============================================================*/
-create table tb_player
-(
-   ID                   varchar(32) not null,
-   NAME                 varchar(20) not null comment '姓名',
-   ID_CARD              varchar(20) not null comment '身份证',
-   TEL_PHONE            varchar(20) not null comment '电话号码',
-   DEL_FLAG             tinyint not null comment '删除标识',
-   AUDIT_FLAG           tinyint not null comment '审核意见',
-   ACCOUNT_NAME         varchar(20) comment '用户账户',
-   CRT_TIME             datetime comment '创建时间',
-   MOD_TIME             datetime comment '修改时间',
-   primary key (ID)
-);
+-- ----------------------------
+-- Table structure for `tb_player`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_player`;
+CREATE TABLE `tb_player` (
+  `ID` varchar(32) NOT NULL,
+  `NAME` varchar(20) NOT NULL,
+  `ID_CARD` varchar(20) NOT NULL,
+  `TEL_PHONE` varchar(20) NOT NULL,
+  `DEL_FLAG` tinyint(4) NOT NULL,
+  `AUDIT_FLAG` tinyint(4) NOT NULL,
+  `ACCOUNT_NAME` varchar(20) NOT NULL,
+  `CRT_TIME` datetime DEFAULT NULL,
+  `MOD_TIME` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

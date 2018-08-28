@@ -1,0 +1,486 @@
+/* base style file
+ * 
+ * 1、general
+ * 2、layout
+ * 3、header
+ * 4、footer
+ * 5、bar
+ * 6、nav
+ * 7、menu (include: subMenu)
+ * 8、pop modal
+ * 9、width
+ * 10、height
+ * 11、margin
+ * 12、padding
+ * 13、login
+ * 14、regsiter
+ * 15、title  
+ * 16、search
+ * 17、pager
+ * 18、tip
+ * 19、link 
+ * 20、form (include: input、select、textarea、radio、checkbox...)
+ * 21、icon
+ * 22、img
+ * 23、btn
+ * 24、tabs
+ * 25、table
+ * 26、box 
+ * 27、list
+ * 28、style
+ * 29、...
+ 
+ * 99、other
+ * -------------------------------------------------- */
+
+
+/* 1、general
+ * -------------------------------------------------- */
+@import url(reset.css);
+body {
+	width: 100%;
+	font-family: Arial, "微软雅黑", sans-serif;
+	background: #ffffff;
+	color:#555;
+	font-size:12px;
+	position:relative;
+}
+a {
+	color: #096394;
+	text-decoration: none;
+	cursor: pointer;
+}
+a:hover, a:visited {
+	color: #08A0C1;
+	text-decoration: none;
+}
+a.gray {
+	color:#555;
+}
+a.gray:hover, a.gray:visited {
+	color:#000;
+}
+p, span {
+	line-height: 24px;
+}
+input, select, textarea {
+	border:none;
+	border-radius:4px;
+	height:24px;
+	line-height:24px;
+	padding:3px 8px;
+	font-family: Arial, "微软雅黑";
+	font-size: 14px;
+	color: #444;
+}
+input:focus, input:hover, select:focus, select:hover, textarea:focus, textarea:hover  {
+	transition: all 0.8s;
+}
+input.radio, input.checkbox {
+	border:none;
+}
+textarea {
+	resize: none;
+	line-height: 24px;
+	min-height:80px;
+}
+select {
+	height:32px;
+}
+select option {
+	padding:5px 8px;
+}
+.clear {
+	clear:both;
+}
+/* 2、layout
+ * -------------------------------------------------- */
+.bg {
+	background: #720b20;
+	width: 100%;
+	height: 100%;
+	min-width: 1100px;
+}
+.bg1 {
+	background: #6c0c20;
+	width: 100%;
+	height: 100%;
+	min-width: 1100px;
+}
+.pageWrapper1 {
+	background:url(../images/bm_form_bg.png) no-repeat;
+	background-size: 100%;
+	min-height: 1500px;
+	width: 100%;
+	position:relative;
+	min-width:1100px;
+}
+.pageWrapper {
+	background:url(../images/bm_bg.png) no-repeat;
+	background-size: 100%;
+	width:100%;
+	min-height:768px;
+	position:relative;
+	min-width:1100px;
+}
+.main-page {
+	overflow:hidden;
+	width:40%;
+	margin:0 auto;
+}
+
+
+/* 3、header
+ * -------------------------------------------------- */
+.header {
+	background-image:-webkit-linear-gradient(to top, #ffffff, #D9DAE3); 
+	background-image:linear-gradient(to top, #ffffff, #D9DAE3);
+	min-width:1000px;
+	width:100%;
+	border-bottom:1px solid #E3E3E3;
+	margin-bottom:-1px;
+}
+.header .content {
+	margin:auto;
+	width:1000px;
+	margin-bottom:1px\0;
+}
+
+/* 4、footer
+ * -------------------------------------------------- */
+.footer {
+	background:#1b1b1b;
+	position:absolute;
+	bottom: 0;
+	width:100%;
+	min-width:1000px;
+} 
+.footer .content {
+	width:100%;
+	margin:0 auto;
+	text-align:center;
+	font-size:12px;
+	background: #222;
+} 
+.footer .content ul {
+	width:550px;
+	margin:0 auto;
+	overflow:hidden;
+}
+.footer .content ul li {
+	float:left;
+	padding:10px 5px;
+}
+.footer .content ul li a {
+	color:#666666;
+}
+.footer .content ul li a:hover {
+	color:#fff;
+}
+.footer p {
+	text-align: center;
+	color: #fff;
+	font-size: 12px;
+	padding: 10px 0 20px 0;
+}
+
+/* 6、nav
+ * -------------------------------------------------- */
+.top-nav {
+	overflow: hidden;
+	margin-top: 2.8%;
+}
+.top-nav ul {
+	width: 40%;
+}
+.top-nav ul li {
+	float:left;
+	width: 50%;
+	text-align: center;
+}
+.top-nav ul li a {
+	padding:3% 2%;
+	display:block;
+	font-size:13px;
+	color:#ffeba6;
+	text-shadow: 1px 1px 3px #890726;
+}
+.top-nav ul li a:hover, .top-nav ul .on a {
+	color:#fff;
+}
+
+/* 8、pop modal
+ * -------------------------------------------------- */
+.overlay-bg {
+	background-color: #000;
+	opacity: 0.75;
+	filter: alpha(opacity=75);
+	height: 100%;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index:999;
+}
+.float-div {
+	left: 45%;
+	top:40%;
+	position: absolute;
+	z-index:1000;
+	background:#fff;
+	overflow:hidden;
+	border-radius:6px;
+	padding:15px 30px;
+}
+
+
+/* 9、width
+ * -------------------------------------------------- */
+
+.width-150 { width: 150px;}
+.width-120 { width: 120px;}
+
+/* 11、margin
+ * -------------------------------------------------- */
+.mt-30 { margin-top:30px!important;} 
+.mr-20 { margin-right:20px!important;} 
+.mb-20 { margin-bottom:20px!important;}
+.mt-0 { margin-top:0!important;}
+.mr-0 { margin-right:0!important;}
+.mr-20 { margin-right:20px!important;}
+.mt-10 { margin-top:10px!important;}
+.pt-0  { padding-top:0!important;}
+.ml-10 { margin-left:10px!important;}
+.mtb-20 { margin-top:20px!important; margin-bottom:20px!important;}
+
+ 
+/* 17、pager
+ * -------------------------------------------------- */
+.pager {
+	margin: 0;
+	overflow:hidden;
+}
+.pager .page-numb {
+	float:right;
+	line-height:36px;
+	margin-right:10px;
+	color:#969696;
+}
+.pager ul {
+	border:1px solid #d9dfea;
+	border-radius:4px
+}
+.pager ul li {
+	float:left;
+	position:relative;
+	border-right:1px solid #d9dfea;
+}
+.pager ul li:last-child {
+	border:none;
+}
+.pager ul li:first-child a {
+	border-radius:4px 0 0 4px;
+}
+.pager ul li:last-child a {
+	border-radius:0 4px 4px 0;
+}
+.pager ul li a, .pager ul li span {
+	background:#fff;
+	width:32px;
+	height:32px;
+	line-height:32px;
+	text-align:center;
+	display:block;
+	color:#555;
+}
+.pager ul li .text {
+	padding:0 10px;
+}
+.pager ul li a:hover {
+	color:#000;
+	background:#f9fafb;
+	transition:all 0.3s;
+}
+.pager ul li span {
+	color:#2aabf2;
+	font-weight:bold;
+}
+.pager ul li .icon i {
+	font-size:12px;
+	color:5b9fea;
+}
+
+/* 20、form
+ * -------------------------------------------------- */
+.bm-form {
+	margin: 155% auto 35% auto;
+	background: #f1ce90;
+	border-radius: 6px;
+	padding: 20px 40px;
+}
+
+.bm-form .input-style {
+	background: #fff8bb;
+	box-shadow: 1px 2px 3px #eec07d;
+	margin:15px 0;
+	border-radius: 4px;
+	width: 100%;
+	overflow: hidden;
+	
+}
+.bm-form .input-style p {
+	float: left;
+	color: #1b1b1b;
+	width: 60px;
+	line-height: 38px;
+	font-size: 14px;
+	padding: 0 0 0 10px;
+}
+.bm-form .input-style em {
+	line-height: 38px;
+	padding: 0 0 0 10px;
+	float: left;
+}
+.bm-form input {
+	float: left;
+	width: 70%;
+	line-height: 38px;
+	height: 38px;
+	padding: 0;
+	background:none;
+	margin-left: 20px;
+}
+.bm-form input.width-4 {
+	width:40%;
+}
+.bm-form .link {
+	float: right;
+	margin-right: 20px;
+	line-height: 38px;
+}
+.bm-form .tip-wrong {
+	color: #e61939;
+}
+.bm-form .tip-right {
+	color: #0b9f81;
+}
+.bm-form .tip {
+	line-height: 30px;
+	color: #de5d03;
+}
+.bm-form .one-line {
+	overflow: hidden;
+}
+.bm-form .one-line input {
+	width: auto;
+	margin-left: 0;
+	line-height: 60px;
+	margin-top: 11px;
+	margin-right: 10px;
+}
+.bm-form .one-line .read-text {
+	float: left;
+	width: 200px;
+}
+.bm-form .one-line .read-text p {
+	display: block;
+	line-height: 60px;
+	color: #1b1b1b;
+}
+.bm-form .one-line .read-text p a {
+	margin: 10px;
+	text-decoration: underline;
+}
+
+
+
+
+/* 21、icon
+ * -------------------------------------------------- */
+
+
+/* 22、img
+ * -------------------------------------------------- */
+
+
+/* 23、btn
+ * -------------------------------------------------- */
+.btns {
+	overflow:hidden;
+	margin-bottom:10px;
+}
+.btn-bm {
+	margin: 65% auto;
+	width: 442px;
+	overflow: hidden;
+}
+.btn-bm .btn-bm-1 {
+	background: url(../images/bm_btn_01.png) no-repeat;
+	background-size: 100%;
+	margin: 0 5px 0 10px;
+	width: 183px;
+	height: 46px;
+	float: left;
+}
+.btn-bm .btn-bm-2 {
+	background: url(../images/bm_btn_02.png) no-repeat;
+	background-size: 100%;
+	margin: 0 5px;
+	width: 183px;
+	height: 46px;
+	float: left;
+}
+.btn-bm .btn-bm-3 {
+	background: url(../images/bm_btn_03.png) no-repeat;
+	background-size: 100%;
+	width: 46px;
+	height: 46px;
+	float: left;
+}
+.btn-bm .btn-bm-1:hover, .btn-bm .btn-bm-2:hover, .btn-bm .btn-bm-3:hover {
+	opacity: 0.9;
+}
+.btn-bm1 {
+	background: url(../images/bm_btn_bg.png) no-repeat;
+	background-size: 100%;
+	width: 156px;
+	height: 60px;
+	float: right;
+	text-align: center;
+	line-height: 60px;
+	font-size: 20px;
+	color: #482e05;
+}
+.btn-bm1:hover {
+	opacity: 0.9;
+	color: #432901;
+}
+
+
+/* 25、table
+ * -------------------------------------------------- */
+
+
+/* 26、box
+ * -------------------------------------------------- */
+
+
+/* 27、list
+ * -------------------------------------------------- */
+
+ 
+/* 28、style
+ * -------------------------------------------------- */
+ 
+.clear {
+	clear:both;
+}
+.floatL {
+	float:left;
+}
+.floatR {
+	float:right;
+}
+.text-center {
+	text-align:center;
+}

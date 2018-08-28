@@ -67,35 +67,7 @@
 							</shiro:hasPermission>
 						</ul>
 					</li>	
-				</shiro:hasAnyRoles>
-			    <%--拥有 角色888888（管理员） ||  100002（用户中心）--%>
-			    <shiro:hasAnyRoles name='888888,100002'>
-				  <li class="dropdown ">
-					  <a aria-expanded="false" aria-haspopup="true"  role="button" data-toggle="dropdown" class="dropdown-toggle" href="<%=basePath%>/member/list.shtml">
-						  参赛人员<span class="caret"></span>
-					  </a>
-					  <ul class="dropdown-menu">
-						  <shiro:hasPermission name="player/list.shtml">
-							  <li><a href="<%=basePath%>/player/list.shtml">参赛人员列表</a></li>
-						  </shiro:hasPermission>
-					  </ul>
-				  </li>
-			    </shiro:hasAnyRoles>
-				  <li>
-					<a class="dropdown-toggle" target="_blank" href="http://www.sojson.com/tag_shiro.html" target="_blank">
-						Shiro相关博客<span class="collapsing"></span>
-					</a>
-				</li>	          
-				<li>
-					<a class="dropdown-toggle" href="http://www.sojson.com/shiro" target="_blank">
-						本项目介绍<span class="collapsing"></span>
-					</a>
-				</li>	          
-				<li>
-					<a class="dropdown-toggle" href="http://www.sojson.com/jc/shiro.html" target="_blank">
-						Shiro Demo 其他版本<span class="collapsing"></span>
-					</a>
-				</li>	          
+				</shiro:hasAnyRoles>    
 	          </ul>
 	           <ul class="nav navbar-nav  pull-right" >
 				<li class="dropdown " style="color:#fff;">

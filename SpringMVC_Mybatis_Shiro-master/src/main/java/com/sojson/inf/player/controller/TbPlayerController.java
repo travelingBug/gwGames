@@ -3,6 +3,7 @@ package com.sojson.inf.player.controller;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
 import com.sojson.common.model.TbPlayer;
+import com.sojson.common.model.dto.TbPlayerDto;
 import com.sojson.inf.player.service.TbPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -22,7 +23,7 @@ public class TbPlayerController extends BaseController {
 
 	@RequestMapping(value="save",method=RequestMethod.POST)
 	@ResponseBody
-	public ResultMessage save(TbPlayer dto){
+	public ResultMessage save(TbPlayerDto dto){
 		return tbPlayerService.insert(dto);
 	}
 

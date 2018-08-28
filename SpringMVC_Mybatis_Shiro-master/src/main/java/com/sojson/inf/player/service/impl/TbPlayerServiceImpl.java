@@ -4,6 +4,7 @@ import com.sojson.common.IConstant;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.dao.UTbPlayerMapper;
 import com.sojson.common.model.TbPlayer;
+import com.sojson.common.model.dto.TbPlayerDto;
 import com.sojson.common.utils.StringUtils;
 import com.sojson.common.utils.VaildUtils;
 import com.sojson.core.mybatis.BaseMybatisDao;
@@ -20,16 +21,16 @@ public class TbPlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> impleme
 
 
 	@Override
-	public ResultMessage insert(TbPlayer entity) {
+	public ResultMessage insert(TbPlayerDto dto) {
 		//数据验证
-		ResultMessage msg = beforeAddVaild(entity);
+		ResultMessage msg = beforeAddVaild(dto);
 		if (msg.getLevel() == ResultMessage.MSG_LEVEL.SUCC.v) {
-			entity.setId(StringUtils.getUUID32()); //获取UUID
-			entity.setAuditFlag(IConstant.AUDIT_STATUS.WAIT_AUDIT.v); //设置待审核
-			entity.setDelFlag(IConstant.YES_OR_NO.NO.v); //设置未删除
-			entity.setCrtTime(new Date()); //设置创建时间
+			dto.setId(StringUtils.getUUID32()); //获取UUID
+			dto.setAuditFlag(IConstant.AUDIT_STATUS.WAIT_AUDIT.v); //设置待审核
+			dto.setDelFlag(IConstant.YES_OR_NO.NO.v); //设置未删除
+			dto.setCrtTime(new Date()); //设置创建时间
 			//插入会员信息
-			uTbPlayerMapper.insert(entity);
+			uTbPlayerMapper.insert(dto);
 			msg.setMessageText("申请成功！");
 		}
 		return msg;
@@ -40,7 +41,7 @@ public class TbPlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> impleme
 	 * @param dto 会员信息
 	 * @return ResultMessage 返回结果
 	 */
-	private ResultMessage beforeAddVaild(TbPlayer dto){
+	private ResultMessage beforeAddVaild(TbPlayerDto dto){
 
 		//验证用户名
 		if (StringUtils.isEmpty(dto.getName())
