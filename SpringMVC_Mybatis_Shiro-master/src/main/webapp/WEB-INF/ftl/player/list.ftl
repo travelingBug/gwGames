@@ -8,6 +8,8 @@
 		<link   rel="shortcut icon" href="https://open.sojson.com/favicon.ico" />
 		<link href="${basePath}/js/common/bootstrap/3.3.5/css/bootstrap.min.css?${_v}" rel="stylesheet"/>
 		<link href="${basePath}/css/common/base.css?${_v}" rel="stylesheet"/>
+        <link href="${basePath}/css/gwGame.css?${_v}" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 		<script  src="http://open.sojson.com/common/jquery/jquery1.8.3.min.js"></script>
 		<script  src="${basePath}/js/common/layer/layer.js"></script>
 		<script  src="${basePath}/js/common/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -43,31 +45,26 @@
 						<tr>
 							<th><input type="checkbox" id="checkAll"/></th>
 							<th>昵称</th>
-							<th>Email/帐号</th>
-							<th>登录状态</th>
-							<th>创建时间</th>
-							<th>最后登录时间</th>
+							<th>姓名</th>
+							<th>身份证</th>
+							<th>手机号</th>
 							<th>操作</th>
 						</tr>
 						<#if page?exists && page.list?size gt 0 >
 							<#list page.list as it>
 								<tr>
 									<td><input value="${it.id}" check='box' type="checkbox" /></td>
-									<td>${it.nickname?default('未设置')}</td>
-									<td>${it.email?default('未设置')}</td>
-									<td>${(it.status==1)?string('有效','禁止')}</td>
-									<td>${it.createTime?string('yyyy-MM-dd HH:mm')}</td>
-									<td>${it.lastLoginTime?string('yyyy-MM-dd HH:mm')}</td>
+									<td>${it.accountName}</td>
+									<td>${it.name}</td>
+									<td>${it.idCard}</td>
+									<td>${it.telPhone}</td>
 									<td>
-										<#--<@shiro.hasPermission name="/member/forbidUserById.shtml">-->
-										<#--${(it.status==1)?string('<i class="glyphicon glyphicon-eye-close"></i>&nbsp;','<i class="glyphicon glyphicon-eye-open"></i>&nbsp;')}-->
-										<#--<a href="javascript:forbidUserById(${(it.status==1)?string(0,1)},${it.id})">-->
-											<#--${(it.status==1)?string('禁止登录','激活登录')}-->
-										<#--</a>-->
-										<#--</@shiro.hasPermission>-->
-										<#--<@shiro.hasPermission name="/member/deleteUserById.shtml">-->
-										<#--<a href="javascript:_delete([${it.id}]);">删除</a>-->
-										<#--</@shiro.hasPermission>-->
+										<@shiro.hasPermission name="/member/deleteUserById.shtml">
+										<a href="javascript:_audit([${it.id}]);"><i class="fas fa-check-circle pass"></i></a>
+										</@shiro.hasPermission>
+										<@shiro.hasPermission name="/member/deleteUserById.shtml">
+                                            <a href="javascript:_audit([${it.id}]);"><i class="fas fa-times-circle fail"></i></a>
+										</@shiro.hasPermission>
 									</td>
 								</tr>
 							</#list>
