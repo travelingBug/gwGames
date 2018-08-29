@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class TbPlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> implements TbPlayerService {
@@ -89,4 +91,9 @@ public class TbPlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> impleme
 		return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
 	}
 
+
+	@Override
+	public List<TbPlayer> findAllNoPage(TbPlayerDto dto){
+		return uTbPlayerMapper.findAllNoPage(dto);
+	}
 }

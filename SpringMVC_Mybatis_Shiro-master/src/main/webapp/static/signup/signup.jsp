@@ -27,15 +27,16 @@
             </div>
             <form method="post" action="" id="addForm" class="form-inline">
                 <div class="form bm-form">
-                    <div class="input-style"><p>姓名</p><em>|</em><input maxlength="20" name="name" type="text" /></div>
-                    <div class="input-style"><p>身份证</p><em>|</em><input maxlength="20" name="idCard" type="text" /></div>
-                    <div class="input-style"><p>手机号</p><em>|</em><input maxlength="11" name="telPhone" class="width-4" type="text" /><a class="link">发送验证码</a></div>
-                    <div class="input-style"><p>验证码</p><em>|</em><input maxlength="4" name="verfiCode" type="text" /></div>
                     <div class="input-style">
-                        <p>昵称</p><em>|</em><input  maxlength="20" name="accountName" class="width-4" type="text" />
-                        <span class="link tip-wrong">昵称已被使用</span>
+                        <p>昵称</p><em>|</em><input  maxlength="20" name="accountName" id="accountNameId" class="width-4" type="text" />
+                        <span class="link tip-wrong" id="accountErrorId" style="display: none">昵称已被使用</span>
                         <!--<span class="link tip-right">昵称可用</span>-->
                     </div>
+                    <div class="input-style"><p>真实姓名</p><em>|</em><input maxlength="20" name="name" id="nameId" type="text" /></div>
+                    <div class="input-style"><p>身份证</p><em>|</em><input maxlength="20" name="idCard" id="idCardId" type="text" /></div>
+                    <div class="input-style"><p>手机号</p><em>|</em><input maxlength="11" name="telPhone" id="telPhoneId" class="width-4" type="text" /><a class="link">发送验证码</a></div>
+                    <div class="input-style"><p>验证码</p><em>|</em><input maxlength="4" name="verfiCode" id="verfiCodeId" type="text" /></div>
+
                     <div class="one-line">
                         <p class="tip">注意：昵称确认后将无法修改！</p>
                     </div>
@@ -55,9 +56,29 @@
 </html>
 <script>
 
+    $("#accountNameId").blur(function(){
+        var accountName = $('#accountNameId').val();
+        if (accountName && accountName != null && accountName != '') {
+            $.ajax({
+                type: "POST",
+                url: "interface/player/findAllNoPage.shtml",
+                data: {accountName:accountName},
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Authorization", "1");
+                },
+                success: function (data) {
+                    if (data != null && data.length < 1) {
+                        $('#accountErrorId').css('display','none');
+                    } else {
+                        $('#accountErrorId').css('display','');
+                    }
+                }
+            });
+        }
+    });
     $("#buttonSubmit").click(function(){
         var data =$('#addForm').serializeArray();
-        debugger
         $.ajax({
             type: "POST",
             url: "interface/player/save.shtml",
