@@ -54,6 +54,6 @@ public class SendMsgUtil {
             e.printStackTrace();
         }
 
-        return null;
+        return result;
     }
 }
