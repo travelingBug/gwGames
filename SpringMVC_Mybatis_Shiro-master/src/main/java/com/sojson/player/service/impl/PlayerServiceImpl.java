@@ -33,15 +33,14 @@ public class PlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> implement
         if (msg.getLevel() == ResultMessage.MSG_LEVEL.SUCC.v) {
             entity.setModTime(new Date()); //设置修改时间
             uTbPlayerMapper.updateByPrimaryKeySelective(entity);
-            msg.setMessageText("修改成功！");
         }
-        return new ResultMessage();
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
 
     private ResultMessage beforeUpdateVaild(TbPlayer entity){
         //修改ID验证
         if (StringUtils.isBlank(entity.getId())) {
-            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"参赛人员信息错误！");
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"选手信息错误！");
         }
 
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);

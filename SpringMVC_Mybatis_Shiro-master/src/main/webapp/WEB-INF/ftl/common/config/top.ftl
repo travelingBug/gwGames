@@ -68,11 +68,11 @@
 				  <@shiro.hasAnyRoles name='888888,100002'>
                       <li class="dropdown ${(index==4)?string('active','')}">
                           <a aria-expanded="false" aria-haspopup="true"  role="button" data-toggle="dropdown" class="dropdown-toggle" href="${basePath}/player/list.shtml">
-                              参赛人员中心<span class="caret"></span>
+                              选手管理<span class="caret"></span>
                           </a>
                           <ul class="dropdown-menu">
 							  <@shiro.hasPermission name="/player/list.shtml">
-                                  <li><a href="${basePath}/player/list.shtml">参赛人员列表</a></li>
+                                  <li><a href="${basePath}/player/list.shtml">选手列表</a></li>
 							  </@shiro.hasPermission>
                           </ul>
                       </li>

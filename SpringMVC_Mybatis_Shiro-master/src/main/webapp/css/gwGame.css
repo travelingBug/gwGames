@@ -10,3 +10,7 @@
 #playerForm .fail:hover{
     color:#f06595;
 }
+
+#playerForm .normal:hover{
+    color: #4dabf7;
+}

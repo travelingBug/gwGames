@@ -45,6 +45,22 @@ public class PlayerController extends BaseController {
     }
 
     /**
+     * 编辑参赛人员
+     * @param id
+     * @param accountName
+     * @param req
+     * @return
+     */
+    @RequestMapping(value="editPlayer",method=RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage editPlayer(String id, String accountName, HttpServletRequest req){
+        TbPlayer entity = new TbPlayer();
+        entity.setId(id);
+        entity.setAccountName(accountName);
+        return playerService.updateByPrimaryKeySelective(entity);
+    }
+
+    /**
      * 参赛人员主页
      * @return
      */
