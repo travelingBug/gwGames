@@ -1,18 +1,34 @@
 package com.sojson.common.utils;
 
+import com.sojson.core.config.IConfig;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by lx on 2018/8/25.
  */
 public class SendMsgUtil {
 
-    public static String sendMsg(String user, String key, String phone, String msg) {
+    public static String sendMsg(String phone) {
+
+        String user = IConfig.get("user");
+        String key = IConfig.get("key");
+        String msg_1 = "";
+        String msg_2 = "";
+        try {
+            msg_1 = new String(IConfig.get("msg_1").getBytes("iso-8859-1"),"utf-8");
+            msg_2 = new String(IConfig.get("msg_2").getBytes("iso-8859-1"),"utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        int code = (int)((Math.random()*9+1)*100000);
+        String msg = msg_1 + code + msg_2;
+
         HttpClient client = new HttpClient();
         PostMethod post = new PostMethod("http://utf8.api.smschinese.cn");
         post.addRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");//在头文件中设置转码
