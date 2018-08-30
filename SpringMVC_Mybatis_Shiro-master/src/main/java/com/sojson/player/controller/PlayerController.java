@@ -40,16 +40,4 @@ public class PlayerController extends BaseController {
         return playerService.updateByPrimaryKeySelective(entity);
     }
 
-    /**
-     * 参赛人员主页
-     * @return
-     */
-    @RequestMapping(value="list")
-    public ModelAndView list(ModelMap map, Integer pageNo, String findContent){
-
-//        map.put("findContent", findContent);
-        Pagination<TbPlayer> page = playerService.findByPage(map,pageNo,pageSize);
-        map.put("page", page);
-        return new ModelAndView("player/list");
-    }
 }

@@ -29,6 +29,12 @@
       <if test="accountName != null and accountName !=''">
         and ACCOUNT_NAME = #{accountName}
       </if>
+      <if test="telPhone != null and telPhone !=''">
+        and TEL_PHONE = #{telPhone}
+      </if>
+      <if test="accountName != null and accountName !=''">
+        and ACCOUNT_NAME = #{accountName}
+      </if>
      </where>
   </sql>
   <select id="findAll" resultMap="PlayerResultMap" >
@@ -41,6 +47,13 @@
   <select id="findCount" resultMap="PlayerResultMap" >
  	 select count(id) from  tb_player
   	<include refid="where_all" />
+  </select>
+
+  <select id="findAllNoPage" resultMap="PlayerResultMap" >
+    select
+    <include refid="Player_Column_List" />
+    from tb_player
+    <include refid="where_all"/>
   </select>
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbPlayer" >

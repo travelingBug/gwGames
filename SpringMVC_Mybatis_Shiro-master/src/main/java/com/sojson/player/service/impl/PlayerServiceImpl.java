@@ -52,4 +52,6 @@ public class PlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> implement
     public Pagination<TbPlayer> findByPage(Map<String, Object> resultMap, Integer pageNo, Integer pageSize) {
         return super.findPage(resultMap, pageNo, pageSize);
     }
+
+
 }

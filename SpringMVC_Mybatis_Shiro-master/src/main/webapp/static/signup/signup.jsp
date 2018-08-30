@@ -27,15 +27,20 @@
             </div>
             <form method="post" action="" id="addForm" class="form-inline">
                 <div class="form bm-form">
-                    <div class="input-style"><p>姓名</p><em>|</em><input maxlength="20" name="name" type="text" /></div>
-                    <div class="input-style"><p>身份证</p><em>|</em><input maxlength="20" name="idCard" type="text" /></div>
-                    <div class="input-style"><p>手机号</p><em>|</em><input maxlength="11" name="telPhone" class="width-4" type="text" /><a class="link">发送验证码</a></div>
-                    <div class="input-style"><p>验证码</p><em>|</em><input maxlength="4" name="verfiCode" type="text" /></div>
                     <div class="input-style">
-                        <p>昵称</p><em>|</em><input  maxlength="20" name="accountName" class="width-4" type="text" />
-                        <span class="link tip-wrong">昵称已被使用</span>
-                        <!--<span class="link tip-right">昵称可用</span>-->
+                        <p>昵称</p><em>|</em><input  maxlength="20" name="accountName" id="accountNameId" class="width-4" type="text" />
+                        <span class="link tip-wrong" id="accountFailId" style="display: none">昵称已被使用</span>
+                        <span class="link tip-right" id="accountSuccId" style="display: none">昵称可用</span>
                     </div>
+                    <div class="input-style"><p>真实姓名</p><em>|</em><input maxlength="20" name="name" id="nameId" type="text" /></div>
+                    <div class="input-style">
+                        <p>身份证</p><em>|</em><input maxlength="20" name="idCard" id="idCardId" class="width-4" type="text" />
+                        <span class="link tip-wrong" id="idCardFailId" style="display: none">身份证已注册</span>
+                        <span class="link tip-right" id="idCardSuccId" style="display: none">身份证可用</span>
+                    </div>
+                    <div class="input-style"><p>手机号</p><em>|</em><input maxlength="11" name="telPhone" id="telPhoneId" class="width-4" type="text" /><a class="link" disabled="disabled">发送验证码</a></div>
+                    <div class="input-style"><p>验证码</p><em>|</em><input maxlength="4" name="verfiCode" id="verfiCodeId" type="text" /></div>
+
                     <div class="one-line">
                         <p class="tip">注意：昵称确认后将无法修改！</p>
                     </div>
@@ -55,9 +60,82 @@
 </html>
 <script>
 
+    $("#idCardId").bind("input propertychange",function(event){
+        var idCard= $("#idCardId").val();
+        if (idCard && idCard != null && idCard != '') {
+            $.ajax({
+                type: "POST",
+                url: "interface/player/findAllNoPage.shtml",
+                data: {idCard:idCard},
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Authorization", "1");
+                },
+                success: function (data) {
+                    if (data != null && data.length > 0) {
+                        $('#idCardSuccId').css('display','none');
+                        $('#idCardFailId').css('display','');
+
+                    } else {
+                        $('#idCardFailId').css('display','none');
+                        $('#idCardSuccId').css('display','');
+                    }
+                }
+            });
+        }
+    });
+
+    $("#telPhoneId").bind("input propertychange",function(event){
+        var telPhone= $("#telPhoneId").val();
+        if (telPhone && telPhone != null && telPhone != '' && telPhone.length == 11) {
+            $.ajax({
+                type: "POST",
+                url: "interface/player/findAllNoPage.shtml",
+                data: {telPhone:telPhone},
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Authorization", "1");
+                },
+                success: function (data) {
+                    if (data != null && data.length > 0) {
+                        layer.alert('电话号码已被使用', {
+                            icon: 0,
+                            skin: 'layui-layer-lan'
+                        });
+                    } else {
+
+                    }
+                }
+            });
+        }
+    });
+
+    $("#accountNameId").blur(function(){
+        var accountName = $('#accountNameId').val();
+        if (accountName && accountName != null && accountName != '') {
+            $.ajax({
+                type: "POST",
+                url: "interface/player/findAllNoPage.shtml",
+                data: {accountName:accountName},
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Authorization", "1");
+                },
+                success: function (data) {
+                    if (data != null && data.length > 0) {
+                        $('#accountSuccId').css('display','none');
+                        $('#accountFailId').css('display','');
+                    } else {
+                        $('#accountFailId').css('display','none');
+                        $('#accountSuccId').css('display','');
+
+                    }
+                }
+            });
+        }
+    });
     $("#buttonSubmit").click(function(){
         var data =$('#addForm').serializeArray();
-        debugger
         $.ajax({
             type: "POST",
             url: "interface/player/save.shtml",
