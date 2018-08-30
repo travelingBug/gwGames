@@ -8,6 +8,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
 /**
  * Created by lx on 2018/8/25.
@@ -27,6 +28,9 @@ public class SendMsgUtil {
             e.printStackTrace();
         }
         int code = (int)((Math.random()*9+1)*100000);
+        RedisUtil redisUtil = RedisUtil.getRedis();
+        redisUtil.save(phone, code+","+ new Date().getTime());
+
         String msg = msg_1 + code + msg_2;
 
         HttpClient client = new HttpClient();
@@ -50,6 +54,6 @@ public class SendMsgUtil {
             e.printStackTrace();
         }
 
-        return result;
+        return null;
     }
 }

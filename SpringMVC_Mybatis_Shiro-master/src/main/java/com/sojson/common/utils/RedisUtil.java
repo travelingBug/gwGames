@@ -92,6 +92,10 @@ public class RedisUtil {
         return map;
     }
 
+    public static String get(String key){
+        return jedis.get(key);
+    }
+
     public static BufferedImage drawTranslucentStringPic(int width, int height, Integer fontHeight, String drawStr)
     {
         try
