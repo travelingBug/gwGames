@@ -262,7 +262,7 @@ select option {
 	width:800px;
 	margin-left:-400px;
 	z-index:1010;
-	top: 5%;
+	top: 3%;
 }
 .layer-small .overlay-bg {
 	z-index:1002;
@@ -278,6 +278,7 @@ select option {
 	padding: 10px 20px 30px 20px;
 	overflow-x:hidden;
 	min-height:200px;
+	max-height: 480px;
 }
 .layer-big .float-div .btn {
 	border-top:1px solid #efefef;
@@ -341,8 +342,12 @@ select option {
 /* 9、width
  * -------------------------------------------------- */
 
-.width-150 { width: 150px;}
-.width-120 { width: 120px;}
+.width-200 { width: 200px!important;}
+.width-170 { width: 170px!important;}
+.width-160 { width: 160px!important;}
+.width-150 { width: 150px!important;}
+.width-120 { width: 120px!important;}
+.width-90 { width: 90px!important;}
 
 /* 11、margin
  * -------------------------------------------------- */
@@ -457,27 +462,40 @@ select option {
 .bm-form input.width-4 {
 	width:40%;
 }
-.bm-form .link {
+.bm-form .link, .bm-form .numb {
 	float: right;
-	margin-right: 20px;
+	margin-right: 8px;
 	line-height: 38px;
+}
+.bm-form .numb {
+	font-size: 14px;
+	color: #0b9f81;
 }
 .bm-form .tip-wrong {
 	color: #e61939;
 }
+.bm-form .tip-wrong .icon {
+	margin-right: 3px;
+}
 .bm-form .tip-right {
 	color: #0b9f81;
 }
+.bm-form .link .icon {
+	width: 18px;
+	height: 18px;
+	float: left;
+	margin-top: 10px;
+}
 .bm-form .tip {
 	line-height: 30px;
-	color: #de5d03;
+	color: #ae4902;
 }
 .bm-form .one-line {
 	overflow: hidden;
 }
 .bm-form .one-line input {
 	width: auto;
-	margin-left: 0;
+	margin-left: 1px;
 	line-height: 60px;
 	margin-top: 11px;
 	margin-right: 10px;
@@ -502,6 +520,8 @@ select option {
 /* 21、icon
  * -------------------------------------------------- */
 .icon-close { background: url(../images/icon_close.png) no-repeat;background-size: 100%;}
+.icon-wrong { background: url(../images/icon_wrong.png) no-repeat;background-size: 100%;}
+.icon-right { background: url(../images/icon_right.png) no-repeat;background-size: 100%;}
 
 
 /* 22、img
