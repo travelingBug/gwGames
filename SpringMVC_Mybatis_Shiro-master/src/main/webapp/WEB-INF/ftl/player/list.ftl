@@ -25,14 +25,14 @@
                 var text = status?'通过':'不通过';
                 var index = layer.confirm("确定审核"+text+"这个用户？",function(){
                     var load = layer.load();
-                    $.post('${basePath}/player/auditById.shtml',{status:status,id:id},function(result){
+                    $.post('${basePath}/player/auditById.shtml',{auditFlag:status,id:id},function(result){
                         layer.close(load);
                         if(result && result.status != 200){
                             return layer.msg(result.message,so.default),!0;
                         }else{
                             layer.msg(text +'成功');
                             setTimeout(function(){
-                                $('#formId').submit();
+                                $('#playerForm').submit();
                             },1000);
                         }
                     },'json');
@@ -82,10 +82,14 @@
 									<td>${it.telPhone}</td>
 									<td>
 										<@shiro.hasPermission name="/player/auditById.shtml">
-										<a href="javascript:_audit(${it.id},1);"><i class="fas fa-check-circle pass"></i></a>
+											<#if it.auditFlag==0>
+                                            	<a href="javascript:_audit('${it.id}','1');"><i class="fas fa-check-circle pass"></i></a>
+											</#if>
 										</@shiro.hasPermission>
 										<@shiro.hasPermission name="/player/auditById.shtml">
-                                            <a href="javascript:_audit(${it.id},2);"><i class="fas fa-times-circle fail"></i></a>
+											<#if it.auditFlag==0>
+                                            	<a href="javascript:_audit('${it.id}','2');"><i class="fas fa-times-circle fail"></i></a>
+											</#if>
 										</@shiro.hasPermission>
 									</td>
 								</tr>

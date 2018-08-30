@@ -77,11 +77,13 @@
 	<@shiro.hasAnyRoles name='888888,100002'>
     <div  id="one" class="col-md-2">
         <ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
+			<@shiro.hasPermission name="/player/list.shtml">
             <li class="${(index==1)?string('active',' ')}">
-                <a href="${basePath}/player/list.shtml">
-                    <i class="glyphicon glyphicon-chevron-right"></i>参赛人员列表
+                <a href="${basePath}/player/list.shtml?">
+                    <i class="glyphicon glyphicon-chevron-right"></i>选手列表
                 </a>
             </li>
+			</@shiro.hasPermission>
             <#--<li class="${(index==2)?string('active',' ')} dropdown">-->
                 <#--<a href="${basePath}/member/online.shtml">-->
                     <#--<i class="glyphicon glyphicon-chevron-right"></i>在线用户-->

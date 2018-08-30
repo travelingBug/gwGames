@@ -1,12 +1,12 @@
-i{
+#playerForm i{
     color:#adb5bd;
     font-size: 2rem;
 }
 
-.pass:hover{
+#playerForm .pass:hover{
     color:#82c91e;
 }
 
-.fail:hover{
+#playerForm .fail:hover{
     color:#f06595;
 }

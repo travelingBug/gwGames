@@ -23,6 +23,7 @@
   
   <sql id="where_all">
   	<where>
+      DEL_FLAG = 0
   	  <if test="name != null and name !='' " >
         and name like LOWER(CONCAT("%",#{name,jdbcType=VARCHAR},"%"))
       </if>
@@ -32,8 +33,12 @@
       <if test="telPhone != null and telPhone !=''">
         and TEL_PHONE = #{telPhone}
       </if>
-      <if test="accountName != null and accountName !=''">
-        and ACCOUNT_NAME = #{accountName}
+      <if test="idCard != null and idCard !=''">
+        and ID_CARD = #{idCard}
+      </if>
+      <if test="findContent != null and findContent !=''">
+        and (name like LOWER(CONCAT("%",#{findContent,jdbcType=VARCHAR},"%"))
+        or ACCOUNT_NAME like LOWER(CONCAT("%",#{findContent,jdbcType=VARCHAR},"%")))
       </if>
      </where>
   </sql>
