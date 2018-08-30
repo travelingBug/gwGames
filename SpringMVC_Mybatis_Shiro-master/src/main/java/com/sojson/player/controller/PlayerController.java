@@ -30,13 +30,17 @@ public class PlayerController extends BaseController {
 
     /**
      * 审核参赛人员
-     * @param entity
+     * @param id
+     * @param auditFlag
      * @param req
      * @return
      */
-    @RequestMapping(value="audit",method=RequestMethod.POST)
+    @RequestMapping(value="auditById",method=RequestMethod.POST)
     @ResponseBody
-    public ResultMessage audit(TbPlayer entity, HttpServletRequest req){
+    public ResultMessage audit(String id, Byte auditFlag, HttpServletRequest req){
+        TbPlayer entity = new TbPlayer();
+        entity.setId(id);
+        entity.setAuditFlag(auditFlag);
         return playerService.updateByPrimaryKeySelective(entity);
     }
 

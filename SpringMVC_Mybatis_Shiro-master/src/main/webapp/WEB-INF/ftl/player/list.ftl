@@ -19,6 +19,28 @@
 				//初始化全选。
 				so.checkBoxInit('#checkAll','[check=box]');
 			});
+			<@shiro.hasPermission name="/player/auditById.shtml">
+            //根据ID数组，删除
+            function _audit(id, status){
+                var text = status?'通过':'不通过';
+                var index = layer.confirm("确定审核"+text+"这个用户？",function(){
+                    var load = layer.load();
+                    $.post('${basePath}/player/auditById.shtml',{status:status,id:id},function(result){
+                        layer.close(load);
+                        if(result && result.status != 200){
+                            return layer.msg(result.message,so.default),!0;
+                        }else{
+                            layer.msg(text +'成功');
+                            setTimeout(function(){
+                                $('#formId').submit();
+                            },1000);
+                        }
+                    },'json');
+                    layer.close(index);
+                });
+            }
+			</@shiro.hasPermission>
+
 		</script>
 	</head>
 	<body data-target="#one" data-spy="scroll">
@@ -30,7 +52,7 @@
 				<div class="col-md-10">
 					<h2>参赛人员列表</h2>
 					<hr>
-					<form method="post" action="" id="formId" class="form-inline">
+					<form method="post" action="" id="playerForm" class="form-inline">
 						<div clss="well">
 					      <div class="form-group">
 					        <input type="text" class="form-control" style="width: 300px;" value="${findContent?default('')}" 
@@ -59,11 +81,11 @@
 									<td>${it.idCard}</td>
 									<td>${it.telPhone}</td>
 									<td>
-										<@shiro.hasPermission name="/member/deleteUserById.shtml">
-										<a href="javascript:_audit([${it.id}]);"><i class="fas fa-check-circle pass"></i></a>
+										<@shiro.hasPermission name="/player/auditById.shtml">
+										<a href="javascript:_audit(${it.id},1);"><i class="fas fa-check-circle pass"></i></a>
 										</@shiro.hasPermission>
-										<@shiro.hasPermission name="/member/deleteUserById.shtml">
-                                            <a href="javascript:_audit([${it.id}]);"><i class="fas fa-times-circle fail"></i></a>
+										<@shiro.hasPermission name="/player/auditById.shtml">
+                                            <a href="javascript:_audit(${it.id},2);"><i class="fas fa-times-circle fail"></i></a>
 										</@shiro.hasPermission>
 									</td>
 								</tr>
