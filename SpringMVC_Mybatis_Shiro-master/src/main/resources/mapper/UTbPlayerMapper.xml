@@ -40,6 +40,9 @@
         and (name like LOWER(CONCAT("%",#{findContent,jdbcType=VARCHAR},"%"))
         or ACCOUNT_NAME like LOWER(CONCAT("%",#{findContent,jdbcType=VARCHAR},"%")))
       </if>
+      <if test="idCard != null and idCard !=''">
+        and ID_CARD = #{idCard}
+      </if>
      </where>
   </sql>
 
