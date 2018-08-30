@@ -5,6 +5,7 @@ import com.sojson.common.ResultMessage;
 import com.sojson.common.dao.UTbPlayerMapper;
 import com.sojson.common.model.TbPlayer;
 import com.sojson.common.model.dto.TbPlayerDto;
+import com.sojson.common.utils.RedisUtil;
 import com.sojson.common.utils.StringUtils;
 import com.sojson.common.utils.VaildUtils;
 import com.sojson.core.mybatis.BaseMybatisDao;
@@ -61,6 +62,18 @@ public class TbPlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> impleme
 				|| dto.getTelPhone().length() > 20) {
 			return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"电话号码必填且不能超过20个字符！");
 		}
+
+		//验证短信验证码
+		RedisUtil redisUtil = RedisUtil.getRedis();
+		String code = redisUtil.get(dto.getTelPhone());
+		if (StringUtils.isBlank(code)) {
+			return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"未找到对应验证码！");
+		}
+		String[] codeArr = code.split(",");
+		if (codeArr.length != 2 || !codeArr[0].equalsIgnoreCase(dto.getVerfiCode())) {
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"验证码错误！");
+        }
+
 
 		return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
 	}

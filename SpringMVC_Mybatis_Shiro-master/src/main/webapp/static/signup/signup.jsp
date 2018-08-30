@@ -40,9 +40,8 @@
                         <p>手机号</p><em>|</em><input maxlength="11" name="telPhone" id="telPhoneId"  class="width-4" type="text" />
                         <a id="sendVerfiCode" class="link" href="javascript:;" style="color: #5e5e5e;">发送验证码</a>
                     </div>
-                    </form>
                     <div class="input-style" id="verfiCodeDiv"><p>验证码</p><em>|</em><input maxlength="6" name="verfiCode" id="verfiCodeId"  class="width-4" type="text" /><span class="numb"></span></div>
-
+                    </form>
                         <div class="one-line">
                             <p class="tip">注意：昵称确认后将无法修改！</p>
                         </div>
@@ -116,7 +115,7 @@
     $("#telPhoneId").bind("input propertychange",function(event){
         var telPhone= $("#telPhoneId").val();
         telPhoneFlag = false;
-        if (telPhone && telPhone != null && telPhone != '' && telPhone.length == 11) {
+        if (telPhone && telPhone != null && telPhone != '' && telPhone.length == 11 && !isCountDown ) {
             if (!isPhoneNo(telPhone)) {
                 layer.alert('电话号码格式错误', {
                     icon: 0,
@@ -140,15 +139,20 @@
                             });
                             canClick=false;
                             $('#sendVerfiCode').css('color','#5e5e5e');
-                            $('#sendVerfiCode').setAttribute("href", 'javascript:;');
+                            $('#sendVerfiCode').attr("href", 'javascript:;');
                         } else {
-                            $('#sendVerfiCode').css('color','blue');
-                            canClick=true;
-                            telPhoneFlag=true;
-                            canSubmit();
+                                $('#sendVerfiCode').css('color','blue');
+                                canClick=true;
+                                telPhoneFlag=true;
+                                canSubmit();
+
                         }
                     }
                 });
+            } else {
+                canClick=false;
+                $('#sendVerfiCode').css('color','#5e5e5e');
+                $('#sendVerfiCode').attr("href", 'javascript:;');
             }
     });
 
@@ -211,6 +215,8 @@
     $("#buttonSubmit").click(function(){
         var verfiCode = $('#verfiCodeId').val();
         if (!verfiCode || verfiCode.length != 6) {
+            $('#verfiCodeDiv').find('span').remove();
+
             $("#verfiCodeId").after('<span class="link tip-wrong"><i class="icon icon-wrong"></i>请输入6位验证码</span>');
             return;
         }
@@ -224,7 +230,6 @@
                 request.setRequestHeader("Authorization", "1");
             },
             success: function(data) {
-                debugger
                 if (data.level == 1) {
                     layer.alert(data.messageText, {
                         icon: 1,
@@ -256,9 +261,39 @@
     //倒计时
     var countdown=60;
     var canClick=false;
+    var isCountDown = false;
     $('#sendVerfiCode').click(function(){
         if (canClick) {
+            //获取手机号码
+            var telPhone = $('#telPhoneId').val();
+            isCountDown = true;
             canClick = false;
+            $.ajax({
+                type: "POST",
+                url: "interface/meaage/send.shtml",
+                data: {telPhone:telPhone},
+                dataType: "json",
+                beforeSend: function(request) {
+                    request.setRequestHeader("Authorization", "1");
+                },
+                success: function(data) {
+                    if (data.level == 1) {
+
+                    } else {
+                        layer.alert(data.messageText, {
+                            icon: 0,
+                            skin: 'layui-layer-lan'
+                        });
+                    }
+                },
+                error: function(data) {
+                    layer.alert('系统错误，请联系管理员！', {
+                        icon: 2,
+                        skin: 'layui-layer-lan'
+                    });
+                }
+            });
+
             $('#sendVerfiCode').css('color','#5e5e5e');
             $('#sendVerfiCode').attr("href", 'javascript:;');
             settime();
@@ -273,6 +308,7 @@
             $('#sendVerfiCode').css('color','blue');
             countdown = 60;
             canClick=true;
+            isCountDown = false;
             return;
         } else {
             $('#sendVerfiCode').html("发送验证码(" + countdown + "s)");
