@@ -25,7 +25,7 @@
   	<where>
       DEL_FLAG = 0
   	  <if test="name != null and name !='' " >
-        and name like LOWER(CONCAT("%",#{name,jdbcType=VARCHAR},"%"))
+        and name like LOWER(CONCAT('%',#{name,jdbcType=VARCHAR},'%'))
       </if>
       <if test="accountName != null and accountName !=''">
         and ACCOUNT_NAME = #{accountName}
@@ -37,8 +37,8 @@
         and ID_CARD = #{idCard}
       </if>
       <if test="findContent != null and findContent !=''">
-        and (name like LOWER(CONCAT("%",#{findContent,jdbcType=VARCHAR},"%"))
-        or ACCOUNT_NAME like LOWER(CONCAT("%",#{findContent,jdbcType=VARCHAR},"%")))
+        and (name like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%'))
+        or ACCOUNT_NAME like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%')))
       </if>
       <if test="idCard != null and idCard !=''">
         and ID_CARD = #{idCard}
