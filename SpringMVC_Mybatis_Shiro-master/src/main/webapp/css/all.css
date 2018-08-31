@@ -493,13 +493,13 @@ select option {
 .bm-form .one-line {
 	overflow: hidden;
 }
-.bm-form .one-line input {
+.bm-form .one-line .radio-style {
 	width: auto;
 	margin-left: 1px;
 	line-height: 60px;
 	margin-top: 11px;
 	margin-right: 10px;
-}
+} 
 .bm-form .one-line .read-text {
 	float: left;
 	width: 200px;
@@ -565,7 +565,7 @@ select option {
 .btn-bm .btn-bm-1:hover, .btn-bm .btn-bm-2:hover, .btn-bm .btn-bm-3:hover {
 	opacity: 0.9;
 }
-.btn-bm1 {
+.bm-form .btn-bm1 {
 	background: url(../images/bm_btn_bg.png) no-repeat;
 	background-size: 100%;
 	width: 156px;
@@ -575,12 +575,17 @@ select option {
 	line-height: 60px;
 	font-size: 20px;
 	color: #482e05;
+	margin: 0;
+	cursor: pointer;
 }
-.btn-bm1:hover {
-	opacity: 0.9;
+.bm-form .btn-bm1:hover {
+	opacity: 0.8;
 	color: #432901;
 }
-
+.bm-form .btn-bm1.disable {
+	opacity: 0.6;
+	color: #84632f;
+}
 
 /* 25、table
  * -------------------------------------------------- */
