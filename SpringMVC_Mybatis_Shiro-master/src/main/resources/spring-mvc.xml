@@ -152,4 +152,8 @@
 		p:defaultEncoding="utf-8">
 		<property name="maxUploadSize" value="50048000" />	
 	</bean>
+	<!--初始化加载-->
+	<bean id="testInit" class="com.sojson.core.init.TestInit" scope="singleton"  init-method="init"></bean>
+
+
 </beans>
