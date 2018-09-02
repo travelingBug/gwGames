@@ -1,17 +1,12 @@
 <%@ page pageEncoding="utf-8"%>
 <%--shiro 标签 --%>
-<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>  
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<% String path = request.getContextPath(); String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/"; %> 
-<base href="<%=basePath%>">
-<script baseUrl="<%=basePath%>" src="<%=basePath%>/js/common/jquery/jquery-3.3.1.js"></script>
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>股王大赛</title>
-    <link href="<%=basePath%>/css/all.css" rel="stylesheet" type="text/css" />
+    <%@include file="../head.jsp" %>
 </head>
-<body>
 
+<body>
 <div class="overlay layer-big" id="gameBonusDiv" style="display: none;">
     <div class="overlay-bg"></div>
     <div class="float-div">
@@ -138,9 +133,7 @@
                 </ul>
             </div>
             <div class="btn-bm">
-                <a class="btn-bm-1" href="<%=basePath%>static/signUp/signup.jsp"></a>
-                <a href="javascript:;" style="color: #5e5e5e" class="btn-bm-2"></a>
-                <%--<a class="btn-bm-3"></a>--%>
+                <a class="btn-bm-1" href="<%=basePath%>static/signup/signup.jsp"></a>
             </div>
         </div>
         <div class="footer">

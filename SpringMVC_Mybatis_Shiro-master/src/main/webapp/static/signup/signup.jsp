@@ -1,15 +1,9 @@
 <%@ page pageEncoding="utf-8"%>
 <%--shiro 标签 --%>
-<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>  
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<% String path = request.getContextPath(); String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/"; %> 
-<base href="<%=basePath%>">
-<script baseUrl="<%=basePath%>" src="<%=basePath%>/js/common/jquery/jquery-3.3.1.js"></script>
-<script  src="<%=basePath%>/js/common/layer/layer.js"></script>
+<%@include file="../head.jsp" %>
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>股王大赛</title>
-    <link href="<%=basePath%>/css/all.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
@@ -277,7 +271,7 @@
                 data: {idCard:idCard},
                 dataType: "json",
                 beforeSend: function (request) {
-                    request.setRequestHeader("Authorization", "1");
+                    request.setRequestHeader("Authorization", getAuthorization());
                 },
                 success: function (data) {
                     if (data != null && data.length > 0) {
@@ -315,7 +309,7 @@
                     data: {telPhone: telPhone},
                     dataType: "json",
                     beforeSend: function (request) {
-                        request.setRequestHeader("Authorization", "1");
+                        request.setRequestHeader("Authorization", getAuthorization());
                     },
                     success: function (data) {
                         if (data != null && data.length > 0) {
@@ -376,7 +370,7 @@
                 data: {accountName:accountName},
                 dataType: "json",
                 beforeSend: function (request) {
-                    request.setRequestHeader("Authorization", "1");
+                    request.setRequestHeader("Authorization", getAuthorization());
                 },
                 success: function (data) {
                     $('#accountNameDiv').find('span').remove();
@@ -413,7 +407,7 @@
             data: data,
             dataType: "json",
             beforeSend: function(request) {
-                request.setRequestHeader("Authorization", "1");
+                request.setRequestHeader("Authorization", getAuthorization());
             },
             success: function(data) {
                 if (data.level == 1) {
@@ -422,7 +416,7 @@
                         skin: 'layui-layer-lan'
                     });
 
-                    document.getElementById("buttonSubmit").reset()
+                    $('#addForm')[0].reset()
                 } else {
                     layer.alert(data.messageText, {
                         icon: 0,
@@ -462,7 +456,7 @@
                 data: {telPhone:telPhone},
                 dataType: "json",
                 beforeSend: function(request) {
-                    request.setRequestHeader("Authorization", "1");
+                    request.setRequestHeader("Authorization", getAuthorization());
                 },
                 success: function(data) {
                     if (data.level == 1) {

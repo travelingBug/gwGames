@@ -542,27 +542,12 @@ select option {
 .btn-bm .btn-bm-1 {
 	background: url(../images/bm_btn_01.png) no-repeat;
 	background-size: 100%;
-	margin: 0 5px 0 10px;
+	margin: 0 auto;
 	width: 183px;
 	height: 46px;
-	float: left;
+	display: block;
 }
-.btn-bm .btn-bm-2 {
-	background: url(../images/bm_btn_02.png) no-repeat;
-	background-size: 100%;
-	margin: 0 5px;
-	width: 183px;
-	height: 46px;
-	float: left;
-}
-.btn-bm .btn-bm-3 {
-	background: url(../images/bm_btn_03.png) no-repeat;
-	background-size: 100%;
-	width: 46px;
-	height: 46px;
-	float: left;
-}
-.btn-bm .btn-bm-1:hover, .btn-bm .btn-bm-2:hover, .btn-bm .btn-bm-3:hover {
+.btn-bm .btn-bm-1:hover:hover {
 	opacity: 0.9;
 }
 .bm-form .btn-bm1 {

@@ -42,4 +42,13 @@ public interface IConstant {
         }
     }
 
+    /**
+     * 默认key
+     */
+    String key = "tJjwxDz4WF0Sf9JT";
+    /**
+     * 游客sessionID
+     */
+    String defSessionId = "visitor";
+
 }
