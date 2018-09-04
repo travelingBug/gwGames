@@ -56,4 +56,14 @@ public class SendMsgUtil {
 
         return result;
     }
+
+
+    public static String sendMsgTest(String phone) {
+
+
+        RedisUtil redisUtil = RedisUtil.getRedis();
+        redisUtil.save(phone, "123456,"+ new Date().getTime());
+
+        return "1";
+    }
 }

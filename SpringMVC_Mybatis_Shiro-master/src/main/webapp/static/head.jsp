@@ -2,7 +2,12 @@
 <%--shiro 标签 --%>
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>  
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<% String path = request.getContextPath(); String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/"; %> 
+<% String path = request.getContextPath(); String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/"; %>
+<%@ page   import= "com.sojson.common.IConstant"%>
+<%
+    String key = IConstant.key;
+    String defSessionId = IConstant.defSessionId;
+%>
 <base href="<%=basePath%>">
 
 <link href="<%=basePath%>/css/all.css" rel="stylesheet" type="text/css" />
@@ -12,8 +17,8 @@
 <script  src="<%=basePath%>/js/common/layer/layer.js"></script>
 <%--<script type="text/javascript" src="<%=basePath%>/js/utils/extend.js"></script>--%>
 <script>
-    sessionStorage.setItem("key", "tJjwxDz4WF0Sf9JT");
-    sessionStorage.setItem("defSessionId", "visitor");
+    sessionStorage.setItem("key", '<%=key %>');
+    sessionStorage.setItem("defSessionId", '<%=defSessionId %>');
     function encrypt(word) {
                 var key = CryptoJS.enc.Utf8.parse(sessionStorage.getItem("key"));
                 var srcs = CryptoJS.enc.Utf8.parse(word);
