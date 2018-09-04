@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sojson.common.dao.UTbDealerMapper" >
+  <resultMap id="dealerResultMap" type="com.sojson.common.model.TbDealer" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
+    <result column="DEL_FLAG" property="delFlag" jdbcType="TINYINT" />
+    <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
+    <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="dealer_Column_List" >
+    ID,NAME,crt_time
+  </sql>
+  <sql id="dealer_limit_sql">
+  	   <if test="page_sql != null and page_sql != ''">
+      	${page_sql}
+      </if>
+  </sql>
+  
+  <sql id="dealer_where_all">
+  	<where>
+      DEL_FLAG = 0
+  	  <if test="name != null and name !='' " >
+        and name like LOWER(CONCAT('%',#{name,jdbcType=VARCHAR},'%'))
+      </if>
+     </where>
+  </sql>
+
+  <sql id="dealer_order_all">
+    ORDER BY crt_time
+  </sql>
+  <select id="findAll" resultMap="dealerResultMap" >
+  	select
+    <include refid="dealer_Column_List" />
+    from tb_dealer
+    <include refid="dealer_where_all"/>
+    <include refid="dealer_order_all"/>
+    <include refid="dealer_limit_sql" />
+  </select>
+  <select id="findCount" resultMap="dealerResultMap" >
+ 	 select count(id) from  tb_dealer
+  	<include refid="dealer_where_all" />
+  </select>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbDealer" >
+    insert into tb_dealer (ID,NAME,CRT_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},#{crtTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="update" parameterType="com.sojson.common.model.TbDealer" >
+    update tb_dealer
+    <set >
+      <if test="name != null and name !=''" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="modTime != null and modTime != ''" >
+        MOD_TIME = #{modTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
