@@ -11,7 +11,7 @@
 <base href="<%=basePath%>">
 
 <link href="<%=basePath%>/css/all.css" rel="stylesheet" type="text/css" />
-<script baseUrl="<%=basePath%>" src="<%=basePath%>/js/common/jquery/jquery-3.3.1.js"></script>
+<script baseUrl="<%=basePath%>" src="<%=basePath%>/js/common/jquery/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="<%=basePath%>/js/encrypt/aes.js"></script>
 <script type="text/javascript" src="<%=basePath%>/js/encrypt/mode-ecb.js"></script>
 <script  src="<%=basePath%>/js/common/layer/layer.js"></script>

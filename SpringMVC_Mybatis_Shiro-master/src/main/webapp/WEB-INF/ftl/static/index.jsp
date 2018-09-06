@@ -1,10 +1,8 @@
 <%@ page pageEncoding="utf-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <%--shiro 标签 --%>
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>股王大赛6</title>
+    <title>股王大赛</title>
     <%@include file="../head.jsp" %>
 </head>
 
@@ -141,11 +139,7 @@
         <div class="footer">
             <div class="content">
             </div>
-            <div class="text">
-                <p>Copyright © 四川富甲文化有限公司 </p>
-                <p>联系电话：400-2345-1234 邮箱：xxxxxx@163.com</p>
-            </div>
-
+            <p>Copyright © 四川富甲文化有限公司 </p>
         </div>
     </div>
 </div>

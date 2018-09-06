@@ -1,4 +1,5 @@
 <%@ page pageEncoding="utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%--shiro 标签 --%>
 <%@include file="../head.jsp" %>
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
@@ -190,6 +191,7 @@
         <div class="btn" id="closeReadContent"><a href="javascript:;">已阅参赛须知</a></div>
     </div>
 </div>
+
 <div class="bg1">
     <div class="pageWrapper1">
         <div class="main-page">
@@ -203,9 +205,16 @@
                     <li><a href="javascript:;" style="color: #5e5e5e">赛事报道</a></li>
                 </ul>
             </div>
+            <div class="bm-form" id="succDiv" style="display: none">
+                <div class="tip-content">
+                    <i class="icon-right"></i>
+                    <h4>恭喜！报名成功！</h4>
+                    <p>客服会在24小时之内联系您,请注意接听电话。</p>
+                    <p>客服电话:028-xxxxxxxx</p>
+                </div>
+            </div>
 
-
-                <div class="form bm-form">
+                <div class="form bm-form"  id="bmDiv">
                     <form method="post" action="" id="addForm" class="form-inline">
                     <div class="input-style" id="accountNameDiv">
                         <p>昵称</p><em>|</em><input maxlength="20" name="accountName" id="accountNameId" class="width-4" type="text" />
@@ -231,7 +240,10 @@
 
         </div>
         <div class="footer">
-            <p>Copyright © 四川富甲文化有限公司 </p>
+            <div class="text">
+                <p>Copyright © 四川富甲文化有限公司 </p>
+                <p>联系电话：400-2345-1234 邮箱：xxxxxx@163.com</p>
+            </div>
         </div>
     </div>
 </div>
@@ -239,6 +251,11 @@
 </html>
 <script>
 
+    $(function(){
+        $('body,html').animate({
+            scrollTop: 700
+        }, 500);
+    });
     var accountFlag = false;
     var nameFlag = false;
     var idCardFlag = false;
@@ -411,12 +428,14 @@
             },
             success: function(data) {
                 if (data.level == 1) {
-                    layer.alert(data.messageText, {
-                        icon: 1,
-                        skin: 'layui-layer-lan'
-                    });
+//                    layer.alert(data.messageText, {
+//                        icon: 1,
+//                        skin: 'layui-layer-lan'
+//                    });
 
-                    $('#addForm')[0].reset()
+                    $('#addForm')[0].reset();
+                    $('#succDiv').css('display','block');
+                    $('#bmDiv').css('display','none');
                 } else {
                     layer.alert(data.messageText, {
                         icon: 0,
@@ -534,5 +553,8 @@
     });
     $('#closeReadContent').click(function(){
         $('#readerContent').css('display','none');
+        $('body,html').animate({
+            scrollTop: 700
+        }, 500);
     });
 </script>
