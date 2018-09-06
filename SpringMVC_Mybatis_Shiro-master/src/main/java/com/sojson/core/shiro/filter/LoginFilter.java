@@ -19,7 +19,7 @@ public class LoginFilter  extends AccessControlFilter {
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request,
 			ServletResponse response, Object mappedValue) throws Exception {
-		
+
 		UUser token = TokenManager.getToken();
 		
 		if(null != token || isLoginRequest(request, response)){// && isEnabled()
