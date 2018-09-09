@@ -120,3 +120,26 @@ CREATE TABLE `tb_player` (
   `MOD_TIME` datetime DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+drop table if exists tb_gains_Iinfo;
+
+/*==============================================================*/
+/* Table: tb_palyer_gains_Iinfo                                 */
+/*==============================================================*/
+create table tb_gains_info
+(
+   ID                   bigint not null auto_increment comment '主键',
+   SHARES_CODE          varchar(10) not null comment '股票代码',
+   SHARES_NAME          varchar(50) not null comment '股票名称',
+   BUSINESS_FLAG        tinyint not null comment '买卖标致',
+   VOLUME               int not null comment '成交量',
+   PRICE                varchar(10) not null comment '成交价格',
+   TOTAL_MONEY varchar(10) not null comment '剩余资金',
+   BUSINESS_TIME        datetime not null comment '交易时间',
+   CRT_TIME             datetime not null comment '创建时间',
+   MOD_TIME             datetime comment '修改时间',
+   primary key (ID)
+);

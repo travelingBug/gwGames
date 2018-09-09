@@ -153,7 +153,7 @@ select option {
  * -------------------------------------------------- */
 .footer {
 	background:#1b1b1b;
-	position:absolute;
+	position:relative;
 	bottom: 0;
 	width:100%;
 	min-width:1000px;
@@ -603,17 +603,18 @@ select option {
 	width: 40px;
 	height: 40px;
 	display: block;
-	margin: 20px auto 0 auto;
+	/*margin: 20px auto 0 auto;*/
 	
 }
 .bm-form .tip-content h4 {
 	font-size: 20px;
-	margin-left:168px;
+	/*margin-left:-1px;*/
 	line-height: 50px;
 	color: #323232;
+	width: 100%;
 }
 .bm-form .tip-content p {
-	margin-left:126px;
+	/*margin-left:126px;*/
 	font-size: 13px;
 	margin-bottom: 20px;
 }
@@ -1245,4 +1246,50 @@ select option {
 	border:none!important;
 }	
 	
+
+/*--------------------页面修改_20180909--------------------------*/
+.bm-form i {
+	margin:auto;
+
+}
+.bm-form h4 {
+	text-align: center;
+	display:inline-block;
+	margin-left: 10px;
+
+}
+
+.bm-form p{
+	text-align: center;
+	display:inline-block;
+	margin-left: 10px;
+}
+.tip-content {
+	text-align: center;
+}
+
+/*--------------------奖项设置--------------------------*/
+.awards {
+	/*float: left;*/
+	height: 1500px;
+	background-color:white;
+	padding-top: 30px;
+	text-align: center;
+
+
+
+}
+.awards-img {
+	/*float: left;*/
+	height: 1500px;
+	width: 1000px;
+	margin: auto;
+	display: inline-block;
+	background-color:white;
 	
+
+}
+
+
+
+
