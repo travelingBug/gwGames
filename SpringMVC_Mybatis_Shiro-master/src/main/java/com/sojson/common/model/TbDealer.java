@@ -14,9 +14,19 @@ public class TbDealer implements Serializable {
     private String id;
 
     /**
+     * 账号
+     */
+    private String loginName;
+
+    /**
      * 经销商名称
      */
     private String name;
+
+    /**
+     * 用户编号
+     */
+    private Long userId;
 
     /**
      * 删除标记
@@ -48,12 +58,28 @@ public class TbDealer implements Serializable {
         this.id = id;
     }
 
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Date getCrtTime() {

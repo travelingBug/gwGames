@@ -1,11 +1,12 @@
 package com.sojson.user.controller;
 
-import java.util.Map;
-
-import javax.annotation.Resource;
-
+import com.sojson.common.controller.BaseController;
+import com.sojson.common.model.UUser;
+import com.sojson.common.utils.LoggerUtils;
+import com.sojson.core.shiro.token.manager.TokenManager;
+import com.sojson.user.manager.UserManager;
+import com.sojson.user.service.UUserService;
 import net.sf.json.JSONObject;
-
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,12 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.sojson.common.controller.BaseController;
-import com.sojson.common.model.UUser;
-import com.sojson.common.utils.LoggerUtils;
-import com.sojson.core.shiro.token.manager.TokenManager;
-import com.sojson.user.manager.UserManager;
-import com.sojson.user.service.UUserService;
+import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * 用户管理
@@ -64,11 +61,11 @@ public class UserCoreController extends BaseController {
 				pswd = UserManager.md5Pswd(email, pswd);
 		UUser	user = userService.login(email, pswd);
 		
-		if("admin".equals(email)){
-			resultMap.put("status", 300);
-			resultMap.put("message", "管理员不准修改密码。");
-			return resultMap;
-		}
+//		if("admin".equals(email)){
+//			resultMap.put("status", 300);
+//			resultMap.put("message", "管理员不准修改密码。");
+//			return resultMap;
+//		}
 		
 		if(null == user){
 			resultMap.put("status", 300);

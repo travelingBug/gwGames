@@ -4,6 +4,7 @@
   <resultMap id="dealerResultMap" type="com.sojson.common.model.TbDealer" >
     <id column="ID" property="id" jdbcType="VARCHAR" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="FK_USER_ID" property="userId" jdbcType="BIGINT" />
     <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
     <result column="DEL_FLAG" property="delFlag" jdbcType="TINYINT" />
     <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
@@ -44,8 +45,8 @@
   </select>
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbDealer" >
-    insert into tb_dealer (ID,NAME,CRT_TIME)
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},#{crtTime,jdbcType=TIMESTAMP}
+    insert into tb_dealer (ID,FK_USER_ID,NAME,CRT_TIME)
+    values (#{id,jdbcType=VARCHAR},#{userId} #{name,jdbcType=VARCHAR},#{crtTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <update id="update" parameterType="com.sojson.common.model.TbDealer" >
@@ -57,6 +58,14 @@
       <if test="modTime != null and modTime != ''" >
         MOD_TIME = #{modTime,jdbcType=TIMESTAMP},
       </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="delete" parameterType="String">
+    update tb_dealer
+    <set >
+      DEL_FLAG = 1
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>

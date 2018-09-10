@@ -3,6 +3,7 @@ package com.sojson.dealer.controller;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
 import com.sojson.common.model.TbDealer;
+import com.sojson.common.utils.StringUtils;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.dealer.service.DealerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,21 @@ public class DealerController extends BaseController {
     DealerService dealerService;
 
     /**
+     * 增加经销商
+     *
+     * @param entity
+     * @param req
+     * @return
+     */
+    @RequestMapping(value = "addDealer", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage addDealer(TbDealer entity, HttpServletRequest req) {
+        entity.setId(StringUtils.getUUID32());
+
+        return dealerService.insert(entity);
+    }
+
+    /**
      * 编辑经销商
      *
      * @param id
@@ -42,6 +58,19 @@ public class DealerController extends BaseController {
         entity.setId(id);
         entity.setName(name);
         return dealerService.update(entity);
+    }
+
+    /**
+     * 删除经销商
+     *
+     * @param id
+     * @param req
+     * @return
+     */
+    @RequestMapping(value = "deleteDealerById", method = RequestMethod.GET)
+    @ResponseBody
+    public ResultMessage deleteDealerById(String id, HttpServletRequest req) {
+        return dealerService.delete(id);
     }
 
     /**

@@ -19,7 +19,7 @@
 				//初始化全选。
 				so.checkBoxInit('#checkAll','[check=box]');
 
-				$("#dealer_btn_submit").click(function(){
+				$("#dealer_edit_btn_submit").click(function(){
 					var id = $("#dealer_edit_id").val();
 					var name = $("#dealer_edit_name").val();
                     $.post('${basePath}/dealer/editDealer.shtml',{name:name,id:id},function(result){
@@ -33,6 +33,20 @@
                         }
                     },'json');
 				});
+
+                $("#dealer_add_btn_submit").click(function(){
+                    var data = $("#dealerAddModal .form-group").serialize();
+                    $.post('${basePath}/dealer/addDealer.shtml',{data},function(result){
+                        if(result && result.level != 1){
+                            return layer.msg(result.messageText,so.default),!0;
+                        }else{
+                            layer.msg('新增成功！');
+                            setTimeout(function(){
+                                $('#dealerForm').submit();
+                            },1000);
+                        }
+                    },'json');
+                });
 			});
 
 			function _edit(id, name){
@@ -59,7 +73,13 @@
 					      </div>
 					     <span class=""> <#--pull-right -->
 				         	<button type="submit" class="btn btn-primary">查询</button>
-				         </span>    
+							 <@shiro.hasPermission name="/dealer/addDealer.shtml">
+								 <a class="btn btn-success" onclick="$('#dealerAddModal').modal();">新增</a>
+							 </@shiro.hasPermission>
+							 <@shiro.hasPermission name="/dealer/deleteDealerById.shtml">
+								 <button type="button" id="deleteAll" class="btn  btn-danger">删除</button>
+							 </@shiro.hasPermission>
+				         </span>
 				        </div>
 					<hr>
 					<table class="table table-bordered">
@@ -92,6 +112,29 @@
 						</div>
 					</#if>
 					</form>
+					<!--新增modal-->
+                    <div class="modal fade" id="dealerAddModal" tabindex="-1" role="dialog" aria-labelledby="dealerAddModalLabel">
+                        <div class="modal-dialog" role="document" style="width:30%;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title" id="dealerAddModalLabel">新增</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="dealer_name">名称</label>
+                                        <input type="text" name="name" class="form-control" id="dealer_add_name" placeholder="名称">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                                    <button type="button" id="dealer_add_btn_submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-save normal"></i>&nbsp;保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--编辑modal-->
                     <div class="modal fade" id="dealerEditModal" tabindex="-1" role="dialog" aria-labelledby="dealerEditModalLabel">
                         <div class="modal-dialog" role="document" style="width:30%;">
                             <div class="modal-content">
@@ -108,7 +151,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
-                                    <button type="button" id="dealer_btn_submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-save normal"></i>&nbsp;保存</button>
+                                    <button type="button" id="dealer_edit_btn_submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-save normal"></i>&nbsp;保存</button>
                                 </div>
                             </div>
                         </div>

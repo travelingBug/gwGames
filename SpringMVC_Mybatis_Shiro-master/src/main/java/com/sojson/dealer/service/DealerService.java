@@ -14,4 +14,8 @@ public interface DealerService {
                                     Integer pageSize);
 
     ResultMessage update(TbDealer entity);
+
+    ResultMessage insert(TbDealer entity);
+
+    ResultMessage delete(String id);
 }

@@ -7,4 +7,6 @@ public interface UTbDealerMapper {
     int insert(TbDealer record);
 
     int update(TbDealer record);
+
+    void delete(String id);
 }
