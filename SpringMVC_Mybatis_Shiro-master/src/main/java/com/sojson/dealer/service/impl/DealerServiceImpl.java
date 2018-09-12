@@ -65,6 +65,8 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
         Date date = new Date();
         userEntity.setCreateTime(date);
         userEntity.setLastLoginTime(date);
+        userEntity.setPswd("123456");
+        userEntity.setNickname(entity.getName());
         //把密码md5
         userEntity = UserManager.md5Pswd(userEntity);
         //设置有效
@@ -73,7 +75,10 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
         userEntity = userService.insert(userEntity);
         //新增经销商
         entity.setUserId(userEntity.getId());
+        entity.setDelFlag(TbDealer._0);
+        entity.setCrtTime(date);
         uTbDealerMapper.insert(entity);
+        userService.addRole2User(userEntity.getId(),"200001");
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
 

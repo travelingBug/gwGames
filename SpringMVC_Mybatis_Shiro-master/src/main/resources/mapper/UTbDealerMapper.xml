@@ -7,11 +7,14 @@
     <result column="FK_USER_ID" property="userId" jdbcType="BIGINT" />
     <result column="PARENT_ID" property="parentId" jdbcType="VARCHAR" />
     <result column="DEL_FLAG" property="delFlag" jdbcType="TINYINT" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="TINYINT" />
     <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
     <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="dealer_Column_List" >
-    ID,NAME,crt_time
+    d.ID,d.NAME,d.PHONE,d.ADDRESS,d.TYPE,d.crt_time
   </sql>
   <sql id="dealer_limit_sql">
   	   <if test="page_sql != null and page_sql != ''">
@@ -21,7 +24,7 @@
   
   <sql id="dealer_where_all">
   	<where>
-      DEL_FLAG = 0
+      d.DEL_FLAG = 0
   	  <if test="name != null and name !='' " >
         and name like LOWER(CONCAT('%',#{name,jdbcType=VARCHAR},'%'))
       </if>
@@ -29,25 +32,27 @@
   </sql>
 
   <sql id="dealer_order_all">
-    ORDER BY crt_time
+    ORDER BY d.crt_time
   </sql>
   <select id="findAll" resultMap="dealerResultMap" >
   	select
-    <include refid="dealer_Column_List" />
-    from tb_dealer
+    <include refid="dealer_Column_List" />,
+    u.email as loginName
+    from tb_dealer d
+    LEFT JOIN u_user u
+    ON u.id = d.FK_USER_ID
     <include refid="dealer_where_all"/>
     <include refid="dealer_order_all"/>
     <include refid="dealer_limit_sql" />
   </select>
   <select id="findCount" resultMap="dealerResultMap" >
- 	 select count(id) from  tb_dealer
+ 	 select count(d.id) from  tb_dealer d
   	<include refid="dealer_where_all" />
   </select>
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbDealer" >
-    insert into tb_dealer (ID,FK_USER_ID,NAME,CRT_TIME)
-    values (#{id,jdbcType=VARCHAR},#{userId} #{name,jdbcType=VARCHAR},#{crtTime,jdbcType=TIMESTAMP}
-      )
+    insert into tb_dealer (ID,FK_USER_ID,NAME,PARENT_ID,PHONE,ADDRESS,DEL_FLAG,TYPE,CRT_TIME)
+    values (#{id},#{userId},#{name},#{parentId},#{phone},#{address},#{delFlag},#{type},#{crtTime})
   </insert>
   <update id="update" parameterType="com.sojson.common.model.TbDealer" >
     update tb_dealer

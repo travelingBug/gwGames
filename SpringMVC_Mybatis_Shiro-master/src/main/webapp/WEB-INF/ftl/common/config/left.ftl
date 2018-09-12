@@ -95,7 +95,7 @@
 </#macro>
 <#macro dealer index>
 	<@shiro.hasAnyRoles name='888888'>
-    <div  id="one" class="col-md-2">
+    <div id="one" class="col-md-2">
         <ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
 			<@shiro.hasPermission name="/dealer/list.shtml">
                 <li class="${(index==1)?string('active',' ')}">
@@ -104,11 +104,6 @@
                     </a>
                 </li>
 			</@shiro.hasPermission>
-		<#--<li class="${(index==2)?string('active',' ')} dropdown">-->
-		<#--<a href="${basePath}/member/online.shtml">-->
-		<#--<i class="glyphicon glyphicon-chevron-right"></i>在线用户-->
-		<#--</a>-->
-		<#--</li>-->
         </ul>
     </div>
 	</@shiro.hasAnyRoles>

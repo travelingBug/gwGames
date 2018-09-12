@@ -45,7 +45,7 @@ CREATE TABLE `u_role` (
 
 /*Data for the table `u_role` */
 
-insert  into `u_role`(`id`,`name`,`type`) values (1,'系统管理员','888888'),(3,'权限角色','100003'),(4,'用户中心','100002');
+insert  into `u_role`(`id`,`name`,`type`) values (1,'系统管理员','888888'),(3,'权限角色','100003'),(4,'用户中心','100002'),(5,'经销商','200001');
 
 /*Table structure for table `u_role_permission` */
 
@@ -98,15 +98,10 @@ insert  into `u_user_role`(`uid`,`rid`) values (12,4),(11,3),(11,4),(1,1);
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 
-drop table if exists tb_player;
 
 /*==============================================================*/
 /* Table: tb_player                                             */
 /*==============================================================*/
-drop table if exists tb_player;
--- ----------------------------
--- Table structure for `tb_player`
--- ----------------------------
 DROP TABLE IF EXISTS `tb_player`;
 CREATE TABLE `tb_player` (
   `ID` varchar(32) NOT NULL,
@@ -143,3 +138,22 @@ create table tb_gains_info
    MOD_TIME             datetime comment '修改时间',
    primary key (ID)
 );
+
+
+/*==============================================================*/
+/* Table: tb_dealer                                             */
+/*==============================================================*/
+DROP TABLE IF EXISTS `tb_dealer`;
+CREATE TABLE `tb_dealer` (
+  `ID` varchar(32) NOT NULL,
+  `PARENT_ID` varchar(32) DEFAULT NULL,
+  `NAME` varchar(50) NOT NULL,
+  `FK_USER_ID` bigint(20) NOT NULL,
+  `DEL_FLAG` tinyint(4) NOT NULL,
+  `CRT_TIME` datetime DEFAULT NULL,
+  `MOD_TIME` datetime DEFAULT NULL,
+  `ADDRESS` varchar(32) DEFAULT NULL,
+  `PHONE` varchar(32) DEFAULT NULL,
+  `TYPE` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

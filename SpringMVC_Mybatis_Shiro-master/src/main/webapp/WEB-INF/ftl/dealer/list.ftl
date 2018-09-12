@@ -35,8 +35,10 @@
 				});
 
                 $("#dealer_add_btn_submit").click(function(){
-                    var data = $("#dealerAddModal .form-group").serialize();
-                    $.post('${basePath}/dealer/addDealer.shtml',{data},function(result){
+					var data = $("#form1").serialize();
+                    $.post('${basePath}/dealer/addDealer.shtml',
+							data,
+							function(result){
                         if(result && result.level != 1){
                             return layer.msg(result.messageText,so.default),!0;
                         }else{
@@ -52,6 +54,11 @@
 			function _edit(id, name){
 				$("#dealer_edit_id").val(id);
                 $("#dealer_edit_name").val(name);
+			}
+
+			function _add(){
+				$('#dealerAddModal .form-control').val("");
+                $('#dealerAddModal').modal();
 			}
 
 		</script>
@@ -74,7 +81,7 @@
 					     <span class=""> <#--pull-right -->
 				         	<button type="submit" class="btn btn-primary">查询</button>
 							 <@shiro.hasPermission name="/dealer/addDealer.shtml">
-								 <a class="btn btn-success" onclick="$('#dealerAddModal').modal();">新增</a>
+								 <a class="btn btn-success" onclick="_add();">新增</a>
 							 </@shiro.hasPermission>
 							 <@shiro.hasPermission name="/dealer/deleteDealerById.shtml">
 								 <button type="button" id="deleteAll" class="btn  btn-danger">删除</button>
@@ -85,14 +92,20 @@
 					<table class="table table-bordered">
 						<tr>
 							<th><input type="checkbox" id="checkAll"/></th>
+                            <th>账号</th>
 							<th>名称</th>
+							<th>手机号码</th>
+                            <th>联系地址</th>
 							<th>操作</th>
 						</tr>
 						<#if page?exists && page.list?size gt 0 >
 							<#list page.list as it>
 								<tr>
 									<td><input value="${it.id}" check='box' type="checkbox" /></td>
-									<td>${it.name}</td>
+									<td>${it.loginName}</td>
+                                    <td>${it.name}</td>
+                                    <td>${it.phone}</td>
+                                    <td>${it.address}</td>
 									<td>
 										<@shiro.hasPermission name="/dealer/editDealer.shtml">
 											<a href="javascript:_edit('${it.id}','${it.name}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#dealerEditModal"></i></a>
@@ -122,8 +135,23 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label for="dealer_name">名称</label>
-                                        <input type="text" name="name" class="form-control" id="dealer_add_name" placeholder="名称">
+										<form id="form1" action="${basePath}/dealer/addDealer.shtml" method="post">
+											<input type="hidden" name="parentId" value="0">
+											<label for="dealer_add_loginName">账号</label>
+											<input type="text" name="loginName" class="form-control" id="dealer_add_loginName" placeholder="账号">
+											<label for="dealer_add_name">名称</label>
+											<input type="text" name="name" class="form-control" id="dealer_add_name" placeholder="名称">
+											<label for="dealer_add_phone">手机号码</label>
+											<input type="text" name="phone" class="form-control" id="dealer_add_phone" placeholder="手机号码">
+											<label for="dealer_add_address">联系地址</label>
+											<input type="text" name="address" class="form-control" id="dealer_add_address" placeholder="地址">
+											<label for="dealer_add_type">返点类型</label>
+											<select name="type" class="form-control">
+												<option value="1">5%</option>
+                                                <option value="2">10%</option>
+                                                <option value="3">15%</option>
+											</select>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -147,6 +175,16 @@
 										<input type="hidden" name="id" id="dealer_edit_id">
                                         <label for="dealer_name">名称</label>
                                         <input type="text" name="name" class="form-control" id="dealer_edit_name" placeholder="名称">
+                                        <label for="dealer_add_phone">手机号码</label>
+                                        <input type="text" name="phone" class="form-control" id="dealer_edit_phone" placeholder="手机号码">
+                                        <label for="dealer_add_address">联系地址</label>
+                                        <input type="text" name="address" class="form-control" id="dealer_edit_address" placeholder="地址">
+                                        <label for="dealer_add_type">返点类型</label>
+                                        <select name="type" class="form-control">
+                                            <option value="1">5%</option>
+                                            <option value="2">10%</option>
+                                            <option value="3">15%</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="modal-footer">

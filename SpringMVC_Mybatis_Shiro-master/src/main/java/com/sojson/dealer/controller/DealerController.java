@@ -32,14 +32,12 @@ public class DealerController extends BaseController {
      * 增加经销商
      *
      * @param entity
-     * @param req
      * @return
      */
     @RequestMapping(value = "addDealer", method = RequestMethod.POST)
     @ResponseBody
-    public ResultMessage addDealer(TbDealer entity, HttpServletRequest req) {
+    public ResultMessage addDealer(TbDealer entity) {
         entity.setId(StringUtils.getUUID32());
-
         return dealerService.insert(entity);
     }
 

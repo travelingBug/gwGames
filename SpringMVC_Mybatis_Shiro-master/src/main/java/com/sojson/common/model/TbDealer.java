@@ -8,6 +8,11 @@ import java.util.Date;
  */
 public class TbDealer implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    //0:未删除
+    public static final Byte _0 = 0;
+    //1:已删除
+    public static final Byte _1 = 1;
     /**
      * 主键
      */
@@ -39,6 +44,21 @@ public class TbDealer implements Serializable {
      * 0：无父节点
      */
     private String parentId;
+
+    /**
+     * 手机号码
+     */
+    private String phone;
+
+    /**
+     * 联系地址
+     */
+    private String address;
+
+    /**
+     * 返点类型
+     */
+    private Byte type;
 
     /**
      * 创建时间
@@ -112,5 +132,29 @@ public class TbDealer implements Serializable {
 
     public void setParentId(String parentId) {
         this.parentId = parentId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
     }
 }
