@@ -14,6 +14,11 @@
 		<script  src="${basePath}/js/shiro.demo.js"></script>
 		<script >
 			so.init(function(){
+            $("#uploadEventBtn").unbind("click").bind("click", function() {
+                $("#uploadEventFile").click();
+            });
+            bindFile();
+
 				//初始化全选。
 				so.checkBoxInit('#checkAll','[check=box]');
 				
@@ -77,6 +82,55 @@
 				},'json');
 			}
 			</@shiro.hasPermission>
+
+
+ 			function replaceFile(){
+                $('#uploadEventFile').remove();
+                $("#uploadEventBtn").after('<input type="file" name="file"  style="width:0px;height:0px;" id="uploadEventFile" />');
+                bindFile();
+			}
+
+			function bindFile(){
+                $("#uploadEventFile").bind("change", function() {
+                    var uploadEventFile = $("#uploadEventFile").val();
+                    if (uploadEventFile == '') {
+                        alert("请择excel,再上传");
+                    } else if (uploadEventFile.lastIndexOf(".xls") < 0 || uploadEventFile.lastIndexOf(".xlsx") < 0) {//可判断以.xls和.xlsx结尾的excel
+                        alert("只能上传Excel文件");
+                    } else {
+                        var formData = new FormData();
+                        formData.append('file', $('#uploadEventFile')[0].files[0]);
+                        $.ajax({
+                            url : '${basePath}/gainsInfo/import.shtml',
+                            type : 'post',
+                            data : formData,
+                            dataType : "json",
+                            success : function(result) {
+                                var msg = result.messageText;
+                                if (result.data && result.data.length == 2) {
+                                    msg = msg + "<a href='${basePath}/download.shtml?fileOutName="+encodeURI(encodeURI(result.data[0]))+"&filePath="+result.data[1]+"'>点击下载错误信息</a>";
+								}
+                                layer.alert(msg, {
+                                    icon: 0,
+                                    skin: 'layui-layer-lan'
+                                });
+                                replaceFile();
+                            },
+                            error : function(result) {
+                                layer.alert(result.messageText, {
+                                    icon: 0,
+                                    skin: 'layui-layer-lan'
+                                });
+                                replaceFile();
+                            },
+                            cache : false,
+                            contentType : false,
+                            processData : false
+                        });
+                    }
+                });
+			}
+
 		</script>
 	</head>
 	<body data-target="#one" data-spy="scroll">
@@ -103,6 +157,10 @@
 				         	<@shiro.hasPermission name="/role/deleteRoleById.shtml">
 				         		<button type="button" id="deleteAll" class="btn  btn-danger">Delete</button>
 				         	</@shiro.hasPermission>
+							<form enctype="multipart/form-data" id="excelForm"   method="post" >
+								<button class="btn btn-primary" id="uploadEventBtn"  type="button" >导入选手数据</button>
+        						<input type="file" name="file"  style="width:0px;height:0px;" id="uploadEventFile" />
+							</form>
 				         </span>    
 				        </div>
 					<hr>

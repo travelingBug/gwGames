@@ -1,5 +1,6 @@
 package com.sojson.common.utils;
 
+import com.sojson.common.IExcelToBeanParam;
 import com.sojson.common.ResultMessage;
 
 import java.beans.PropertyDescriptor;
@@ -9,7 +10,7 @@ import java.util.*;
 /**
  * Created by hy on 2016/7/7.
  */
-public abstract class ExcelToBeanUtil {
+public class ExcelToBeanUtil {
 
     public static String COMMONS_XLS = ".xls";
 
@@ -24,7 +25,7 @@ public abstract class ExcelToBeanUtil {
      * @return   返回消息结果
      * @throws Exception
      */
-    public ResultMessage changeExcelToPo(String filePath, LinkedHashMap<String,String> heahReal,LinkedHashMap<String,IFormatExcel> headValue, Class cls, int sheetNum) throws Exception{
+    public static ResultMessage changeExcelToPo(String filePath, LinkedHashMap<String,String> heahReal,LinkedHashMap<String,IFormatExcel> headValue, Class cls, int sheetNum,IExcelToBeanParam param) throws Exception{
         //返回结果集
         Map<Byte,Object> result = new HashMap<Byte,Object>();
         List<Object[]> datas = null;
@@ -63,7 +64,7 @@ public abstract class ExcelToBeanUtil {
             }
             //需要转换为映射关系
             String title = obj.toString().trim();
-            if(heahReal.containsKey(title)){
+            if(!heahReal.containsKey(title)){
                 return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "找不到对应表头的映射关系");
             }
             title = heahReal.get(title);
@@ -75,18 +76,34 @@ public abstract class ExcelToBeanUtil {
         //生成对象存放处
         List<Object> objList = new ArrayList<Object>();
         //验证错误数据存放处
-        List<String[]> errorData = new ArrayList<String[]>();
+        List<Object[]> errorData = new ArrayList<Object[]>();
         for (int i = 1 ; i < datas.size() ; i ++) {
             if(datas.get(i).length != headAttr.length){
-                errorData.add( new String[]{i + "","数据列数不匹配"});
+                Object[] errorColum = new Object[datas.get(i).length + 1];
+                //src: 源数组
+                //srcPos: 从源数组复制数据的起始位置
+                //dest: 目标数组
+                //destPos: 复制到目标数组的起始位置
+                //length: 复制的长度
+                System.arraycopy(datas.get(i), 0, errorColum, 0, datas.get(i).length );
+                errorColum[datas.get(i).length] = "数据列数不匹配";
+                errorData.add( errorColum);
                 continue;
             }
-            ResultMessage colVail = validExcelCol(datas.get(i));
+            ResultMessage colVail = param.validExcelCol(datas.get(i));
             if ( colVail.getLevel() ==  ResultMessage.MSG_LEVEL.SUCC.v){
                 //验证正确的数据进行对象转换
-                objList.add(chang(datas.get(i), headAttr,headValue, cls));
+                objList.add(chang(datas.get(i), headAttr,headValue, cls,param));
             } else { //记录验证没有通过的行数和错误原因 ,第一个为行数，第二个为错误原因
-                errorData.add( new String[]{i + "",colVail.getMessageText()});
+                Object[] errorColum = new Object[datas.get(i).length + 1];
+                //src: 源数组
+                //srcPos: 从源数组复制数据的起始位置
+                //dest: 目标数组
+                //destPos: 复制到目标数组的起始位置
+                //length: 复制的长度
+                System.arraycopy(datas.get(i), 0, errorColum, 0, datas.get(i).length );
+                errorColum[datas.get(i).length] = colVail.getMessageText();
+                errorData.add( errorColum);
             }
         }
         //把验证没通过的行给放进去
@@ -97,6 +114,8 @@ public abstract class ExcelToBeanUtil {
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"转换成功",result);
     }
 
+
+
     /**
      * 转换方法
      * @param setMethod
@@ -104,7 +123,7 @@ public abstract class ExcelToBeanUtil {
      * @param obj
      * @throws Exception
      */
-    private void setVal(Method setMethod , Object value,Object obj) throws Exception{
+    private static void setVal(Method setMethod , Object value,Object obj,IExcelToBeanParam param) throws Exception{
         String type = setMethod.getParameterTypes()[0].getName();
         //为空时，则不需要设置就会为空
         if (value != null) {
@@ -142,19 +161,17 @@ public abstract class ExcelToBeanUtil {
                     }
                     setMethod.invoke(obj, Long.parseLong(str));
                 }else  if ("java.util.Date".equals(type)){
-                    setMethod.invoke(obj, (Date)value);
+                    setMethod.invoke(obj, DateUtil.stringToDate(value.toString(),DateUtil.DATETIME_PATTERN));
                 } else {
                     //其他自定义的值重写这个方法
-                    setValOtherType(setMethod, type, obj, value);
+                    param.setValOtherType(setMethod, type, obj, value);
                 }
             }
         }
 
     }
 
-    public abstract ResultMessage validExcelCol(Object[] cols);
 
-    public abstract void setValOtherType(Method setMethod,String type, Object obj, Object value);
 
     /**
      * 转换时间
@@ -164,7 +181,7 @@ public abstract class ExcelToBeanUtil {
      * @return  生成的对象
      * @throws Exception
      */
-    public Object chang(Object[] data,String[] headName,LinkedHashMap<String,IFormatExcel> headValue,Class cls)throws Exception{
+    public static Object chang(Object[] data,String[] headName,LinkedHashMap<String,IFormatExcel> headValue,Class cls,IExcelToBeanParam param)throws Exception{
         List<Object> objList = new ArrayList<Object>();
         //生成一个对象
         Object obj = cls.newInstance();
@@ -175,9 +192,9 @@ public abstract class ExcelToBeanUtil {
             //转换需要保存的数据方法
             Object valueObj = data[j];
             if (headValue != null && data[j] != null && headValue.get(attrName) != null) {
-                headValue.get(attrName).format(data[j].toString());
+                data[j] = headValue.get(attrName).format(data[j].toString());
             }
-            setVal(setMethod, data[j], obj);//执行set方法
+            setVal(setMethod, data[j], obj,param);//执行set方法
             j++;
         }
         return obj;

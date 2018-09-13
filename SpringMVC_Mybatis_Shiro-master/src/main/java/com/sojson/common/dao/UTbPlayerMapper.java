@@ -13,4 +13,6 @@ public interface UTbPlayerMapper {
     int updateByPrimaryKeySelective(TbPlayer record);
 
     List<TbPlayer> findAllNoPage(TbPlayerDto dto);
+
+    List<TbPlayer> findAll(TbPlayerDto dto);
 }

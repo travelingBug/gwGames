@@ -3,6 +3,7 @@ package com.sojson.player.service.impl;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.dao.UTbPlayerMapper;
 import com.sojson.common.model.TbPlayer;
+import com.sojson.common.model.dto.TbPlayerDto;
 import com.sojson.common.utils.StringUtils;
 import com.sojson.core.mybatis.BaseMybatisDao;
 import com.sojson.core.mybatis.page.Pagination;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,6 +52,12 @@ public class PlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> implement
     @Override
     public Pagination<TbPlayer> findByPage(Map<String, Object> resultMap, Integer pageNo, Integer pageSize) {
         return super.findPage(resultMap, pageNo, pageSize);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<TbPlayer> findAll(TbPlayerDto player) {
+        return uTbPlayerMapper.findAll(player);
     }
 
 

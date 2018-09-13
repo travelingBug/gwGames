@@ -1,18 +1,20 @@
 package com.sojson.common.utils;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Created by wlh on 2016/1/5.
@@ -122,5 +124,73 @@ public class ExcelUtil{
         file.close();
         return datas;
     }
+
+
+    /**
+     * 写Excel
+     * @param dataList
+     * @param excelPath
+     * @param sheetName
+     * @throws IOException
+     */
+    public static void writeExcel(List<Object[]> dataList,String excelPath,String sheetName)  throws IOException{
+        OutputStream out = null;
+        try {
+            Workbook workBook = null;
+            if(excelPath.toLowerCase().endsWith(".xls")){     //Excel&nbsp;2003
+                workBook = new HSSFWorkbook();
+            }else if(excelPath.toLowerCase().endsWith(".xlsx")){    // Excel 2007/2010
+                workBook = new XSSFWorkbook();
+            }
+            // sheet 对应一个工作页
+            Sheet sheet = workBook.createSheet(sheetName);
+
+            sheet.setDefaultColumnWidth(15);
+
+            CellStyle commStyle = workBook.createCellStyle();
+            commStyle.setAlignment(HorizontalAlignment.CENTER);
+            commStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+
+            CellStyle errorStyle = workBook.createCellStyle();
+            errorStyle.setAlignment(HorizontalAlignment.CENTER);
+            errorStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+            Font font = workBook.createFont();
+            font.setColor(HSSFColor.RED.index);
+            errorStyle.setFont(font);
+            /**
+             * 往Excel中写数据
+             */
+            for (int j = 0; j < dataList.size(); j++) {
+                // 创建一行
+                Row row = sheet.createRow(j);
+                // 得到要插入的每一条记录
+                Object[] objArr = dataList.get(j);
+                for (int k = 0; k < objArr.length; k++) {
+                    // 在一行内循环
+                    Cell cell = row.createCell(k);
+                    cell.setCellValue(objArr[k] == null? "":objArr[k].toString());
+                    if (k == objArr.length -1) {
+                        cell.setCellStyle(errorStyle);
+                    } else {
+                        cell.setCellStyle(commStyle);
+                    }
+                }
+            }
+            // 创建文件输出流，准备输出电子表格：这个必须有，否则你在sheet上做的任何操作都不会有效
+            out =  new FileOutputStream(excelPath);
+            workBook.write(out);
+            workBook.close();
+        } finally{
+            try {
+                if(out != null){
+                    out.flush();
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 }

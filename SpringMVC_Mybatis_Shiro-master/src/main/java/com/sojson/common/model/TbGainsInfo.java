@@ -13,6 +13,11 @@ public class TbGainsInfo implements Serializable {
      */
     private String id;
 
+    /**
+     * 身份证号
+     */
+    private String idCard;
+
 
     /**
      * 股票代码
@@ -41,7 +46,7 @@ public class TbGainsInfo implements Serializable {
     private String price;
 
     /**
-     * '剩余资金'
+     * '总资产'
      */
     private String totalMoney;
 
@@ -139,5 +144,13 @@ public class TbGainsInfo implements Serializable {
 
     public void setModTime(Date modTime) {
         this.modTime = modTime;
+    }
+
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 }

@@ -85,7 +85,7 @@
 			<tx:method name="del*" />
 			<tx:method name="load*" />
 			<tx:method name="init*" />
-
+			<tx:method name="import*" />
 
 
 

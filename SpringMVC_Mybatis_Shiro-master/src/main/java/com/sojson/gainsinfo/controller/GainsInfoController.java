@@ -4,6 +4,7 @@ import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
 import com.sojson.common.model.TbPlayer;
 import com.sojson.core.mybatis.page.Pagination;
+import com.sojson.gainsinfo.service.GainsInfoService;
 import com.sojson.player.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -28,12 +29,14 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("gainsInfo")
 public class GainsInfoController extends BaseController {
 
+    @Autowired
+    GainsInfoService gainsInfoService;
     //导入excel
     @RequestMapping(value = "/import", method=RequestMethod.POST)
     @ResponseBody
     public ResultMessage importExcel(@RequestParam(value="file",required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response){
-        System.out.println(file.getName());
-        return new ResultMessage();
+        ResultMessage msg = gainsInfoService.importGainsExcel(file);
+        return msg;
     }
 
 }

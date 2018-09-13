@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sojson.common.dao.UTbGainsInfoMapper" >
+  <resultMap id="GainsInfoResultMap" type="com.sojson.common.model.TbGainsInfo" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ID_CARD" property="idCard" jdbcType="VARCHAR" />
+    <result column="SHARES_CODE" property="sharesCode" jdbcType="VARCHAR" />
+    <result column="SHARES_NAME" property="sharesNmae" jdbcType="VARCHAR" />
+    <result column="BUSINESS_FLAG" property="businessFlag" jdbcType="TINYINT" />
+    <result column="VOLUME" property="volume" jdbcType="INTEGER" />
+    <result column="PRICE" property="price" jdbcType="VARCHAR" />
+    <result column="TOTAL_MONEY" property="totalMoney" jdbcType="VARCHAR" />
+    <result column="BUSINESS_TIME" property="businessTime" jdbcType="TIMESTAMP" />
+    <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
+    <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="GainsInfo_Column_List" >
+    ID,ID_CARD,SHARES_CODE,SHARES_NAME,BUSINESS_FLAG,VOLUME,PRICE,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME,MOD_TIME
+  </sql>
+  <sql id="limit_sql">
+  	   <if test="page_sql != null and page_sql != ''">
+      	${page_sql}
+      </if>
+  </sql>
+  
+  <sql id="where_all">
+  	<where>
+  	  <if test="sharesNmae != null and sharesNmae !='' " >
+        and SHARES_CODE like LOWER(CONCAT('%',#{sharesNmae,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test="accountName != null and accountName !=''">
+        and SHARES_NAME = #{accountName}
+      </if>
+      <if test="idCard != null and idCard !=''">
+        and ID_CARD = #{idCard}
+      </if>
+     </where>
+  </sql>
+
+  <sql id="order_all">
+    ORDER BY BUSINESS_TIME DESC,crt_time DESC
+  </sql>
+  <select id="findAll" resultMap="GainsInfoResultMap" >
+  	select
+    <include refid="GainsInfo_Column_List" />
+    from tb_player
+    <include refid="where_all"/>
+    <include refid="order_all"/>
+    <include refid="limit_sql" />
+  </select>
+  <select id="findCount" resultMap="GainsInfoResultMap" >
+ 	 select count(id) from  tb_gains_info
+  	<include refid="where_all" />
+  </select>
+
+  <select id="findAllNoPage" resultMap="GainsInfoResultMap" >
+    select
+    <include refid="GainsInfo_Column_List" />
+    from tb_gains_info
+    <include refid="where_all"/>
+  </select>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbGainsInfo" >
+    insert into tb_gains_info (ID,ID_CARD,SHARES_CODE,SHARES_NAME,BUSINESS_FLAG,VOLUME,PRICE,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR},#{sharesCode,jdbcType=VARCHAR},#{sharesNmae,jdbcType=VARCHAR},#{businessFlag,jdbcType=TINYINT},
+      #{volume,jdbcType=INTEGER}, #{price,jdbcType=VARCHAR}, #{totalMoney,jdbcType=VARCHAR}, #{businessTime,jdbcType=TIMESTAMP}, #{crtTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.sojson.common.model.TbGainsInfo" >
+    update tb_gains_info
+    <set >
+      <if test="totalMoney != null and totalMoney !=''" >
+        TOTAL_MONEY = #{totalMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null and price !=''" >
+        PRICE = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null  and idCard !=''" >
+        ID_CARD = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="sharesCode != null and sharesCode !=''" >
+        SHARES_CODE = #{sharesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sharesNmae != null and sharesNmae != ''" >
+        SHARES_NAME = #{sharesNmae,jdbcType=VARCHAR},
+      </if>
+      <if test="volume != null and volume != ''" >
+        VOLUME = #{volume,jdbcType=INTEGER},
+      </if>
+      <if test="modTime != null and modTime != ''" >
+        MOD_TIME = #{modTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into tb_gains_info (ID,ID_CARD,SHARES_CODE,SHARES_NAME,BUSINESS_FLAG,VOLUME,PRICE,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.id,jdbcType=VARCHAR}, #{item.idCard,jdbcType=VARCHAR},#{item.sharesCode,jdbcType=VARCHAR},#{item.sharesNmae,jdbcType=VARCHAR},#{item.businessFlag,jdbcType=TINYINT},
+      #{item.volume,jdbcType=INTEGER}, #{item.price,jdbcType=VARCHAR}, #{item.totalMoney,jdbcType=VARCHAR}, #{item.businessTime,jdbcType=TIMESTAMP}, #{item.crtTime,jdbcType=TIMESTAMP}
+      )
+    </foreach>
+  </insert>
+</mapper>

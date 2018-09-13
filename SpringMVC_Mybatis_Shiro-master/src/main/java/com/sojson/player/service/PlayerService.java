@@ -2,8 +2,10 @@ package com.sojson.player.service;
 
 import com.sojson.common.ResultMessage;
 import com.sojson.common.model.TbPlayer;
+import com.sojson.common.model.dto.TbPlayerDto;
 import com.sojson.core.mybatis.page.Pagination;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,4 +17,6 @@ public interface PlayerService {
                                     Integer pageSize);
 
     ResultMessage updateByPrimaryKeySelective(TbPlayer entity);
+
+    public List<TbPlayer> findAll(TbPlayerDto player);
 }
