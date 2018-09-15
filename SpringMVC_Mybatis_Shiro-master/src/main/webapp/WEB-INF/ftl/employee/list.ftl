@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 	<head>
 		<meta charset="utf-8" />
-		<title>经销商列表</title>
+		<title>员工列表</title>
 		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 		<link   rel="icon" href="https://open.sojson.com/favicon.ico" type="image/x-icon" />
 		<link   rel="shortcut icon" href="https://open.sojson.com/favicon.ico" />
@@ -19,21 +19,21 @@
 				//初始化全选。
 				so.checkBoxInit('#checkAll','[check=box]');
 
-				$("#dealer_edit_btn_submit").click(function(){
-					var data = $("#dealer_edit_form").serialize();
+				$("#employee_edit_btn_submit").click(function(){
+					var data = $("#employee_edit_form").serialize();
                     $.post('${basePath}/dealer/editDealer.shtml',data,function(result){
                         if(result && result.level != 1){
                             return layer.msg(result.messageText,so.default),!0;
                         }else{
                             layer.msg('编辑成功！');
                             setTimeout(function(){
-                                $('#dealerForm').submit();
+                                $('#employeeForm').submit();
                             },1000);
                         }
                     },'json');
 				});
 
-                $("#dealer_add_btn_submit").click(function(){
+                $("#employee_add_btn_submit").click(function(){
 					var data = $("#form1").serialize();
                     $.post('${basePath}/dealer/addDealer.shtml',
 							data,
@@ -43,7 +43,7 @@
                         }else{
                             layer.msg('新增成功！');
                             setTimeout(function(){
-                                $('#dealerForm').submit();
+                                $('#employeeForm').submit();
                             },1000);
                         }
                     },'json');
@@ -51,16 +51,16 @@
 			});
 
 			function _edit(id, name, phone, address, type){
-				$("#dealer_edit_id").val(id);
-                $("#dealer_edit_name").val(name);
-                $("#dealer_edit_phone").val(phone);
-                $("#dealer_edit_address").val(address);
-                $("#dealer_edit_type").val(type);
+				$("#employee_edit_id").val(id);
+                $("#employee_edit_name").val(name);
+                $("#employee_edit_phone").val(phone);
+                $("#employee_edit_address").val(address);
+                $("#employee_edit_type").val(type);
 			}
 
 			function _add(){
-				$('#dealerAddModal .form-control').val("");
-                $('#dealerAddModal').modal();
+				$('#employeeAddModal .form-control').val("");
+                $('#employeeAddModal').modal();
 			}
 
 			<@shiro.hasPermission name="/dealer/forbidUserById.shtml">
@@ -96,9 +96,9 @@
 			<div class="row">
 				<@_left.player 1/>
 				<div class="col-md-10">
-					<h2>经销商列表</h2>
+					<h2>员工列表</h2>
 					<hr>
-					<form method="post" action="${basePath}/dealer/list.shtml?parentId=0" id="dealerForm" class="form-inline">
+					<form method="post" action="${basePath}/dealer/employeeList.shtml?parentId=${userId}" id="employeeForm" class="form-inline">
 						<div clss="well">
 					      <div class="form-group">
 					        <input type="text" class="form-control" style="width: 300px;" value="${findContent?default('')}" 
@@ -131,7 +131,7 @@
                                     <td>${it.address}</td>
 									<td>
 										<@shiro.hasPermission name="/dealer/editDealer.shtml">
-											<a href="javascript:_edit('${it.id}','${it.name}','${it.phone}','${it.address}','${it.type}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#dealerEditModal"></i></a>
+											<a href="javascript:_edit('${it.id}','${it.name}','${it.phone}','${it.address}','${it.type}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#employeeEditModal"></i></a>
 										</@shiro.hasPermission>
 										<@shiro.hasPermission name="/dealer/forbidUserById.shtml">
 											${(it.status=='1')?string('<i class="glyphicon glyphicon-eye-close"></i>&nbsp;','<i class="glyphicon glyphicon-eye-open"></i>&nbsp;')}
@@ -144,7 +144,7 @@
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="6">没有找到经销商</td>
+								<td class="text-center danger" colspan="6">没有找到员工</td>
 							</tr>
 						</#if>
 					</table>
@@ -155,27 +155,27 @@
 					</#if>
 					</form>
 					<!--新增modal-->
-                    <div class="modal fade" id="dealerAddModal" tabindex="-1" role="dialog" aria-labelledby="dealerAddModalLabel">
+                    <div class="modal fade" id="employeeAddModal" tabindex="-1" role="dialog" aria-labelledby="employeeAddModalLabel">
                         <div class="modal-dialog" role="document" style="width:30%;">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                    <h4 class="modal-title" id="dealerAddModalLabel">新增</h4>
+                                    <h4 class="modal-title" id="employeeAddModalLabel">新增</h4>
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group">
 										<form id="form1" action="${basePath}/dealer/addDealer.shtml" method="post">
-											<input type="hidden" name="parentId" value="0"/>
-											<input type="hidden" name="roleId" value="5"/>
-											<label for="dealer_add_loginName">账号</label>
-											<input type="text" name="loginName" class="form-control" id="dealer_add_loginName" placeholder="账号">
-											<label for="dealer_add_name">名称</label>
-											<input type="text" name="name" class="form-control" id="dealer_add_name" placeholder="名称">
-											<label for="dealer_add_phone">手机号码</label>
-											<input type="text" name="phone" class="form-control" id="dealer_add_phone" placeholder="手机号码">
-											<label for="dealer_add_address">联系地址</label>
-											<input type="text" name="address" class="form-control" id="dealer_add_address" placeholder="地址">
-											<label for="dealer_add_type">返点类型</label>
+											<input type="hidden" name="parentId" value="${userId}"/>
+											<input type="hidden" name="roleId" value="6"/>
+											<label for="employee_add_loginName">账号</label>
+											<input type="text" name="loginName" class="form-control" id="employee_add_loginName" placeholder="账号">
+											<label for="employee_add_name">名称</label>
+											<input type="text" name="name" class="form-control" id="employee_add_name" placeholder="名称">
+											<label for="employee_add_phone">手机号码</label>
+											<input type="text" name="phone" class="form-control" id="employee_add_phone" placeholder="手机号码">
+											<label for="employee_add_address">联系地址</label>
+											<input type="text" name="address" class="form-control" id="employee_add_address" placeholder="地址">
+											<label for="employee_add_type">返点类型</label>
 											<select name="type" class="form-control">
 												<option value="1">5%</option>
                                                 <option value="2">10%</option>
@@ -186,32 +186,32 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
-                                    <button type="button" id="dealer_add_btn_submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-save normal"></i>&nbsp;保存</button>
+                                    <button type="button" id="employee_add_btn_submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-save normal"></i>&nbsp;保存</button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!--编辑modal-->
-                    <div class="modal fade" id="dealerEditModal" tabindex="-1" role="dialog" aria-labelledby="dealerEditModalLabel">
+                    <div class="modal fade" id="employeeEditModal" tabindex="-1" role="dialog" aria-labelledby="employeeEditModalLabel">
                         <div class="modal-dialog" role="document" style="width:30%;">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                    <h4 class="modal-title" id="dealerEditModalLabel">编辑</h4>
+                                    <h4 class="modal-title" id="employeeEditModalLabel">编辑</h4>
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group">
-										<form id="dealer_edit_form" action="${basePath}/dealer/editDealer.shtml" method="post">
-										<input type="hidden" name="id" id="dealer_edit_id">
-                                        <label for="dealer_name">名称</label>
-                                        <input type="text" name="name" class="form-control" id="dealer_edit_name" placeholder="名称">
-                                        <label for="dealer_add_phone">手机号码</label>
-                                        <input type="text" name="phone" class="form-control" id="dealer_edit_phone" placeholder="手机号码">
-                                        <label for="dealer_add_address">联系地址</label>
-                                        <input type="text" name="address" class="form-control" id="dealer_edit_address" placeholder="地址">
-                                        <label for="dealer_add_type">返点类型</label>
-                                        <select name="type" class="form-control" id="dealer_edit_type">
+										<form id="employee_edit_form" action="${basePath}/dealer/editDealer.shtml" method="post">
+										<input type="hidden" name="id" id="employee_edit_id">
+                                        <label for="employee_name">名称</label>
+                                        <input type="text" name="name" class="form-control" id="employee_edit_name" placeholder="名称">
+                                        <label for="employee_add_phone">手机号码</label>
+                                        <input type="text" name="phone" class="form-control" id="employee_edit_phone" placeholder="手机号码">
+                                        <label for="employee_add_address">联系地址</label>
+                                        <input type="text" name="address" class="form-control" id="employee_edit_address" placeholder="地址">
+                                        <label for="employee_add_type">返点类型</label>
+                                        <select name="type" class="form-control" id="employee_edit_type">
                                             <option value="1">5%</option>
                                             <option value="2">10%</option>
                                             <option value="3">15%</option>
@@ -220,7 +220,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
-                                    <button type="button" id="dealer_edit_btn_submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-save normal"></i>&nbsp;保存</button>
+                                    <button type="button" id="employee_edit_btn_submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-save normal"></i>&nbsp;保存</button>
                                 </div>
                             </div>
                         </div>

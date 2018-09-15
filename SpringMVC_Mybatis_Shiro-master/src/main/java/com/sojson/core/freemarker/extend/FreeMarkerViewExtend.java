@@ -1,16 +1,14 @@
 package com.sojson.core.freemarker.extend;
 
-import java.util.Date;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
-
 import com.sojson.common.model.UUser;
 import com.sojson.common.utils.LoggerUtils;
 import com.sojson.core.shiro.token.manager.TokenManager;
 import com.sojson.core.statics.Constant;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.Map;
 public class FreeMarkerViewExtend extends FreeMarkerView {
 	
 	protected void exposeHelpers(Map<String, Object> model, HttpServletRequest request){
@@ -31,6 +29,8 @@ public class FreeMarkerViewExtend extends FreeMarkerView {
 		model.put("_v", Constant.VERSION);//版本号，重启的时间
 		model.put("cdn", Constant.DOMAIN_CDN);//CDN域名
 		model.put("basePath", request.getContextPath());//base目录。
+		model.put("userId", TokenManager.getUserId());
+
 		
 	}
 }

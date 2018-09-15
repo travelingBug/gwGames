@@ -61,6 +61,16 @@ public class TbDealer implements Serializable {
     private Byte type;
 
     /**
+     * 角色编号
+     */
+    private String roleId;
+
+    /**
+     * 登录状态(0-禁止登录，1-激活登录)
+     */
+    private String status;
+
+    /**
      * 创建时间
      */
     private Date crtTime;
@@ -156,5 +166,21 @@ public class TbDealer implements Serializable {
 
     public void setType(Byte type) {
         this.type = type;
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

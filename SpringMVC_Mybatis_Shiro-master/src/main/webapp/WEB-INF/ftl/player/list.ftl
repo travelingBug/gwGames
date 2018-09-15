@@ -78,6 +78,11 @@
 					      <div class="form-group">
 					        <input type="text" class="form-control" style="width: 300px;" value="${findContent?default('')}" 
 					        			name="findContent" id="findContent" placeholder="输入昵称 / 帐号">
+							<select name="auditFlag" class="form-control">
+                                <option value="0">待审核</option>
+                                <option value="1">通过</option>
+                                <option value="2">不通过</option>
+							</select>
 					      </div>
 					     <span class=""> <#--pull-right -->
 				         	<button type="submit" class="btn btn-primary">查询</button>

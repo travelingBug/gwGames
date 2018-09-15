@@ -43,6 +43,9 @@
       <if test="idCard != null and idCard !=''">
         and ID_CARD = #{idCard}
       </if>
+      <if test="auditFlag != null and auditFlag != ''">
+        and AUDIT_FLAG = #{auditFlag}
+      </if>
      </where>
   </sql>
 

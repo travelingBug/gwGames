@@ -1,25 +1,19 @@
 package com.sojson.common.controller;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.Map.Entry;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import com.sojson.common.utils.StringUtils;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.sojson.common.utils.StringUtils;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class BaseController {
 
-	
+
 	protected int pageNo =1;
 	public static  int pageSize = 10;
 	protected final static Logger logger = Logger.getLogger(BaseController.class);

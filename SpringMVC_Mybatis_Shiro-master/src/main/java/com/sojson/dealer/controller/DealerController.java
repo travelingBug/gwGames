@@ -6,6 +6,7 @@ import com.sojson.common.model.TbDealer;
 import com.sojson.common.utils.StringUtils;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.dealer.service.DealerService;
+import com.sojson.user.service.UUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * Created by lx on 2018/9/4.
@@ -27,6 +29,9 @@ public class DealerController extends BaseController {
 
     @Autowired
     DealerService dealerService;
+
+    @Autowired
+    UUserService userService;
 
     /**
      * 增加经销商
@@ -44,17 +49,12 @@ public class DealerController extends BaseController {
     /**
      * 编辑经销商
      *
-     * @param id
-     * @param name
      * @param req
      * @return
      */
     @RequestMapping(value = "editDealer", method = RequestMethod.POST)
     @ResponseBody
-    public ResultMessage editDealer(String id, String name, HttpServletRequest req) {
-        TbDealer entity = new TbDealer();
-        entity.setId(id);
-        entity.setName(name);
+    public ResultMessage editDealer(TbDealer entity, HttpServletRequest req) {
         return dealerService.update(entity);
     }
 
@@ -72,16 +72,40 @@ public class DealerController extends BaseController {
     }
 
     /**
-     * 参赛人员主页
+     * 经销商主页
      *
      * @return
      */
     @RequestMapping(value = "list")
-    public ModelAndView list(ModelMap map, Integer pageNo, String findContent) {
+    public ModelAndView list(ModelMap map, Integer pageNo, String findContent,
+                             String parentId) {
 
         map.put("findContent", findContent);
+        map.put("parentId", parentId);
         Pagination<TbDealer> page = dealerService.findByPage(map, pageNo, pageSize);
         map.put("page", page);
         return new ModelAndView("dealer/list");
+    }
+
+    /**
+     * 员工主页
+     *
+     * @return
+     */
+    @RequestMapping(value = "employeeList")
+    public ModelAndView employeeList(ModelMap map, Integer pageNo, String findContent,
+                             String parentId) {
+
+        map.put("findContent", findContent);
+        map.put("parentId", parentId);
+        Pagination<TbDealer> page = dealerService.findByPage(map, pageNo, pageSize);
+        map.put("page", page);
+        return new ModelAndView("employee/list");
+    }
+
+    @RequestMapping(value="forbidUserById",method=RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> forbidUserById(Long id, Long status){
+        return userService.updateForbidUserById(id,status);
     }
 }
