@@ -25,8 +25,12 @@
   <sql id="dealer_where_all">
   	<where>
       d.DEL_FLAG = 0
-  	  <if test="name != null and name !='' " >
-        and name like LOWER(CONCAT('%',#{name,jdbcType=VARCHAR},'%'))
+      <if test="findContent != null and findContent !=''">
+        and (d.name like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%'))
+        or u.email like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%')))
+      </if>
+      <if test="parentId != null and parentId !='' " >
+        and PARENT_ID = #{parentId}
       </if>
      </where>
   </sql>
@@ -37,7 +41,7 @@
   <select id="findAll" resultMap="dealerResultMap" >
   	select
     <include refid="dealer_Column_List" />,
-    u.email as loginName
+    u.email as loginName,u.status as status,u.id as userId
     from tb_dealer d
     LEFT JOIN u_user u
     ON u.id = d.FK_USER_ID
@@ -56,12 +60,19 @@
   </insert>
   <update id="update" parameterType="com.sojson.common.model.TbDealer" >
     update tb_dealer
-    <set >
+    <set>
+      MOD_TIME = #{modTime,jdbcType=TIMESTAMP}
       <if test="name != null and name !=''" >
-        NAME = #{name,jdbcType=VARCHAR},
+        ,NAME = #{name,jdbcType=VARCHAR}
       </if>
-      <if test="modTime != null and modTime != ''" >
-        MOD_TIME = #{modTime,jdbcType=TIMESTAMP},
+      <if test="type != null and type != ''">
+        ,TYPE = #{type}
+      </if>
+      <if test="phone != null and phone != ''">
+        ,PHONE = #{phone}
+      </if>
+      <if test="address != null and address != ''">
+        ,ADDRESS = #{address}
       </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}

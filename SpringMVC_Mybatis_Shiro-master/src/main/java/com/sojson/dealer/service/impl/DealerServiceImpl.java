@@ -78,7 +78,7 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
         entity.setDelFlag(TbDealer._0);
         entity.setCrtTime(date);
         uTbDealerMapper.insert(entity);
-        userService.addRole2User(userEntity.getId(),"200001");
+        userService.addRole2User(userEntity.getId(),entity.getRoleId());
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
 

@@ -99,8 +99,23 @@
         <ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
 			<@shiro.hasPermission name="/dealer/list.shtml">
                 <li class="${(index==1)?string('active',' ')}">
-                    <a href="${basePath}/dealer/list.shtml?">
+                    <a href="${basePath}/dealer/list.shtml?parentId=0">
                         <i class="glyphicon glyphicon-chevron-right"></i>经销商列表
+                    </a>
+                </li>
+			</@shiro.hasPermission>
+        </ul>
+    </div>
+	</@shiro.hasAnyRoles>
+</#macro>
+<#macro employee index>
+	<@shiro.hasAnyRoles name='200001'>
+    <div id="one" class="col-md-2">
+        <ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
+			<@shiro.hasPermission name="/dealer/employeeList.shtml">
+                <li class="${(index==1)?string('active',' ')}">
+                    <a href="${basePath}/dealer/employeeList.shtml?parentId=${userId}">
+                        <i class="glyphicon glyphicon-chevron-right"></i>员工列表
                     </a>
                 </li>
 			</@shiro.hasPermission>
