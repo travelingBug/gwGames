@@ -270,9 +270,12 @@ select option {
 	color: #323232;
 	font-weight: bold;
 	padding-left: 5px;
+	font-family:"微软雅黑";
 }
 .float-div .content .one-area {
 	margin: 30px 0;
+	font-family:"微软雅黑";
+	font-size:14px;
 }
 .float-div .content .one-area p {
 	margin: 20px 0;
