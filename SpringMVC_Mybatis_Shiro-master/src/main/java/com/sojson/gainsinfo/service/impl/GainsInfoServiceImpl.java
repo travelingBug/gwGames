@@ -4,13 +4,16 @@ import com.sojson.common.ImportHeader;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.dao.UTbGainsInfoMapper;
 import com.sojson.common.model.TbGainsInfo;
+import com.sojson.common.model.dto.TbGainsInfoDto;
 import com.sojson.common.model.dto.TbPlayerDto;
+import com.sojson.common.model.vo.TbGainsInfoVo;
 import com.sojson.common.utils.ExcelToBeanUtil;
 import com.sojson.common.utils.ExcelUtil;
 import com.sojson.common.utils.LoggerUtils;
 import com.sojson.common.utils.StringUtils;
 import com.sojson.core.config.IConfig;
 import com.sojson.core.mybatis.BaseMybatisDao;
+import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.gainsinfo.service.GainsInfoService;
 import com.sojson.player.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,4 +132,12 @@ public class GainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> imp
         }
         return  new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
+
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Pagination<TbGainsInfoVo> findByPage(Map<String, Object> resultMap, Integer pageNo, Integer pageSize) {
+        return super.findPage(resultMap, pageNo, pageSize);
+    }
+
 }

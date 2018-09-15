@@ -74,6 +74,9 @@
 							  <@shiro.hasPermission name="/player/list.shtml">
                                   <li><a href="${basePath}/player/list.shtml">选手列表</a></li>
 							  </@shiro.hasPermission>
+							  <@shiro.hasPermission name="/gainsInfo/list.shtml">
+                                  <li><a href="${basePath}/gainsInfo/list.shtml">参赛选手数据</a></li>
+							  </@shiro.hasPermission>
                           </ul>
                       </li>
 				  </@shiro.hasAnyRoles>

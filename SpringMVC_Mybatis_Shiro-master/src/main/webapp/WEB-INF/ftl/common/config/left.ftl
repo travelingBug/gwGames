@@ -80,9 +80,16 @@
 			<@shiro.hasPermission name="/player/list.shtml">
             <li class="${(index==1)?string('active',' ')}">
                 <a href="${basePath}/player/list.shtml?">
-                    <i class="glyphicon glyphicon-chevron-right"></i>选手列表
+                    <i class="glyphicon glyphicon-chevron-right"></i>选手列表${index}
                 </a>
             </li>
+			</@shiro.hasPermission>
+			<@shiro.hasPermission name="/gainsInfo/list.shtml">
+                <li class="${(index==2)?string('active',' ')} dropdown">
+                    <a href="${basePath}/gainsInfo/list.shtml?">
+                        <i class="glyphicon glyphicon-chevron-right"></i>参赛选手数据
+                    </a>
+                </li>
 			</@shiro.hasPermission>
             <#--<li class="${(index==2)?string('active',' ')} dropdown">-->
                 <#--<a href="${basePath}/member/online.shtml">-->

@@ -2,7 +2,12 @@ package com.sojson.gainsinfo.service;
 
 
 import com.sojson.common.ResultMessage;
+import com.sojson.common.model.dto.TbGainsInfoDto;
+import com.sojson.common.model.vo.TbGainsInfoVo;
+import com.sojson.core.mybatis.page.Pagination;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Map;
 
 /**
  * 选手收益处理层
@@ -14,4 +19,7 @@ public interface GainsInfoService {
      * @return
      */
     public ResultMessage importGainsExcel(MultipartFile file);
+
+    Pagination<TbGainsInfoVo> findByPage(Map<String, Object> resultMap, Integer pageNo,
+                                         Integer pageSize);
 }

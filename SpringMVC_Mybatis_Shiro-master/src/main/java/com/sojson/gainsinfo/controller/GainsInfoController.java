@@ -3,6 +3,8 @@ package com.sojson.gainsinfo.controller;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
 import com.sojson.common.model.TbPlayer;
+import com.sojson.common.model.dto.TbGainsInfoDto;
+import com.sojson.common.model.vo.TbGainsInfoVo;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.gainsinfo.service.GainsInfoService;
 import com.sojson.player.service.PlayerService;
@@ -37,6 +39,18 @@ public class GainsInfoController extends BaseController {
     public ResultMessage importExcel(@RequestParam(value="file",required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response){
         ResultMessage msg = gainsInfoService.importGainsExcel(file);
         return msg;
+    }
+
+    /**
+     * 参赛选手数据列表
+     * @return
+     */
+    @RequestMapping(value="list")
+    public ModelAndView list(Integer pageNo, ModelMap map){
+
+        Pagination<TbGainsInfoVo> page = gainsInfoService.findByPage(map,pageNo,pageSize);
+        map.put("page", page);
+        return new ModelAndView("gainsInfo/list");
     }
 
 }

@@ -27,7 +27,7 @@ public class TbGainsInfo implements Serializable {
     /**
      * '股票名称'
      */
-    private String sharesNmae;
+    private String sharesName;
 
     /**
      * 买卖标致
@@ -81,13 +81,6 @@ public class TbGainsInfo implements Serializable {
         this.sharesCode = sharesCode;
     }
 
-    public String getSharesNmae() {
-        return sharesNmae;
-    }
-
-    public void setSharesNmae(String sharesNmae) {
-        this.sharesNmae = sharesNmae;
-    }
 
     public Byte getBusinessFlag() {
         return businessFlag;
@@ -152,5 +145,13 @@ public class TbGainsInfo implements Serializable {
 
     public void setIdCard(String idCard) {
         this.idCard = idCard;
+    }
+
+    public String getSharesName() {
+        return sharesName;
+    }
+
+    public void setSharesName(String sharesName) {
+        this.sharesName = sharesName;
     }
 }

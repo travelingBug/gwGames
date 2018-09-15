@@ -18,7 +18,7 @@ public class ImportHeader {
         gainsInfoHeadReal.put("操作时间","businessTime");
         gainsInfoHeadReal.put("身份证","idCard");
         gainsInfoHeadReal.put("股票代码","sharesCode");
-        gainsInfoHeadReal.put("股票名称","sharesNmae");
+        gainsInfoHeadReal.put("股票名称","sharesName");
         gainsInfoHeadReal.put("买卖标志","businessFlag");
         gainsInfoHeadReal.put("成交数量","volume");
         gainsInfoHeadReal.put("成交价格","price");
