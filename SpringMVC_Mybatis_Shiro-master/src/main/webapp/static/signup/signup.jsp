@@ -14,8 +14,8 @@
     <div class="float-div">
         <a class="icon icon-close" href="javascript:;" id="gameBonusClose"></a>
         <div style="width: 100%;height: 600px;text-align: center;overflow:scroll;"  >
-            <img src="<%=basePath%>/images/awrads-img.png" width="80%" height="900px">
-            <div style="background-color: #FDF2E1; width: 80%;margin-left: auto;margin-right: auto;">
+            <img src="<%=basePath%>/images/awrads-img.png" width="90%" height="840px">
+            <div style="background-color: #FDF2E1; width: 90%;margin-left: auto;margin-right: auto;">
                 <div  style="font-family:'微软雅黑';width: 80%;text-align: center;font-size:14px;font-weight:bold;margin-left: auto; margin-right: auto;padding-top: 20px;padding-bottom: 20px;">根据比赛情况，主办方保留增加大赛总收益奖励金额以及大赛月度奖奖励金额的权利，主办方对大赛奖项设置拥有最终解释权。</div>
             </div>
         </div>

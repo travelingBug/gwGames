@@ -80,7 +80,7 @@
 			<@shiro.hasPermission name="/player/list.shtml">
             <li class="${(index==1)?string('active',' ')}">
                 <a href="${basePath}/player/list.shtml?">
-                    <i class="glyphicon glyphicon-chevron-right"></i>选手列表${index}
+                    <i class="glyphicon glyphicon-chevron-right"></i>选手列表
                 </a>
             </li>
 			</@shiro.hasPermission>

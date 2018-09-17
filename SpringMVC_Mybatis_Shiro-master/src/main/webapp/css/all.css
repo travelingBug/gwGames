@@ -108,20 +108,22 @@ select option {
 	min-width: 1100px;
 }
 .pageWrapper1 {
-	background:url(../images/bm_form_bg.png) no-repeat;
+	background:url(http://60.205.189.94:8080/images/bm_form_bg.png) no-repeat;
 	background-size: 100%;
 	min-height: 1500px;
 	width: 100%;
 	position:relative;
 	min-width:1100px;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/bm_form_bg.png',sizingMethod='scale');
 }
 .pageWrapper {
-	background:url(../images/bm_bg.png) no-repeat;
+	background:url(http://60.205.189.94:8080/images/bm_bg.png) no-repeat;
 	background-size: 100%;
 	width:100%;
 	min-height:768px;
 	position:relative;
 	min-width:1100px;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/bm_bg.png',sizingMethod='scale');
 }
 .pageWrapper2 {
 	min-height: 1500px;
@@ -157,14 +159,14 @@ select option {
 	bottom: 0;
 	width:100%;
 	min-width:1000px;
-} 
+}
 .footer .content {
 	width:100%;
 	margin:0 auto;
 	text-align:center;
 	font-size:12px;
 	background: #222;
-} 
+}
 .footer .content ul {
 	width:500px;
 	margin:0 auto;
@@ -262,10 +264,10 @@ select option {
 }
 .float-div .content .one-area .title {
 	width: 70px;
-	height: 10px;
+	height: 20px;
 	background: #f6e8d1;
 	display: block;
-	line-height: 10px;
+	line-height: 20px;
 	font-size:16px;
 	color: #323232;
 	font-weight: bold;
@@ -375,21 +377,23 @@ select option {
 	right: 10px;
 }
 .float-layer .content .fw-box {
-	background: url(../images/bg_fwtd.png) no-repeat;
+	background: url(http://60.205.189.94:8080/images/bg_fwtd.png) no-repeat;
 	background-size: 100%;
 	width: 178px;
 	height: 268px;
 	position: relative;
 	overflow: hidden;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/bg_fwtd.png',sizingMethod='scale');
 }
 .float-layer .content .zn-box {
-	background: url(../images/bg_dszn.png) no-repeat;
+	background: url(http://60.205.189.94:8080/images/bg_dszn.png) no-repeat;
 	background-size: 100%;
 	width: 178px;
 	height: 174px;
 	margin-top: 20px;
 	position: relative;
 	overflow: hidden;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/bg_dszn.png',sizingMethod='scale');
 }
 .float-layer .content .zn-box .icon-close {
 	top:35px;
@@ -410,14 +414,14 @@ select option {
 }
 .float-layer .content .fw-box .btn {
 	width:156px;
-	height: 36px;	
+	height: 36px;
 	display: block;
 }
 .float-layer .content .zn-box .btn {
 	width:158px;
-	height: 44px;	
+	height: 44px;
 	display: block;
-	
+
 }
 
 
@@ -437,8 +441,8 @@ select option {
 
 /* 11、margin
  * -------------------------------------------------- */
-.mt-30 { margin-top:30px!important;} 
-.mr-20 { margin-right:20px!important;} 
+.mt-30 { margin-top:30px!important;}
+.mr-20 { margin-right:20px!important;}
 .mb-20 { margin-bottom:20px!important;}
 .mt-0 { margin-top:0!important;}
 .mr-0 { margin-right:0!important;}
@@ -448,7 +452,7 @@ select option {
 .ml-10 { margin-left:10px!important;}
 .mtb-20 { margin-top:20px!important; margin-bottom:20px!important;}
 
- 
+
 /* 17、pager
  * -------------------------------------------------- */
 .pager {
@@ -521,7 +525,7 @@ select option {
 	border-radius: 4px;
 	width: 100%;
 	overflow: hidden;
-	
+
 }
 .bm-form .input-style p {
 	float: left;
@@ -585,7 +589,7 @@ select option {
 	line-height: 60px;
 	margin-top: 11px;
 	margin-right: 10px;
-} 
+}
 .bm-form .one-line .read-text {
 	float: left;
 	width: 200px;
@@ -607,7 +611,7 @@ select option {
 	height: 40px;
 	display: block;
 	/*margin: 20px auto 0 auto;*/
-	
+
 }
 .bm-form .tip-content h4 {
 	font-size: 20px;
@@ -653,8 +657,8 @@ select option {
 .btn-appxz { background:url(../images/btn_appxz.png)no-repeat;background-size: 100%;}
 .btn-bmcs { background:url(../images/btn_bmcs.png)no-repeat;background-size: 100%;}
 .btn-gszc { background:url(../images/btn_gszc.png)no-repeat;background-size: 100%;}
-	
-	
+
+
 
 
 /* 22、img
@@ -673,18 +677,19 @@ select option {
 	overflow: hidden;
 }
 .btn-bm .btn-bm-1 {
-	background: url(../images/bm_btn_01.png) no-repeat;
+	background: url(http://60.205.189.94:8080/images/bm_btn_01.png) no-repeat;
 	background-size: 100%;
 	margin: 0 auto;
 	width: 130px;
 	height: 54px;
 	display: block;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/bm_btn_01.png',sizingMethod='scale');
 }
 .btn-bm .btn-bm-1:hover:hover {
 	opacity: 0.9;
 }
 .bm-form .btn-bm1 {
-	background: url(../images/bm_btn_bg.png) no-repeat;
+	background: url(http://60.205.189.94:8080/images/bm_btn_bg.png) no-repeat;
 	background-size: 100%;
 	width: 156px;
 	height: 60px;
@@ -695,6 +700,7 @@ select option {
 	color: #482e05;
 	margin: 0;
 	cursor: pointer;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/bm_btn_bg.png',sizingMethod='scale');
 }
 .bm-form .btn-bm1:hover {
 	opacity: 0.8;
@@ -774,11 +780,12 @@ select option {
 	padding: 25px 0 50px 0;
 }
 .top-box .content .logo {
-	background:url(../images/logo.png) no-repeat;
+	background:url(http://60.205.189.94:8080/images/logo.png) no-repeat;
 	background-size: 70%;
 	width: 255px;
 	height: 33px;
 	float: left;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/logo.png',sizingMethod='scale');
 }
 .top-box .content .right-area {
 	float: right;
@@ -799,10 +806,11 @@ select option {
 }
 .top-box .content .right-area .btn-contact {
 	float: left;
-	background: url(../images/btn_contact.png) no-repeat;
+	background: url(http://60.205.189.94:8080/images/btn_contact.png) no-repeat;
 	background-size: 70%;
 	width: 120px;
 	height:42px;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/btn_contact.png',sizingMethod='scale');
 }
 .top-box .content .right-area .btn-contact:hover {
 	opacity: 0.9;
@@ -865,7 +873,7 @@ select option {
 	margin: 0 2px;
 	background: #781313;
 	opacity: 0.8;
-	
+
 }
 .slider-box .slider-dot li.on {
 	background: #fff;
@@ -953,10 +961,11 @@ select option {
 	border-right: 1px solid #727272;
 }
 .contact-box .content .left-area .logo-white {
-	background:url(../images/logo_white.png) no-repeat;
+	background:url(http://60.205.189.94:8080/images/logo_white.png) no-repeat;
 	background-size: 100%;
 	width: 250px;
 	height: 32px;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/logo_white.png',sizingMethod='scale');
 }
 .contact-box .content .left-area .one-area {
 	margin-top:20px;
@@ -1035,7 +1044,7 @@ select option {
 .list2 .oneline .text p {
 	line-height: 18px;
 	color: #888888;
-} 
+}
 .list2 .oneline .text .tit {
 	position: relative;
 	padding-bottom: 10px;
@@ -1082,10 +1091,10 @@ select option {
 	margin-right: 10px;
 }
 
- 
+
 /* 28、style
  * -------------------------------------------------- */
- 
+
 .clear {
 	clear:both;
 }
@@ -1114,12 +1123,13 @@ select option {
 .mid-banner-1 .content {
 	position: relative;
 	top:-31px;
-	background: url(../images/mid_banner_02.png) no-repeat;
+	background: url(http://60.205.189.94:8080/images/mid_banner_02.png) no-repeat;
 	background-size: 100%;
 	width: 1000px;
 	height: 200px;
 	margin: 0 auto;
 	overflow: hidden;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/mid_banner_02.png',sizingMethod='scale');
 }
 .mid-banner-1 .link {
 	position: absolute;
@@ -1169,7 +1179,7 @@ select option {
 	height: 460px;
 }
 
-.bg-red img { 
+.bg-red img {
 	width: 100%;
 	min-width: 1000px;
 	height: 460px;
@@ -1203,29 +1213,33 @@ select option {
 	width: 64px;
 	height: 40px;
 	margin: 40px auto 0 auto;
-	background: url(../images/img_title_01.png) no-repeat;
+	background: url(http://60.205.189.94:8080/images/img_title_01.png) no-repeat;
 	background-size: 100%;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/img_title_01.png',sizingMethod='scale');
 }
 .title-2 {
 	width: 240px;
 	height: 66px;
 	margin: 40px auto 0 auto;
-	background: url(../images/img_title_02.png) no-repeat;
+	background: url(http://60.205.189.94:8080/images/img_title_02.png) no-repeat;
 	background-size: 100%;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/img_title_02.png',sizingMethod='scale');
 }
 .title-3 {
 	width: 117px;
 	height: 40px;
 	margin: 40px auto 0 auto;
-	background: url(../images/img_title_03.png) no-repeat;
+	background: url(http://60.205.189.94:8080/images/img_title_03.png) no-repeat;
 	background-size: 100%;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/img_title_03.png',sizingMethod='scale');
 }
 .title-4 {
 	width: 112px;
 	height: 42px;
 	margin: 40px auto 0 auto;
-	background: url(../images/img_title_04.png) no-repeat;
+	background: url(http://60.205.189.94:8080/images/img_title_04.png) no-repeat;
 	background-size: 100%;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/img_title_04.png',sizingMethod='scale');
 }
 .slider-dot {
 	width: 60px;
@@ -1240,15 +1254,15 @@ select option {
 	margin: 0 2px;
 	background: #b8b8b8;
 	opacity: 0.8;
-	
+
 }
 .slider-dot li.on {
 	background: #db372a;
 }
 .border-none {
 	border:none!important;
-}	
-	
+}
+
 
 /*--------------------页面修改_20180909--------------------------*/
 .bm-form i {
@@ -1289,7 +1303,7 @@ select option {
 	margin: auto;
 	display: inline-block;
 	background-color:white;
-	
+
 
 }
 

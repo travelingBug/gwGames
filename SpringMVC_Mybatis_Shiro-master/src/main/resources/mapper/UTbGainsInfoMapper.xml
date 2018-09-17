@@ -20,6 +20,9 @@
   <sql id="GainsInfo_Column_List" >
     t.ID,t.ID_CARD,t.SHARES_CODE,t.SHARES_NAME,t.BUSINESS_FLAG,t.VOLUME,t.PRICE,t.TOTAL_MONEY,t.BUSINESS_TIME,p.ACCOUNT_NAME,p.NAME,(DATE_FORMAT(t.BUSINESS_TIME,'%Y-%m-%d %H:%i:%S')) BUSINESS_TIME_STR,t.CRT_TIME,t.MOD_TIME
   </sql>
+  <sql id="GainsInfo_Simple_Column_List" >
+    t.ID,t.ID_CARD,t.SHARES_CODE,t.SHARES_NAME,t.BUSINESS_FLAG,t.VOLUME,t.PRICE,t.TOTAL_MONEY,t.BUSINESS_TIME,(DATE_FORMAT(t.BUSINESS_TIME,'%Y-%m-%d %H:%i:%S')) BUSINESS_TIME_STR,t.CRT_TIME,t.MOD_TIME
+  </sql>
   <sql id="limit_sql">
   	   <if test="page_sql != null and page_sql != ''">
       	${page_sql}
@@ -46,6 +49,19 @@
       <if test="endTime != null and endTime !=''">
         and t.BUSINESS_TIME  &lt; #{endTime}
       </if>
+
+      <if test="businessTime != null and businessTime !=''">
+        and t.BUSINESS_TIME  = #{businessTime}
+      </if>
+      <if test="volume != null and volume !=''">
+        and t.VOLUME  = #{volume}
+      </if>
+      <if test="price != null and price !=''">
+        and t.PRICE  = #{price}
+      </if>
+      <if test="totalMoney != null and totalMoney !=''">
+        and t.TOTAL_MONEY  = #{totalMoney}
+      </if>
      </where>
   </sql>
 
@@ -60,6 +76,15 @@
     <include refid="order_all"/>
     <include refid="limit_sql" />
   </select>
+
+
+  <select id="findGainsInfo" resultMap="GainsInfoResultMap" >
+    select
+    <include refid="GainsInfo_Simple_Column_List" />
+    from tb_gains_info t
+    <include refid="where_all"/>
+  </select>
+
   <select id="findCount" resultMap="GainsInfoResultMap" >
  	 select count(t.id) from  tb_gains_info t LEFT JOIN tb_player  p ON t.ID_CARD = p.ID_CARD
   	<include refid="where_all" />
@@ -73,8 +98,8 @@
   </select>
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbGainsInfo" >
-    insert into tb_gains_info (ID,ID_CARD,SHARES_CODE,SHARES_NAME,BUSINESS_FLAG,VOLUME,PRICE,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME)
-    values (#{id,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR},#{sharesCode,jdbcType=VARCHAR},#{sharesName,jdbcType=VARCHAR},#{businessFlag,jdbcType=TINYINT},
+    insert into tb_gains_info (ID_CARD,SHARES_CODE,SHARES_NAME,BUSINESS_FLAG,VOLUME,PRICE,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME)
+    values ( #{idCard,jdbcType=VARCHAR},#{sharesCode,jdbcType=VARCHAR},#{sharesName,jdbcType=VARCHAR},#{businessFlag,jdbcType=TINYINT},
       #{volume,jdbcType=INTEGER}, #{price,jdbcType=VARCHAR}, #{totalMoney,jdbcType=VARCHAR}, #{businessTime,jdbcType=TIMESTAMP}, #{crtTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -103,16 +128,26 @@
       <if test="modTime != null and modTime != ''" >
         MOD_TIME = #{modTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="businessFlag != null and businessFlag != ''" >
+        BUSINESS_FLAG = #{businessFlag,jdbcType=TINYINT},
+      </if>
+      <if test="businessTime != null and businessTime != ''" >
+        BUSINESS_TIME = #{businessTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 
   <insert id="insertBatch" parameterType="java.util.List">
-    insert into tb_gains_info (ID,ID_CARD,SHARES_CODE,SHARES_NAME,BUSINESS_FLAG,VOLUME,PRICE,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME) values
+    insert into tb_gains_info (ID_CARD,SHARES_CODE,SHARES_NAME,BUSINESS_FLAG,VOLUME,PRICE,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME) values
     <foreach collection="list" item="item" index="index" separator=",">
-      (#{item.id,jdbcType=VARCHAR}, #{item.idCard,jdbcType=VARCHAR},#{item.sharesCode,jdbcType=VARCHAR},#{item.sharesNmae,jdbcType=VARCHAR},#{item.businessFlag,jdbcType=TINYINT},
+      ( #{item.idCard,jdbcType=VARCHAR},#{item.sharesCode,jdbcType=VARCHAR},#{item.sharesNmae,jdbcType=VARCHAR},#{item.businessFlag,jdbcType=TINYINT},
       #{item.volume,jdbcType=INTEGER}, #{item.price,jdbcType=VARCHAR}, #{item.totalMoney,jdbcType=VARCHAR}, #{item.businessTime,jdbcType=TIMESTAMP}, #{item.crtTime,jdbcType=TIMESTAMP}
       )
     </foreach>
   </insert>
+
+  <delete id="deleteById">
+    delete from tb_gains_info where id =  #{id,jdbcType=BIGINT}
+  </delete>
 </mapper>

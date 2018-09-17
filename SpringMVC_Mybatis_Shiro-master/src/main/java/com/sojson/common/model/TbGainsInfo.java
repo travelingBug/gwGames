@@ -154,4 +154,5 @@ public class TbGainsInfo implements Serializable {
     public void setSharesName(String sharesName) {
         this.sharesName = sharesName;
     }
+
 }

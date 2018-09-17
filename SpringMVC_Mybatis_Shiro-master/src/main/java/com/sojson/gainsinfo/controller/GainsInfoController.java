@@ -2,6 +2,7 @@ package com.sojson.gainsinfo.controller;
 
 import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
+import com.sojson.common.model.TbGainsInfo;
 import com.sojson.common.model.TbPlayer;
 import com.sojson.common.model.dto.TbGainsInfoDto;
 import com.sojson.common.model.vo.TbGainsInfoVo;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * Created by lx on 2018/8/27.
@@ -41,15 +43,37 @@ public class GainsInfoController extends BaseController {
         return msg;
     }
 
+    @RequestMapping(value = "/update", method=RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage update(HttpServletRequest request, HttpServletResponse response,TbGainsInfo tbGainsInfo){
+        ResultMessage msg = gainsInfoService.update(tbGainsInfo);
+        return msg;
+    }
+
+    @RequestMapping(value = "/add", method=RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage add(HttpServletRequest request, HttpServletResponse response,TbGainsInfo tbGainsInfo){
+        ResultMessage msg = gainsInfoService.add(tbGainsInfo);
+        return msg;
+    }
+
+    @RequestMapping(value = "/del", method=RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage del(HttpServletRequest request, HttpServletResponse response,Long id){
+        ResultMessage msg = gainsInfoService.deleteById(id);
+        return msg;
+    }
+
     /**
      * 参赛选手数据列表
      * @return
      */
     @RequestMapping(value="list")
-    public ModelAndView list(Integer pageNo, ModelMap map){
+    public ModelAndView list(Integer pageNo, ModelMap modelMap,@RequestParam Map<String,Object> map){
 
         Pagination<TbGainsInfoVo> page = gainsInfoService.findByPage(map,pageNo,pageSize);
-        map.put("page", page);
+        modelMap.put("page", page);
+        modelMap.putAll(map);
         return new ModelAndView("gainsInfo/list");
     }
 

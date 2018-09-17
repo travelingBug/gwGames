@@ -1,16 +1,15 @@
 package com.sojson.gainsinfo.service.impl;
 
 import com.sojson.common.ImportHeader;
+import com.sojson.common.RegConstant;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.dao.UTbGainsInfoMapper;
 import com.sojson.common.model.TbGainsInfo;
+import com.sojson.common.model.TbPlayer;
 import com.sojson.common.model.dto.TbGainsInfoDto;
 import com.sojson.common.model.dto.TbPlayerDto;
 import com.sojson.common.model.vo.TbGainsInfoVo;
-import com.sojson.common.utils.ExcelToBeanUtil;
-import com.sojson.common.utils.ExcelUtil;
-import com.sojson.common.utils.LoggerUtils;
-import com.sojson.common.utils.StringUtils;
+import com.sojson.common.utils.*;
 import com.sojson.core.config.IConfig;
 import com.sojson.core.mybatis.BaseMybatisDao;
 import com.sojson.core.mybatis.page.Pagination;
@@ -25,6 +24,8 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+
+import static com.sojson.common.RegConstant.moneyReg;
 
 /**
  * Created by lx on 2018/8/27.
@@ -44,7 +45,6 @@ public class GainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> imp
      * @return
      */
     @Override
-    @Transactional
     public ResultMessage importGainsExcel(MultipartFile file) {
         ResultMessage msg = beforeImport(file);
         if (msg.getLevel() == ResultMessage.MSG_LEVEL.SUCC.v ) { //验证正确则继续处理后续文件操作
@@ -140,4 +140,93 @@ public class GainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> imp
         return super.findPage(resultMap, pageNo, pageSize);
     }
 
+    @Override
+    @Transactional
+    public ResultMessage update(TbGainsInfo tbGainsInfo){
+        ResultMessage msg = beforeInDb(tbGainsInfo);
+        if (msg.getLevel() == ResultMessage.MSG_LEVEL.SUCC.v) {
+            tbGainsInfo.setModTime(new Date());
+            uTbGainsInfoMapper.updateByPrimaryKeySelective(tbGainsInfo);
+        }
+        return msg;
+    }
+
+    @Override
+    @Transactional
+    public ResultMessage add(TbGainsInfo tbGainsInfo){
+        ResultMessage msg = beforeInDb(tbGainsInfo);
+        if (msg.getLevel() == ResultMessage.MSG_LEVEL.SUCC.v) {
+            tbGainsInfo.setCrtTime(new Date());
+            uTbGainsInfoMapper.insert(tbGainsInfo);
+        }
+        return msg;
+    }
+
+
+    @Override
+    @Transactional
+    public ResultMessage deleteById(Long id){
+        uTbGainsInfoMapper.deleteById(id);
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
+    }
+
+    private ResultMessage beforeInDb(TbGainsInfo tbGainsInfo){
+        //操作时间
+        if (tbGainsInfo.getBusinessTime() == null){
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"操作时间不能为空！");
+        }
+
+
+
+        //股票代码
+        if (StringUtils.isBlank(tbGainsInfo.getSharesCode()) || tbGainsInfo.getSharesCode().toString().length() > 20) {
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"股票代码格式错误！");
+        }
+        //股票名称
+        if (StringUtils.isBlank(tbGainsInfo.getSharesName()) || tbGainsInfo.getSharesName().toString().length() > 50) {
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"股票名称格式错误！");
+        }
+        //买卖标志
+        if (tbGainsInfo.getBusinessFlag() == null || !(tbGainsInfo.getBusinessFlag() == 1 || tbGainsInfo.getBusinessFlag() == 0)) {
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"买卖标志错误！");
+        }
+        //成交数量
+        if (StringUtils.isBlank(tbGainsInfo.getVolume()) || !tbGainsInfo.getVolume().toString().matches(RegConstant.numReg)) {
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"成交数量格式错误！");
+        }
+
+        //成交价格
+        if (StringUtils.isBlank(tbGainsInfo.getPrice()) || !tbGainsInfo.getPrice().toString().matches(RegConstant.moneyReg)) {
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"成交价格格式错误！");
+        }
+
+        //总资产
+        if (StringUtils.isBlank(tbGainsInfo.getTotalMoney()) || !tbGainsInfo.getTotalMoney().toString().matches(RegConstant.moneyReg)) {
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"总资产格式错误！");
+        }
+
+        //验证身份证
+        TbPlayerDto player  = new TbPlayerDto();
+        player.setIdCard(tbGainsInfo.getIdCard());
+        List<TbPlayer> players = playerService.findAll(player);
+        if (players == null ||  players.size() == 0) {
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"此身份证没有对应参赛选手！");
+        }
+
+        //如果是新增则验证是不是重复数据
+        if (tbGainsInfo.getId() == null) {
+            List<TbGainsInfoVo> gainsInfos = uTbGainsInfoMapper.findGainsInfo(tbGainsInfo);
+            if (gainsInfos != null && gainsInfos.size() > 0) {
+                return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"重复数据，请检查后再添加！");
+            }
+
+            //新增才验证身份证
+            if (tbGainsInfo.getIdCard() == null || !VaildUtils.cardCodeValid(tbGainsInfo.getIdCard())) {
+                return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"身份格式不正确！");
+            }
+        }
+
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
+
+    }
 }

@@ -2,6 +2,7 @@ package com.sojson.gainsinfo.service;
 
 
 import com.sojson.common.ResultMessage;
+import com.sojson.common.model.TbGainsInfo;
 import com.sojson.common.model.dto.TbGainsInfoDto;
 import com.sojson.common.model.vo.TbGainsInfoVo;
 import com.sojson.core.mybatis.page.Pagination;
@@ -22,4 +23,15 @@ public interface GainsInfoService {
 
     Pagination<TbGainsInfoVo> findByPage(Map<String, Object> resultMap, Integer pageNo,
                                          Integer pageSize);
+
+    /**
+     * 修改
+     * @param tbGainsInfo
+     * @return
+     */
+    public ResultMessage update(TbGainsInfo tbGainsInfo);
+
+    public ResultMessage add(TbGainsInfo tbGainsInfo);
+
+    public ResultMessage deleteById(Long id);
 }
