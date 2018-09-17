@@ -6,6 +6,7 @@ import com.sojson.common.dao.UTbPlayerMapper;
 import com.sojson.common.model.TbPlayer;
 import com.sojson.common.model.dto.TbPlayerDto;
 import com.sojson.common.utils.RedisUtil;
+import com.sojson.common.utils.SendMsgUtil;
 import com.sojson.common.utils.StringUtils;
 import com.sojson.common.utils.VaildUtils;
 import com.sojson.core.mybatis.BaseMybatisDao;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class TbPlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> implements TbPlayerService {
@@ -37,6 +37,8 @@ public class TbPlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> impleme
 			msg.setMessageText("申请成功！");
 			//删除redies缓存
 			redisUtil.delete(dto.getTelPhone());
+
+			SendMsgUtil.sendAdminMsg("18019565656,18980907645,15982113122");
 		}
 		return msg;
 	}
