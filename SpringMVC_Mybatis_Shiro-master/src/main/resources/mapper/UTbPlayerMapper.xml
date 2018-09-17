@@ -13,7 +13,7 @@
     <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Player_Column_List" >
-    ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,crt_time
+    ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,crt_time,ACCOUNT,BZ
   </sql>
   <sql id="limit_sql">
   	   <if test="page_sql != null and page_sql != ''">
@@ -85,9 +85,12 @@
       <!--<if test="idCard != null" >-->
         <!--ID_CARD = #{idCard,jdbcType=VARCHAR},-->
       <!--</if>-->
-      <!--<if test="telPhone != null" >-->
-        <!--TEL_PHONE = #{telPhone,jdbcType=VARCHAR},-->
-      <!--</if>-->
+      <if test="bz != null and bz != ''" >
+        BZ = #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null and account != ''" >
+        ACCOUNT = #{account,jdbcType=VARCHAR},
+      </if>
       <if test="accountName != null and accountName !=''" >
         ACCOUNT_NAME = #{accountName,jdbcType=VARCHAR},
       </if>

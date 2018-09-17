@@ -14,3 +14,23 @@
 #playerForm .normal:hover{
     color: #4dabf7;
 }
+
+#div_refresh{
+    cursor: pointer;
+    width: 5rem;
+    height: 3.5rem;
+    text-align: center;
+    padding: 0.75rem;
+    float: right;
+    background-color: #339af0;
+    border-radius: 5px;
+}
+
+#div_refresh:hover{
+    background-color: #1864ab;
+}
+
+#i_refresh{
+    color: #ffffff !important;
+    font-size: 2rem;
+}

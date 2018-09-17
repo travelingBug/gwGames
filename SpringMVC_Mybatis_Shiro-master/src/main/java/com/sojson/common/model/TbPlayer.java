@@ -1,6 +1,6 @@
 package com.sojson.common.model;
 
-import net.sf.json.JSONObject;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -55,6 +55,16 @@ public class TbPlayer implements Serializable{
      */
 	private Date modTime;
 
+    /**
+     * 资金账号
+     */
+    private String account = "";
+
+    /**
+     * 备注
+     */
+    private String bz = "";
+
     public String getId() {
         return id;
     }
@@ -107,6 +117,7 @@ public class TbPlayer implements Serializable{
         return crtTime;
     }
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public void setCrtTime(Date crtTime) {
         this.crtTime = crtTime;
     }
@@ -125,5 +136,21 @@ public class TbPlayer implements Serializable{
 
     public void setAccountName(String accountName) {
         this.accountName = accountName;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getBz() {
+        return bz;
+    }
+
+    public void setBz(String bz) {
+        this.bz = bz;
     }
 }
