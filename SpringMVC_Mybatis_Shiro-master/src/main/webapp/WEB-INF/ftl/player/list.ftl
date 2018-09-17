@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 	<head>
 		<meta charset="utf-8" />
-		<title>参赛人员列表</title>
+		<title>选手列表</title>
 		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 		<link   rel="icon" href="https://open.sojson.com/favicon.ico" type="image/x-icon" />
 		<link   rel="shortcut icon" href="https://open.sojson.com/favicon.ico" />
@@ -20,9 +20,8 @@
 				so.checkBoxInit('#checkAll','[check=box]');
 
 				$("#player_btn_submit").click(function(){
-					var id = $("#player_edit_id").val();
-					var accountName = $("#player_accountName").val();
-                    $.post('${basePath}/player/editPlayer.shtml',{accountName:accountName,id:id},function(result){
+					var data = $("#play_edit_form").serialize();
+                    $.post('${basePath}/player/editPlayer.shtml',data,function(result){
                         if(result && result.level != 1){
                             return layer.msg(result.messageText,so.default),!0;
                         }else{
@@ -33,16 +32,11 @@
                         }
                     },'json');
 				});
-			});
 
-			<@shiro.hasPermission name="/player/auditById.shtml">
-            //根据ID数组，删除
-            function _audit(id, status){
-                var text = status==1?'通过':'不通过';
-                var index = layer.confirm("确定"+text+"当前选手？",function(){
-                    var load = layer.load();
-                    $.post('${basePath}/player/auditById.shtml',{auditFlag:status,id:id},function(result){
-                        layer.close(load);
+				<@shiro.hasPermission name="/player/auditById.shtml">
+                $("#player_audit_submit").click(function(){
+                    var data = $("#play_audit_form").serialize();
+                    $.post('${basePath}/player/auditById.shtml',data,function(result){
                         if(result && result.level != 1){
                             return layer.msg(result.messageText,so.default),!0;
                         }else{
@@ -52,14 +46,33 @@
                             },1000);
                         }
                     },'json');
+                });
+				</@shiro.hasPermission>
+
+				$("#i_refresh").click(function(){
+					$("#playerForm")[0].reset();
+                    $('#playerForm').submit();
+				});
+			});
+
+
+            //根据ID数组，删除
+            function _audit(id, status){
+                var text = status==1?'通过':'不通过';
+                var index = layer.confirm("确定"+text+"当前选手？",function(){
+                    $("#player_audit_id").val(id);
+                    $("#player_audit_status").val(status);
                     layer.close(index);
+
+					$("#playerAuditModal").modal();
                 });
             }
-			</@shiro.hasPermission>
 
-			function _edit(id, name){
+			function _edit(id, name, account, bz){
 				$("#player_edit_id").val(id);
                 $("#player_accountName").val(name);
+				$("#player_account").val(account);
+				$("#player_bz").val(bz);
 			}
 
 		</script>
@@ -79,14 +92,18 @@
 					        <input type="text" class="form-control" style="width: 300px;" value="${findContent?default('')}" 
 					        			name="findContent" id="findContent" placeholder="输入昵称 / 帐号">
 							<select name="auditFlag" class="form-control">
+                                <option value="">全部</option>
                                 <option value="0">待审核</option>
                                 <option value="1">通过</option>
                                 <option value="2">不通过</option>
 							</select>
 					      </div>
-					     <span class=""> <#--pull-right -->
+					     <span> <#--pull-right -->
 				         	<button type="submit" class="btn btn-primary">查询</button>
-				         </span>    
+				         </span>
+						  <div id="div_refresh">
+                              <i class="fas fa-redo-alt" id="i_refresh" title="刷新"></i>
+						  </div>
 				        </div>
 					<hr>
 					<table class="table table-bordered">
@@ -94,8 +111,11 @@
 							<th><input type="checkbox" id="checkAll"/></th>
 							<th>昵称</th>
 							<th>姓名</th>
+							<th>资金账号</th>
 							<th>身份证</th>
 							<th>手机号</th>
+							<th>报名时间</th>
+							<th>备注</th>
 							<th>审核状态</th>
 							<th>操作</th>
 						</tr>
@@ -105,8 +125,11 @@
 									<td><input value="${it.id}" check='box' type="checkbox" /></td>
 									<td>${it.accountName}</td>
 									<td>${it.name}</td>
+									<td>${it.account}</td>
 									<td>${it.idCard}</td>
 									<td>${it.telPhone}</td>
+									<td>${it.crtTime?string("yyyy-MM-dd HH:mm:ss")}</td>
+									<td>${it.bz}</td>
 									<td>
 										<#if it.auditFlag==0>
 											待审核
@@ -127,13 +150,13 @@
                                             	<a href="javascript:_audit('${it.id}','2');"><i class="fas fa-times-circle fail" title="不通过"></i></a>
 											</#if>
 										</@shiro.hasPermission>
-                                        <a href="javascript:_edit('${it.id}', '${it.accountName}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#playerEditModal"></i></a>
+                                        <a href="javascript:_edit('${it.id}', '${it.accountName}','${it.account}','${it.bz}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#playerEditModal"></i></a>
 									</td>
 								</tr>
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="6">没有找到参赛人员</td>
+								<td class="text-center danger" colspan="10">没有找到参赛选手</td>
 							</tr>
 						</#if>
 					</table>
@@ -152,14 +175,47 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group">
-										<input type="hidden" name="id" id="player_edit_id">
-                                        <label for="player_accountName">昵称</label>
-                                        <input type="text" name="accountName" class="form-control" id="player_accountName" placeholder="昵称">
+                                        <form id="play_edit_form" action="#" method="post">
+											<input type="hidden" name="id" id="player_edit_id">
+											<label for="player_accountName">昵称</label>
+											<input type="text" name="accountName" class="form-control" id="player_accountName" placeholder="昵称">
+											<label for="player_account">资金账号</label>
+											<input type="text" name="account" class="form-control" id="player_account" placeholder="资金账号">
+											<label for="player_bz">备注</label>
+											<textarea name="bz" class="form-control" id="player_bz" placeholder="备注"></textarea>
+										</form>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
                                     <button type="button" id="player_btn_submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-save normal"></i>&nbsp;保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="playerAuditModal" tabindex="-1" role="dialog" aria-labelledby="playerAuditModalLabel">
+                        <div class="modal-dialog" role="document" style="width:30%;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title" id="playerAModalLabel">审核选手</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+										<form id="play_audit_form" action="#" method="post">
+											<input type="hidden" name="id" id="player_audit_id">
+											<input type="hidden" name="auditFlag" id="player_audit_status">
+											<label for="player_account">资金账号</label>
+											<input type="text" name="account" class="form-control" placeholder="资金账号">
+											<label for="player_bz">备注</label>
+											<textarea name="bz" class="form-control" placeholder="备注"></textarea>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                                    <button type="button" id="player_audit_submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-save normal"></i>&nbsp;保存</button>
                                 </div>
                             </div>
                         </div>

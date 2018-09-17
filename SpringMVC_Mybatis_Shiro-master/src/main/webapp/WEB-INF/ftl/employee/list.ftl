@@ -91,10 +91,10 @@
 	</head>
 	<body data-target="#one" data-spy="scroll">
 		
-		<@_top.top 4/>
+		<@_top.top 6/>
 		<div class="container" style="padding-bottom: 15px;min-height: 300px; margin-top: 40px;">
 			<div class="row">
-				<@_left.player 1/>
+				<@_left.employee 1/>
 				<div class="col-md-10">
 					<h2>员工列表</h2>
 					<hr>
