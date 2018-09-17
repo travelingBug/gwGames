@@ -631,32 +631,32 @@ select option {
 
 /* 21、icon
  * -------------------------------------------------- */
-.icon-close { background: url(../images/icon_close.png) no-repeat;background-size: 100%;}
-.icon-wrong { background: url(../images/icon_wrong.png) no-repeat;background-size: 100%;}
-.icon-right { background: url(../images/icon_right.png) no-repeat;background-size: 100%;}
-.icon-weibo { background: url(../images/icon_weibo.png) no-repeat;background-size: 100%;}
-.icon-jf { background: url(../images/icon_jf.png) no-repeat;background-size: 100%;}
-.icon-bmcs { background: url(../images/icon_bmcs.png) no-repeat;background-size: 100%;}
-.icon-gszc { background: url(../images/icon_gszc.png) no-repeat;background-size: 100%;}
-.icon-ranking { background: url(../images/icon_ranking.png) no-repeat;background-size: 100%;}
-.icon-one { background: url(../images/icon_one.png) no-repeat;background-size: 100%;}
-.icon-two { background: url(../images/icon_two.png) no-repeat;background-size: 100%;}
-.icon-three { background: url(../images/icon_three.png) no-repeat;background-size: 100%;}
-.icon-tj { background: url(../images/icon_tj.png) no-repeat;background-size: 100%;}
-.icon-gz { background:url(../images/logo_gz.png) no-repeat;background-size: 100%;}
-.icon-jd { background:url(../images/logo_jd.png)no-repeat;background-size: 100%;}
-.icon-arrow-down { background:url(../images/icon_arrow_down.png)no-repeat;background-size: 100%;}
-.icon-phone { background:url(../images/icon_phone.png)no-repeat;background-size: 100%;}
-.icon-qq { background:url(../images/icon_qq.png)no-repeat;background-size: 100%;}
-.img-wechat-1 { background:url(../images/img_wechat_01.png)no-repeat;background-size: 100%;}
-.img-wechat-2 { background:url(../images/img_wechat_02.png)no-repeat;background-size: 100%;}
-.fw-box .icon-close { background:url(../images/icon_close_golden.png)no-repeat;background-size: 100%;}
-.zn-box .icon-close { background:url(../images/icon_close_red.png)no-repeat;background-size: 100%;}
-.btn-zxzx { background:url(../images/btn_zxzx.png)no-repeat;background-size: 100%;}
-.btn-cjwt { background:url(../images/btn_cjwt.png)no-repeat;background-size: 100%;}
-.btn-appxz { background:url(../images/btn_appxz.png)no-repeat;background-size: 100%;}
-.btn-bmcs { background:url(../images/btn_bmcs.png)no-repeat;background-size: 100%;}
-.btn-gszc { background:url(../images/btn_gszc.png)no-repeat;background-size: 100%;}
+.icon-close { background: url(http://60.205.189.94:8080/images/icon_close.png) no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/icon_close.png',sizingMethod='scale');}
+.icon-wrong { background: url(http://60.205.189.94:8080/images/icon_wrong.png) no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/icon_wrong.png',sizingMethod='scale');}
+.icon-right { background: url(http://60.205.189.94:8080/images/icon_right.png) no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/icon_right.png',sizingMethod='scale');}
+.icon-weibo { background: url(http://60.205.189.94:8080/images/icon_weibo.png) no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/icon_weibo.png',sizingMethod='scale');}
+.icon-jf { background: url(http://60.205.189.94:8080/images/icon_jf.png) no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/icon_jf.png',sizingMethod='scale');}
+.icon-bmcs { background: url(http://60.205.189.94:8080/images/icon_bmcs.png) no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/icon_bmcs.png',sizingMethod='scale');}
+.icon-gszc { background: url(http://60.205.189.94:8080/images/icon_gszc.png) no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/icon_gszc.png',sizingMethod='scale');}
+.icon-ranking { background: url(http://60.205.189.94:8080/images/icon_ranking.png) no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/icon_ranking.png',sizingMethod='scale');}
+.icon-one { background: url(http://60.205.189.94:8080/images/icon_one.png) no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/icon_one.png',sizingMethod='scale');}
+.icon-two { background: url(http://60.205.189.94:8080/images/icon_two.png) no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/icon_two.png',sizingMethod='scale');}
+.icon-three { background: url(http://60.205.189.94:8080/images/icon_three.png) no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/icon_three.png',sizingMethod='scale');}
+.icon-tj { background: url(http://60.205.189.94:8080/images/icon_tj.png) no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/icon_tj.png',sizingMethod='scale');}
+.icon-gz { background:url(http://60.205.189.94:8080/images/logo_gz.png) no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/logo_gz.png',sizingMethod='scale');}
+.icon-jd { background:url(http://60.205.189.94:8080/images/logo_jd.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/logo_jd.png',sizingMethod='scale');}
+.icon-arrow-down { background:url(http://60.205.189.94:8080/images/icon_arrow_down.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/icon_arrow_down.png',sizingMethod='scale');}
+.icon-phone { background:url(http://60.205.189.94:8080/images/icon_phone.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/icon_phone.png',sizingMethod='scale');}
+.icon-qq { background:url(http://60.205.189.94:8080/images/icon_qq.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/icon_qq.png',sizingMethod='scale');}
+.img-wechat-1 { background:url(http://60.205.189.94:8080/images/img_wechat_01.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/img_wechat_01.png',sizingMethod='scale');}
+.img-wechat-2 { background:url(http://60.205.189.94:8080/images/img_wechat_02.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/img_wechat_02.png',sizingMethod='scale');}
+.fw-box .icon-close { background:url(http://60.205.189.94:8080/images/icon_close_golden.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/icon_close_golden.png',sizingMethod='scale');}
+.zn-box .icon-close { background:url(http://60.205.189.94:8080/images/icon_close_red.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/icon_close_red.png',sizingMethod='scale');}
+.btn-zxzx { background:url(http://60.205.189.94:8080/images/btn_zxzx.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/btn_zxzx.png',sizingMethod='scale');}
+.btn-cjwt { background:url(http://60.205.189.94:8080/images/btn_cjwt.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/btn_cjwt.png',sizingMethod='scale');}
+.btn-appxz { background:url(http://60.205.189.94:8080/images/btn_appxz.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/btn_appxz.png',sizingMethod='scale');}
+.btn-bmcs { background:url(http://60.205.189.94:8080/images/btn_bmcs.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/btn_bmcs.png',sizingMethod='scale');}
+.btn-gszc { background:url(http://60.205.189.94:8080/images/btn_gszc.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/btn_gszc.png',sizingMethod='scale');}
 
 
 
