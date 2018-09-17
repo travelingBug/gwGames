@@ -15,7 +15,6 @@
 		<script >
 			so.init(function(){
 
-
 				//初始化全选。
 				so.checkBoxInit('#checkAll','[check=box]');
 				

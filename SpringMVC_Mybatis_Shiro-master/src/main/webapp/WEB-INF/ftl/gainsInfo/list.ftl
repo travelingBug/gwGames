@@ -319,7 +319,7 @@
 		<@_top.top 4/>
 		<div class="container" style="padding-bottom: 15px;min-height: 300px; margin-top: 40px;">
 			<div class="row">
-				<@_left.player 1/>
+				<@_left.player 2/>
 				<div class="col-md-10">
 					<h2>参赛选手数据表</h2>
 					<hr>
@@ -357,7 +357,7 @@
                                     <a class="btn btn-success" onclick="$('#gainsInfoAddModal').modal();">增加选手资料</a>
                                     <form enctype="multipart/form-data" id="excelForm"   method="post" >
                                         <button class="btn btn-primary" id="uploadEventBtn"  type="button" >导入选手数据</button>
-                                        <input type="file" name="file"  style="width:0px;height:0px;" id="uploadEventFile" />
+                                        <input type="file" name="file"  style="width:0px;height:0px;display: none;" id="uploadEventFile" />
                                     </form>
                                 </span>
                             </div>
