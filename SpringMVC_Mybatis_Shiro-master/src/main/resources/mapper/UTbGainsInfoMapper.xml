@@ -141,7 +141,7 @@
   <insert id="insertBatch" parameterType="java.util.List">
     insert into tb_gains_info (ID_CARD,SHARES_CODE,SHARES_NAME,BUSINESS_FLAG,VOLUME,PRICE,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME) values
     <foreach collection="list" item="item" index="index" separator=",">
-      ( #{item.idCard,jdbcType=VARCHAR},#{item.sharesCode,jdbcType=VARCHAR},#{item.sharesNmae,jdbcType=VARCHAR},#{item.businessFlag,jdbcType=TINYINT},
+      ( #{item.idCard,jdbcType=VARCHAR},#{item.sharesCode,jdbcType=VARCHAR},#{item.sharesName,jdbcType=VARCHAR},#{item.businessFlag,jdbcType=TINYINT},
       #{item.volume,jdbcType=INTEGER}, #{item.price,jdbcType=VARCHAR}, #{item.totalMoney,jdbcType=VARCHAR}, #{item.businessTime,jdbcType=TIMESTAMP}, #{item.crtTime,jdbcType=TIMESTAMP}
       )
     </foreach>

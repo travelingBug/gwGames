@@ -45,6 +45,7 @@ public class GainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> imp
      * @return
      */
     @Override
+    @Transactional
     public ResultMessage importGainsExcel(MultipartFile file) {
         ResultMessage msg = beforeImport(file);
         if (msg.getLevel() == ResultMessage.MSG_LEVEL.SUCC.v ) { //验证正确则继续处理后续文件操作
