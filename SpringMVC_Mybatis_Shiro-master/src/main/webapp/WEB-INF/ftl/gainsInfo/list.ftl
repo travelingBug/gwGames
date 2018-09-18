@@ -274,12 +274,16 @@
 
             function bindFile(){
                 $("#uploadEventFile").bind("change", function() {
+
                     var uploadEventFile = $("#uploadEventFile").val();
                     if (uploadEventFile == '') {
-                        alert("请择excel,再上传");
+                        msg("请择excel,再上传");
+                        return;
                     } else if (uploadEventFile.lastIndexOf(".xls") < 0 || uploadEventFile.lastIndexOf(".xlsx") < 0) {//可判断以.xls和.xlsx结尾的excel
-                        alert("只能上传Excel文件");
+                        msg("只能上传Excel文件");
+                        return;
                     } else {
+                        $("#contentDiv").mask("文件上传中，请稍后...");
                         var formData = new FormData();
                         formData.append('file', $('#uploadEventFile')[0].files[0]);
                         $.ajax({
@@ -288,6 +292,7 @@
                             data : formData,
                             dataType : "json",
                             success : function(result) {
+                                $("#contentDiv").unmask();
                                 var msg = result.messageText;
                                 if (result.data && result.data.length == 2) {
                                     msg = msg + "<a href='${basePath}/download.shtml?fileOutName="+encodeURI(encodeURI(result.data[0]))+"&filePath="+result.data[1]+"'>点击下载错误信息</a>";
@@ -299,6 +304,7 @@
                                 replaceFile();
                             },
                             error : function(result) {
+                                $("#contentDiv").unmask();
                                 layer.alert(result.messageText, {
                                     icon: 0,
                                     skin: 'layui-layer-lan'
@@ -314,10 +320,10 @@
             }
 		</script>
 	</head>
-	<body data-target="#one" data-spy="scroll">
+	<body data-target="#one" data-spy="scroll" id="contentDiv">
 		
 		<@_top.top 4/>
-		<div class="container" style="padding-bottom: 15px;min-height: 300px; margin-top: 40px;">
+		<div class="container" style="padding-bottom: 15px;min-height: 300px; margin-top: 40px;" >
 			<div class="row">
 				<@_left.player 2/>
 				<div class="col-md-10">
