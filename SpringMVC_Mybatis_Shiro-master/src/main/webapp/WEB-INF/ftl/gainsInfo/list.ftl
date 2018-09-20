@@ -360,11 +360,14 @@
                             <div class="form-group  col-sm-4">
                                 <span class=""> <#--pull-right -->
                                     <button type="submit" class="btn btn-primary">查询</button>
-                                    <a class="btn btn-success" onclick="$('#gainsInfoAddModal').modal();">增加选手资料</a>
+                                    <a class="btn btn-success" onclick="$('#gainsInfoAddModal').modal();">添加</a>
                                     <form enctype="multipart/form-data" id="excelForm"   method="post" >
-                                        <button class="btn btn-primary" id="uploadEventBtn"  type="button" >导入选手数据</button>
+                                        <button class="btn btn-primary" id="uploadEventBtn"  type="button" >
+                                            导入
+                                        </button>
                                         <input type="file" name="file"  style="width:0px;height:0px;display: none;" id="uploadEventFile" />
                                     </form>
+                                    <a href="${basePath}/file/gainsInfo.xlsx">模板下载</a>
                                 </span>
                             </div>
 						</div>
