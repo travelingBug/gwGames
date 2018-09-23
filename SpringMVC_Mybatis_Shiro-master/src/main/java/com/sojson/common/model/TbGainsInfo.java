@@ -46,6 +46,11 @@ public class TbGainsInfo implements Serializable {
     private String price;
 
     /**
+     * 资金余额
+     */
+    private String balanceMoney;
+
+    /**
      * '总资产'
      */
     private String totalMoney;
@@ -155,4 +160,11 @@ public class TbGainsInfo implements Serializable {
         this.sharesName = sharesName;
     }
 
+    public String getBalanceMoney() {
+        return balanceMoney;
+    }
+
+    public void setBalanceMoney(String balanceMoney) {
+        this.balanceMoney = balanceMoney;
+    }
 }

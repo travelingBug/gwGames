@@ -6,6 +6,7 @@ import com.sojson.common.model.dto.TbPlayerDto;
 import com.sojson.common.model.vo.TbGainsInfoVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UTbGainsInfoMapper {
 
@@ -38,4 +39,19 @@ public interface UTbGainsInfoMapper {
      * @return
      */
     int deleteById(Long id);
+
+    /**
+     * 查询总榜的内容
+     */
+    List<TbGainsInfoVo>  findTopForAll();
+
+    /**
+     * 查询月榜
+     */
+    List<TbGainsInfoVo>  findTopByMonth(Map<String,Object> param);
+
+    /**
+     * 根据身份证查询选手数据
+     */
+    List<TbGainsInfoVo> getGainsInfoByIdCards(List<String> idCards);
 }

@@ -23,6 +23,7 @@ public class ImportHeader {
         gainsInfoHeadReal.put("成交数量","volume");
         gainsInfoHeadReal.put("成交价格","price");
         gainsInfoHeadReal.put("总资产","totalMoney");
+        gainsInfoHeadReal.put("资金余额","balanceMoney");
     }
 
     private static LinkedHashMap<String,IFormatExcel> gainsInfoHeadFormat = new LinkedHashMap<String,IFormatExcel>();

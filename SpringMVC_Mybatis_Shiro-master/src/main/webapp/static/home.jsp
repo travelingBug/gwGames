@@ -169,14 +169,14 @@
         <div class="title"><div class="title-2"></div></div>
         <div class="content">
             <div class="tab1">
-                <a class="on">总收益排行榜</a>
-                <a>月收益排行榜</a>
+                <a class="on" id="all">总收益排行榜</a>
+                <a id="month">月收益排行榜</a>
                 <a class="link">查看更多</a>
             </div>
-            <div class="table-area1">
+            <div class="table-area1" id="allShow">
                 <h3><i class="icon icon-ranking"></i>首届股神大赛总收益排行</h3>
                 <table class="table1">
-                    <tbody>
+                    <tbody  id="topAll">
                     <tr>
                         <th>排名</th>
                         <th>选手</th>
@@ -185,70 +185,23 @@
                         <th>总资产</th>
                         <th>操作</th>
                     </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-area1" style="display: none;" id="monthShow">
+                <h3><i class="icon icon-ranking"></i>首届股神大赛月排行</h3>
+                <table class="table1">
+                    <tbody  id="topMonth">
                     <tr>
-                        <td><em class="icon-one">1</em></td>
-                        <td>a</td>
-                        <td class="red">86%</td>
-                        <td>564</td>
-                        <td>32312321.32</td>
-                        <td><a class="red">观赛</a></td>
+                        <th>排名</th>
+                        <th>选手</th>
+                        <th>总收益</th>
+                        <th>持仓比</th>
+                        <th>总资产</th>
+                        <th>操作</th>
                     </tr>
-                    <tr class="bg">
-                        <td><em class="icon-two">2</em></td>
-                        <td>a</td>
-                        <td class="red">86%</td>
-                        <td>564</td>
-                        <td>32312321.32</td>
-                        <td><a class="red">观赛</a></td>
-                    </tr>
-                    <tr>
-                        <td><em class="icon-three">3</em></td>
-                        <td>a</td>
-                        <td class="red">86%</td>
-                        <td>564</td>
-                        <td>32312321.32</td>
-                        <td><a class="red">观赛</a></td>
-                    </tr>
-                    <tr class="bg">
-                        <td>1</td>
-                        <td>a</td>
-                        <td class="red">86%</td>
-                        <td>564</td>
-                        <td>32312321.32</td>
-                        <td><a class="red">观赛</a></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>a</td>
-                        <td class="red">86%</td>
-                        <td>564</td>
-                        <td>32312321.32</td>
-                        <td><a class="red">观赛</a></td>
-                    </tr>
-                    <tr class="bg">
-                        <td>1</td>
-                        <td>a</td>
-                        <td class="red">86%</td>
-                        <td>564</td>
-                        <td>32312321.32</td>
-                        <td><a class="red">观赛</a></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>a</td>
-                        <td class="red">86%</td>
-                        <td>564</td>
-                        <td>32312321.32</td>
-                        <td><a class="red">观赛</a></td>
-                    </tr>
-                    <tr class="bg">
-                        <td>1</td>
-                        <td>a</td>
-                        <td class="red">86%</td>
-                        <td>564</td>
-                        <td>32312321.32</td>
-                        <td><a class="red">观赛</a></td>
-                    </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -334,15 +287,106 @@
             </div>
         </div>
     </div>
-    <div class="footer home-footer">
-        <div class="content">
-            <ul><li><a>大赛首页</a></li><li>|</li><li><a>赛事规则</a></li><li>|</li><li><a>奖项设置</a></li><li>|</li><li><a>赛事报道</a></li><li>|</li><li><a>比赛排名</a></li><li>|</li><li><a>月度冠军</a></li><li>|</li><li><a>我的账户</a></li></ul>
-        </div>
-        <div class="text">
-            <p>Copyright © 和讯网北京和讯在线信息咨询服务有限公司 </p>
-            <p>联系电话：400-2345-1234 邮箱：eweewe@163.com</p>
-        </div>
-    </div>
+    <%@include file="footer.jsp" %>
 </div>
 </body>
 </html>
+<script>
+    $(function() {
+        $.ajax({
+            type: "POST",
+            url: "interface/gainsInfo/getTopAll.shtml",
+            data: {size: 10},
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (data) {
+                if (data != null && data.length > 0) {
+                    for (var i = 0 ; i < data.length;i++ ) {
+                        var trClass = '';
+                        if (data.length % 2 == 1) {
+                            trClass = 'bg';
+                        }
+                        var showTop= '<td>'+(i+1)+'</td>';
+                        if (i == 0) {
+                            var showTop= '<td><em class="icon-one">'+(i+1)+'</em></td>';
+                        }
+                        if (i == 1) {
+                            var showTop= '<td><em class="icon-two">'+(i+1)+'</em></td>';
+                        }
+                        if (i == 2) {
+                            var showTop= '<td><em class="icon-three">'+(i+1)+'</em></td>';
+                        }
+                        var html = '<tr class="'+trClass+'">';
+                        html += showTop;
+                        html += '<td>'+data[i].accountName+'</td>';
+                        html += '<td class="red">'+data[i].yieldRate+'</td>';
+                        html += '<td>'+data[i].buyForALLRate+'</td>';
+                        html += '<td>'+data[i].totalMoney+'</td>';
+                        html += '<td><a class="red">观赛</a></td>';
+                        html += '</tr>';
+                        $('#topAll').append(html);
+                    }
+
+                }
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "interface/gainsInfo/getTopMonth.shtml",
+            data: {size: 10},
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (data) {
+                if (data != null && data.length > 0) {
+                    for (var i = 0 ; i < data.length;i++ ) {
+                        var trClass = '';
+                        if (data.length % 2 == 1) {
+                            trClass = 'bg';
+                        }
+                        var showTop= '<td>'+(i+1)+'</td>';
+                        if (i == 0) {
+                            var showTop= '<td><em class="icon-one">'+(i+1)+'</em></td>';
+                        }
+                        if (i == 1) {
+                            var showTop= '<td><em class="icon-two">'+(i+1)+'</em></td>';
+                        }
+                        if (i == 2) {
+                            var showTop= '<td><em class="icon-three">'+(i+1)+'</em></td>';
+                        }
+                        var html = '<tr class="'+trClass+'">';
+                        html += showTop;
+                        html += '<td>'+data[i].accountName+'</td>';
+                        html += '<td class="red">'+data[i].yieldRate+'</td>';
+                        html += '<td>'+data[i].buyForALLRate+'</td>';
+                        html += '<td>'+data[i].totalMoney+'</td>';
+                        html += '<td><a class="red">观赛</a></td>';
+                        html += '</tr>';
+                        $('#topMonth').append(html);
+                    }
+
+                }
+            }
+        });
+
+        $('#all').click(function(){
+            $('#all').attr('class','on');
+            $('#month').attr('class','');
+
+            $('#allShow').css('display','block');
+            $('#monthShow').css('display','none');
+        });
+
+        $('#month').click(function(){
+            $('#month').attr('class','on');
+            $('#all').attr('class','');
+
+            $('#monthShow').css('display','block');
+            $('#allShow').css('display','none');
+        });
+    });
+</script>

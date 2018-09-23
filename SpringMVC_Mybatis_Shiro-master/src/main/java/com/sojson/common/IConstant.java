@@ -51,4 +51,8 @@ public interface IConstant {
      */
     String defSessionId = "visitor";
 
+    /**
+     * 本金
+     */
+    Long capital = 300000L;
 }

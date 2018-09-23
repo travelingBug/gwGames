@@ -25,6 +25,16 @@ public class TbGainsInfoVo extends TbGainsInfo {
      */
     private String businessTimeStr;
 
+    /**
+     * 收益金额
+     */
+    private String getMoney;
+
+    /**
+     * 本金
+     */
+    private String capital;
+
     public String getAccountName() {
         return accountName;
     }
@@ -47,5 +57,21 @@ public class TbGainsInfoVo extends TbGainsInfo {
 
     public void setBusinessTimeStr(String businessTimeStr) {
         this.businessTimeStr = businessTimeStr;
+    }
+
+    public String getGetMoney() {
+        return getMoney;
+    }
+
+    public void setGetMoney(String getMoney) {
+        this.getMoney = getMoney;
+    }
+
+    public String getCapital() {
+        return capital;
+    }
+
+    public void setCapital(String capital) {
+        this.capital = capital;
     }
 }
