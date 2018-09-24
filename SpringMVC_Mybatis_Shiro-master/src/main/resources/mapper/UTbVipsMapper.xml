@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.sojson.common.dao.UTbDealerMapper" >
+<mapper namespace="com.sojson.common.dao.UTbVipsMapper" >
   <resultMap id="vipsResultMap" type="com.sojson.common.model.TbVips" >
     <id column="ID" property="id" jdbcType="VARCHAR" />
     <result column="NICKNAME" property="nickName" jdbcType="VARCHAR" />
