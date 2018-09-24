@@ -92,7 +92,11 @@
 							  <@shiro.hasPermission name="/dealer/list.shtml">
                                   <li><a href="${basePath}/dealer/list.shtml?parentId=0">经销商列表</a></li>
 							  </@shiro.hasPermission>
+							  <@shiro.hasPermission name="/dealer/countDealerList.shtml">
+                                  <li><a href="${basePath}/dealer/countDealerList.shtml">经销商会员统计</a></li>
+							  </@shiro.hasPermission>
                           </ul>
+
                       </li>
 				  </@shiro.hasAnyRoles>
 
@@ -106,6 +110,10 @@
 							  <@shiro.hasPermission name="/dealer/employeeList.shtml">
                                   <li><a href="${basePath}/dealer/employeeList.shtml?parentId=${userId}">员工列表</a></li>
 							  </@shiro.hasPermission>
+							  <@shiro.hasPermission name="/dealer/countEmployeeList.shtml">
+                                  <li><a href="${basePath}/dealer/countEmployeeList.shtml">员工会员统计</a></li>
+							  </@shiro.hasPermission>
+
                           </ul>
                       </li>
 				  </@shiro.hasAnyRoles>

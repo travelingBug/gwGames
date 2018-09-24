@@ -301,8 +301,8 @@ select option {
 }
 
 .layer-big .float-div .content {
-	margin:40px 20px 10px 20px;
-	padding: 10px 20px 10px 20px;
+	margin:40px 20px 30px 20px;
+	padding: 10px 20px 30px 20px;
 	overflow-x:hidden;
 	min-height:200px;
 	max-height: 480px;
@@ -429,6 +429,7 @@ select option {
  * -------------------------------------------------- */
 
 .width-1000 { width: 1000px!important;}
+.width-240 { width: 240px!important;}
 .width-220 { width: 220px!important;}
 .width-200 { width: 200px!important;}
 .width-190 { width: 190px!important;}
@@ -452,6 +453,39 @@ select option {
 .ml-10 { margin-left:10px!important;}
 .mtb-20 { margin-top:20px!important; margin-bottom:20px!important;}
 
+/* 14、regsiter
+ * -------------------------------------------------- */
+ 
+ .register .top-box .content .right-area .link {
+	 float:none;
+	 margin-left:10px;
+	 color:#e01818;
+}
+ .register .top-box .content .right-area .link:hover {
+	 color:#f90606;
+}
+ .register .main {
+	 background:#f7f7f7;
+	 overflow:hidden;
+}
+ .register .main .content {
+	 background:#fff;
+	 margin:20px auto;
+	 width:1000px;
+	 overflow:hidden;
+}
+ .register .main .content .title {
+	 border-bottom:1px solid #ebebeb;
+	 overflow:hidden;
+	 margin:20px;
+}
+ .register .main .content .title h3 {
+	 color:#333;
+	 float:left;
+	 font-size:16px;
+	 border-bottom: 4px solid #e33434;
+	 padding:5px 5px 10px 5px;
+}
 
 /* 17、pager
  * -------------------------------------------------- */
@@ -625,6 +659,9 @@ select option {
 	font-size: 13px;
 	margin-bottom: 20px;
 }
+.input {
+	border:1px solid #ebebeb;
+}
 
 
 
@@ -710,6 +747,21 @@ select option {
 	opacity: 0.6;
 	color: #84632f;
 }
+.btn-register {
+	background:#e33434;
+	width:150px;
+	height:44px;
+	line-height:44px;
+	text-align:center;
+	display:block;
+	font-size:16px;
+	color:#fff;
+}
+.btn-register:hover {
+	background:#cd3434;
+	color:#fff;
+}
+
 /* 24、tabs
  * -------------------------------------------------- */
 .tab1 {
@@ -767,6 +819,22 @@ select option {
 	text-align: center;
 	color: #fff;
 	line-height: 24px;
+}
+.table2 {
+	margin:0 auto 40px auto;
+}
+.table2 tr th ,.table2 tr td {
+	padding:10px;
+}
+.table2 tr td .yzm {
+	border:1px solid #e33434;
+	padding:7px 10px;
+	margin-left:10px;
+	color:#e33434;
+	border-radius:4px;
+}
+.table2 tr td .yzm:hover {
+	color:#f90606;
 }
 
 /* 26、box

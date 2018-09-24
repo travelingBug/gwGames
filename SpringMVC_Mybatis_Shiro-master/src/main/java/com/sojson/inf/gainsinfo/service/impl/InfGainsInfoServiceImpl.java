@@ -96,4 +96,8 @@ public class InfGainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> 
 		}
 		GainsInfoCache.putTopForMonth(palyerTopMonthInfos);
 	}
+
+	public void getStrategy(String idCard){
+
+	}
 }

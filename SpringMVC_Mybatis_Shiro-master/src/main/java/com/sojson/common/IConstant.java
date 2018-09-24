@@ -73,4 +73,7 @@ public interface IConstant {
      * 本金
      */
     Long capital = 300000L;
+
+    //父类ID
+    String parentId = "0";
 }

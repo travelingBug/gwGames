@@ -2,6 +2,8 @@ package com.sojson.common.dao;
 
 import com.sojson.common.model.TbDealer;
 
+import java.util.List;
+
 public interface UTbDealerMapper {
 
     int insert(TbDealer record);
@@ -13,4 +15,8 @@ public interface UTbDealerMapper {
     int queryDealerCount();
 
     String getSeatNumByUserId(String userId);
+
+    List<TbDealer> findAll(Object param);
+
+    TbDealer findDealerByUserId(Long userId);
 }

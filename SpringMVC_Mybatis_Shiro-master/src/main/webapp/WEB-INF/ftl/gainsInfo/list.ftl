@@ -392,7 +392,6 @@
 
 					<table class="table table-bordered">
 						<tr>
-							<th><input type="checkbox" id="checkAll"/></th>
 							<th>昵称</th>
 							<th>姓名</th>
 							<th>身份证</th>
@@ -409,7 +408,6 @@
 						<#if page?exists && page.list?size gt 0 >
 							<#list page.list as it>
 								<tr>
-									<td><input value="${it.id}" check='box' type="checkbox" /></td>
 									<td>${it.accountName}</td>
 									<td>${it.name}</td>
 									<td>${it.idCard}</td>

@@ -16,7 +16,7 @@
     <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="dealer_Column_List" >
-    d.ID,d.NAME,d.PHONE,d.ADDRESS,d.TYPE,d.crt_time,d.SEAT_NUM,d.INVITE_NUM
+    d.ID,d.NAME,d.PHONE,d.ADDRESS,d.TYPE,d.crt_time,d.SEAT_NUM,d.INVITE_NUM,d.PARENT_ID
   </sql>
   <sql id="dealer_limit_sql">
   	   <if test="page_sql != null and page_sql != ''">
@@ -97,4 +97,11 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="findDealerByUserId" resultMap="dealerResultMap" >
+    select
+    <include refid="dealer_Column_List" />
+    from tb_dealer d
+    where d.FK_USER_ID = #{userId}
+  </select>
 </mapper>
