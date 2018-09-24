@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by lx on 2018/9/4.
  */
-public class TbDealer implements Serializable {
+public class TbVips implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //0:未删除
@@ -24,9 +24,9 @@ public class TbDealer implements Serializable {
     private String loginName;
 
     /**
-     * 经销商名称
+     * 昵称
      */
-    private String name;
+    private String nickName;
 
     /**
      * 用户编号
@@ -40,12 +40,6 @@ public class TbDealer implements Serializable {
     private Byte delFlag;
 
     /**
-     * 父节点
-     * 0：无父节点
-     */
-    private String parentId;
-
-    /**
      * 手机号码
      */
     private String phone;
@@ -56,19 +50,24 @@ public class TbDealer implements Serializable {
     private String address;
 
     /**
-     * 返点类型
-     */
-    private Byte type;
-
-    /**
      * 角色编号
      */
     private String roleId;
 
     /**
-     * 登录状态(0-禁止登录，1-激活登录)
+     * 会员等级
      */
-    private String status;
+    private Integer level;
+
+    /**
+     * 邀请码
+     */
+    private String inviteCode;
+
+    /**
+     * 会员到期日
+     */
+    private String endTime;
 
     /**
      * 创建时间
@@ -80,25 +79,6 @@ public class TbDealer implements Serializable {
      */
     private Date modTime;
 
-    private String seatNum;
-
-    private String inviteNum;
-
-    public String getSeatNum() {
-        return seatNum;
-    }
-
-    public void setSeatNum(String seatNum) {
-        this.seatNum = seatNum;
-    }
-
-    public String getInviteNum() {
-        return inviteNum;
-    }
-
-    public void setInviteNum(String inviteNum) {
-        this.inviteNum = inviteNum;
-    }
 
     public String getId() {
         return id;
@@ -116,12 +96,12 @@ public class TbDealer implements Serializable {
         this.loginName = loginName;
     }
 
-    public String getName() {
-        return name;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public Long getUserId() {
@@ -132,36 +112,12 @@ public class TbDealer implements Serializable {
         this.userId = userId;
     }
 
-    public Date getCrtTime() {
-        return crtTime;
-    }
-
-    public void setCrtTime(Date crtTime) {
-        this.crtTime = crtTime;
-    }
-
-    public Date getModTime() {
-        return modTime;
-    }
-
-    public void setModTime(Date modTime) {
-        this.modTime = modTime;
-    }
-
     public Byte getDelFlag() {
         return delFlag;
     }
 
     public void setDelFlag(Byte delFlag) {
         this.delFlag = delFlag;
-    }
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
     }
 
     public String getPhone() {
@@ -180,14 +136,6 @@ public class TbDealer implements Serializable {
         this.address = address;
     }
 
-    public Byte getType() {
-        return type;
-    }
-
-    public void setType(Byte type) {
-        this.type = type;
-    }
-
     public String getRoleId() {
         return roleId;
     }
@@ -196,11 +144,43 @@ public class TbDealer implements Serializable {
         this.roleId = roleId;
     }
 
-    public String getStatus() {
-        return status;
+    public Integer getLevel() {
+        return level;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public String getInviteCode() {
+        return inviteCode;
+    }
+
+    public void setInviteCode(String inviteCode) {
+        this.inviteCode = inviteCode;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public Date getCrtTime() {
+        return crtTime;
+    }
+
+    public void setCrtTime(Date crtTime) {
+        this.crtTime = crtTime;
+    }
+
+    public Date getModTime() {
+        return modTime;
+    }
+
+    public void setModTime(Date modTime) {
+        this.modTime = modTime;
     }
 }

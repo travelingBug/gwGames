@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sojson.common.dao.UTbDealerMapper" >
+  <resultMap id="vipsResultMap" type="com.sojson.common.model.TbVips" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="NICKNAME" property="nickName" jdbcType="VARCHAR" />
+    <result column="FK_USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="INVITAION_CODE" property="inviteCode" jdbcType="VARCHAR" />
+    <result column="DEL_FLAG" property="delFlag" jdbcType="TINYINT" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="LEVEL" property="level" jdbcType="TINYINT" />
+    <result column="END_TIME" property="endTime" jdbcType="TINYINT" />
+    <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
+    <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="vips_Column_List" >
+    d.ID,d.NICKNAME,d.INVITAION_CODE,d.LEVEL,d.PHONE,d.ADDRESS,d.END_TIME,d.crt_time,d.FK_USER_ID
+  </sql>
+  <sql id="vips_limit_sql">
+  	   <if test="page_sql != null and page_sql != ''">
+      	${page_sql}
+      </if>
+  </sql>
+  
+  <sql id="vips_where_all">
+  	<where>
+      d.DEL_FLAG = 0
+      <if test="findContent != null and findContent !=''">
+--         and (d.name like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%'))
+--         or u.email like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%')))
+      </if>
+      <if test="inviteCode != null and inviteCode !='' " >
+        and INVITAION_CODE = #{inviteCode}
+      </if>
+     </where>
+  </sql>
+
+  <sql id="vips_order_all">
+    ORDER BY d.crt_time
+  </sql>
+  <select id="findAll" resultMap="vipsResultMap" >
+  	select
+    <include refid="vips_Column_List" />,
+    u.email as loginName,u.id as userId
+    from tb_vip d
+    LEFT JOIN u_user u
+    ON u.id = d.FK_USER_ID
+    <include refid="vips_where_all"/>
+    <include refid="vips_order_all"/>
+    <include refid="vips_limit_sql" />
+  </select>
+  <select id="findCount" resultMap="vipsResultMap" >
+ 	 select count(d.id) from  tb_vip d
+  	<include refid="vips_where_all" />
+  </select>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbVips" >
+    insert into tb_vip (ID,FK_USER_ID,NICKNAME,INVITAION_CODE,PHONE,ADDRESS,DEL_FLAG,LEVEL,CRT_TIME,END_TIME)
+    values (#{id},#{userId},#{nickName},#{inviteCode},#{phone},#{address},#{delFlag},#{level},#{crtTime},#{END_TIME})
+  </insert>
+  <update id="update" parameterType="com.sojson.common.model.TbVips" >
+    update tb_vip
+    <set>
+      MOD_TIME = #{modTime,jdbcType=TIMESTAMP}
+      <if test="nickName != null and nickName !=''" >
+        ,NICKNAME = #{nickName,jdbcType=VARCHAR}
+      </if>
+      <if test="type != null and type != ''">
+        ,LEVEL = #{level}
+      </if>
+      <if test="phone != null and phone != ''">
+        ,PHONE = #{phone}
+      </if>
+      <if test="address != null and address != ''">
+        ,ADDRESS = #{address}
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="delete" parameterType="String">
+    update tb_vip
+    <set >
+      DEL_FLAG = 1
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
