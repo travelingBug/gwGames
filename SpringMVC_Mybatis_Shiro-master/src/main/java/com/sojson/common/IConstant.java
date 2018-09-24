@@ -43,6 +43,24 @@ public interface IConstant {
     }
 
     /**
+     * VIP类型
+     * 1:500-A 2：2000-B 3：3000-C
+     */
+    public enum VIP_LEVEL {
+        /** 500-A  */
+        VIP_A((byte)1),
+        /** 2000-B*/
+        VIP_B((byte)2),
+        /**3000-C*/
+        VIP_C((byte)3);
+
+        public byte v;
+        private VIP_LEVEL(byte v) {
+            this.v = v;
+        }
+    }
+
+    /**
      * 默认key
      */
     String key = "tJjwxDz4WF0Sf9JT";
