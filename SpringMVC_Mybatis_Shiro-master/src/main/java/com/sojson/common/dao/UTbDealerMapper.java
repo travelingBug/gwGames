@@ -9,4 +9,8 @@ public interface UTbDealerMapper {
     int update(TbDealer record);
 
     void delete(String id);
+
+    int queryDealerCount();
+
+    String getSeatNumByUserId(String userId);
 }
