@@ -24,12 +24,21 @@ public class MessageController extends BaseController {
 	 * @param telPhone
 	 * @return
 	 */
-	@RequestMapping(value="send",method=RequestMethod.POST,produces = "application/json;charset=utf-8")
+	@RequestMapping(value="send",method=RequestMethod.POST)
 	@ResponseBody
 	public ResultMessage send(String telPhone){
 
 		return messageService.send(telPhone);
 	}
+
+	@RequestMapping(value="sendValidCode",method=RequestMethod.POST)
+	@ResponseBody
+	public ResultMessage sendValidCode(String telPhone){
+
+		return messageService.sendValidCode(telPhone);
+	}
+
+
 
 
 }

@@ -16,7 +16,7 @@ public class TbVips implements Serializable {
     /**
      * 主键
      */
-    private String id;
+    private Integer id;
 
     /**
      * 账号
@@ -29,9 +29,9 @@ public class TbVips implements Serializable {
     private String nickName;
 
     /**
-     * 用户编号
+     * 登录密码
      */
-    private Long userId;
+    private String password;
 
     /**
      * 删除标记
@@ -57,7 +57,7 @@ public class TbVips implements Serializable {
     /**
      * 会员等级
      */
-    private Integer level;
+    private Byte level;
 
     /**
      * 邀请码
@@ -79,13 +79,30 @@ public class TbVips implements Serializable {
      */
     private Date modTime;
 
+    private String verfiCode;
 
-    public String getId() {
+    public String getVerfiCode() {
+        return verfiCode;
+    }
+
+    public void setVerfiCode(String verfiCode) {
+        this.verfiCode = verfiCode;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getLoginName() {
@@ -102,14 +119,6 @@ public class TbVips implements Serializable {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public Byte getDelFlag() {
@@ -144,11 +153,11 @@ public class TbVips implements Serializable {
         this.roleId = roleId;
     }
 
-    public Integer getLevel() {
+    public Byte getLevel() {
         return level;
     }
 
-    public void setLevel(Integer level) {
+    public void setLevel(Byte level) {
         this.level = level;
     }
 

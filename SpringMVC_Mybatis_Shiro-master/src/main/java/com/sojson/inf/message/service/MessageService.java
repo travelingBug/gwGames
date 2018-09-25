@@ -10,4 +10,6 @@ public interface MessageService {
 	 * @return
 	 */
 	public ResultMessage send(String telPhone);
+
+	ResultMessage sendValidCode(String telPhone);
 }

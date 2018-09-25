@@ -47,6 +47,8 @@ public interface IConstant {
      * 1:500-A 2：2000-B 3：3000-C
      */
     public enum VIP_LEVEL {
+        /**0*/
+        VIP_0((byte)0),
         /** 500-A  */
         VIP_A((byte)1),
         /** 2000-B*/

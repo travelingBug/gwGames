@@ -169,7 +169,7 @@ CREATE TABLE `tb_vip` (
   `ID` varchar(32) NOT NULL,
   `INVITAION_CODE` varchar(64) NOT NULL,
   `LEVEL` tinyint(4) NOT NULL,
-  `END_TIME` datetime NOT NULL,
+  `END_TIME` datetime DEFAULT NULL,
   `FK_USER_ID` bigint(20) NOT NULL,
   `NICKNAME` varchar(32) DEFAULT NULL,
   `DEL_FLAG` tinyint(4) NOT NULL,

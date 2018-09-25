@@ -97,6 +97,48 @@ public class SendMsgUtil {
         return result;
     }
 
+    public static String sendValidCode(String phone) {
+
+        String user = IConfig.get("user");
+        String key = IConfig.get("key");
+        String msg_1 = "";
+        String msg_4 = "";
+        try {
+            msg_1 = new String(IConfig.get("msg_1").getBytes("iso-8859-1"),"utf-8");
+            msg_4 = new String(IConfig.get("msg_4").getBytes("iso-8859-1"),"utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        int code = (int)((Math.random()*9+1)*100000);
+        RedisUtil redisUtil = RedisUtil.getRedis();
+        redisUtil.save(phone, code+","+ new Date().getTime());
+
+        String msg = msg_1 + code + msg_4;
+
+        HttpClient client = new HttpClient();
+        PostMethod post = new PostMethod("http://utf8.api.smschinese.cn");
+        post.addRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");//在头文件中设置转码
+        NameValuePair[] data = {new NameValuePair("Uid", user), new NameValuePair("Key", key), new NameValuePair("smsMob", phone), new NameValuePair("smsText", msg)};
+        post.setRequestBody(data);
+        String result = "";
+        try {
+            client.executeMethod(post);
+            Header[] headers = post.getResponseHeaders();
+            int statusCode = post.getStatusCode();
+            System.out.println("statusCode:" + statusCode);
+            for (Header h : headers) {
+                System.out.println(h.toString());
+            }
+            result = new String(post.getResponseBodyAsString().getBytes("utf-8"));
+            System.out.println(result); //打印返回消息状态
+            post.releaseConnection();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
 
     public static String sendMsgTest(String phone) {
 

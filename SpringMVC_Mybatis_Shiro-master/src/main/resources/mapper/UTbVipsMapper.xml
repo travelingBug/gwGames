@@ -2,20 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sojson.common.dao.UTbVipsMapper" >
   <resultMap id="vipsResultMap" type="com.sojson.common.model.TbVips" >
-    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="NICKNAME" property="nickName" jdbcType="VARCHAR" />
-    <result column="FK_USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
     <result column="INVITAION_CODE" property="inviteCode" jdbcType="VARCHAR" />
     <result column="DEL_FLAG" property="delFlag" jdbcType="TINYINT" />
     <result column="PHONE" property="phone" jdbcType="VARCHAR" />
     <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
     <result column="LEVEL" property="level" jdbcType="TINYINT" />
-    <result column="END_TIME" property="endTime" jdbcType="TINYINT" />
+    <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
     <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
     <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="vips_Column_List" >
-    d.ID,d.NICKNAME,d.INVITAION_CODE,d.LEVEL,d.PHONE,d.ADDRESS,d.END_TIME,d.crt_time,d.FK_USER_ID
+    d.ID,d.NICKNAME,d.INVITAION_CODE,d.LEVEL,d.PHONE,d.ADDRESS,d.END_TIME,d.crt_time,d.PASSWORD
   </sql>
   <sql id="vips_limit_sql">
   	   <if test="page_sql != null and page_sql != ''">
@@ -41,11 +41,8 @@
   </sql>
   <select id="findAll" resultMap="vipsResultMap" >
   	select
-    <include refid="vips_Column_List" />,
-    u.email as loginName,u.id as userId
+    <include refid="vips_Column_List" />
     from tb_vip d
-    LEFT JOIN u_user u
-    ON u.id = d.FK_USER_ID
     <include refid="vips_where_all"/>
     <include refid="vips_order_all"/>
     <include refid="vips_limit_sql" />
@@ -56,8 +53,8 @@
   </select>
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbVips" >
-    insert into tb_vip (ID,FK_USER_ID,NICKNAME,INVITAION_CODE,PHONE,ADDRESS,DEL_FLAG,LEVEL,CRT_TIME,END_TIME)
-    values (#{id},#{userId},#{nickName},#{inviteCode},#{phone},#{address},#{delFlag},#{level},#{crtTime},#{END_TIME})
+    insert into tb_vip (ID,PASSWORD,NICKNAME,INVITAION_CODE,PHONE,ADDRESS,DEL_FLAG,LEVEL,CRT_TIME)
+    values (#{id},#{password},#{nickName},#{inviteCode},#{phone},#{address},#{delFlag},#{level},#{crtTime})
   </insert>
   <update id="update" parameterType="com.sojson.common.model.TbVips" >
     update tb_vip
@@ -66,11 +63,8 @@
       <if test="nickName != null and nickName !=''" >
         ,NICKNAME = #{nickName,jdbcType=VARCHAR}
       </if>
-      <if test="type != null and type != ''">
+      <if test="level != null and level != ''">
         ,LEVEL = #{level}
-      </if>
-      <if test="phone != null and phone != ''">
-        ,PHONE = #{phone}
       </if>
       <if test="address != null and address != ''">
         ,ADDRESS = #{address}
@@ -86,4 +80,14 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="findUserByPhone" parameterType="com.sojson.common.model.TbVips" resultMap="vipsResultMap" >
+    select <include refid="vips_Column_List" />
+    from  tb_vip d
+    where d.DEL_FLAG = 0
+    AND d.PHONE = #{phone}
+    <if test="password != null and password != ''">
+      AND d.PASSWORD = #{password}
+    </if>
+  </select>
 </mapper>

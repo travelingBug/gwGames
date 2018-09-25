@@ -1,14 +1,11 @@
-package com.sojson.vips.controller;
+package com.sojson.inf.vips.controller;
 
 import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
-import com.sojson.common.model.TbDealer;
 import com.sojson.common.model.TbVips;
-import com.sojson.common.utils.StringUtils;
 import com.sojson.core.mybatis.page.Pagination;
-import com.sojson.dealer.service.DealerService;
+import com.sojson.inf.vips.service.VipsService;
 import com.sojson.user.service.UUserService;
-import com.sojson.vips.service.VipsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -26,7 +23,7 @@ import java.util.Map;
  */
 @Controller
 @Scope(value="prototype")
-@RequestMapping("vips")
+@RequestMapping("interface/vips")
 public class VipsController extends BaseController {
 
     @Autowired
@@ -43,9 +40,32 @@ public class VipsController extends BaseController {
      */
     @RequestMapping(value = "register", method = RequestMethod.POST)
     @ResponseBody
-    public ResultMessage register(TbVips entity) {
-        entity.setId(StringUtils.getUUID32());
-        return vipsService.insert(entity);
+    public ResultMessage register(TbVips entity, HttpServletRequest req) {
+        return vipsService.insert(entity, req);
+    }
+
+    /**
+     * 登录
+     *
+     * @param entity
+     * @return
+     */
+    @RequestMapping(value = "login", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage login(TbVips entity, HttpServletRequest req) {
+        return vipsService.login(entity, req);
+    }
+
+    /**
+     * 验证手机号码
+     *
+     * @param telPhone
+     * @return
+     */
+    @RequestMapping(value = "validPhone", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage validPhone(String telPhone) {
+        return vipsService.validPhone(telPhone);
     }
 
     /**

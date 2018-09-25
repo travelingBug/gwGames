@@ -1,6 +1,6 @@
 package com.sojson.common.dao;
 
-import com.sojson.common.model.TbDealer;
+
 import com.sojson.common.model.TbVips;
 
 public interface UTbVipsMapper {
@@ -10,4 +10,6 @@ public interface UTbVipsMapper {
     int update(TbVips record);
 
     void delete(String id);
+
+    TbVips findUserByPhone(TbVips entity);
 }

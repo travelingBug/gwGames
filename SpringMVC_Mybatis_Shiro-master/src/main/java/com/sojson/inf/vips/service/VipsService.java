@@ -1,10 +1,10 @@
-package com.sojson.vips.service;
+package com.sojson.inf.vips.service;
 
 import com.sojson.common.ResultMessage;
-import com.sojson.common.model.TbDealer;
 import com.sojson.common.model.TbVips;
 import com.sojson.core.mybatis.page.Pagination;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -16,7 +16,11 @@ public interface VipsService {
 
     ResultMessage update(TbVips entity);
 
-    ResultMessage insert(TbVips entity);
+    ResultMessage insert(TbVips entity, HttpServletRequest req);
 
     ResultMessage delete(String id);
+
+    ResultMessage login(TbVips entity, HttpServletRequest req);
+
+    ResultMessage validPhone(String telPhone);
 }
