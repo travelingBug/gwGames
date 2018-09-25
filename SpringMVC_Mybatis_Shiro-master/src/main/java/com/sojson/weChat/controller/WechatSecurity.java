@@ -88,11 +88,45 @@ public class WechatSecurity  {
     public void ces(HttpServletRequest request,HttpServletResponse response){
         //{"button":[{"name":"博客","type":"view","url":"http://www.cuiyongzhi.com"},{"name":"菜单","sub_button":[{"key":"text","name":"回复图文","type":"click"},{"name":"博客","type":"view","url":"http://www.cuiyongzhi.com"}]},{"key":"text","name":"回复图文","type":"click"}]}
         JSONArray gResBut = new JSONArray();
+
+        JSONArray gResBut1 = new JSONArray();
         JSONObject node = new JSONObject();
-        node.put("name","我要报名");
+        node.put("name","报名");
         node.put("type","view");
         node.put("url","http://mywx.wonderscd.com/static/h5/index.html");
-        gResBut.add(node);
+        gResBut1.add(node);
+        node.put("name","赛事");
+        node.put("type","view");
+        node.put("url","http://mywx.wonderscd.com/static/h5/index.html");
+        gResBut1.add(node);
+        node.put("name","观赛");
+        node.put("type","view");
+        node.put("url","http://mywx.wonderscd.com/static/h5/index.html");
+        gResBut1.add(node);
+        node.put("name","排行榜");
+        node.put("type","view");
+        node.put("url","http://mywx.wonderscd.com/static/h5/index.html");
+        gResBut1.add(node);
+
+        JSONObject node1 = new JSONObject();
+        node1.put("name","主页");
+        node1.put("sub_button",gResBut1);
+        gResBut.add(node1);
+
+        JSONArray gResBut2 = new JSONArray();
+        node.put("name","个人中心");
+        node.put("type","view");
+        node.put("url","http://mywx.wonderscd.com/static/h5/index.html");
+        gResBut2.add(node);
+        node.put("name","注册");
+        node.put("type","view");
+        node.put("url","http://mywx.wonderscd.com/static/h5/index.html");
+        gResBut2.add(node);
+
+        JSONObject node2 = new JSONObject();
+        node2.put("name","vip");
+        node2.put("sub_button",gResBut2);
+        gResBut.add(node2);
         /*JSONObject node2 = new JSONObject();
         node2.put("name","回复图文");
         node2.put("type","click");
@@ -105,6 +139,7 @@ public class WechatSecurity  {
         gResBut.add(node3);*/
         JSONObject menujson=new JSONObject();
         menujson.put("button",gResBut);
+        System.out.println(menujson.toString());
         WxseverUtils.setWxMenus(menujson.toString());
     }
 }

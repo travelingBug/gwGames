@@ -9,8 +9,8 @@
     <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
-    <link rel="stylesheet" href="./lib/alertify/themes/alertify.core.css">
-    <link rel="stylesheet" href="./lib/alertify/themes/alertify.default.css">
+    <!-- <link rel="stylesheet" href="./lib/alertify/themes/alertify.core.css">
+    <link rel="stylesheet" href="./lib/alertify/themes/alertify.default.css"> -->
     <link rel="stylesheet" href="./index.css">
 </head>
 
@@ -19,30 +19,45 @@
         <div class="form-container">
             <form name="regist">
                 <div class="form-item">
+                    <div class="headimg">
+                        <img src="./assets/imgs/accountname.png" class="right">
+                    </div>
                     <input type="text" placeholder="昵称" name="accountName" class="needValidate" />
                     <div class="placeimg">
                         <img src="./assets/imgs/icon_right.png" class="right">
                     </div>
                 </div>
                 <div class="form-item">
+                    <div class="headimg">
+                        <img src="./assets/imgs/name.png" class="right">
+                    </div>
                     <input type="text" placeholder="真实姓名" name="name" class="truename" />
                     <div class="placeimg">
                         <img src="./assets/imgs/icon_right.png" class="right">
                     </div>
                 </div>
                 <div class="form-item">
+                    <div class="headimg">
+                        <img src="./assets/imgs/idcard.png" class="right">
+                    </div>
                     <input type="text" placeholder="身份证号码" name="idCard" class="needValidate" />
                     <div class="placeimg">
                         <img src="./assets/imgs/icon_right.png" class="right">
                     </div>
                 </div>
                 <div class="form-item">
+                    <div class="headimg">
+                        <img src="./assets/imgs/telno.png" class="right">
+                    </div>
                     <input type="number" placeholder="手机号码" name="telPhone" class="needValidate" />
                     <div class="placeimg">
                         <img src="./assets/imgs/icon_right.png" class="right">
                     </div>
                 </div>
                 <div class="form-item valide">
+                    <div class="headimg">
+                        <img src="./assets/imgs/valicode.png" class="right">
+                    </div>
                     <input type="number" placeholder="验证码" name="verfiCode" value="123456" />
                     <button class="vlidate-btn" type="button" id="vlidatebtn" id="sendVerfiCode">发送验证码</button>
                 </div>
@@ -74,11 +89,14 @@
                 <button type="button" class="agree-btn" id="hidenAgreement">确定</button>
             </div>
         </div>
+
+        <div class="alert-area">
+            请输入正确的身份证号码
+        </div>
     </div>
     <script src="./lib/jquery-1.11.1.min.js"></script>
     <script src="./lib/AES/aes.js"></script>
     <script src="./lib/AES/mode-ecb.js"></script>
-    <script src="./lib/alertify/alertify.min.js"></script>
     <script src="./lib/moment.min.js"></script>
     <script src="https://cdn.bootcss.com/rxjs/6.2.0/rxjs.umd.js"></script>
     <script>
@@ -104,7 +122,6 @@
             rxjs.fromEvent($('.needValidate'), 'input propertychange').pipe(
                 rxjs.operators.throttleTime(100),
                 rxjs.operators.switchMap(e => {
-                    // return $(this).attr('name');
                     return rxjs.of($(e.target || e.srcElement))
                 })
             ).subscribe(function (target) {
@@ -114,10 +131,7 @@
                 var bodyData = {};
                 bodyData[name] = target.val();
                 var rigthDom = target.next().find('.right');
-                // if (target.val().length === 0) {
-                //     rigthDom.hide();
-                //     return;
-                // }
+
                 rigthDom.show();
                 switch (name) {
                     case 'idCard':
@@ -159,13 +173,12 @@
                                 rigthDom.attr('src', wrongImgPath);
                             } else {
                                 // 提交
-                                // submit();
                                 rigthDom.attr('src', rightImgPath);
                             }
                         }
                     },
                     error: function (err) {
-                        alertify.alert("网络错误，请稍后重试");
+                        showAlert("网络错误，请稍后重试");
                     },
                 })
             })
@@ -174,10 +187,7 @@
             rxjs.fromEvent($('input.truename'), 'blur').subscribe(function (e) {
                 var target = $(e.target || e.srcElement);
                 var rigthDom = target.next().find('.right');
-                // if (target.val().length === 0) {
-                //     rigthDom.hide();
-                //     return;
-                // }
+
                 rigthDom.show();
                 if (!/^[\u4e00-\u9fa5]{2,6}$/ig.test(target.val())) {
                     rigthDom.attr('src', wrongImgPath);
@@ -189,7 +199,6 @@
             rxjs.fromEvent($('#vlidatebtn'), 'click').pipe(
                 rxjs.operators.throttleTime(200),
             ).subscribe(function () {
-                console.log('哈哈')
                 if (timeout != 0) {
                     return;
                 }
@@ -200,16 +209,15 @@
                     var imgDom = $(regisForm.telPhone).next().find('.right');
                     imgDom.show();
                     imgDom.attr('src', wrongImgPath);
-                    return;
                 }
 
                 var telPhone = regisForm.telPhone.value;
                 if (!/\d{11}/ig.test(telPhone)) {
-                    alertify.alert("请正确输入手机号码");
+                    showAlert("请正确输入手机号码");
                     return;
                 }
                 if (!regisForm.agree.checked) {
-                    alertify.alert("请同意参赛须知");
+                    showAlert("请同意参赛须知");
                     return;
                 }
 
@@ -243,12 +251,12 @@
                             }, 1000)
                         } else {
                             // 获取失败
-                            alertify.alert(resMsg.messageText);
+                            showAlert(resMsg.messageText);
                         }
                     },
                     error: function (err) {
                         console.log(err)
-                        alertify.alert("网络错误，请稍后重试");
+                        showAlert("网络错误，请稍后重试");
                     },
                     complete: function (XMLHttpRequest, status) { //请求完成后最终执行参数　
                     }
@@ -258,7 +266,7 @@
             // 判断是否通过验证
             function isPassValidate(target) {
                 var imgDom = $(target).next().find('.right');
-                if (imgDom.is(':visible')) {
+                if (target.value.length && imgDom.is(':visible')) {
                     if (imgDom.attr('src') === wrongImgPath) {
                         return false;
                     }
@@ -280,17 +288,22 @@
                 var idCardInput = regisForm.idCard;
                 var telPhoneInput = regisForm.telPhone;
                 var verfiCodeInput = regisForm.verfiCode;
-                if (!(isPassValidate(accountNameInput) &&
-                        isPassValidate(nameInput) &&
-                        isPassValidate(idCardInput) &&
-                        isPassValidate(telPhoneInput))) {
-                    console.log('进入2')
-
-                    return false;
+                if (!isPassValidate(accountNameInput)) {
+                    showAlert(!!accountNameInput.value.length ? "昵称重复" : "请输入昵称");
+                    return;
                 }
-                console.log('进入')
-
-
+                if (!isPassValidate(nameInput)) {
+                    showAlert(!!nameInput.value.length ? "请正确输入姓名" : "请输入姓名");
+                    return;
+                }
+                if (!isPassValidate(idCardInput)) {
+                    showAlert(!!idCardInput.value.length ? "身份证号码输入错误或重复" : "请输入身份证号码");
+                    return;
+                }
+                if (!isPassValidate(telPhoneInput)) {
+                    showAlert(!!idCardInput.value.length ? "手机号码输入错误或重复" : "请输入手机号码");
+                    return;
+                }
                 var accountName = accountNameInput.value;
                 var name = nameInput.value;
                 var idCard = idCardInput.value;
@@ -298,11 +311,11 @@
                 var verfiCode = verfiCodeInput.value;
 
                 if (!regisForm.agree.checked) {
-                    alertify.alert("请同意参赛须知");
+                    showAlert("请同意参赛须知");
                     return;
                 }
                 if (!/\d{6}/ig.test(verfiCode)) {
-                    alertify.alert("请输入验证码");
+                    showAlert("请输入验证码");
                     return;
                 }
                 $.ajax({
@@ -327,12 +340,12 @@
                             location.href = 'http://www.baidu.com'
                         } else {
                             // 获取失败
-                            alertify.alert(resMsg.message);
+                            showAlert(resMsg.messageText);
                         }
 
                     },
                     error: function (err) {
-                        alertify.alert("网络错误，请稍后重试");
+                        showAlert("网络错误，请稍后重试");
                     },
                     complete: function (XMLHttpRequest, status) { //请求完成后最终执行参数　
                     }
@@ -381,6 +394,29 @@
                     padding: CryptoJS.pad.Pkcs7
                 });
                 return CryptoJS.enc.Utf8.stringify(decrypt).toString();
+            }
+            // 弹出提示框
+            var timeoutid = null;
+
+            function showAlert(msg) {
+                var _alert = $('.alert-area');
+                _alert.text(msg);
+                if (_alert.is(':visible')) {
+                    // 如果已经提示,重置定时器
+                    clearTimeout(timeoutid);
+                    timeoutid = setTimeout(function () {
+                        _alert.hide();
+                        clearTimeout(timeoutid);
+                        timeoutid = null;
+                    }, 2500);
+                } else {
+                    _alert.show();
+                    timeoutid = setTimeout(function () {
+                        _alert.hide();
+                        clearTimeout(timeoutid);
+                        timeoutid = null;
+                    }, 2500);
+                }
             }
         })
     </script>

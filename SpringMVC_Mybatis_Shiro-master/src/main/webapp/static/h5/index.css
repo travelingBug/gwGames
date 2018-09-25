@@ -48,14 +48,14 @@ form {
 .form-item>input {
     display: block;
     box-sizing: border-box;
-    padding-right: 30px;
+    padding: 0 30px 0 40px;
     width: 100%;
     height: 100%;
     border-width: 0 0 1px 0;
-    border-bottom-color: #494949;
+    border-bottom-color: #aaa;
     border-bottom-style: solid;
     font-size: 16px;
-    color: #333;
+    color: #474747;
     outline: none;
     background: transparent;
 }
@@ -67,6 +67,21 @@ form {
     height: 100%;
     top: 0;
     right: 20px;
+}
+
+.form-item .headimg {
+    position: absolute;
+    display: inline-block;
+    width: 20px;
+    height: 100%;
+    top: 0;
+    left: 20px;
+}
+
+.form-item .headimg img {
+    vertical-align: middle;
+    width: 100%;
+    margin-top: 10px;
 }
 
 .form-item .placeimg .right {
@@ -195,4 +210,21 @@ button.login-btn {
     height: 44px;
     color: #aa3731;
     font-size: 18px;
+}
+
+
+/* 底部的提示框*/
+.alert-area {
+    display: none;
+    position: absolute;
+    left: calc(50% - 100px);
+    bottom: 150px;
+    border-radius: 4px;
+    width: 200px;
+    height: 50px;
+    line-height: 50px;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
 }
