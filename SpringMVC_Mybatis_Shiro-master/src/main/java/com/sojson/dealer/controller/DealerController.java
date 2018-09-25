@@ -141,6 +141,19 @@ public class DealerController extends BaseController {
         return new ModelAndView("employee/countEmployeeList");
     }
 
+    @RequestMapping(value="exportExcelDealerVip",method=RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage exportExcelDealerVip(@RequestParam Map<String,Object> map){
+        return dealerService.exportExcelDealerVip(map);
+    }
+
+    @RequestMapping(value="exportEmployee",method=RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage exportEmployee(@RequestParam Map<String,Object> map){
+        return dealerService.exportEmployee(map);
+    }
+
+
 //    @RequestMapping(value="countDealerVip",method=RequestMethod.POST)
 //    @ResponseBody
 //    public List<DealerCountVo> countDealerVip(@RequestParam Map<String,Object> map){

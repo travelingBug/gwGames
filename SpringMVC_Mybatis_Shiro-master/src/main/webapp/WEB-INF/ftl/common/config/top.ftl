@@ -1,8 +1,9 @@
 <#macro top index>
 <script baseUrl="${basePath}" src="${basePath}/js/user.login.js"></script>
 <script  src="${basePath}/js/common/mask/Jquery.mask.js"></script>
+<script  src="${basePath}/js/common/laydate/laydate.dev.js"></script>
 <div class="navbar navbar-inverse navbar-fixed-top animated fadeInDown" style="z-index: 101;height: 41px;">
-	  
+
       <div class="container" style="padding-left: 0px; padding-right: 0px;">
         <div class="navbar-header">
           <button data-target=".navbar-collapse" data-toggle="collapse" type="button" class="navbar-toggle collapsed">

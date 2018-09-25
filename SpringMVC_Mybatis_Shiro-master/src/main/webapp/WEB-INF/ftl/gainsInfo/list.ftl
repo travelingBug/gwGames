@@ -14,7 +14,7 @@
 		<script  src="${basePath}/js/common/layer/layer.js"></script>
 		<script  src="${basePath}/js/common/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script  src="${basePath}/js/shiro.demo.js"></script>
-        <script  src="${basePath}/js/common/laydate/laydate.dev.js"></script>
+
 		<script >
 			so.init(function(){
                 $("#uploadEventBtn").unbind("click").bind("click", function() {
@@ -392,18 +392,18 @@
 
 					<table class="table table-bordered">
 						<tr>
-							<th>昵称</th>
-							<th>姓名</th>
-							<th>身份证</th>
-                            <th>交易时间</th>
-							<th>股票代码</th>
-							<th>股票名称</th>
-							<th>买卖标致</th>
-                            <th>成交量</th>
-                            <th>成交价格</th>
-                            <th>资金余额</th>
-                            <th>总资产</th>
-                            <th>操作</th>
+							<th width="80">昵称</th>
+							<th width="80">姓名</th>
+							<th width="100">身份证</th>
+                            <th width="100">交易时间</th>
+							<th width="100">股票代码</th>
+							<th width="100">股票名称</th>
+							<th width="90">买卖标致</th>
+                            <th width="80">成交量</th>
+                            <th width="100">成交价格</th>
+                            <th width="100">资金余额</th>
+                            <th width="100">总资产</th>
+                            <th width="80">操作</th>
 						</tr>
 						<#if page?exists && page.list?size gt 0 >
 							<#list page.list as it>

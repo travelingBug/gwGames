@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 @Controller
 @Scope(value="prototype")
@@ -35,7 +36,7 @@ public class DownLoadController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("download")
-	public void downloadLocal(String filePath,String fileOutName,HttpServletResponse response,HttpServletRequest request) throws FileNotFoundException {
+	public void downloadLocal(String filePath,String fileOutName,HttpServletResponse response,HttpServletRequest request) throws Exception {
 		// 下载本地文件
 		try {
 			fileOutName = URLDecoder.decode(fileOutName, "UTF-8");
@@ -47,7 +48,7 @@ public class DownLoadController extends BaseController {
 		// 设置输出的格式
 		response.reset();
 		response.setContentType("bin");
-		response.addHeader("Content-Disposition", "attachment; filename=\"" + fileOutName + "\"");
+		response.addHeader("Content-Disposition", "attachment; filename=\"" + URLEncoder.encode(fileOutName, "UTF-8") + "\"");
 		// 定义输出类型
 		response.setContentType("application/msexcel;charset=utf-8");
 		// 循环取出流中的数据

@@ -29,4 +29,8 @@ public interface DealerService {
     public List<DealerCountVo> countDealerVip(Map<String,Object> param);
 
     public List<DealerCountVo> countDealerVipById(Map<String,Object> param);
+
+    public ResultMessage exportExcelDealerVip(Map<String,Object> param);
+
+    public ResultMessage exportEmployee(Map<String,Object> param);
 }

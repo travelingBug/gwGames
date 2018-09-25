@@ -35,10 +35,11 @@
 
     <select id="countByEmployee" resultMap="CountLevel" >
         select a1.NAME,a2.INVITAION_CODE,a2.level,a2.countNum,a2.countMoney from
-    (select x.NAME,x.INVITE_NUM from tb_dealer x where x.ID = #{dealerId} or x.PARENT_ID = #{dealerId}) a1 LEFT JOIN
     (select t.INVITAION_CODE,v.level,count(v.id) countNum,SUM(v.amount) countMoney from tb_vip t INNER JOIN tb_vip_record v on t.id = v.vip_id
         <include refid="where_count"/>
-    GROUP BY t.INVITAION_CODE,v.level) a2 on a1.INVITE_NUM = a2.INVITAION_CODE
+    GROUP BY t.INVITAION_CODE,v.level) a2
+        LEFT JOIN (select x.NAME,x.INVITE_NUM from tb_dealer x where x.ID = #{dealerId} or x.PARENT_ID = #{dealerId}) a1
+        on a1.INVITE_NUM = a2.INVITAION_CODE
 
     </select>
 

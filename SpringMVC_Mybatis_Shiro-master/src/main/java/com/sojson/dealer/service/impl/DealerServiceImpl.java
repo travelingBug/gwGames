@@ -1,5 +1,6 @@
 package com.sojson.dealer.service.impl;
 
+import com.sojson.common.ExportHeader;
 import com.sojson.common.IConstant;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.dao.UTbDealerMapper;
@@ -8,7 +9,9 @@ import com.sojson.common.model.TbDealer;
 import com.sojson.common.model.UUser;
 import com.sojson.common.model.vo.DealerCountVo;
 import com.sojson.common.model.vo.VipRecordCount;
+import com.sojson.common.utils.ExcelUtil;
 import com.sojson.common.utils.StringUtils;
+import com.sojson.core.config.IConfig;
 import com.sojson.core.mybatis.BaseMybatisDao;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.core.shiro.token.manager.TokenManager;
@@ -20,6 +23,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -118,6 +123,51 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
     }
 
 
+    @Override
+    public ResultMessage exportExcelDealerVip(Map<String,Object> param){
+        ResultMessage msg = new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"EXCEL生成成功！");
+        List<DealerCountVo> DealerCountVos = countDealerVip(param);
+        //文件保存地址
+        String path = IConfig.get("excel_dealer_count_path");
+        File pathFile = new File(path);
+        if(!pathFile.exists()){//目录不存在就创建
+            pathFile.mkdirs();
+        }
+        List<Object[]> dataList = changeDealerVip2Array(DealerCountVos);
+        dataList.add(0,ExportHeader.DEALER_COUNT_HEAD);
+        String fileName = StringUtils.getUUID32() + ".xlsx";
+        try {
+            ExcelUtil.writeCommonExcel(dataList,path+fileName,"sheet1");
+            List<String> fileInfo = new ArrayList<String>();
+            fileInfo.add("经销商会员统计.xlsx");//下载文件名
+            fileInfo.add(path+fileName);//错误文件路径
+            msg.setData(fileInfo);
+        } catch (IOException e) {
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"生成EXCEL异常，请稍后再试！");
+        }
+
+
+        return msg;
+
+    }
+
+    private List<Object[]> changeDealerVip2Array(List<DealerCountVo> DealerCountVos){
+        List<Object[]> dataList = new ArrayList<Object[]>();
+        for (DealerCountVo dealerCountVo : DealerCountVos) {
+            Object[] dataline = new Object[ExportHeader.DEALER_COUNT_HEAD.length];
+            dataline[0] = dealerCountVo.getName();
+            dataline[1] = String.valueOf(dealerCountVo.getVipACount());
+            dataline[2] = String.valueOf(dealerCountVo.getVipAMoneyCount());
+            dataline[3] = String.valueOf(dealerCountVo.getVipBCount());
+            dataline[4] = String.valueOf(dealerCountVo.getVipBMoneyCount());
+            dataline[5] = String.valueOf(dealerCountVo.getVipCCount());
+            dataline[6] = String.valueOf(dealerCountVo.getVipCMoneyCount());
+            dataline[7] = String.valueOf(dealerCountVo.getVipMoneyCount());
+            dataList.add(dataline);
+        }
+        return dataList;
+    }
+
     /**
      * 统计经销商的会员数
      * @param param
@@ -208,4 +258,32 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
         return list;
     }
 
+
+    @Override
+    public ResultMessage exportEmployee(Map<String,Object> param){
+        ResultMessage msg = new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"EXCEL生成成功！");
+        List<DealerCountVo> employees = countDealerVipById(param);
+        //文件保存地址
+        String path = IConfig.get("excel_employee_count_path");
+        File pathFile = new File(path);
+        if(!pathFile.exists()){//目录不存在就创建
+            pathFile.mkdirs();
+        }
+        List<Object[]> dataList = changeDealerVip2Array(employees);
+        dataList.add(0,ExportHeader.EMPLOYEE_COUNT_HEAD);
+        String fileName = StringUtils.getUUID32() + ".xlsx";
+        try {
+            ExcelUtil.writeCommonExcel(dataList,path+fileName,"sheet1");
+            List<String> fileInfo = new ArrayList<String>();
+            fileInfo.add("员工会员统计.xlsx");//下载文件名
+            fileInfo.add(path+fileName);//错误文件路径
+            msg.setData(fileInfo);
+        } catch (IOException e) {
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"生成EXCEL异常，请稍后再试！");
+        }
+
+
+        return msg;
+
+    }
 }

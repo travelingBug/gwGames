@@ -30,6 +30,21 @@
 				so.checkBoxInit('#checkAll','[check=box]');
 
 
+                $('#exportButton').click(function(){
+                    $("#contentDiv").mask("Excel生中成，请稍后...");
+                    var data = $("#countForm").serialize();
+                    $.post('${basePath}/dealer/exportEmployee.shtml',data,function(result){
+                        if(result && result.level != 1){
+                            layer.alert(result.messageText, {
+                                icon: 0,
+                                skin: 'layui-layer-lan'
+                            });
+                        }else{
+                            $("#contentDiv").unmask();
+                            window.location.href = '${basePath}/download.shtml?fileOutName='+encodeURI(encodeURI(result.data[0]))+"&filePath="+result.data[1];
+                        }
+                    },'json');
+                });
 			});
 
 
@@ -48,12 +63,12 @@
 					<h2>员工会员统计</h2>
 					<hr>
 					<form method="post" action="${basePath}/dealer/countEmployeeList.shtml" id="countForm" class="form-inline">
-                        <div class="col-sm-12">
+                        <div class="col-sm-12"  style="margin-top: 10px;margin-bottom: 20px;">
                             <div class="form-group col-sm-8" form-inline>
                                 <label for="bgnTime">购买时间</label>
-                                <input type="text"  class="form-control" name="bgnTime" id="bgnTime" placeholder="开始时间" />
-                                ~
-                                <input type="text"  class="form-control" name="endTime" id="endTime" placeholder="结束时间" />
+                                <input type="text"  class="form-control" name="bgnTime" id="bgnTime" placeholder="开始时间" value="${bgnTime?default('')}" />
+
+                                <input type="text"  class="form-control" name="endTime" id="endTime" placeholder="结束时间" value="${endTime?default('')}" />
                             </div>
                             <div class="form-group  col-sm-4">
                                 <span class=""> <#--pull-right -->
@@ -63,6 +78,9 @@
                         </div>
 					<hr>
 					<table class="table table-bordered">
+                        <tr>
+                            <td colspan="8"><button type="button" id="exportButton" <#if !listData?exists || listData?size lte 0 >disabled="disabled"</#if> class="btn btn-primary">导出</button></td>
+                        </tr>
 						<tr>
                             <th>员工名称</th>
 							<th>新增A类会员人数</th>
@@ -88,7 +106,7 @@
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="6">没有找到员工数据</td>
+								<td class="text-center danger" colspan="8">没有找到员工数据</td>
 							</tr>
 						</#if>
 					</table>

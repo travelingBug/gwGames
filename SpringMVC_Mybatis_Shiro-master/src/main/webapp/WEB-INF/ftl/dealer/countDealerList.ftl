@@ -30,6 +30,24 @@
 				so.checkBoxInit('#checkAll','[check=box]');
 
 
+				$('#exportButton').click(function(){
+                    $("#contentDiv").mask("Excel生中成，请稍后...");
+                        var data = $("#countForm").serialize();
+                        $.post('${basePath}/dealer/exportExcelDealerVip.shtml',data,function(result){
+                            if(result && result.level != 1){
+                                layer.alert(result.messageText, {
+                                    icon: 0,
+                                    skin: 'layui-layer-lan'
+                                });
+                            }else{
+                                $("#contentDiv").unmask();
+                                window.location.href = '${basePath}/download.shtml?fileOutName='+encodeURI(encodeURI(result.data[0]))+"&filePath="+result.data[1];
+                                <#--$.post('${basePath}/download.shtml?fileOutName='+encodeURI(encodeURI(result.data[0]))+"&filePath="+result.data[1],{},function(result){-->
+                                    <#--$("#contentDiv").unmask();-->
+                                <#--});-->
+                            }
+                        },'json');
+                });
 			});
 
 
@@ -38,7 +56,7 @@
 
 		</script>
 	</head>
-	<body data-target="#one" data-spy="scroll">
+	<body data-target="#one" data-spy="scroll" id="contentDiv">
 		
 		<@_top.top 5/>
 		<div class="container" style="padding-bottom: 15px;min-height: 300px; margin-top: 40px;">
@@ -48,12 +66,12 @@
 					<h2>经销商会员统计列表</h2>
 					<hr>
 					<form method="post" action="${basePath}/dealer/countDealerList.shtml" id="countForm" class="form-inline">
-                        <div class="col-sm-12">
+                        <div class="col-sm-12" style="margin-top: 10px;margin-bottom: 20px;">
                             <div class="form-group col-sm-8" form-inline>
                                 <label for="bgnTime">购买时间</label>
-                                <input type="text"  class="form-control" name="bgnTime" id="bgnTime" placeholder="开始时间" />
+                                <input type="text"  class="form-control" name="bgnTime" id="bgnTime" placeholder="开始时间" value="${bgnTime?default('')}" />
                                 ~
-                                <input type="text"  class="form-control" name="endTime" id="endTime" placeholder="结束时间" />
+                                <input type="text"  class="form-control" name="endTime" id="endTime" placeholder="结束时间" value="${endTime?default('')}"/>
                             </div>
                             <div class="form-group  col-sm-4">
                                 <span class=""> <#--pull-right -->
@@ -63,6 +81,9 @@
                         </div>
 					<hr>
 					<table class="table table-bordered">
+                        <tr>
+                            <td colspan="8"><button type="button" id="exportButton" <#if !listData?exists || listData?size lte 0 >disabled="disabled"</#if> class="btn btn-primary">导出</button></td>
+                        </tr>
 						<tr>
                             <th>经销商名称</th>
 							<th>新增A类会员人数</th>

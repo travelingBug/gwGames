@@ -127,7 +127,7 @@ public class ExcelUtil{
 
 
     /**
-     * 写Excel
+     * 写Excel(错误提示信息，最后一行会标红)
      * @param dataList
      * @param excelPath
      * @param sheetName
@@ -174,6 +174,62 @@ public class ExcelUtil{
                     } else {
                         cell.setCellStyle(commStyle);
                     }
+                }
+            }
+            // 创建文件输出流，准备输出电子表格：这个必须有，否则你在sheet上做的任何操作都不会有效
+            out =  new FileOutputStream(excelPath);
+            workBook.write(out);
+            workBook.close();
+        } finally{
+            try {
+                if(out != null){
+                    out.flush();
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    /**
+     * 写Excel(普通Excel，第一行为标题)
+     * @param dataList
+     * @param excelPath
+     * @param sheetName
+     * @throws IOException
+     */
+    public static void writeCommonExcel(List<Object[]> dataList,String excelPath,String sheetName)  throws IOException{
+        OutputStream out = null;
+        try {
+            Workbook workBook = null;
+            if(excelPath.toLowerCase().endsWith(".xls")){     //Excel&nbsp;2003
+                workBook = new HSSFWorkbook();
+            }else if(excelPath.toLowerCase().endsWith(".xlsx")){    // Excel 2007/2010
+                workBook = new XSSFWorkbook();
+            }
+            // sheet 对应一个工作页
+            Sheet sheet = workBook.createSheet(sheetName);
+
+            sheet.setDefaultColumnWidth(15);
+
+            CellStyle commStyle = workBook.createCellStyle();
+            commStyle.setAlignment(HorizontalAlignment.CENTER);
+            commStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+            /**
+             * 往Excel中写数据
+             */
+            for (int j = 0; j < dataList.size(); j++) {
+                // 创建一行
+                Row row = sheet.createRow(j);
+                // 得到要插入的每一条记录
+                Object[] objArr = dataList.get(j);
+                for (int k = 0; k < objArr.length; k++) {
+                    // 在一行内循环
+                    Cell cell = row.createCell(k);
+                    cell.setCellValue(objArr[k] == null? "":objArr[k].toString());
+                    cell.setCellStyle(commStyle);
                 }
             }
             // 创建文件输出流，准备输出电子表格：这个必须有，否则你在sheet上做的任何操作都不会有效
