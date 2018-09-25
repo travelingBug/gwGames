@@ -330,6 +330,9 @@
                     }
 
                 }
+            },
+            error: function (data) {
+                window.location.href = "/static/vips/register.jsp";
             }
         });
 
@@ -370,6 +373,9 @@
                     }
 
                 }
+            },
+            error: function (data) {
+                window.location.href = "/static/vips/register.jsp";
             }
         });
 
