@@ -162,7 +162,7 @@
                     layer.close(index);
                 });
             }
-			function _update(id,accountName,name,idCard,businessTimeStr,sharesCode,sharesName,businessFlag,volume,price,totalMoney){
+			function _update(id,accountName,name,idCard,businessTimeStr,sharesCode,sharesName,businessFlag,volume,price,totalMoney,balanceMoney){
 				$("#gainsInfo_id").val(id);
                 $("#player_accountName").val(accountName);
                 $("#player_name").val(name);
@@ -174,6 +174,8 @@
                 $("#gainsInfo_price").val(price);
                 $("#gainsInfo_volume").val(volume);
                 $("#gainsInfo_totalMoney").val(totalMoney);
+                $("#gainsInfo_balanceMoney").val(balanceMoney);
+
 			}
 
             function getDate(strDate) {
@@ -219,6 +221,11 @@
                     msg('交易价格不能为空！');
                     return false;
                 }
+                if ($("#gainsInfo_balanceMoney").val() == null || $("#gainsInfo_balanceMoney").val() == '') {
+                    msg('资金余额不能为空！');
+                    return false;
+                }
+
                 if ($("#gainsInfo_volume").val() == null || $("#gainsInfo_volume").val() == '') {
                     msg('交易数量不能为空！');
                     return false;
@@ -255,6 +262,11 @@
                     msg('交易价格不能为空！');
                     return false;
                 }
+                if ($("#gainsInfo_balanceMoney_add").val() == null || $("#gainsInfo_balanceMoney_add").val() == '') {
+                    msg('资金余额不能为空！');
+                    return false;
+                }
+
                 if ($("#gainsInfo_volume_add").val() == null || $("#gainsInfo_volume_add").val() == '') {
                     msg('交易数量不能为空！');
                     return false;
@@ -268,7 +280,7 @@
 
             function replaceFile(){
                 $('#uploadEventFile').remove();
-                $("#uploadEventBtn").after('<input type="file" name="file"  style="width:0px;height:0px;" id="uploadEventFile" />');
+                $("#uploadEventBtn").after('<input type="file" name="file"  style="width:0px;height:0px;display: none;" id="uploadEventFile" />');
                 bindFile();
             }
 
@@ -293,15 +305,21 @@
                             dataType : "json",
                             success : function(result) {
                                 $("#contentDiv").unmask();
+
                                 var msg = result.messageText;
                                 if (result.data && result.data.length == 2) {
                                     msg = msg + "<a href='${basePath}/download.shtml?fileOutName="+encodeURI(encodeURI(result.data[0]))+"&filePath="+result.data[1]+"'>点击下载错误信息</a>";
                                 }
                                 layer.alert(msg, {
                                     icon: 0,
-                                    skin: 'layui-layer-lan'
+                                    skin: 'layui-layer-lan',
+                                    end:function(){
+                                        $('#formId').submit();
+                                    }
+
                                 });
                                 replaceFile();
+
                             },
                             error : function(result) {
                                 $("#contentDiv").unmask();
@@ -360,18 +378,20 @@
                             <div class="form-group  col-sm-4">
                                 <span class=""> <#--pull-right -->
                                     <button type="submit" class="btn btn-primary">查询</button>
-                                    <a class="btn btn-success" onclick="$('#gainsInfoAddModal').modal();">增加选手资料</a>
+                                    <a class="btn btn-success" onclick="$('#gainsInfoAddModal').modal();">添加</a>
                                     <form enctype="multipart/form-data" id="excelForm"   method="post" >
-                                        <button class="btn btn-primary" id="uploadEventBtn"  type="button" >导入选手数据</button>
+                                        <button class="btn btn-primary" id="uploadEventBtn"  type="button" >
+                                            导入
+                                        </button>
                                         <input type="file" name="file"  style="width:0px;height:0px;display: none;" id="uploadEventFile" />
                                     </form>
+                                    <a href="${basePath}/file/gainsInfo.xlsx">模板下载</a>
                                 </span>
                             </div>
 						</div>
 
 					<table class="table table-bordered">
 						<tr>
-							<th><input type="checkbox" id="checkAll"/></th>
 							<th>昵称</th>
 							<th>姓名</th>
 							<th>身份证</th>
@@ -381,13 +401,13 @@
 							<th>买卖标致</th>
                             <th>成交量</th>
                             <th>成交价格</th>
+                            <th>资金余额</th>
                             <th>总资产</th>
                             <th>操作</th>
 						</tr>
 						<#if page?exists && page.list?size gt 0 >
 							<#list page.list as it>
 								<tr>
-									<td><input value="${it.id}" check='box' type="checkbox" /></td>
 									<td>${it.accountName}</td>
 									<td>${it.name}</td>
 									<td>${it.idCard}</td>
@@ -403,10 +423,11 @@
 									</td>
                                     <td>${it.volume}</td>
                                     <td>${it.price}</td>
+                                    <td>${it.balanceMoney}</td>
                                     <td>${it.totalMoney}</td>
 									<td>
 										<#--<@shiro.hasPermission name="/gainsInfo/updateById.shtml">-->
-											<a href="javascript:_update('${it.id}','${it.accountName}','${it.name}','${it.idCard}','${it.businessTimeStr}','${it.sharesCode}','${it.sharesName}','${it.businessFlag}','${it.volume}','${it.price}','${it.totalMoney}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#gainsInfoEditModal"></i></a>
+											<a href="javascript:_update('${it.id}','${it.accountName}','${it.name}','${it.idCard}','${it.businessTimeStr}','${it.sharesCode}','${it.sharesName}','${it.businessFlag}','${it.volume}','${it.price}','${it.totalMoney}','${it.balanceMoney}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#gainsInfoEditModal"></i></a>
 										<#--</@shiro.hasPermission>-->
 										<#--<@shiro.hasPermission name="/gainsInfo/delById.shtml">-->
                                             	<a href="javascript:_del('${it.id}');"><i class="glyphicon glyphicon-remove" title="删除"></i></a>
@@ -496,6 +517,14 @@
                                                 <input type="text" class="form-control" name="price" id="gainsInfo_price"  />
                                             </div>
 
+
+                                            <label for="gainsInfo_balanceMoney" class="col-md-2 control-label">资金余额</label>
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" name="balanceMoney" id="gainsInfo_balanceMoney"  />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
                                             <label for="gainsInfo_totalMoney" class="col-md-2 control-label">总资产</label>
                                             <div class="col-md-4">
                                                 <input type="text" class="form-control" name="totalMoney" id="gainsInfo_totalMoney"  />
@@ -580,6 +609,13 @@
                                                 <input type="text" class="form-control" name="price" id="gainsInfo_price_add"  />
                                             </div>
 
+                                            <label for="gainsInfo_balanceMoney_add" class="col-md-2 control-label">资金余额</label>
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" name="balanceMoney" id="gainsInfo_balanceMoney_add"  />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
                                             <label for="gainsInfo_totalMoney_add" class="col-md-2 control-label">总资产</label>
                                             <div class="col-md-4">
                                                 <input type="text" class="form-control" name="totalMoney" id="gainsInfo_totalMoney_add"  />

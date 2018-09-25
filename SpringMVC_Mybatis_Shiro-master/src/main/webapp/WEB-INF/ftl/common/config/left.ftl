@@ -111,6 +111,13 @@
                     </a>
                 </li>
 			</@shiro.hasPermission>
+			<@shiro.hasPermission name="/dealer/countDealerList.shtml">
+                <li class="${(index==2)?string('active',' ')}">
+                    <a href="${basePath}/dealer/countDealerList.shtml">
+                        <i class="glyphicon glyphicon-chevron-right"></i>经销商会员统计
+                    </a>
+                </li>
+			</@shiro.hasPermission>
         </ul>
     </div>
 	</@shiro.hasAnyRoles>
@@ -126,6 +133,15 @@
                     </a>
                 </li>
 			</@shiro.hasPermission>
+
+			<@shiro.hasPermission name="/dealer/countEmployeeList.shtml">
+                <li class="${(index==2)?string('active',' ')}">
+                    <a href="${basePath}/dealer/countEmployeeList.shtml">
+                        <i class="glyphicon glyphicon-chevron-right"></i>员工会员统计
+                    </a>
+                </li>
+			</@shiro.hasPermission>
+
         </ul>
     </div>
 	</@shiro.hasAnyRoles>

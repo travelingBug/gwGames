@@ -45,7 +45,7 @@ CREATE TABLE `u_role` (
 
 /*Data for the table `u_role` */
 
-insert  into `u_role`(`id`,`name`,`type`) values (1,'系统管理员','888888'),(3,'权限角色','100003'),(4,'用户中心','100002'),(5,'经销商','200001'),(6,'员工','200002');
+insert  into `u_role`(`id`,`name`,`type`) values (1,'系统管理员','888888'),(3,'权限角色','100003'),(4,'用户中心','100002'),(5,'经销商','200001'),(6,'员工','200002'),(7,'会员','300001');
 
 /*Table structure for table `u_role_permission` */
 
@@ -155,6 +155,28 @@ CREATE TABLE `tb_dealer` (
   `ADDRESS` varchar(32) DEFAULT NULL,
   `PHONE` varchar(32) DEFAULT NULL,
   `TYPE` tinyint(4) DEFAULT NULL,
+  `SEAT_NUM` varchar(10) DEFAULT NULL,
+  `INVITE_NUM` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+drop table if exists TB_VIP;
+
+/*==============================================================*/
+/* Table: TB_VIP     会员表                                           */
+/*==============================================================*/
+CREATE TABLE `tb_vip` (
+  `ID` varchar(32) NOT NULL,
+  `INVITAION_CODE` varchar(64) NOT NULL,
+  `LEVEL` tinyint(4) NOT NULL,
+  `END_TIME` datetime NOT NULL,
+  `FK_USER_ID` bigint(20) NOT NULL,
+  `NICKNAME` varchar(32) DEFAULT NULL,
+  `DEL_FLAG` tinyint(4) NOT NULL,
+  `PHONE` varchar(11) DEFAULT NULL,
+  `ADDRESS` varchar(20) DEFAULT NULL,
+  `CREATE_TIME` datetime DEFAULT NULL,
+  `MODIFY_TIME` datetime DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 

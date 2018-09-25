@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sojson.common.dao.UTbVipRecordMapper" >
+  <resultMap id="CountLevel" type="com.sojson.common.model.vo.VipRecordCount" >
+      <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="INVITAION_CODE" property="invitaionCode" jdbcType="VARCHAR" />
+    <result column="LEVEL" property="level" jdbcType="TINYINT" />
+    <result column="countNum" property="countNum" jdbcType="INTEGER" />
+      <result column="countMoney" property="countMoney" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="countByCode" resultMap="CountLevel" >
+    select t.INVITAION_CODE,v.level,count(v.id) countNum,SUM(v.amount) countMoney from tb_vip t INNER JOIN tb_vip_record v on t.id = v.vip_id
+    <include refid="where_count"/>
+    GROUP BY t.INVITAION_CODE,v.level
+  </select>
+
+  
+  <sql id="where_count">
+  	<where>
+  	  <if test="bgnMonth != null and bgnMonth !='' " >
+        and v.CRT_TIME &gt;= #{bgnMonth}
+      </if>
+      <if test="endMonth != null and endMonth !='' " >
+        and v.CRT_TIME &lt;= #{endMonth}
+      </if>
+      <if test="bgnTime != null and bgnTime !=''">
+        and v.CRT_TIME   &gt;= #{bgnTime}
+      </if>
+      <if test="endTime != null and endTime !=''">
+        and v.CRT_TIME   &lt;= #{endTime}
+      </if>
+     </where>
+  </sql>
+
+    <select id="countByEmployee" resultMap="CountLevel" >
+        select a1.NAME,a2.INVITAION_CODE,a2.level,a2.countNum,a2.countMoney from
+    (select x.NAME,x.INVITE_NUM from tb_dealer x where x.ID = #{dealerId} or x.PARENT_ID = #{dealerId}) a1 LEFT JOIN
+    (select t.INVITAION_CODE,v.level,count(v.id) countNum,SUM(v.amount) countMoney from tb_vip t INNER JOIN tb_vip_record v on t.id = v.vip_id
+        <include refid="where_count"/>
+    GROUP BY t.INVITAION_CODE,v.level) a2 on a1.INVITE_NUM = a2.INVITAION_CODE
+
+    </select>
+
+</mapper>

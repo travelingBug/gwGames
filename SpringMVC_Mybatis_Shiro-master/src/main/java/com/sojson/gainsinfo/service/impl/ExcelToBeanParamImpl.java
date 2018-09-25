@@ -83,6 +83,11 @@ public class ExcelToBeanParamImpl implements IExcelToBeanParam {
         if (StringUtils.isBlank(cols[7]) || !cols[7].toString().matches(moneyReg)) {
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"总资产格式错误！");
         }
+
+        //资金余额
+        if (StringUtils.isBlank(cols[8]) || !cols[8].toString().matches(moneyReg)) {
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"资金余额错误！");
+        }
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
 

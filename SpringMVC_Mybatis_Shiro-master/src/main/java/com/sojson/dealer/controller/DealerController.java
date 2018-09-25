@@ -3,6 +3,7 @@ package com.sojson.dealer.controller;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
 import com.sojson.common.model.TbDealer;
+import com.sojson.common.model.vo.DealerCountVo;
 import com.sojson.common.utils.StringUtils;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.dealer.service.DealerService;
@@ -13,10 +14,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -108,4 +113,38 @@ public class DealerController extends BaseController {
     public Map<String,Object> forbidUserById(Long id, Long status){
         return userService.updateForbidUserById(id,status);
     }
+
+    @RequestMapping(value = "countDealerList")
+    public ModelAndView countDealerList(ModelMap modelMap,@RequestParam Map<String,Object> map) {
+
+        if (map.get("bgnTime") == null && map.get("endTime") == null) {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            map.put("bgnTime", formatter.format(new Date()) + " 00:00:00");
+            map.put("endTime", formatter.format(new Date()) + " 23:59:59");
+        }
+        modelMap.put("listData", dealerService.countDealerVip(map));
+        modelMap.putAll(map);
+        return new ModelAndView("dealer/countDealerList");
+    }
+
+
+    @RequestMapping(value = "countEmployeeList")
+    public ModelAndView countEmployeeList(ModelMap modelMap,@RequestParam Map<String,Object> map) {
+
+        if (map.get("bgnTime") == null && map.get("endTime") == null) {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            map.put("bgnTime", formatter.format(new Date()) + " 00:00:00");
+            map.put("endTime", formatter.format(new Date()) + " 23:59:59");
+        }
+        modelMap.put("listData", dealerService.countDealerVipById(map));
+        modelMap.putAll(map);
+        return new ModelAndView("employee/countEmployeeList");
+    }
+
+//    @RequestMapping(value="countDealerVip",method=RequestMethod.POST)
+//    @ResponseBody
+//    public List<DealerCountVo> countDealerVip(@RequestParam Map<String,Object> map){
+//        return
+//    }
+
 }

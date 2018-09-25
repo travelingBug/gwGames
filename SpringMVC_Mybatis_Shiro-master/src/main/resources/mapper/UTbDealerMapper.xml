@@ -10,11 +10,13 @@
     <result column="PHONE" property="phone" jdbcType="VARCHAR" />
     <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
     <result column="TYPE" property="type" jdbcType="TINYINT" />
+    <result column="SEAT_NUM" property="seatNum" jdbcType="TINYINT" />
+    <result column="INVITE_NUM" property="inviteNum" jdbcType="TINYINT" />
     <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
     <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="dealer_Column_List" >
-    d.ID,d.NAME,d.PHONE,d.ADDRESS,d.TYPE,d.crt_time
+    d.ID,d.NAME,d.PHONE,d.ADDRESS,d.TYPE,d.crt_time,d.SEAT_NUM,d.INVITE_NUM,d.PARENT_ID
   </sql>
   <sql id="dealer_limit_sql">
   	   <if test="page_sql != null and page_sql != ''">
@@ -54,9 +56,19 @@
   	<include refid="dealer_where_all" />
   </select>
 
+  <select id="queryDealerCount" resultType="int">
+    select count(d.id) from  tb_dealer d
+    where d.DEL_FLAG = 0 and d.PARENT_ID=0
+  </select>
+  
+  <select id="getSeatNumByUserId" parameterType="String" resultType="String">
+    select SEAT_NUM from tb_dealer
+    where DEL_FLAG = 0 and FK_USER_ID = #{userId}
+  </select>
+
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbDealer" >
-    insert into tb_dealer (ID,FK_USER_ID,NAME,PARENT_ID,PHONE,ADDRESS,DEL_FLAG,TYPE,CRT_TIME)
-    values (#{id},#{userId},#{name},#{parentId},#{phone},#{address},#{delFlag},#{type},#{crtTime})
+    insert into tb_dealer (ID,FK_USER_ID,NAME,PARENT_ID,PHONE,ADDRESS,DEL_FLAG,TYPE,CRT_TIME,SEAT_NUM,INVITE_NUM)
+    values (#{id},#{userId},#{name},#{parentId},#{phone},#{address},#{delFlag},#{type},#{crtTime},#{seatNum},#{inviteNum})
   </insert>
   <update id="update" parameterType="com.sojson.common.model.TbDealer" >
     update tb_dealer
@@ -85,4 +97,11 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="findDealerByUserId" resultMap="dealerResultMap" >
+    select
+    <include refid="dealer_Column_List" />
+    from tb_dealer d
+    where d.FK_USER_ID = #{userId}
+  </select>
 </mapper>
