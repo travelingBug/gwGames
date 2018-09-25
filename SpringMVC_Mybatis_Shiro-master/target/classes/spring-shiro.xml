@@ -149,6 +149,7 @@
     <bean id="permission" class="com.sojson.core.shiro.filter.PermissionFilter"/>
     <bean id="simple" class="com.sojson.core.shiro.filter.SimpleAuthFilter"/>
 	<bean id="inf" class="com.sojson.core.shiro.filter.InterfaceFilter"/>
+	<bean id="wxInf" class="com.sojson.core.shiro.filter.WxInfFilter"/>
 
 	<!--接口认证-->
 	
@@ -183,6 +184,7 @@
               <entry key="permission" value-ref="permission"></entry>
               <entry key="kickout" value-ref="kickoutSessionFilter"></entry>
 			  <entry key="inf" value-ref="inf"></entry>
+			   <entry key="wxInf" value-ref="wxInf"></entry>
            </util:map>
        </property>
 	</bean>

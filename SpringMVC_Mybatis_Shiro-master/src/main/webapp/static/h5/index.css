@@ -1,0 +1,230 @@
+button {
+    outline: none;
+    border-width: 0;
+    background: transparent;
+}
+
+.container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #c99491 url(./assets/imgs/bg.png) no-repeat scroll center;
+    background-size: 100% 100%;
+    background-origin: 0 0;
+}
+
+.form-container {
+    position: absolute;
+    width: 80%;
+    top: 30%;
+    bottom: 0;
+    /* margin: 0 auto; */
+    left: 10%;
+    background: #f9e5c1;
+    border-radius: 2.25px;
+    background-image: radial-gradient(47% 114%, #ffdda2 47%, #f0c06b 100%);
+}
+
+.small_bg {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+
+form {
+    padding: 1
+}
+
+.form-item {
+    position: relative;
+    height: 45px;
+    margin: 10px 0;
+    padding: 0 15px;
+    background: transparent;
+}
+
+.form-item>input {
+    display: block;
+    box-sizing: border-box;
+    padding: 0 30px 0 40px;
+    width: 100%;
+    height: 100%;
+    border-width: 0 0 1px 0;
+    border-bottom-color: #aaa;
+    border-bottom-style: solid;
+    font-size: 16px;
+    color: #474747;
+    outline: none;
+    background: transparent;
+}
+
+.form-item .placeimg {
+    position: absolute;
+    display: inline-block;
+    width: 20px;
+    height: 100%;
+    top: 0;
+    right: 20px;
+}
+
+.form-item .headimg {
+    position: absolute;
+    display: inline-block;
+    width: 20px;
+    height: 100%;
+    top: 0;
+    left: 20px;
+}
+
+.form-item .headimg img {
+    vertical-align: middle;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.form-item .placeimg .right {
+    display: none;
+    vertical-align: middle;
+    width: 100%;
+    margin-top: 10px;
+}
+
+input::-webkit-input-placeholder {
+    color: #494949;
+}
+
+.form-item.valide {
+    display: flex;
+}
+
+.form-item.valide>input {
+    flex: 1;
+}
+
+.form-item.valide>button {
+    display: block;
+    margin: 0 0 0 10px;
+    width: 40%;
+    height: 100%;
+    color: white;
+    background: #f3c778;
+    border: 0 solid #eeb247;
+    box-shadow: 0 1px 2px 0 rgba(243, 199, 120, 0.72);
+    border-radius: 2px;
+}
+
+.agreement {
+    height: 45px;
+    margin: 10px 0;
+    padding: 0 15px;
+    background: transparent;
+}
+
+.agreement>input {
+    width: 15px;
+    height: 15px;
+    border: 1px solid #494949;
+    border-radius: 2px;
+}
+
+.agreement>.detail {
+    font-size: 14px;
+    color: #494949;
+    letter-spacing: 1.12px;
+}
+
+.detail>.mark {
+    margin: 0 10px;
+    text-decoration: underline;
+}
+
+button.login-btn {
+    position: absolute;
+    bottom: 5%;
+    z-index: 1200;
+    left: calc(50% - 34px);
+    width: 68px;
+    height: 68px;
+    border: 1px solid #842c27;
+    border-radius: 100%;
+    font-size: 18px;
+    color: #ffffff;
+    background: #aa3731;
+}
+
+/* 自定义弹出框样式 */
+.alertify {
+    border-color: #aa3731;
+}
+
+/* 参赛须知 */
+.agreement-detail {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0%;
+    left: 0;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1300;
+}
+
+.agreemtn-container {
+    position: relative;
+    box-sizing: border-box;
+    margin: 5%;
+    height: 100%;
+    max-height: 580px;
+    padding: 5%;
+    background-color: white;
+}
+
+/* 参赛须知头部*/
+.agreemtn-container>.head {
+    display: block;
+    width: 100%;
+    height: 10%;
+    line-height: 10%;
+    font-size: 20px;
+    color: #42464a;
+}
+
+/* 参赛须知内容 */
+.agreemtn-container>.body {
+    line-height: 22px;
+    font-size: 14px;
+    color: #404040;
+}
+
+/* 确定按钮 */
+.agree-btn {
+    position: absolute;
+    border-top: 1px solid #f3f3f3;
+    display: block;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 44px;
+    color: #aa3731;
+    font-size: 18px;
+}
+
+
+/* 底部的提示框*/
+.alert-area {
+    display: none;
+    position: absolute;
+    left: calc(50% - 100px);
+    bottom: 150px;
+    border-radius: 4px;
+    width: 200px;
+    height: 50px;
+    line-height: 50px;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+}

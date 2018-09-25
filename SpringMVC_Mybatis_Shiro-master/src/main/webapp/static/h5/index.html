@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>报名页面</title>
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <!-- <link rel="stylesheet" href="./lib/alertify/themes/alertify.core.css">
+    <link rel="stylesheet" href="./lib/alertify/themes/alertify.default.css"> -->
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-container">
+            <form name="regist">
+                <div class="form-item">
+                    <div class="headimg">
+                        <img src="./assets/imgs/accountname.png" class="right">
+                    </div>
+                    <input type="text" placeholder="昵称" name="accountName" class="needValidate" />
+                    <div class="placeimg">
+                        <img src="./assets/imgs/icon_right.png" class="right">
+                    </div>
+                </div>
+                <div class="form-item">
+                    <div class="headimg">
+                        <img src="./assets/imgs/name.png" class="right">
+                    </div>
+                    <input type="text" placeholder="真实姓名" name="name" class="truename" />
+                    <div class="placeimg">
+                        <img src="./assets/imgs/icon_right.png" class="right">
+                    </div>
+                </div>
+                <div class="form-item">
+                    <div class="headimg">
+                        <img src="./assets/imgs/idcard.png" class="right">
+                    </div>
+                    <input type="text" placeholder="身份证号码" name="idCard" class="needValidate" />
+                    <div class="placeimg">
+                        <img src="./assets/imgs/icon_right.png" class="right">
+                    </div>
+                </div>
+                <div class="form-item">
+                    <div class="headimg">
+                        <img src="./assets/imgs/telno.png" class="right">
+                    </div>
+                    <input type="number" placeholder="手机号码" name="telPhone" class="needValidate" />
+                    <div class="placeimg">
+                        <img src="./assets/imgs/icon_right.png" class="right">
+                    </div>
+                </div>
+                <div class="form-item valide">
+                    <div class="headimg">
+                        <img src="./assets/imgs/valicode.png" class="right">
+                    </div>
+                    <input type="number" placeholder="验证码" name="verfiCode" value="123456" />
+                    <button class="vlidate-btn" type="button" id="vlidatebtn" id="sendVerfiCode">发送验证码</button>
+                </div>
+                <div class="agreement">
+                    <input type="checkbox" name='agree'>
+                    <span class="detail">我已阅读<span class="mark" id="showAgreement">参赛须知</span></span>
+                </div>
+            </form>
+
+            <button type="button" class="login-btn" id="submit">提交</button>
+        </div>
+        <img class="small_bg" src="./assets/imgs/smal_bg.png" alt="" srcset="">
+        <div class="agreement-detail">
+            <div class="agreemtn-container">
+                <button class="head" type="button">参赛须知</button>
+                <div class="body">
+                    大赛宗旨：<br />
+                    富甲杯——中华股神实盘大赛是由富甲资讯主办的实盘炒股比赛。富甲资讯大赛旨在挖掘民间炒股高手，为其提供一个展现自我风采、相互学习的大舞台。<br />
+                    大赛赛制：<br />
+                    分为总决赛和月赛，总决赛按照正式比赛期间的总收益统计排名，月赛按照自然月收益率排名。<br />
+                    大赛奖项设置：<br />
+                    总决赛：<br />
+                    本次大赛设冠军、亚军，季军各一名，优秀选手奖17名。<br />
+                    选手参赛账户总收益率E前20名，均获得主办方颁发的荣誉证书一本以及奖品。奖品具体如下：<br />
+                    大赛总冠军（第1名）奖品为：人民币现金300000元；<br />
+                    大赛总亚军（第2名）奖品为：人民币现金1000000元；<br />
+                    大赛总季军（第3名）奖品为：人民币现金50000元；<br />
+                </div>
+                <button type="button" class="agree-btn" id="hidenAgreement">确定</button>
+            </div>
+        </div>
+
+        <div class="alert-area">
+            请输入正确的身份证号码
+        </div>
+    </div>
+    <script src="./lib/jquery-1.11.1.min.js"></script>
+    <script src="./lib/AES/aes.js"></script>
+    <script src="./lib/AES/mode-ecb.js"></script>
+    <script src="./lib/moment.min.js"></script>
+    <script src="https://cdn.bootcss.com/rxjs/6.2.0/rxjs.umd.js"></script>
+    <script>
+        //服务器地址
+        var HostAddr = '/';
+        // 倒计时id
+        var timeoutid = null;
+        // 倒计时时间
+        var timeout = 0;
+        // 密钥
+        var encriptKey = 'tJjwxDz4WF0Sf9JT';
+        // 默认未登录
+        var sessionId = 'visitor';
+
+        // 显示正确图片的url
+        var rightImgPath = './assets/imgs/icon_right.png';
+        // 显示错误的图片url
+        var wrongImgPath = './assets/imgs/icon_wrong.png';
+
+
+        $(document).ready(function () {
+            // 验证，昵称，身份证，电话号码是否重复
+            rxjs.fromEvent($('.needValidate'), 'input propertychange').pipe(
+                rxjs.operators.throttleTime(100),
+                rxjs.operators.switchMap(e => {
+                    return rxjs.of($(e.target || e.srcElement))
+                })
+            ).subscribe(function (target) {
+                // 获取姓名
+                var name = target.attr('name');
+                // 获取value
+                var bodyData = {};
+                bodyData[name] = target.val();
+                var rigthDom = target.next().find('.right');
+
+                rigthDom.show();
+                switch (name) {
+                    case 'idCard':
+                        // 验证身份证是否合法
+                        if (!/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/ig.test(
+                                target.val())) {
+                            rigthDom.attr('src',
+                                wrongImgPath);
+                            return;
+                        }
+                        break;
+                        // 验证电话号码是否合法
+                    case 'telPhone':
+                        if (!/\d{11}/ig.test(target.val())) {
+                            rigthDom.attr('src',
+                                wrongImgPath);
+                            return;
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+                $.ajax({
+                    type: 'post',
+                    timeout: 100000, // 超时时间 10 秒
+                    headers: getHeader(),
+                    url: HostAddr + 'interface/player/findAllNoPage.shtml',
+                    contentType: "application/json; charset=utf-8",
+                    data: bodyData,
+                    dataType: "json",
+                    success: function (resMsg) {
+                        // ResultMessage
+                        console.log(resMsg);
+                        if (Array.isArray(resMsg)) {
+
+                            // 判断参赛选手信息是否重复
+                            if (resMsg.length > 0) {
+                                rigthDom.attr('src', wrongImgPath);
+                            } else {
+                                // 提交
+                                rigthDom.attr('src', rightImgPath);
+                            }
+                        }
+                    },
+                    error: function (err) {
+                        showAlert("网络错误，请稍后重试");
+                    },
+                })
+            })
+
+            // 验证
+            rxjs.fromEvent($('input.truename'), 'blur').subscribe(function (e) {
+                var target = $(e.target || e.srcElement);
+                var rigthDom = target.next().find('.right');
+
+                rigthDom.show();
+                if (!/^[\u4e00-\u9fa5]{2,6}$/ig.test(target.val())) {
+                    rigthDom.attr('src', wrongImgPath);
+                } else {
+                    rigthDom.attr('src', rightImgPath);
+                }
+            })
+            // 发送验证码
+            rxjs.fromEvent($('#vlidatebtn'), 'click').pipe(
+                rxjs.operators.throttleTime(200),
+            ).subscribe(function () {
+                if (timeout != 0) {
+                    return;
+                }
+                // 表单内容
+                var regisForm = document.forms[0];
+
+                if (!regisForm.telPhone.value) {
+                    var imgDom = $(regisForm.telPhone).next().find('.right');
+                    imgDom.show();
+                    imgDom.attr('src', wrongImgPath);
+                }
+
+                var telPhone = regisForm.telPhone.value;
+                if (!/\d{11}/ig.test(telPhone)) {
+                    showAlert("请正确输入手机号码");
+                    return;
+                }
+                if (!regisForm.agree.checked) {
+                    showAlert("请同意参赛须知");
+                    return;
+                }
+
+
+                $.ajax({
+                    type: 'post',
+                    timeout: 100000, // 超时时间 10 秒
+                    headers: getHeader(),
+                    url: HostAddr + 'interface/meaage/send.shtml',
+                    // contentType: "application/json; charset=utf-8",
+                    data: {
+                        telPhone: telPhone
+                    },
+                    dataType: "json",
+                    success: function (resMsg) {
+                        console.log(resMsg)
+                        // ResultMessage
+                        if (resMsg.level === 1) {
+                            timeout = 60;
+                            // 获取成功
+                            timeoutid = setInterval(function () {
+                                timeout--;
+                                if (timeout === 0) {
+                                    clearInterval(timeoutid);
+                                    $('#vlidatebtn').text('重新发送');
+
+                                } else {
+                                    $('#vlidatebtn').text('重新发送(' + timeout +
+                                        ')')
+                                }
+                            }, 1000)
+                        } else {
+                            // 获取失败
+                            showAlert(resMsg.messageText);
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err)
+                        showAlert("网络错误，请稍后重试");
+                    },
+                    complete: function (XMLHttpRequest, status) { //请求完成后最终执行参数　
+                    }
+                })
+            })
+
+            // 判断是否通过验证
+            function isPassValidate(target) {
+                var imgDom = $(target).next().find('.right');
+                if (target.value.length && imgDom.is(':visible')) {
+                    if (imgDom.attr('src') === wrongImgPath) {
+                        return false;
+                    }
+                    return true;
+                } else {
+                    imgDom.show();
+                    imgDom.attr('src', wrongImgPath);
+                    return false;
+                }
+            }
+            // 表单提交
+            rxjs.fromEvent($('#submit'), 'click').pipe(
+                rxjs.operators.throttleTime(200),
+            ).subscribe(function () {
+                var regisForm = document.forms[0];
+
+                var accountNameInput = regisForm.accountName;
+                var nameInput = regisForm.name;
+                var idCardInput = regisForm.idCard;
+                var telPhoneInput = regisForm.telPhone;
+                var verfiCodeInput = regisForm.verfiCode;
+                if (!isPassValidate(accountNameInput)) {
+                    showAlert(!!accountNameInput.value.length ? "昵称重复" : "请输入昵称");
+                    return;
+                }
+                if (!isPassValidate(nameInput)) {
+                    showAlert(!!nameInput.value.length ? "请正确输入姓名" : "请输入姓名");
+                    return;
+                }
+                if (!isPassValidate(idCardInput)) {
+                    showAlert(!!idCardInput.value.length ? "身份证号码输入错误或重复" : "请输入身份证号码");
+                    return;
+                }
+                if (!isPassValidate(telPhoneInput)) {
+                    showAlert(!!idCardInput.value.length ? "手机号码输入错误或重复" : "请输入手机号码");
+                    return;
+                }
+                var accountName = accountNameInput.value;
+                var name = nameInput.value;
+                var idCard = idCardInput.value;
+                var telPhone = telPhoneInput.value;
+                var verfiCode = verfiCodeInput.value;
+
+                if (!regisForm.agree.checked) {
+                    showAlert("请同意参赛须知");
+                    return;
+                }
+                if (!/\d{6}/ig.test(verfiCode)) {
+                    showAlert("请输入验证码");
+                    return;
+                }
+                $.ajax({
+                    type: 'post',
+                    timeout: 100000, // 超时时间 10 秒
+                    headers: getHeader(),
+                    url: HostAddr + 'interface/player/save.shtml',
+                    contentType: "application/json; charset=utf-8",
+                    data: {
+                        accountName: accountName,
+                        name: name,
+                        idCard: idCard,
+                        telPhone: telPhone,
+                        verfiCode: verfiCode
+                    },
+                    dataType: "json",
+                    success: function (resMsg) {
+                        // ResultMessage
+                        if (resMsg.level === 1) {
+                            // 保存参赛用户信息成功
+                            // TODO 跳转
+                            location.href = 'http://www.baidu.com'
+                        } else {
+                            // 获取失败
+                            showAlert(resMsg.messageText);
+                        }
+
+                    },
+                    error: function (err) {
+                        showAlert("网络错误，请稍后重试");
+                    },
+                    complete: function (XMLHttpRequest, status) { //请求完成后最终执行参数　
+                    }
+                })
+            })
+
+            // 展示用户须知
+            rxjs.fromEvent($('#showAgreement'), 'click').pipe(
+                rxjs.operators.throttleTime(200),
+            ).subscribe(function () {
+                $('.agreement-detail').fadeIn('fast');
+            })
+
+
+            // 隐藏用户须知
+            rxjs.fromEvent($('#hidenAgreement'), 'click').pipe(
+                rxjs.operators.throttleTime(200),
+            ).subscribe(function () {
+                $('.agreement-detail').fadeOut('fast');
+            })
+
+            // 获取ajaxheader
+            function getHeader() {
+                var dateStr = moment().format('YYYY-MM-DD HH:mm:ss');
+                return {
+                    'Authorization': Encrypt(sessionId + ',' + dateStr),
+                    "Content-type": "application/x-www-form-urlencoded; charset=UTF-8 "
+                };
+            }
+            // 加密
+            function Encrypt(word) {
+                var key = CryptoJS.enc.Utf8.parse(encriptKey);
+                var srcs = CryptoJS.enc.Utf8.parse(word);
+                var encrypted = CryptoJS.AES.encrypt(srcs, key, {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                });
+                return encrypted.toString();
+            }
+            // 解密
+            function Decrypt(word) {
+                var key = CryptoJS.enc.Utf8.parse("tJjwxDz4WF0Sf9JT");
+
+                var decrypt = CryptoJS.AES.decrypt(word, key, {
+                    mode: CryptoJS.mode.ECB,
+                    padding: CryptoJS.pad.Pkcs7
+                });
+                return CryptoJS.enc.Utf8.stringify(decrypt).toString();
+            }
+            // 弹出提示框
+            var timeoutid = null;
+
+            function showAlert(msg) {
+                var _alert = $('.alert-area');
+                _alert.text(msg);
+                if (_alert.is(':visible')) {
+                    // 如果已经提示,重置定时器
+                    clearTimeout(timeoutid);
+                    timeoutid = setTimeout(function () {
+                        _alert.hide();
+                        clearTimeout(timeoutid);
+                        timeoutid = null;
+                    }, 2500);
+                } else {
+                    _alert.show();
+                    timeoutid = setTimeout(function () {
+                        _alert.hide();
+                        clearTimeout(timeoutid);
+                        timeoutid = null;
+                    }, 2500);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

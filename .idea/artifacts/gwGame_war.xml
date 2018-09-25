@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="gwGame:war">
+    <output-path>$PROJECT_DIR$/SpringMVC_Mybatis_Shiro-master/target</output-path>
+    <root id="archive" name="gwGame-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="gwGame:war exploded" />
+    </root>
+  </artifact>
+</component>
