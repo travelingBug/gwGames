@@ -38,7 +38,7 @@
   </sql>
 
   <sql id="dealer_order_all">
-    ORDER BY d.crt_time
+    ORDER BY d.crt_time desc
   </sql>
   <select id="findAll" resultMap="dealerResultMap" >
   	select
