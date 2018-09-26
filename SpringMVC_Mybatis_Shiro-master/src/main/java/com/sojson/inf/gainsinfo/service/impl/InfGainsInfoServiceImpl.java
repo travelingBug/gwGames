@@ -42,7 +42,7 @@ public class InfGainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> 
 		for (TbGainsInfoVo topInfo : topInfos) {
 			PlayerTopInfo playerTopInfo = new PlayerTopInfo();
 			playerTopInfo.setAccountName(topInfo.getAccountName());
-			playerTopInfo.setIdCard(topInfo.getIdCard());
+			playerTopInfo.setAccount(topInfo.getAccount());
 			playerTopInfo.setTotalMoney(topInfo.getTotalMoney());
 			playerTopInfo.setCapital(String.valueOf(IConstant.capital));
 			//计算收益率
@@ -74,7 +74,7 @@ public class InfGainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> 
 		for (TbGainsInfoVo topInfo : topInfos) {
 			PlayerTopInfo playerTopInfo = new PlayerTopInfo();
 			playerTopInfo.setAccountName(topInfo.getAccountName());
-			playerTopInfo.setIdCard(topInfo.getIdCard());
+			playerTopInfo.setAccount(topInfo.getAccount());
 			playerTopInfo.setTotalMoney(topInfo.getTotalMoney());
 			playerTopInfo.setCapital(topInfo.getCapital());
 

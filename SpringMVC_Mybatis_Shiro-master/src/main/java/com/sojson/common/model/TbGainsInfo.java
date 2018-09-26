@@ -14,9 +14,9 @@ public class TbGainsInfo implements Serializable {
     private String id;
 
     /**
-     * 身份证号
+     * 资金账号
      */
-    private String idCard;
+    private String account;
 
 
     /**
@@ -44,6 +44,11 @@ public class TbGainsInfo implements Serializable {
      * 成交价格
      */
     private String price;
+
+    /**
+     * 成交总金额
+     */
+    private String amount;
 
     /**
      * 资金余额
@@ -144,12 +149,12 @@ public class TbGainsInfo implements Serializable {
         this.modTime = modTime;
     }
 
-    public String getIdCard() {
-        return idCard;
+    public String getAccount() {
+        return account;
     }
 
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getSharesName() {
@@ -166,5 +171,13 @@ public class TbGainsInfo implements Serializable {
 
     public void setBalanceMoney(String balanceMoney) {
         this.balanceMoney = balanceMoney;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 }

@@ -835,6 +835,12 @@ select option {
 #registerForm .disable{
 	background-color: #7b8996;
 	color: #fff;
+	width:150px;
+	height:44px;
+	line-height:44px;
+	text-align:center;
+	display:block;
+	font-size:16px;
 }
 
 /* 24、tabs

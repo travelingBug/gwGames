@@ -113,6 +113,7 @@ CREATE TABLE `tb_player` (
   `ACCOUNT_NAME` varchar(20) NOT NULL,
   `CRT_TIME` datetime DEFAULT NULL,
   `MOD_TIME` datetime DEFAULT NULL,
+  `ACCOUNT_NUM` varchar(50) NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -127,12 +128,13 @@ drop table if exists tb_gains_info;
 create table tb_gains_info
 (
    ID                   bigint not null auto_increment comment '主键',
-   ID_CARD              varchar(20) not null comment '身份证',
+   ACCOUNT         varchar(50)  not null comment '资金账号',
    SHARES_CODE          varchar(10) not null comment '股票代码',
    SHARES_NAME          varchar(50) not null comment '股票名称',
    BUSINESS_FLAG        tinyint not null comment '买卖标致',
    VOLUME               int not null comment '成交量',
-   PRICE                varchar(10) not null comment '成交价格',
+   PRICE                varchar(20) not null comment '成交价格',
+   AMOUNT               varchar(20) not null comment '成交价总金额',
    BALANCE_MONEY varchar(20) not null comment '资金余额',
    TOTAL_MONEY varchar(20) not null comment '总资产',
    BUSINESS_TIME        datetime not null comment '交易时间',
@@ -140,7 +142,7 @@ create table tb_gains_info
    MOD_TIME             datetime comment '修改时间',
    primary key (ID)
 );
-ALTER TABLE `tb_gains_info` ADD INDEX index_idCard ( `ID_CARD` ) ;
+ALTER TABLE `tb_gains_info` ADD INDEX index_idCard ( `ACCOUNT` ) ;
 
 /*==============================================================*/
 /* Table: tb_dealer                                             */
@@ -185,3 +187,4 @@ CREATE TABLE `tb_vip` (
 /*选手表补充字段*/
 ALTER TABLE tb_player ADD BZ VARCHAR(200);
 ALTER TABLE tb_player ADD ACCOUNT VARCHAR(32);
+ALTER TABLE tb_player ADD CAPITAL VARCHAR(20);

@@ -116,6 +116,61 @@
                         }
                     });
                 });
+
+                $("#gainsInfo_account_add").blur(function(event){
+                    event.stopPropagation();
+                    var accountName = $("#gainsInfo_account_add").val();
+                    if (accountName != null && accountName != "") {
+                        $.ajax({
+                            type: "POST",
+                            url: "/player/findAll.shtml",
+                            data: {'account':accountName},
+                            dataType: "json",
+                            success: function(result) {
+                                if (result && result.length != 1) {
+                                    msg("资金账户不存在，请验证后再输入");
+                                    $("#player_accountName_add").val("");
+                                    $("#player_name_add").val("");
+                                    $('#gainsInfo_add_submit').attr("disabled","disabled");
+                                } else {
+                                    $("#player_accountName_add").val(result[0].accountName);
+                                    $("#player_name_add").val(result[0].name);
+                                    $('#gainsInfo_add_submit').removeAttr("disabled");
+                                }
+                            },
+                            error: function(data) {
+                                layer.alert('系统错误，请联系管理员！', {
+                                    icon: 2,
+                                    skin: 'layui-layer-lan'
+                                });
+                            }
+                        });
+                    }
+
+                });
+
+                $("#gainsInfo_volume_add").blur(function(event){
+                    event.stopPropagation();
+                    complateAmount("gainsInfo_amount_add", $("#gainsInfo_volume_add").val(),$("#gainsInfo_price_add").val());
+                });
+
+                $("#gainsInfo_price_add").blur(function(event){
+                    event.stopPropagation();
+                    complateAmount( "gainsInfo_amount_add",$("#gainsInfo_volume_add").val(),$("#gainsInfo_price_add").val());
+                });
+
+                $("#gainsInfo_volume").blur(function(event){
+                    event.stopPropagation();
+                    complateAmount("gainsInfo_amount", $("#gainsInfo_volume").val(),$("#gainsInfo_price").val());
+                });
+
+                $("#gainsInfo_price").blur(function(event){
+                    event.stopPropagation();
+                    complateAmount("gainsInfo_amount",$("#gainsInfo_volume").val(),$("#gainsInfo_price").val());
+                });
+
+
+
 				<#--$("#gainsInfo_btn_submit").click(function(){-->
 					<#--var id = $("#gainsInfo_edit_id").val();-->
 					<#--var accountName = $("#player_accountName").val();-->
@@ -132,6 +187,12 @@
 				<#--});-->
 			});
 
+			function complateAmount(id,volume,price){
+			    if (volume != null && volume != ""
+                && price != null && price != "") {
+                    $("#"+id).val((parseFloat(volume)*parseFloat(price)).toFixed(2));
+                }
+            }
 
 
             function _del(id){
@@ -162,11 +223,11 @@
                     layer.close(index);
                 });
             }
-			function _update(id,accountName,name,idCard,businessTimeStr,sharesCode,sharesName,businessFlag,volume,price,totalMoney,balanceMoney){
+			function _update(id,accountName,name,account,businessTimeStr,sharesCode,sharesName,businessFlag,volume,price,totalMoney,balanceMoney,amount){
 				$("#gainsInfo_id").val(id);
                 $("#player_accountName").val(accountName);
                 $("#player_name").val(name);
-                $("#gainsInfo_idCard").val(idCard);
+                $("#gainsInfo_account").val(account);
                 $("#gainsInfo_businessTime").val(businessTimeStr);
                 $("#gainsInfo_sharesCode").val(sharesCode);
                 $("#gainsInfo_sharesName").val(sharesName);
@@ -175,6 +236,8 @@
                 $("#gainsInfo_volume").val(volume);
                 $("#gainsInfo_totalMoney").val(totalMoney);
                 $("#gainsInfo_balanceMoney").val(balanceMoney);
+                $("#gainsInfo_amount").val(amount);
+
 
 			}
 
@@ -197,8 +260,8 @@
                     msg('修改错误，请联系管理员处理');
                     return false;
                 }
-                if ($("#gainsInfo_idCard").val() == null || $("#gainsInfo_idCard").val() == '') {
-                    msg('身份证号码不能为空！');
+                if ($("#gainsInfo_account").val() == null || $("#gainsInfo_account").val() == '') {
+                    msg('资金账号不能为空！');
                     return false;
                 }
                 if ($("#gainsInfo_businessTime").val() == null || $("#gainsInfo_businessTime").val() == '') {
@@ -221,6 +284,10 @@
                     msg('交易价格不能为空！');
                     return false;
                 }
+                if ($("#gainsInfo_amount").val() == null || $("#gainsInfo_amount").val() == '') {
+                    msg('资金总金额不能为空！');
+                    return false;
+                }
                 if ($("#gainsInfo_balanceMoney").val() == null || $("#gainsInfo_balanceMoney").val() == '') {
                     msg('资金余额不能为空！');
                     return false;
@@ -238,8 +305,8 @@
             }
 
             function validAddForm(){
-                if ($("#gainsInfo_idCard_add").val() == null || $("#gainsInfo_idCard_add").val() == '') {
-                    msg('身份证号码不能为空！');
+                if ($("#gainsInfo_account_add").val() == null || $("#gainsInfo_account_add").val() == '') {
+                    msg('资金账号不能为空！');
                     return false;
                 }
                 if ($("#gainsInfo_businessTime_add").val() == null || $("#gainsInfo_businessTime_add").val() == '') {
@@ -262,6 +329,11 @@
                     msg('交易价格不能为空！');
                     return false;
                 }
+                if ($("#gainsInfo_amount_add").val() == null || $("#gainsInfo_amount_add").val() == '') {
+                    msg('资金总金额不能为空！');
+                    return false;
+                }
+
                 if ($("#gainsInfo_balanceMoney_add").val() == null || $("#gainsInfo_balanceMoney_add").val() == '') {
                     msg('资金余额不能为空！');
                     return false;
@@ -356,9 +428,9 @@
                                 <input type="text"  class="form-control" name="endTime" id="endTime" placeholder="结束时间" />
 							</div>
                             <div class="form-group col-sm-4">
-                                <label for="idCard">身份证号</label>
-                                <input type="text" class="form-control"  value="${idCard?default('')}"
-                                       name="idCard" id="idCard" placeholder="输入身份证号" />
+                                <label for="account">资金账号</label>
+                                <input type="text" class="form-control"  value="${account?default('')}"
+                                       name="account" id="account" placeholder="输入资金账号" />
                             </div>
 						</div>
 						<div class="col-sm-12" style="margin-top: 10px;margin-bottom: 20px;">
@@ -394,7 +466,7 @@
 						<tr>
 							<th width="80">昵称</th>
 							<th width="80">姓名</th>
-							<th width="100">身份证</th>
+							<th width="100">资金账号</th>
                             <th width="100">交易时间</th>
 							<th width="100">股票代码</th>
 							<th width="100">股票名称</th>
@@ -410,15 +482,19 @@
 								<tr>
 									<td>${it.accountName}</td>
 									<td>${it.name}</td>
-									<td>${it.idCard}</td>
+									<td>${it.account}</td>
 									<td>${it.businessTimeStr}</td>
                                     <td>${it.sharesCode}</td>
                                     <td>${it.sharesName}</td>
 									<td>
 										<#if it.businessFlag==0>
-											买入
+											证券买入
 										<#elseif it.businessFlag==1>
-											卖出
+                                            证券卖出
+                                        <#elseif it.businessFlag==2>
+                                            基金申购
+                                        <#elseif it.businessFlag==3>
+                                            基金赎回
 										</#if>
 									</td>
                                     <td>${it.volume}</td>
@@ -427,7 +503,7 @@
                                     <td>${it.totalMoney}</td>
 									<td>
 										<#--<@shiro.hasPermission name="/gainsInfo/updateById.shtml">-->
-											<a href="javascript:_update('${it.id}','${it.accountName}','${it.name}','${it.idCard}','${it.businessTimeStr}','${it.sharesCode}','${it.sharesName}','${it.businessFlag}','${it.volume}','${it.price}','${it.totalMoney}','${it.balanceMoney}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#gainsInfoEditModal"></i></a>
+											<a href="javascript:_update('${it.id}','${it.accountName}','${it.name}','${it.account}','${it.businessTimeStr}','${it.sharesCode}','${it.sharesName}','${it.businessFlag}','${it.volume}','${it.price}','${it.totalMoney}','${it.balanceMoney}','${it.amount}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#gainsInfoEditModal"></i></a>
 										<#--</@shiro.hasPermission>-->
 										<#--<@shiro.hasPermission name="/gainsInfo/delById.shtml">-->
                                             	<a href="javascript:_del('${it.id}');"><i class="glyphicon glyphicon-remove" title="删除"></i></a>
@@ -472,9 +548,9 @@
 										</div>
 
                                         <div class="form-group">
-                                            <label for="gainsInfo_idCard" class="col-md-2 control-label">身份证号</label>
+                                            <label for="gainsInfo_account" class="col-md-2 control-label">资金账号</label>
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" id="gainsInfo_idCard"  readonly="readonly" />
+                                                <input type="text" class="form-control" id="gainsInfo_account"  readonly="readonly" />
                                             </div>
 
                                             <label for="gainsInfo_businessTime" class="col-md-2 control-label">交易时间</label>
@@ -500,8 +576,10 @@
                                             <label for="gainsInfo_businessFlag" class="col-md-2 control-label">买卖标志</label>
                                             <div class="col-md-4">
                                                 <select name="businessFlag" class="form-control" id="gainsInfo_businessFlag">
-                                                    <option value="0">买入</option>
-                                                    <option value="1">卖出</option>
+                                                    <option value="0">证券买入</option>
+                                                    <option value="1">证券卖出</option>
+                                                    <option value="2">基金申购</option>
+                                                    <option value="3">基金赎回</option>
                                                 </select>
                                             </div>
 
@@ -518,13 +596,18 @@
                                             </div>
 
 
+                                            <label for="gainsInfo_amount" class="col-md-2 control-label">成交总金额</label>
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" name="amount" id="gainsInfo_amount"  />
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group">
                                             <label for="gainsInfo_balanceMoney" class="col-md-2 control-label">资金余额</label>
                                             <div class="col-md-4">
                                                 <input type="text" class="form-control" name="balanceMoney" id="gainsInfo_balanceMoney"  />
                                             </div>
-                                        </div>
-
-                                        <div class="form-group">
                                             <label for="gainsInfo_totalMoney" class="col-md-2 control-label">总资产</label>
                                             <div class="col-md-4">
                                                 <input type="text" class="form-control" name="totalMoney" id="gainsInfo_totalMoney"  />
@@ -564,9 +647,9 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="gainsInfo_idCard_add" class="col-md-2 control-label">身份证号</label>
+                                            <label for="gainsInfo_account_add" class="col-md-2 control-label">资金账号</label>
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" id="gainsInfo_idCard_add" name="idCard"   />
+                                                <input type="text" class="form-control" id="gainsInfo_account_add" name="account"   />
                                             </div>
 
                                             <label for="gainsInfo_businessTime_add" class="col-md-2 control-label">交易时间</label>
@@ -592,8 +675,10 @@
                                             <label for="gainsInfo_businessFlag_add" class="col-md-2 control-label">买卖标志</label>
                                             <div class="col-md-4">
                                                 <select name="businessFlag" class="form-control" id="gainsInfo_businessFlag_add">
-                                                    <option value="0">买入</option>
-                                                    <option value="1">卖出</option>
+                                                    <option value="0">证券买入</option>
+                                                    <option value="1">证券卖出</option>
+                                                    <option value="2">基金申购</option>
+                                                    <option value="3">基金赎回</option>
                                                 </select>
                                             </div>
 
@@ -609,13 +694,17 @@
                                                 <input type="text" class="form-control" name="price" id="gainsInfo_price_add"  />
                                             </div>
 
-                                            <label for="gainsInfo_balanceMoney_add" class="col-md-2 control-label">资金余额</label>
+                                            <label for="gainsInfo_amount_add" class="col-md-2 control-label">成交总金额</label>
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" name="balanceMoney" id="gainsInfo_balanceMoney_add"  />
+                                                <input type="text" class="form-control" name="amount" id="gainsInfo_amount_add"  />
                                             </div>
                                         </div>
 
                                         <div class="form-group">
+                                            <label for="gainsInfo_balanceMoney_add" class="col-md-2 control-label">资金余额</label>
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" name="balanceMoney" id="gainsInfo_balanceMoney_add"  />
+                                            </div>
                                             <label for="gainsInfo_totalMoney_add" class="col-md-2 control-label">总资产</label>
                                             <div class="col-md-4">
                                                 <input type="text" class="form-control" name="totalMoney" id="gainsInfo_totalMoney_add"  />
@@ -626,7 +715,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" id="gainsInfo_add-remove"  class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
-                                    <button type="button" id="gainsInfo_add_submit" class="btn btn-primary"><i class="fas fa-save normal"></i>&nbsp;保存</button>
+                                    <button type="button" id="gainsInfo_add_submit" class="btn btn-primary" disabled="disabled"><i class="fas fa-save normal"></i>&nbsp;保存</button>
                                 </div>
                             </div>
                         </div>

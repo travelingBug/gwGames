@@ -24,14 +24,14 @@ public class TestInit {
 
 
     public void init(){
-        infGainsInfoService.getTopResultForAll();
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
-        Calendar cal=Calendar.getInstance();
-        cal.add(Calendar.MONTH,2);
-        String currDate = formatter.format(cal.getTime());
-        cal.add(Calendar.MONTH,-1);
-        String preDate = formatter.format(cal.getTime());
-        infGainsInfoService.findTopByMonth(currDate,preDate);
+//        infGainsInfoService.getTopResultForAll();
+//
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
+//        Calendar cal=Calendar.getInstance();
+//        cal.add(Calendar.MONTH,2);
+//        String currDate = formatter.format(cal.getTime());
+//        cal.add(Calendar.MONTH,-1);
+//        String preDate = formatter.format(cal.getTime());
+//        infGainsInfoService.findTopByMonth(currDate,preDate);
     }
 }

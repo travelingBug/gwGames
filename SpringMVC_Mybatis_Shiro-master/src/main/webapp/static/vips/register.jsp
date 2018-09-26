@@ -70,7 +70,7 @@
                     </tr>
                     <tr>
                         <th></th>
-                        <td><a id="buttonSubmit" class="btn-register disable" disabled="disabled">立即注册</a></td>
+                        <td><a id="buttonSubmit" class="disable" disabled="disabled">立即注册</a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -97,7 +97,7 @@
             $('#buttonSubmit').attr('class','btn-register');
         } else {
             $('#buttonSubmit').attr('disabled','disabled');
-            $('#buttonSubmit').attr('class','btn-register disable');
+            $('#buttonSubmit').attr('class','disable');
         }
     }
 
@@ -183,7 +183,7 @@
                         $('#sendVerfiCode').css('color','#5e5e5e');
                         $('#sendVerfiCode').attr("href", 'javascript:;');
                     } else {
-                        $('#sendVerfiCode').css('color','blue');
+                        $('#sendVerfiCode').css('color','#f90606');
                         canClick=true;
                         telPhoneFlag=true;
                         canSubmit();
@@ -264,11 +264,18 @@
     }
 
     $("#buttonSubmit").click(function(){
+        canSubmit();
+
+        var btn = $('#buttonSubmit').attr("class");
         var verfiCode = $('#verfiCode').val();
         if (!verfiCode || verfiCode.length != 6) {
             $('#inviteCodeTd').find('span').remove();
 
             $("#sendVerfiCode").after('<span class="link tip-wrong"><i class="icon icon-wrong"></i>请输入6位验证码</span>');
+            return;
+        }
+
+        if(btn=='disable'){
             return;
         }
         var data =$('#registerForm').serializeArray();

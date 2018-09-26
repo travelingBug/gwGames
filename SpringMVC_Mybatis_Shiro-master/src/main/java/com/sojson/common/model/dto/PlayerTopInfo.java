@@ -15,9 +15,9 @@ public class PlayerTopInfo {
     private String accountName;
 
     /**
-     * 选手身份证
+     * 选手资金账号
      */
-    private String idCard;
+    private String account;
 
     /**
      * 选手总资产
@@ -52,13 +52,7 @@ public class PlayerTopInfo {
         this.accountName = accountName;
     }
 
-    public String getIdCard() {
-        return idCard;
-    }
 
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
-    }
 
     public String getTotalMoney() {
         return totalMoney;
@@ -98,5 +92,13 @@ public class PlayerTopInfo {
 
     public void setBuyForALLRate(String buyForALLRate) {
         this.buyForALLRate = buyForALLRate;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 }
