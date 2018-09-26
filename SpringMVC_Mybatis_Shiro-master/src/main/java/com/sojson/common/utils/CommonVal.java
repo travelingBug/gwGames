@@ -12,7 +12,9 @@ import java.util.Map;
 public class CommonVal {
     public static Map<String,Byte> BUSINESS_FLAG = new HashMap<String,Byte>();
     static{
-        BUSINESS_FLAG.put("买入",(byte)0);
-        BUSINESS_FLAG.put("卖出",(byte)1);
+        BUSINESS_FLAG.put("证券买入",(byte)0);
+        BUSINESS_FLAG.put("证券卖出",(byte)1);
+        BUSINESS_FLAG.put("基金申购",(byte)2);
+        BUSINESS_FLAG.put("基金赎回",(byte)3);
     }
 }

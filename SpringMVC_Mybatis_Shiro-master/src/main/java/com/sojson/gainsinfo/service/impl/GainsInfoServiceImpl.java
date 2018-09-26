@@ -196,9 +196,15 @@ public class GainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> imp
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"成交数量格式错误！");
         }
 
+
         //成交价格
         if (StringUtils.isBlank(tbGainsInfo.getPrice()) || !tbGainsInfo.getPrice().toString().matches(RegConstant.moneyReg)) {
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"成交价格格式错误！");
+        }
+
+        //成交总金额
+        if (StringUtils.isBlank(tbGainsInfo.getAmount()) || !tbGainsInfo.getAmount().toString().matches(RegConstant.moneyReg)) {
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"成交总金额格式错误！");
         }
 
         //总资产
@@ -206,9 +212,9 @@ public class GainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> imp
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"总资产格式错误！");
         }
 
-        //验证身份证
+        //验证资金账户
         TbPlayerDto player  = new TbPlayerDto();
-        player.setIdCard(tbGainsInfo.getIdCard());
+        player.setAccount(tbGainsInfo.getAccount());
         List<TbPlayer> players = playerService.findAll(player);
         if (players == null ||  players.size() == 0) {
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"此身份证没有对应参赛选手！");
@@ -221,9 +227,9 @@ public class GainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> imp
                 return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"重复数据，请检查后再添加！");
             }
 
-            //新增才验证身份证
-            if (tbGainsInfo.getIdCard() == null || !VaildUtils.cardCodeValid(tbGainsInfo.getIdCard())) {
-                return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"身份格式不正确！");
+            //新增才验证资金账户
+            if (tbGainsInfo.getAccount() == null || StringUtils.isBlank(tbGainsInfo.getAccount())) {
+                return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"资金账户不正确！");
             }
         }
 

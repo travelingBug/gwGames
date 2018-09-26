@@ -16,14 +16,16 @@ public class ImportHeader {
     public static LinkedHashMap<String,String> gainsInfoHeadReal = new LinkedHashMap<String,String>();
     static{
         gainsInfoHeadReal.put("操作时间","businessTime");
-        gainsInfoHeadReal.put("身份证","idCard");
+        gainsInfoHeadReal.put("资金账号","account");
         gainsInfoHeadReal.put("股票代码","sharesCode");
         gainsInfoHeadReal.put("股票名称","sharesName");
         gainsInfoHeadReal.put("买卖标志","businessFlag");
         gainsInfoHeadReal.put("成交数量","volume");
         gainsInfoHeadReal.put("成交价格","price");
-        gainsInfoHeadReal.put("总资产","totalMoney");
+        gainsInfoHeadReal.put("成交总金额","amount");
         gainsInfoHeadReal.put("资金余额","balanceMoney");
+        gainsInfoHeadReal.put("总资产","totalMoney");
+
     }
 
     private static LinkedHashMap<String,IFormatExcel> gainsInfoHeadFormat = new LinkedHashMap<String,IFormatExcel>();

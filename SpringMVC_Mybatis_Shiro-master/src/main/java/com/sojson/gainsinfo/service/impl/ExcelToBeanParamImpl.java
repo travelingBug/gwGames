@@ -39,21 +39,21 @@ public class ExcelToBeanParamImpl implements IExcelToBeanParam {
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"操作时间格式错误！");
         }
 
-        //身份证
-        if (cols[1] == null || !VaildUtils.cardCodeValid(cols[1].toString())) {
+        //资金账户
+        if (cols[1] == null || StringUtils.isBlank(cols[1].toString())) {
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"身份格式不正确！");
         }
-        //验证身份证
+        //验证资金账户
         if (playes != null && playes.size() > 0) {
             boolean flag = true;
             for (TbPlayer player : playes) {
-                if (player.getIdCard().equals(cols[1].toString())) {
+                if (player.getAccount().equals(cols[1].toString())) {
                     flag = false;
                     break;
                 }
             }
             if (flag) {
-                return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"此身份证没有对应参赛选手！");
+                return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"此资金账户没有对应参赛选手！");
             }
 
         }
@@ -79,15 +79,22 @@ public class ExcelToBeanParamImpl implements IExcelToBeanParam {
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"成交价格格式错误！");
         }
 
-        //总资产
+        //成交总金额
         if (StringUtils.isBlank(cols[7]) || !cols[7].toString().matches(moneyReg)) {
-            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"总资产格式错误！");
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"成交总金额格式错误！");
         }
 
         //资金余额
         if (StringUtils.isBlank(cols[8]) || !cols[8].toString().matches(moneyReg)) {
-            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"资金余额错误！");
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"资金余额格式错误！");
         }
+
+        //总资产
+        if (StringUtils.isBlank(cols[9]) || !cols[9].toString().matches(moneyReg)) {
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"总资产格式错误！");
+        }
+
+
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
 

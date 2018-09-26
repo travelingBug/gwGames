@@ -11,9 +11,10 @@
     <result column="AUDIT_FLAG" property="auditFlag" jdbcType="TINYINT" />
     <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
     <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
+    <result column="ACCOUNT" property="account" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Player_Column_List" >
-    ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,crt_time,ACCOUNT,BZ
+    ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,crt_time,ACCOUNT,BZ,ACCOUNT_NUM
   </sql>
   <sql id="limit_sql">
   	   <if test="page_sql != null and page_sql != ''">
@@ -35,6 +36,9 @@
       </if>
       <if test="idCard != null and idCard !=''">
         and ID_CARD = #{idCard}
+      </if>
+      <if test="account != null and account !=''">
+        and ACCOUNT = #{account}
       </if>
       <if test="findContent != null and findContent !=''">
         and (name like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%'))

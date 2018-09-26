@@ -3,6 +3,7 @@ package com.sojson.player.controller;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
 import com.sojson.common.model.TbPlayer;
+import com.sojson.common.model.dto.TbPlayerDto;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.player.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by lx on 2018/8/27.
@@ -62,5 +64,14 @@ public class PlayerController extends BaseController {
         Pagination<TbPlayer> page = playerService.findByPage(map,pageNo,pageSize);
         map.put("page", page);
         return new ModelAndView("player/list");
+    }
+
+    /**
+     * 获取参赛选手
+     */
+    @RequestMapping(value="findAll",method=RequestMethod.POST)
+    @ResponseBody
+    public List<TbPlayer> findAll(TbPlayerDto player){
+        return this.playerService.findAll(player);
     }
 }

@@ -3,7 +3,7 @@
 <mapper namespace="com.sojson.common.dao.UTbGainsInfoMapper" >
   <resultMap id="GainsInfoResultMap" type="com.sojson.common.model.vo.TbGainsInfoVo" >
     <id column="ID" property="id" jdbcType="VARCHAR" />
-    <result column="ID_CARD" property="idCard" jdbcType="VARCHAR" />
+    <result column="ACCOUNT" property="account" jdbcType="VARCHAR" />
     <result column="SHARES_CODE" property="sharesCode" jdbcType="VARCHAR" />
     <result column="SHARES_NAME" property="sharesName" jdbcType="VARCHAR" />
     <result column="BUSINESS_FLAG" property="businessFlag" jdbcType="TINYINT" />
@@ -18,12 +18,14 @@
     <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
     <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
     <result column="getMoney" property="getMoney" jdbcType="VARCHAR" />
+    <result column="AMOUNT" property="amount" jdbcType="VARCHAR" />
+
   </resultMap>
   <sql id="GainsInfo_Column_List" >
-    t.ID,t.ID_CARD,t.SHARES_CODE,t.SHARES_NAME,t.BUSINESS_FLAG,t.VOLUME,t.PRICE,t.TOTAL_MONEY,t.BUSINESS_TIME,p.ACCOUNT_NAME,p.NAME,(DATE_FORMAT(t.BUSINESS_TIME,'%Y-%m-%d %H:%i:%S')) BUSINESS_TIME_STR,t.CRT_TIME,t.MOD_TIME,t.BALANCE_MONEY
+    t.ID,t.ACCOUNT,t.SHARES_CODE,t.SHARES_NAME,t.BUSINESS_FLAG,t.VOLUME,t.PRICE,t.TOTAL_MONEY,t.BUSINESS_TIME,p.ACCOUNT_NAME,p.NAME,(DATE_FORMAT(t.BUSINESS_TIME,'%Y-%m-%d %H:%i:%S')) BUSINESS_TIME_STR,t.CRT_TIME,t.MOD_TIME,t.BALANCE_MONEY,t.AMOUNT
   </sql>
   <sql id="GainsInfo_Simple_Column_List" >
-    t.ID,t.ID_CARD,t.SHARES_CODE,t.SHARES_NAME,t.BUSINESS_FLAG,t.VOLUME,t.PRICE,t.TOTAL_MONEY,t.BUSINESS_TIME,(DATE_FORMAT(t.BUSINESS_TIME,'%Y-%m-%d %H:%i:%S')) BUSINESS_TIME_STR,t.CRT_TIME,t.MOD_TIME,t.BALANCE_MONEY
+    t.ID,t.ACCOUNT,t.SHARES_CODE,t.SHARES_NAME,t.BUSINESS_FLAG,t.VOLUME,t.PRICE,t.TOTAL_MONEY,t.BUSINESS_TIME,(DATE_FORMAT(t.BUSINESS_TIME,'%Y-%m-%d %H:%i:%S')) BUSINESS_TIME_STR,t.CRT_TIME,t.MOD_TIME,t.BALANCE_MONEY,t.AMOUNT
   </sql>
   <sql id="limit_sql">
   	   <if test="page_sql != null and page_sql != ''">
@@ -42,8 +44,8 @@
       <if test="accountName != null and accountName !=''">
         and p.ACCOUNT_NAME = #{accountName}
       </if>
-      <if test="idCard != null and idCard !=''">
-        and t.ID_CARD = #{idCard}
+      <if test="account != null and account !=''">
+        and t.ACCOUNT = #{account}
       </if>
       <if test="bgnTime != null and bgnTime !=''">
         and t.BUSINESS_TIME  &gt; #{bgnTime}
@@ -76,8 +78,8 @@
       <if test="sharesCode != null and sharesCode !=''">
         and t.SHARES_CODE = #{sharesCode}
       </if>
-      <if test="idCard != null and idCard !=''">
-        and t.ID_CARD = #{idCard}
+      <if test="account != null and account !=''">
+        and t.ACCOUNT = #{account}
       </if>
 
       <if test="businessTime != null and businessTime !=''">
@@ -101,7 +103,7 @@
   <select id="findAll" resultMap="GainsInfoResultMap" >
   	select
     <include refid="GainsInfo_Column_List" />
-    from tb_gains_info t LEFT JOIN tb_player  p ON t.ID_CARD = p.ID_CARD
+    from tb_gains_info t LEFT JOIN tb_player  p ON t.ACCOUNT = p.ACCOUNT
     <include refid="where_all"/>
     <include refid="order_all"/>
     <include refid="limit_sql" />
@@ -116,7 +118,7 @@
   </select>
 
   <select id="findCount" resultMap="GainsInfoResultMap" >
- 	 select count(t.id) from  tb_gains_info t LEFT JOIN tb_player  p ON t.ID_CARD = p.ID_CARD
+ 	 select count(t.id) from  tb_gains_info t LEFT JOIN tb_player  p ON t.ACCOUNT = p.ACCOUNT
   	<include refid="where_all" />
   </select>
 
@@ -128,9 +130,9 @@
   </select>
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbGainsInfo" >
-    insert into tb_gains_info (ID_CARD,SHARES_CODE,SHARES_NAME,BUSINESS_FLAG,VOLUME,PRICE,BALANCE_MONEY,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME)
-    values ( #{idCard,jdbcType=VARCHAR},#{sharesCode,jdbcType=VARCHAR},#{sharesName,jdbcType=VARCHAR},#{businessFlag,jdbcType=TINYINT},
-      #{volume,jdbcType=INTEGER}, #{price,jdbcType=VARCHAR},#{balanceMoney,jdbcType=VARCHAR}, #{totalMoney,jdbcType=VARCHAR}, #{businessTime,jdbcType=TIMESTAMP}, #{crtTime,jdbcType=TIMESTAMP}
+    insert into tb_gains_info (ACCOUNT,SHARES_CODE,SHARES_NAME,BUSINESS_FLAG,VOLUME,PRICE,BALANCE_MONEY,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME,AMOUNT)
+    values ( #{account,jdbcType=VARCHAR},#{sharesCode,jdbcType=VARCHAR},#{sharesName,jdbcType=VARCHAR},#{businessFlag,jdbcType=TINYINT},
+      #{volume,jdbcType=INTEGER}, #{price,jdbcType=VARCHAR},#{balanceMoney,jdbcType=VARCHAR}, #{totalMoney,jdbcType=VARCHAR}, #{businessTime,jdbcType=TIMESTAMP}, #{crtTime,jdbcType=TIMESTAMP}, #{amount,jdbcType=VARCHAR}
       )
   </insert>
 
@@ -143,8 +145,8 @@
       <if test="price != null and price !=''" >
         PRICE = #{price,jdbcType=VARCHAR},
       </if>
-      <if test="idCard != null  and idCard !=''" >
-        ID_CARD = #{idCard,jdbcType=VARCHAR},
+      <if test="account != null  and account !=''" >
+        ACCOUNT = #{account,jdbcType=VARCHAR},
       </if>
       <if test="sharesCode != null and sharesCode !=''" >
         SHARES_CODE = #{sharesCode,jdbcType=VARCHAR},
@@ -173,10 +175,10 @@
   </update>
 
   <insert id="insertBatch" parameterType="java.util.List">
-    insert into tb_gains_info (ID_CARD,SHARES_CODE,SHARES_NAME,BUSINESS_FLAG,VOLUME,PRICE,BALANCE_MONEY,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME) values
+    insert into tb_gains_info (ACCOUNT,SHARES_CODE,SHARES_NAME,BUSINESS_FLAG,VOLUME,PRICE,BALANCE_MONEY,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME,AMOUNT) values
     <foreach collection="list" item="item" index="index" separator=",">
-      ( #{item.idCard,jdbcType=VARCHAR},#{item.sharesCode,jdbcType=VARCHAR},#{item.sharesName,jdbcType=VARCHAR},#{item.businessFlag,jdbcType=TINYINT},
-      #{item.volume,jdbcType=INTEGER}, #{item.price,jdbcType=VARCHAR},#{item.balanceMoney,jdbcType=VARCHAR}, #{item.totalMoney,jdbcType=VARCHAR}, #{item.businessTime,jdbcType=TIMESTAMP}, #{item.crtTime,jdbcType=TIMESTAMP}
+      ( #{item.account,jdbcType=VARCHAR},#{item.sharesCode,jdbcType=VARCHAR},#{item.sharesName,jdbcType=VARCHAR},#{item.businessFlag,jdbcType=TINYINT},
+      #{item.volume,jdbcType=INTEGER}, #{item.price,jdbcType=VARCHAR},#{item.balanceMoney,jdbcType=VARCHAR}, #{item.totalMoney,jdbcType=VARCHAR}, #{item.businessTime,jdbcType=TIMESTAMP}, #{item.crtTime,jdbcType=TIMESTAMP}, #{amount,jdbcType=VARCHAR}
       )
     </foreach>
   </insert>
@@ -188,7 +190,7 @@
 
 
   <select id="findTopForAll" resultMap="GainsInfoResultMap" >
-    select  <include refid="GainsInfo_Column_List" /> from tb_gains_info t LEFT join  tb_player  p ON t.ID_CARD = p.ID_CARD where not exists(select 1 from tb_gains_info t2  where t2.id_card= t.id_card
+    select  <include refid="GainsInfo_Column_List" /> from tb_gains_info t LEFT join  tb_player  p ON t.ACCOUNT = p.ACCOUNT where not exists(select 1 from tb_gains_info t2  where t2.ACCOUNT= t.ACCOUNT
     and t.BUSINESS_TIME &lt; t2.BUSINESS_TIME) ORDER BY  CAST(t.TOTAL_MONEY as DECIMAL(10,2)) DESC LIMIT 0,200
 
   </select>
@@ -202,14 +204,14 @@
 
 
   <select id="findTopByMonth" resultMap="GainsInfoResultMap"  >
-    select x.account_name,IFNULL(CAST(l2.TOTAL_MONEY as DECIMAL(10,2)),300000) capital,(CAST(l1.TOTAL_MONEY as DECIMAL(10,2)) - IFNULL(CAST(l2.TOTAL_MONEY as DECIMAL(10,2)),0)) getMoney,l1.ID,l1.ID_CARD,l1.SHARES_CODE,l1.SHARES_NAME,l1.BUSINESS_FLAG,l1.VOLUME,l1.PRICE,l1.TOTAL_MONEY,l1.BUSINESS_TIME,(DATE_FORMAT(l1.BUSINESS_TIME,'%Y-%m-%d %H:%i:%S')) BUSINESS_TIME_STR,l1.CRT_TIME,l1.MOD_TIME,l1.BALANCE_MONEY from
-    (select p.* from tb_gains_info p where date_format(p.BUSINESS_TIME, '%Y-%m') = #{currDate} and not exists(select 1 from tb_gains_info p2  where p2.id_card= p.id_card
+    select x.account_name,IFNULL(CAST(l2.TOTAL_MONEY as DECIMAL(10,2)),300000) capital,(CAST(l1.TOTAL_MONEY as DECIMAL(10,2)) - IFNULL(CAST(l2.TOTAL_MONEY as DECIMAL(10,2)),0)) getMoney,l1.ID,l1.ACCOUNT,l1.SHARES_CODE,l1.SHARES_NAME,l1.BUSINESS_FLAG,l1.VOLUME,l1.PRICE,l1.TOTAL_MONEY,l1.BUSINESS_TIME,(DATE_FORMAT(l1.BUSINESS_TIME,'%Y-%m-%d %H:%i:%S')) BUSINESS_TIME_STR,l1.CRT_TIME,l1.MOD_TIME,l1.BALANCE_MONEY from
+    (select p.* from tb_gains_info p where date_format(p.BUSINESS_TIME, '%Y-%m') = #{currDate} and not exists(select 1 from tb_gains_info p2  where p2.ACCOUNT= p.ACCOUNT
     and p.BUSINESS_TIME &lt; p2.BUSINESS_TIME and date_format(p2.BUSINESS_TIME, '%Y-%m') = #{currDate})) l1
     LEFT JOIN
-    (select p.* from tb_gains_info p where date_format(p.BUSINESS_TIME, '%Y-%m') = #{preDate} and not exists(select 1 from tb_gains_info p2  where p2.id_card= p.id_card
+    (select p.* from tb_gains_info p where date_format(p.BUSINESS_TIME, '%Y-%m') = #{preDate} and not exists(select 1 from tb_gains_info p2  where p2.ACCOUNT= p.ACCOUNT
     and p.BUSINESS_TIME &lt; p2.BUSINESS_TIME and  date_format(p2.BUSINESS_TIME, '%Y-%m') = #{preDate})) l2
-    on l1.id_card = l2.id_card
-    LEFT JOIN  tb_player x ON l1.ID_CARD = x.ID_CARD
+    on l1.ACCOUNT = l2.ACCOUNT
+    LEFT JOIN  tb_player x ON l1.ACCOUNT = x.ACCOUNT
     order by  (CAST(l1.TOTAL_MONEY as DECIMAL(10,2)) - IFNULL(CAST(l2.TOTAL_MONEY as DECIMAL(10,2)),0)) desc
   </select>
   <!--#月榜-->
