@@ -10,7 +10,7 @@
 <div class="overlay layer-small login">
     <div class="overlay-bg"></div>
     <div class="float-div">
-        <a class="icon icon-close"></a>
+        <a class="icon icon-close loginClose"></a>
         <h3 class="title">登录</h3>
         <div class="content">
             <form action="#" method="post" id="loginForm">
@@ -314,10 +314,12 @@
             dataType: "json",
             beforeSend: function(request) {
                 request.setRequestHeader("Authorization", getAuthorization());
+                window.location.href="/gwGames/static/home.jsp";
             },
             success: function(data) {
                 if (data.level == 1) {
                     sessionStorage.setItem("sessionId", data.data);
+
                 } else {
                     layer.alert(data.messageText, {
                         icon: 0,
@@ -336,6 +338,10 @@
 
     $(".register .loginBtn").click(function(){
         $(".login").show();
+    });
+
+    $(".login .loginClose").click(function(){
+        $(".login").hide();
     });
 
 </script>

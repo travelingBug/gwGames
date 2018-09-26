@@ -119,6 +119,7 @@
 							<th>名称</th>
 							<th>手机号码</th>
                             <th>联系地址</th>
+							<th>坐席号</th>
 							<th>操作</th>
 						</tr>
 						<#if page?exists && page.list?size gt 0 >
@@ -129,6 +130,7 @@
                                     <td>${it.name}</td>
                                     <td>${it.phone}</td>
                                     <td>${it.address}</td>
+                                    <td>${it.seatNum}</td>
 									<td>
 										<@shiro.hasPermission name="/dealer/editDealer.shtml">
 											<a href="javascript:_edit('${it.id}','${it.name}','${it.phone}','${it.address}','${it.type}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#employeeEditModal"></i></a>
