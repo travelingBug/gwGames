@@ -327,7 +327,7 @@
                 if (data.level == 1) {
                     $('#registerForm')[0].reset();
                     sessionStorage.setItem("sessionId", data.data);
-                    window.location.href="/gwGames/static/home.jsp";
+                    window.location.href="/static/home.jsp";
                 } else {
                     layer.alert(data.messageText, {
                         icon: 0,
@@ -358,7 +358,7 @@
             dataType: "json",
             beforeSend: function(request) {
                 request.setRequestHeader("Authorization", getAuthorization());
-                window.location.href="/gwGames/static/home.jsp";
+                window.location.href="/static/home.jsp";
             },
             success: function(data) {
                 if (data.level == 1) {

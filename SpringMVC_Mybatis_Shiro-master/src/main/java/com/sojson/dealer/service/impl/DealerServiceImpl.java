@@ -107,7 +107,7 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
         uTbDealerMapper.insert(entity);
         userService.addRole2User(userEntity.getId(),entity.getRoleId());
 
-        String url = IConfig.get("url")+"gwGames/static/mobile/index.html?seatNum=" + seatNum+"&inviteNum="+inviteNum;
+        String url = IConfig.get("url")+"/static/mobile/index.html?seatNum=" + seatNum+"&inviteNum="+inviteNum;
         String path = IConfig.get("qrCode_path");
         String fileName = userEntity.getId() + ".jpg";
         QrCodeUtil.createQrCode(url, path, fileName);
@@ -302,8 +302,8 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
         if(null == dealer){
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "未查询到经销商");
         }
-        String url = IConfig.get("url")+"/gwGames/static/vips/register.jsp?seatNum=" + dealer.getSeatNum()+"&inviteNum="+dealer.getInviteNum();
-        String mobileUrl = IConfig.get("url")+"gwGames/static/mobile/index.html?seatNum=" + dealer.getSeatNum()+"&inviteNum="+dealer.getInviteNum();
+        String url = IConfig.get("url")+"/static/vips/register.jsp?seatNum=" + dealer.getSeatNum()+"&inviteNum="+dealer.getInviteNum();
+        String mobileUrl = IConfig.get("url")+"/static/mobile/index.html?seatNum=" + dealer.getSeatNum()+"&inviteNum="+dealer.getInviteNum();
         String[] strArray={url,"2"};
 
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "查询成功！", strArray);
