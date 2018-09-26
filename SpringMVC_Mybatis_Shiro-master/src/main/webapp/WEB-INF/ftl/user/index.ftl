@@ -38,7 +38,6 @@
 							<th>最后登录时间</th>
 							<td>${token.lastLoginTime?string('yyyy-MM-dd HH:mm')}</td>
 						</tr>
-						<
                         <tr>
                             <th>分享</th>
                             <td><i class="fas fa-link" onclick="_queryLink('${userId}');"></i></td>
@@ -54,6 +53,9 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group" style="text-align: center;">
+										<div>
+											<img src="${qrCodeUrl}${userId}.jpg"/>
+                                        </div>
                                         <input type="text" readonly="readonly" value="www.baidu.com" id="link">
                                         <button class="btn btn-blue" id="copyBtn">复制链接</button>
 									</div>
@@ -94,24 +96,18 @@
 	function _queryLink(userId){
         $.ajax({
             type: "POST",
-            url: "interface/vips/validPhone.shtml",
+            url: "dealer/queryLink.shtml",
             data: {userId: userId},
             dataType: "json",
             success: function (data) {
-                if (data != null && data.length > 0) {
-                    layer.alert('电话号码已被使用', {
+                if (data != null && data.level == 1) {
+                    $("#link").val(data.data[0]);
+					$("#dealerLinkModal").modal();
+                } else {
+                    layer.alert(data.messageText, {
                         icon: 0,
                         skin: 'layui-layer-lan'
                     });
-                    canClick=false;
-                    $('#sendVerfiCode').css('color','#5e5e5e');
-                    $('#sendVerfiCode').attr("href", 'javascript:;');
-                } else {
-                    $('#sendVerfiCode').css('color','blue');
-                    canClick=true;
-                    telPhoneFlag=true;
-                    canSubmit();
-
                 }
             }
         });

@@ -2,6 +2,7 @@ package com.sojson.core.freemarker.extend;
 
 import com.sojson.common.model.UUser;
 import com.sojson.common.utils.LoggerUtils;
+import com.sojson.core.config.IConfig;
 import com.sojson.core.shiro.token.manager.TokenManager;
 import com.sojson.core.statics.Constant;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
@@ -30,7 +31,7 @@ public class FreeMarkerViewExtend extends FreeMarkerView {
 		model.put("cdn", Constant.DOMAIN_CDN);//CDN域名
 		model.put("basePath", request.getContextPath());//base目录。
 		model.put("userId", TokenManager.getUserId());
-
+		model.put("qrCodeUrl", IConfig.get("qrCode_path"));
 		
 	}
 }

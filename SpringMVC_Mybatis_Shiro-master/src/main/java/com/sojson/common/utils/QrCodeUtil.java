@@ -16,12 +16,13 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
+import com.sojson.core.config.IConfig;
 
 public class QrCodeUtil {
 
 	public static void main(String[] args) {
 		String url = "http://baidu.com";
-		String path = FileSystemView.getFileSystemView().getHomeDirectory() + File.separator + "testQrcode";
+		String path = IConfig.get("qrCode_path");
 		String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".jpg";
 		createQrCode(url, path, fileName);
 	}

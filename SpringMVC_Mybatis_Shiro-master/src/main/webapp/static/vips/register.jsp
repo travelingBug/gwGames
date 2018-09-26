@@ -55,7 +55,9 @@
                     </tr>
                     <tr>
                         <th>推荐码：</th>
-                        <td id="inviteCodeTd"><input id="inviteCode" name="inviteCode" class="input width-240" /></td>
+                        <td id="inviteCodeTd">
+                            <input id="inviteCode" name="inviteCode" class="input width-240" />
+                        </td>
                     </tr>
                     <tr>
                         <th>手机号：</th>
@@ -84,6 +86,10 @@
 <script>
     $(function(){
         $(".login").hide();
+
+//        $("#seatNum").text(getUrlParam('seatNum'));
+        $("#inviteCode").val(getUrlParam('inviteNum'));
+
     });
 
     var nameFlag = false;
@@ -120,6 +126,32 @@
         inviteCodeFlag = false;
         $('#inviteCodeTd').find('span').remove();
         if(inviteCode && inviteCode != null && inviteCode != ''){
+//            $.ajax({
+//                type: "POST",
+//                url: "interface/vips/validInviteCode.shtml",
+//                data: {telPhone: telPhone},
+//                dataType: "json",
+//                beforeSend: function (request) {
+//                    request.setRequestHeader("Authorization", getAuthorization());
+//                },
+//                success: function (data) {
+//                    if (data != null && data.length > 0) {
+//                        layer.alert('电话号码已被使用', {
+//                            icon: 0,
+//                            skin: 'layui-layer-lan'
+//                        });
+//                        canClick=false;
+//                        $('#sendVerfiCode').css('color','#5e5e5e');
+//                        $('#sendVerfiCode').attr("href", 'javascript:;');
+//                    } else {
+//                        $('#sendVerfiCode').css('color','#f90606');
+//                        canClick=true;
+//                        telPhoneFlag=true;
+//                        canSubmit();
+//
+//                    }
+//                }
+//            });
             $("#inviteCode").after('<span class="link tip-right"><i class="icon icon-right"></i></span>');
             inviteCodeFlag = true;
             canSubmit();
@@ -264,9 +296,6 @@
     }
 
     $("#buttonSubmit").click(function(){
-        canSubmit();
-
-        var btn = $('#buttonSubmit').attr("class");
         var verfiCode = $('#verfiCode').val();
         if (!verfiCode || verfiCode.length != 6) {
             $('#inviteCodeTd').find('span').remove();
@@ -274,7 +303,14 @@
             $("#sendVerfiCode").after('<span class="link tip-wrong"><i class="icon icon-wrong"></i>请输入6位验证码</span>');
             return;
         }
+        var inviteCode = $('#inviteCode').val();
+        if(inviteCode && inviteCode != null && inviteCode != ''){
+            $("#inviteCode").after('<span class="link tip-right"><i class="icon icon-right"></i></span>');
+            inviteCodeFlag = true;
+        }
 
+        canSubmit();
+        var btn = $('#buttonSubmit').attr("class");
         if(btn=='disable'){
             return;
         }
@@ -291,6 +327,7 @@
                 if (data.level == 1) {
                     $('#registerForm')[0].reset();
                     sessionStorage.setItem("sessionId", data.data);
+                    window.location.href="/gwGames/static/home.jsp";
                 } else {
                     layer.alert(data.messageText, {
                         icon: 0,
@@ -350,5 +387,12 @@
     $(".login .loginClose").click(function(){
         $(".login").hide();
     });
+
+    //获取url中的参数
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
 
 </script>

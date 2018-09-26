@@ -23,4 +23,5 @@ public interface VipsService {
     ResultMessage login(TbVips entity, HttpServletRequest req);
 
     ResultMessage validPhone(String telPhone);
+
 }

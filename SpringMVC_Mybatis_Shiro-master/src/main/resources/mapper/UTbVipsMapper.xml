@@ -27,11 +27,10 @@
   	<where>
       d.DEL_FLAG = 0
       <if test="findContent != null and findContent !=''">
---         and (d.name like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%'))
---         or u.email like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%')))
+        and (d.NICKNAME like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%')))
       </if>
       <if test="inviteCode != null and inviteCode !='' " >
-        and INVITAION_CODE = #{inviteCode}
+        and d.INVITAION_CODE = #{inviteCode}
       </if>
      </where>
   </sql>
@@ -43,7 +42,12 @@
   	select
     <include refid="vips_Column_List" />
     from tb_vip d
+    LEFT JOIN tb_dealer v
+    ON v.INVITE_NUM = d.INVITAION_CODE
     <include refid="vips_where_all"/>
+    <if test="parentId != null and parentId !='' " >
+      and v.fk_user_id = #{parentId}
+    </if>
     <include refid="vips_order_all"/>
     <include refid="vips_limit_sql" />
   </select>

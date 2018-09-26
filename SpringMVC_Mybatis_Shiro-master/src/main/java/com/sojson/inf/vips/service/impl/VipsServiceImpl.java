@@ -2,11 +2,14 @@ package com.sojson.inf.vips.service.impl;
 
 import com.sojson.common.IConstant;
 import com.sojson.common.ResultMessage;
+import com.sojson.common.dao.UTbDealerMapper;
 import com.sojson.common.dao.UTbVipsMapper;
+import com.sojson.common.model.TbDealer;
 import com.sojson.common.model.TbVips;
 import com.sojson.common.utils.MathUtil;
 import com.sojson.common.utils.RedisUtil;
 import com.sojson.common.utils.StringUtils;
+import com.sojson.core.config.IConfig;
 import com.sojson.core.mybatis.BaseMybatisDao;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.core.shiro.token.manager.TokenManager;
@@ -152,7 +155,6 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
         if (codeArr.length != 2 || !codeArr[0].equalsIgnoreCase(dto.getVerfiCode())) {
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"验证码错误！");
         }
-
 
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }

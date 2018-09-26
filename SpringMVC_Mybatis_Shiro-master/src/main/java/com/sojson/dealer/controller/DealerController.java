@@ -3,10 +3,12 @@ package com.sojson.dealer.controller;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
 import com.sojson.common.model.TbDealer;
+import com.sojson.common.model.TbVips;
 import com.sojson.common.model.vo.DealerCountVo;
 import com.sojson.common.utils.StringUtils;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.dealer.service.DealerService;
+import com.sojson.dealer.service.VipsListService;
 import com.sojson.user.service.UUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -34,6 +36,9 @@ public class DealerController extends BaseController {
 
     @Autowired
     DealerService dealerService;
+
+    @Autowired
+    VipsListService vipsListService;
 
     @Autowired
     UUserService userService;
@@ -151,6 +156,34 @@ public class DealerController extends BaseController {
     @ResponseBody
     public ResultMessage exportEmployee(@RequestParam Map<String,Object> map){
         return dealerService.exportEmployee(map);
+    }
+
+    /**
+     * 查询连接
+     *
+     * @param telPhone
+     * @return
+     */
+    @RequestMapping(value = "queryLink", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage queryLink(String telPhone) {
+        return dealerService.queryLink(telPhone);
+    }
+
+    /**
+     * 客户主页
+     *
+     * @return
+     */
+    @RequestMapping(value = "vipsList")
+    public ModelAndView vipsList(ModelMap map, Integer pageNo, String findContent,
+                             String parentId) {
+
+        map.put("findContent", findContent);
+        map.put("parentId", parentId);
+        Pagination<TbVips> page = vipsListService.findByPage(map, pageNo, pageSize);
+        map.put("page", page);
+        return new ModelAndView("dealer/vipsList");
     }
 
 

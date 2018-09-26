@@ -2,6 +2,7 @@ package com.sojson.dealer.service;
 
 import com.sojson.common.ResultMessage;
 import com.sojson.common.model.TbDealer;
+import com.sojson.common.model.TbVips;
 import com.sojson.common.model.vo.DealerCountVo;
 import com.sojson.core.mybatis.page.Pagination;
 
@@ -33,4 +34,7 @@ public interface DealerService {
     public ResultMessage exportExcelDealerVip(Map<String,Object> param);
 
     public ResultMessage exportEmployee(Map<String,Object> param);
+
+    ResultMessage queryLink(String userId);
+
 }

@@ -6,10 +6,12 @@ import com.sojson.common.ResultMessage;
 import com.sojson.common.dao.UTbDealerMapper;
 import com.sojson.common.dao.UTbVipRecordMapper;
 import com.sojson.common.model.TbDealer;
+import com.sojson.common.model.TbVips;
 import com.sojson.common.model.UUser;
 import com.sojson.common.model.vo.DealerCountVo;
 import com.sojson.common.model.vo.VipRecordCount;
 import com.sojson.common.utils.ExcelUtil;
+import com.sojson.common.utils.QrCodeUtil;
 import com.sojson.common.utils.StringUtils;
 import com.sojson.core.config.IConfig;
 import com.sojson.core.mybatis.BaseMybatisDao;
@@ -26,6 +28,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -103,6 +106,12 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
         entity.setInviteNum(inviteNum);
         uTbDealerMapper.insert(entity);
         userService.addRole2User(userEntity.getId(),entity.getRoleId());
+
+        String url = IConfig.get("url")+"gwGames/static/mobile/index.html?seatNum=" + seatNum+"&inviteNum="+inviteNum;
+        String path = IConfig.get("qrCode_path");
+        String fileName = userEntity.getId() + ".jpg";
+        QrCodeUtil.createQrCode(url, path, fileName);
+
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
 
@@ -284,6 +293,20 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
 
 
         return msg;
+
+    }
+
+    @Override
+    public ResultMessage queryLink(String userId) {
+        TbDealer dealer = uTbDealerMapper.findDealerByUserId(TokenManager.getUserId());
+        if(null == dealer){
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "未查询到经销商");
+        }
+        String url = IConfig.get("url")+"/gwGames/static/vips/register.jsp?seatNum=" + dealer.getSeatNum()+"&inviteNum="+dealer.getInviteNum();
+        String mobileUrl = IConfig.get("url")+"gwGames/static/mobile/index.html?seatNum=" + dealer.getSeatNum()+"&inviteNum="+dealer.getInviteNum();
+        String[] strArray={url,"2"};
+
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "查询成功！", strArray);
 
     }
 }
