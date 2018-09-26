@@ -166,19 +166,19 @@ drop table if exists TB_VIP;
 /* Table: TB_VIP     会员表                                           */
 /*==============================================================*/
 CREATE TABLE `tb_vip` (
-  `ID` varchar(32) NOT NULL,
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
   `INVITAION_CODE` varchar(64) NOT NULL,
   `LEVEL` tinyint(4) NOT NULL,
   `END_TIME` datetime DEFAULT NULL,
-  `FK_USER_ID` bigint(20) NOT NULL,
+  `PASSWORD` varchar(32) NOT NULL,
   `NICKNAME` varchar(32) DEFAULT NULL,
   `DEL_FLAG` tinyint(4) NOT NULL,
   `PHONE` varchar(11) DEFAULT NULL,
   `ADDRESS` varchar(20) DEFAULT NULL,
-  `CREATE_TIME` datetime DEFAULT NULL,
-  `MODIFY_TIME` datetime DEFAULT NULL,
+  `CRT_TIME` datetime DEFAULT NULL,
+  `MOD_TIME` datetime DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
 
 /*选手表补充字段*/
 ALTER TABLE tb_player ADD BZ VARCHAR(200);
