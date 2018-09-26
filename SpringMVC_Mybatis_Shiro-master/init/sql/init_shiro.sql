@@ -184,6 +184,20 @@ CREATE TABLE `tb_vip` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
 
+/*==============================================================*/
+/* Table: tb_vip_record     会员记录表                                           */
+/*==============================================================*/
+DROP TABLE IF EXISTS `tb_vip_record`;
+CREATE TABLE `tb_vip_record` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `vip_id` varchar(32) NOT NULL,
+  `level` tinyint(4) NOT NULL,
+  `crt_time` datetime NOT NULL,
+  `amount` int(12) NOT NULL,
+  `remark` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
 /*选手表补充字段*/
 ALTER TABLE tb_player ADD BZ VARCHAR(200);
 ALTER TABLE tb_player ADD ACCOUNT VARCHAR(32);

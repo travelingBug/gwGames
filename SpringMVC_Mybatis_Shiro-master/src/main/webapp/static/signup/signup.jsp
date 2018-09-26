@@ -224,7 +224,7 @@
                         <%--<span class="link tip-wrong"><i class="icon icon-wrong"></i>昵称已被使用</span>--%>
                         <!--<span class="link tip-right"><i class="icon icon-right"></i></span>-->
                     </div>
-                    <div class="input-style" id="nameDiv"><p>真实姓名</p><em>|</em><input  maxlength="20" name="name" id="nameId" class="width-4" type="text" /></div>
+                    <div class="input-style" id="nameDiv"><p>姓名</p><em>|</em><input  maxlength="20" name="name" id="nameId" class="width-4" type="text" /></div>
                         <div class="input-style" id="idCardDiv"><p>身份证</p><em>|</em><input  maxlength="20" name="idCard" id="idCardId" class="width-4" type="text" /></div>
                     <div class="input-style">
                         <p>手机号</p><em>|</em><input maxlength="11" name="telPhone" id="telPhoneId"  class="width-4" type="text" />

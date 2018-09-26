@@ -14,7 +14,7 @@
     <result column="ACCOUNT" property="account" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Player_Column_List" >
-    ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,crt_time,ACCOUNT,BZ,ACCOUNT_NUM
+    ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,crt_time,ACCOUNT,BZ,ACCOUNT
   </sql>
   <sql id="limit_sql">
   	   <if test="page_sql != null and page_sql != ''">
