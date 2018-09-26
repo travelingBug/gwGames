@@ -119,7 +119,7 @@ CREATE TABLE `tb_player` (
 
 
 
-drop table if exists tb_gains_Iinfo;
+drop table if exists tb_gains_info;
 
 /*==============================================================*/
 /* Table: tb_palyer_gains_Iinfo                                 */
@@ -127,18 +127,20 @@ drop table if exists tb_gains_Iinfo;
 create table tb_gains_info
 (
    ID                   bigint not null auto_increment comment '主键',
+   ID_CARD              varchar(20) not null comment '身份证',
    SHARES_CODE          varchar(10) not null comment '股票代码',
    SHARES_NAME          varchar(50) not null comment '股票名称',
    BUSINESS_FLAG        tinyint not null comment '买卖标致',
    VOLUME               int not null comment '成交量',
    PRICE                varchar(10) not null comment '成交价格',
-   TOTAL_MONEY varchar(10) not null comment '剩余资金',
+   BALANCE_MONEY varchar(20) not null comment '资金余额',
+   TOTAL_MONEY varchar(20) not null comment '总资产',
    BUSINESS_TIME        datetime not null comment '交易时间',
    CRT_TIME             datetime not null comment '创建时间',
    MOD_TIME             datetime comment '修改时间',
    primary key (ID)
 );
-
+ALTER TABLE `tb_gains_info` ADD INDEX index_idCard ( `ID_CARD` ) ;
 
 /*==============================================================*/
 /* Table: tb_dealer                                             */
