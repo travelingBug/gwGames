@@ -118,6 +118,7 @@
                 });
 
                 $("#gainsInfo_account_add").blur(function(event){
+                    event.stopPropagation();
                     var accountName = $("#gainsInfo_account_add").val();
                     if (accountName != null && accountName != "") {
                         $.ajax({
@@ -126,8 +127,15 @@
                             data: {'account':accountName},
                             dataType: "json",
                             success: function(result) {
-                                if (result && result.level != 1) {
+                                if (result && result.length != 1) {
                                     msg("资金账户不存在，请验证后再输入");
+                                    $("#player_accountName_add").val("");
+                                    $("#player_name_add").val("");
+                                    $('#gainsInfo_add_submit').attr("disabled","disabled");
+                                } else {
+                                    $("#player_accountName_add").val(result[0].accountName);
+                                    $("#player_name_add").val(result[0].name);
+                                    $('#gainsInfo_add_submit').removeAttr("disabled");
                                 }
                             },
                             error: function(data) {
@@ -138,7 +146,30 @@
                             }
                         });
                     }
+
                 });
+
+                $("#gainsInfo_volume_add").blur(function(event){
+                    event.stopPropagation();
+                    complateAmount("gainsInfo_amount_add", $("#gainsInfo_volume_add").val(),$("#gainsInfo_price_add").val());
+                });
+
+                $("#gainsInfo_price_add").blur(function(event){
+                    event.stopPropagation();
+                    complateAmount( "gainsInfo_amount_add",$("#gainsInfo_volume_add").val(),$("#gainsInfo_price_add").val());
+                });
+
+                $("#gainsInfo_volume").blur(function(event){
+                    event.stopPropagation();
+                    complateAmount("gainsInfo_amount", $("#gainsInfo_volume").val(),$("#gainsInfo_price").val());
+                });
+
+                $("#gainsInfo_price").blur(function(event){
+                    event.stopPropagation();
+                    complateAmount("gainsInfo_amount",$("#gainsInfo_volume").val(),$("#gainsInfo_price").val());
+                });
+
+
 
 				<#--$("#gainsInfo_btn_submit").click(function(){-->
 					<#--var id = $("#gainsInfo_edit_id").val();-->
@@ -156,6 +187,12 @@
 				<#--});-->
 			});
 
+			function complateAmount(id,volume,price){
+			    if (volume != null && volume != ""
+                && price != null && price != "") {
+                    $("#"+id).val((parseFloat(volume)*parseFloat(price)).toFixed(2));
+                }
+            }
 
 
             function _del(id){
@@ -186,7 +223,7 @@
                     layer.close(index);
                 });
             }
-			function _update(id,accountName,name,account,businessTimeStr,sharesCode,sharesName,businessFlag,volume,price,totalMoney,balanceMoney){
+			function _update(id,accountName,name,account,businessTimeStr,sharesCode,sharesName,businessFlag,volume,price,totalMoney,balanceMoney,amount){
 				$("#gainsInfo_id").val(id);
                 $("#player_accountName").val(accountName);
                 $("#player_name").val(name);
@@ -199,6 +236,8 @@
                 $("#gainsInfo_volume").val(volume);
                 $("#gainsInfo_totalMoney").val(totalMoney);
                 $("#gainsInfo_balanceMoney").val(balanceMoney);
+                $("#gainsInfo_amount").val(amount);
+
 
 			}
 
@@ -464,7 +503,7 @@
                                     <td>${it.totalMoney}</td>
 									<td>
 										<#--<@shiro.hasPermission name="/gainsInfo/updateById.shtml">-->
-											<a href="javascript:_update('${it.id}','${it.accountName}','${it.name}','${it.account}','${it.businessTimeStr}','${it.sharesCode}','${it.sharesName}','${it.businessFlag}','${it.volume}','${it.price}','${it.totalMoney}','${it.balanceMoney}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#gainsInfoEditModal"></i></a>
+											<a href="javascript:_update('${it.id}','${it.accountName}','${it.name}','${it.account}','${it.businessTimeStr}','${it.sharesCode}','${it.sharesName}','${it.businessFlag}','${it.volume}','${it.price}','${it.totalMoney}','${it.balanceMoney}','${it.amount}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#gainsInfoEditModal"></i></a>
 										<#--</@shiro.hasPermission>-->
 										<#--<@shiro.hasPermission name="/gainsInfo/delById.shtml">-->
                                             	<a href="javascript:_del('${it.id}');"><i class="glyphicon glyphicon-remove" title="删除"></i></a>
@@ -676,7 +715,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" id="gainsInfo_add-remove"  class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
-                                    <button type="button" id="gainsInfo_add_submit" class="btn btn-primary"><i class="fas fa-save normal"></i>&nbsp;保存</button>
+                                    <button type="button" id="gainsInfo_add_submit" class="btn btn-primary" disabled="disabled"><i class="fas fa-save normal"></i>&nbsp;保存</button>
                                 </div>
                             </div>
                         </div>
