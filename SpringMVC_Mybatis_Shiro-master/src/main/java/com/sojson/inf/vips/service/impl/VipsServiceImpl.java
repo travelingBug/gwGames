@@ -79,8 +79,7 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
 
             redisUtil.save(req.getSession().getId(), entity.getPhone());
         }else{
-            msg.setLevel(ResultMessage.MSG_LEVEL.FAIL.v);
-            msg.setMessageText("注册失败！");
+            msg.setData("");
         }
 
         return new ResultMessage(msg.getLevel(), msg.getMessageText(), req.getSession().getId());

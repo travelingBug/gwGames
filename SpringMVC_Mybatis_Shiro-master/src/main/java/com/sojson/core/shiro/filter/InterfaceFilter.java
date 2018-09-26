@@ -2,31 +2,30 @@ package com.sojson.core.shiro.filter;
 
 import com.sojson.common.IConstant;
 import com.sojson.common.InfAuth;
-import com.sojson.common.ResultMessage;
 import com.sojson.common.utils.EncryptUtils;
-import com.sojson.common.utils.LoggerUtils;
 import com.sojson.common.utils.RedisUtil;
-import net.sf.json.JSONObject;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.StringUtils;
 import org.apache.shiro.web.filter.AccessControlFilter;
-import org.apache.shiro.web.util.WebUtils;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 public class InterfaceFilter extends AccessControlFilter {
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request,
-			ServletResponse response, Object mappedValue) throws Exception {
+			ServletResponse resp, Object mappedValue) throws Exception {
 		HttpServletRequest req = (HttpServletRequest) request;
+//		HttpServletResponse response = (HttpServletResponse) resp;
+//		response.setHeader("Access-Control-Allow-Origin", "*"); //解决跨域访问报错
+//		response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
+//		 response.setHeader("Access-Control-Max-Age", "3600"); //设置过期时间
+//		 response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, client_id, uuid, Authorization");
+//		 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // 支持HTTP 1.1.
+//		 response.setHeader("Pragma", "no-cache"); // 支持HTTP 1.0. response.setHeader("Expires", "0");
+
 		String token = req.getHeader("Authorization");
 		if (StringUtils.hasText(token)) {
 			String content = EncryptUtils.aesDecrypt(token, IConstant.key);

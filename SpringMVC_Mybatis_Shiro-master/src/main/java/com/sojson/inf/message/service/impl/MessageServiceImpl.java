@@ -1,5 +1,6 @@
 package com.sojson.inf.message.service.impl;
 
+import com.sojson.common.RegConstant;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.utils.RedisUtil;
 import com.sojson.common.utils.SendMsgUtil;
@@ -39,6 +40,9 @@ public class MessageServiceImpl implements MessageService {
 	 * @return
 	 */
 	public ResultMessage vaildCanSend(String telPhone){
+		if (StringUtils.isBlank(telPhone) || telPhone.length() != 11 || !telPhone.matches(RegConstant.numReg)) {
+			return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"手机号码格式不正确！");
+		}
 		String code = redisUtil.get(telPhone);
 		if (!StringUtils.isBlank(code)) {
 			String[] codeArr = code.split(",");
@@ -54,8 +58,8 @@ public class MessageServiceImpl implements MessageService {
 	public ResultMessage sendValidCode(String telPhone){
 		ResultMessage msg = vaildCanSend(telPhone);
 		if (msg.getLevel() == ResultMessage.MSG_LEVEL.SUCC.v) {
-			String result = SendMsgUtil.sendValidCode(telPhone);
-//			String result = SendMsgUtil.sendMsgTest(telPhone);
+//			String result = SendMsgUtil.sendValidCode(telPhone);
+			String result = SendMsgUtil.sendMsgTest(telPhone);
 			if (Integer.parseInt(result) > 0) {
 				msg =  new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "短信发送成功");
 			} else {

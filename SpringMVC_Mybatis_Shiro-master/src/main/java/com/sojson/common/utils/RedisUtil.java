@@ -3,6 +3,7 @@ package com.sojson.common.utils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.exceptions.JedisDataException;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -93,7 +94,13 @@ public class RedisUtil {
     }
 
     public static String get(String key){
-        return jedis.get(key);
+        String value = "";
+        try {
+            value = jedis.get(key);
+        }catch (JedisDataException e){
+            return "";
+        }
+        return value;
     }
 
     public static BufferedImage drawTranslucentStringPic(int width, int height, Integer fontHeight, String drawStr)
