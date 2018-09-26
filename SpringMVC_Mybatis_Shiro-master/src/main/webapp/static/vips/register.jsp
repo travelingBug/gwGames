@@ -94,10 +94,10 @@
     function canSubmit(){
         if (nameFlag && pwdFlag && inviteCodeFlag && telPhoneFlag) {
             $('#buttonSubmit').removeAttr('disabled');
-            $('#buttonSubmit').attr('class','btn-bm1');
+            $('#buttonSubmit').attr('class','btn-register');
         } else {
             $('#buttonSubmit').attr('disabled','disabled');
-            $('#buttonSubmit').attr('class','btn-bm1 disable');
+            $('#buttonSubmit').attr('class','btn-register disable');
         }
     }
 

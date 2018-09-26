@@ -832,6 +832,10 @@ select option {
 	background:#cd3434;
 	color:#fff;
 }
+#registerForm .disable{
+	background-color: #7b8996;
+	color: #fff;
+}
 
 /* 24、tabs
  * -------------------------------------------------- */
