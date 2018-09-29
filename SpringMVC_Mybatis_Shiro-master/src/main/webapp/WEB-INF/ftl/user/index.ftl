@@ -96,7 +96,7 @@
 	function _queryLink(userId){
         $.ajax({
             type: "POST",
-            url: "dealer/queryLink.shtml",
+            url: "${basePath}/dealer/queryLink.shtml",
             data: {userId: userId},
             dataType: "json",
             success: function (data) {
