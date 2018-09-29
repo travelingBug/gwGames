@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 	<head>
+        <#include "../head.ftl" >
 		<meta charset="utf-8" />
 		<title>参赛人员列表</title>
 		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-		<link   rel="icon" href="https://open.sojson.com/favicon.ico" type="image/x-icon" />
-		<link   rel="shortcut icon" href="https://open.sojson.com/favicon.ico" />
 		<link href="${basePath}/js/common/bootstrap/3.3.5/css/bootstrap.min.css?${_v}" rel="stylesheet"/>
 		<link href="${basePath}/css/common/base.css?${_v}" rel="stylesheet"/>
         <link href="${basePath}/css/gwGame.css?${_v}" rel="stylesheet"/>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-		<script  src="http://open.sojson.com/common/jquery/jquery1.8.3.min.js"></script>
 		<script  src="${basePath}/js/common/layer/layer.js"></script>
 		<script  src="${basePath}/js/common/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script  src="${basePath}/js/shiro.demo.js"></script>
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 
-		<script >
+
+
+            <script >
 			so.init(function(){
                 $("#uploadEventBtn").unbind("click").bind("click", function() {
                     $("#uploadEventFile").click();
@@ -117,7 +117,7 @@
                     });
                 });
 
-                $("#gainsInfo_account_add").blur(function(event){
+                $("#gainsInfo_account_add").unbind('blur').bind('blur',function(event){
                     event.stopPropagation();
                     var accountName = $("#gainsInfo_account_add").val();
                     if (accountName != null && accountName != "") {
@@ -223,7 +223,7 @@
                     layer.close(index);
                 });
             }
-			function _update(id,accountName,name,account,businessTimeStr,sharesCode,sharesName,businessFlag,volume,price,totalMoney,balanceMoney,amount){
+			function _update(id,accountName,name,account,businessTimeStr,sharesCode,sharesName,businessFlag,volume,price,amount){
 				$("#gainsInfo_id").val(id);
                 $("#player_accountName").val(accountName);
                 $("#player_name").val(name);
@@ -234,8 +234,6 @@
                 $("#gainsInfo_businessFlag").val(businessFlag);
                 $("#gainsInfo_price").val(price);
                 $("#gainsInfo_volume").val(volume);
-                $("#gainsInfo_totalMoney").val(totalMoney);
-                $("#gainsInfo_balanceMoney").val(balanceMoney);
                 $("#gainsInfo_amount").val(amount);
 
 
@@ -288,17 +286,9 @@
                     msg('资金总金额不能为空！');
                     return false;
                 }
-                if ($("#gainsInfo_balanceMoney").val() == null || $("#gainsInfo_balanceMoney").val() == '') {
-                    msg('资金余额不能为空！');
-                    return false;
-                }
 
                 if ($("#gainsInfo_volume").val() == null || $("#gainsInfo_volume").val() == '') {
                     msg('交易数量不能为空！');
-                    return false;
-                }
-                if ($("#gainsInfo_totalMoney").val() == null || $("#gainsInfo_totalMoney").val() == '') {
-                    msg('总收益不能为空！');
                     return false;
                 }
                 return true;
@@ -334,17 +324,9 @@
                     return false;
                 }
 
-                if ($("#gainsInfo_balanceMoney_add").val() == null || $("#gainsInfo_balanceMoney_add").val() == '') {
-                    msg('资金余额不能为空！');
-                    return false;
-                }
 
                 if ($("#gainsInfo_volume_add").val() == null || $("#gainsInfo_volume_add").val() == '') {
                     msg('交易数量不能为空！');
-                    return false;
-                }
-                if ($("#gainsInfo_totalMoney_add").val() == null || $("#gainsInfo_totalMoney_add").val() == '') {
-                    msg('总收益不能为空！');
                     return false;
                 }
                 return true;
@@ -423,9 +405,9 @@
                         <div class="col-sm-12">
                             <div class="form-group col-sm-8" form-inline>
                                 <label for="bgnTime">交易时间</label>
-								<input type="text"  class="form-control" name="bgnTime" id="bgnTime" placeholder="开始时间" />
+								<input type="text"  class="form-control" name="bgnTime" id="bgnTime" value="${bgnTime?default('')}" placeholder="开始时间" />
 								~
-                                <input type="text"  class="form-control" name="endTime" id="endTime" placeholder="结束时间" />
+                                <input type="text"  class="form-control" name="endTime" id="endTime" value="${endTime?default('')}" placeholder="结束时间" />
 							</div>
                             <div class="form-group col-sm-4">
                                 <label for="account">资金账号</label>
@@ -457,24 +439,23 @@
                                         </button>
                                         <input type="file" name="file"  style="width:0px;height:0px;display: none;" id="uploadEventFile" />
                                     </form>
-                                    <a href="${basePath}/file/gainsInfo.xlsx">模板下载</a>
+                                    <a href="${basePath}/file/playergains.xlsx">模板下载</a>
                                 </span>
                             </div>
 						</div>
 
 					<table class="table table-bordered">
 						<tr>
-							<th width="80">昵称</th>
-							<th width="80">姓名</th>
+							<th width="120">昵称</th>
+							<th width="120">姓名</th>
 							<th width="100">资金账号</th>
-                            <th width="100">交易时间</th>
+                            <th width="180">交易时间</th>
 							<th width="100">股票代码</th>
 							<th width="100">股票名称</th>
 							<th width="90">买卖标致</th>
                             <th width="80">成交量</th>
                             <th width="100">成交价格</th>
-                            <th width="100">资金余额</th>
-                            <th width="100">总资产</th>
+                            <th width="100">成交总额</th>
                             <th width="80">操作</th>
 						</tr>
 						<#if page?exists && page.list?size gt 0 >
@@ -499,11 +480,10 @@
 									</td>
                                     <td>${it.volume}</td>
                                     <td>${it.price}</td>
-                                    <td>${it.balanceMoney}</td>
-                                    <td>${it.totalMoney}</td>
+                                    <td>${it.amount}</td>
 									<td>
 										<#--<@shiro.hasPermission name="/gainsInfo/updateById.shtml">-->
-											<a href="javascript:_update('${it.id}','${it.accountName}','${it.name}','${it.account}','${it.businessTimeStr}','${it.sharesCode}','${it.sharesName}','${it.businessFlag}','${it.volume}','${it.price}','${it.totalMoney}','${it.balanceMoney}','${it.amount}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#gainsInfoEditModal"></i></a>
+											<a href="javascript:_update('${it.id}','${it.accountName}','${it.name}','${it.account}','${it.businessTimeStr}','${it.sharesCode}','${it.sharesName}','${it.businessFlag}','${it.volume}','${it.price}','${it.amount}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#gainsInfoEditModal"></i></a>
 										<#--</@shiro.hasPermission>-->
 										<#--<@shiro.hasPermission name="/gainsInfo/delById.shtml">-->
                                             	<a href="javascript:_del('${it.id}');"><i class="glyphicon glyphicon-remove" title="删除"></i></a>
@@ -513,7 +493,7 @@
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="12">暂未发现数据</td>
+								<td class="text-center danger" colspan="10">暂未发现数据</td>
 							</tr>
 						</#if>
 					</table>
@@ -603,17 +583,6 @@
 
                                         </div>
 
-                                        <div class="form-group">
-                                            <label for="gainsInfo_balanceMoney" class="col-md-2 control-label">资金余额</label>
-                                            <div class="col-md-4">
-                                                <input type="text" class="form-control" name="balanceMoney" id="gainsInfo_balanceMoney"  />
-                                            </div>
-                                            <label for="gainsInfo_totalMoney" class="col-md-2 control-label">总资产</label>
-                                            <div class="col-md-4">
-                                                <input type="text" class="form-control" name="totalMoney" id="gainsInfo_totalMoney"  />
-                                            </div>
-                                        </div>
-
 									</form>
                                 </div>
                                 <div class="modal-footer">
@@ -700,16 +669,6 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label for="gainsInfo_balanceMoney_add" class="col-md-2 control-label">资金余额</label>
-                                            <div class="col-md-4">
-                                                <input type="text" class="form-control" name="balanceMoney" id="gainsInfo_balanceMoney_add"  />
-                                            </div>
-                                            <label for="gainsInfo_totalMoney_add" class="col-md-2 control-label">总资产</label>
-                                            <div class="col-md-4">
-                                                <input type="text" class="form-control" name="totalMoney" id="gainsInfo_totalMoney_add"  />
-                                            </div>
-                                        </div>
 
                                     </form>
                                 </div>

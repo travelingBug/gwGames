@@ -135,6 +135,19 @@ create table tb_gains_info
    VOLUME               int not null comment '成交量',
    PRICE                varchar(20) not null comment '成交价格',
    AMOUNT               varchar(20) not null comment '成交价总金额',
+--    BALANCE_MONEY varchar(20) not null comment '资金余额',
+--    TOTAL_MONEY varchar(20) not null comment '总资产',
+   BUSINESS_TIME        datetime not null comment '交易时间',
+   CRT_TIME             datetime not null comment '创建时间',
+   MOD_TIME             datetime comment '修改时间',
+   primary key (ID)
+);
+ALTER TABLE `tb_gains_info` ADD INDEX index_idCard ( `ACCOUNT` ) ;
+
+create table tb_player_money
+(
+   ID                   bigint not null auto_increment comment '主键',
+   ACCOUNT         varchar(50)  not null comment '资金账号',
    BALANCE_MONEY varchar(20) not null comment '资金余额',
    TOTAL_MONEY varchar(20) not null comment '总资产',
    BUSINESS_TIME        datetime not null comment '交易时间',
@@ -142,7 +155,6 @@ create table tb_gains_info
    MOD_TIME             datetime comment '修改时间',
    primary key (ID)
 );
-ALTER TABLE `tb_gains_info` ADD INDEX index_idCard ( `ACCOUNT` ) ;
 
 /*==============================================================*/
 /* Table: tb_dealer                                             */

@@ -1,9 +1,6 @@
 package com.sojson.common.utils;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
@@ -57,7 +54,14 @@ public class ExcelUtil{
                     if(colsNum > 0) {
                         Object[] colDara = new Object[colsNum];
                         for (int j = 0; j <colsNum; j++) {
-                            colDara[j] = xssfRow.getCell(j);
+                           Cell cell = xssfRow.getCell(j);
+                           if (cell != null) {
+                               cell.setCellType(Cell.CELL_TYPE_STRING);
+                               colDara[j] = cell.getStringCellValue();
+                           } else {
+                               colDara[j] = "";
+                           }
+
                         }
                         datas.add(colDara);
                     }
@@ -110,7 +114,9 @@ public class ExcelUtil{
                     if (colsNum > 0) {
                         Object[] colData = new Object[colsNum];
                         for (int k = 0; k < colsNum; k++) {
-                            colData[k] = rowTitle.getCell(k);
+                            Cell cell = rowTitle.getCell(k);
+                            cell.setCellType(Cell.CELL_TYPE_STRING );
+                            colData[k] = cell.getStringCellValue();
                         }
                         datas.add(colData);
                     }

@@ -103,7 +103,7 @@ public class Test
         FileOutputStream fos=new FileOutputStream(new File("D:/12.sql"));
         OutputStreamWriter osw=new OutputStreamWriter(fos, "UTF-8");
         BufferedWriter bw=new BufferedWriter(osw);
-        String player = "insert into tb_player (ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,CRT_TIME,ACCOUNT) values (";
+        String player = "insert into tb_player (ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,CRT_TIME,ACCOUNT,CAPITAL) values (";
         List<Integer> idCards = new ArrayList<Integer>();
         Map<Integer,Double> playerMoney = new HashMap<Integer,Double>();
         Map<Integer,Double> balanceMoneyMap = new HashMap<Integer,Double>();
@@ -118,7 +118,7 @@ public class Test
             playerData += "'"+i+"',";
             playerData += "0,";
             playerData += "1,";
-            playerData += "'2018-09-21 00:00:00',"+i+");";
+            playerData += "'2018-09-21 00:00:00',"+i+",'300000');";
             bw.write(playerData+"\t\n");
             playerMoney.put(i,300000d);
             balanceMoneyMap.put(i,300000d);

@@ -7,7 +7,7 @@ package com.sojson.common.model.dto;
  * @Date:2018-9-23 15:01
  * @VERSION: 1.0
  */
-public class PlayerTopInfo {
+public class PlayerTopInfo implements Comparable<PlayerTopInfo> {
 
     /**
      * 选手昵称
@@ -100,5 +100,13 @@ public class PlayerTopInfo {
 
     public void setAccount(String account) {
         this.account = account;
+    }
+
+    @Override
+    public int compareTo(PlayerTopInfo o) {
+        if (Double.parseDouble(this.yieldRate) >= Double.parseDouble(o.yieldRate)) {
+            return 1;
+        }
+        return -1;
     }
 }

@@ -91,6 +91,14 @@
                     </a>
                 </li>
 			</@shiro.hasPermission>
+			<@shiro.hasPermission name="/playerMoney/list.shtml">
+                <li class="${(index==3)?string('active',' ')} dropdown">
+                    <a href="${basePath}/playerMoney/list.shtml?">
+                        <i class="glyphicon glyphicon-chevron-right"></i>参赛选手资金
+                    </a>
+                </li>
+			</@shiro.hasPermission>
+
             <#--<li class="${(index==2)?string('active',' ')} dropdown">-->
                 <#--<a href="${basePath}/member/online.shtml">-->
                     <#--<i class="glyphicon glyphicon-chevron-right"></i>在线用户-->
