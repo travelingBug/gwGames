@@ -6,11 +6,12 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
 import sun.misc.BASE64Encoder;
 
+import java.net.URLEncoder;
 import java.util.*;
 
 
@@ -80,15 +81,21 @@ public class HttpClientUtils {
         return result;
     }
 
-    public static String createSign(Map<String,String> map, String uKey){
-        String signPars = getSign(map);
+    public static String createSign(){
+        String uKey = "b36b5b4794f15d42";
+        Map<String,String> aaa = createData();
+        aaa.remove("pr_id");
+        aaa.remove("pr_ver");
+        aaa.remove("merchant_id");
+
+        String signPars = getSign(aaa);
         signPars += "key="+uKey;
         String sign = signPars.toUpperCase();
 
         return sign;
     }
 
-    public static String createData(){
+    public static Map<String,String> createData(){
         Map<String,String> map = new HashMap<String,String>();
         map.put("key", "b36b5b4794f15d42");
         map.put("method", "anonymousPayOrder");
@@ -112,31 +119,51 @@ public class HttpClientUtils {
         map.put("mblNo","15882094486");
         map.put("smsCode","123456");
 
-        Map<String,String> map1 = map;
+        return map;
+    }
 
-        map1.remove("pr_id");
-        map1.remove("pr_ver");
-        map1.remove("merchant_id");
+    public static String createTranData(){
+        Map<String,String> aaa = createData();
+        aaa.remove("pr_id");
+        aaa.remove("pr_ver");
+        aaa.remove("merchant_id");
 
-        createSign(map1, "b36b5b4794f15d42");
-
-        JSONObject jsonObject = JSONObject.fromObject(map1);
+        JSONObject jsonObject = JSONObject.fromObject(aaa);
         byte[] bt = jsonObject.toString().getBytes();
-        String trandate = (new BASE64Encoder()).encodeBuffer(bt);
+        String trandata = (new BASE64Encoder()).encodeBuffer(bt);
 
-        System.out.println(jsonObject);
-
-        return null;
+        return trandata;
     }
 
     public static void main(String[] args){
 
-        createData();
-//        String url = "http://d-test.xadtsc.cn/gateway/method.do";
-//        String jsonStr = "";
-//
-//
-//        String httpOrgCreateTestRtn = HttpClientUtils.doPost(url, jsonStr);
+        String url = "http://d-test.xadtsc.cn/gateway/method.do";
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("method", "anonymousPayOrder");
+        map.put("merchant_id", "151010002");
+        map.put("pr_id","1012");
+        map.put("pr_ver","QuickPay0.21");
+        map.put("sign",createSign());
+        map.put("tranData", createTranData());
+
+        List<Map.Entry<String, String>> infoIds = new ArrayList<Map.Entry<String, String>>(map.entrySet());
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> item : infoIds) {
+            if (item.getKey() != null || item.getKey() != "") {
+                String key = item.getKey();
+                String val = item.getValue();
+                if (!(val == "" || val == null)) {
+                    sb.append(key + "=" + URLEncoder.encode(val) + "&");
+                }
+            }
+
+        }
+        String str = "sb.toString()";
+
+
+        String httpOrgCreateTestRtn = HttpClientUtils.doPost(url, str);
+
+        System.out.println(httpOrgCreateTestRtn);
 
 
 
