@@ -381,5 +381,20 @@
 			<artifactId>httpmime</artifactId>
 			<version>4.1.2</version>
 		</dependency>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>qrCode</groupId>
+			<artifactId>qrCode</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>fastjson</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.1</version>
+		</dependency>
 	</dependencies>
 </project>

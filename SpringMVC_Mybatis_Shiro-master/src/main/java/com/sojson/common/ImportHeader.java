@@ -3,6 +3,8 @@ package com.sojson.common;
 import com.sojson.common.utils.CommonVal;
 import com.sojson.common.utils.IFormatExcel;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.LinkedHashMap;
 
 /**
@@ -23,8 +25,8 @@ public class ImportHeader {
         gainsInfoHeadReal.put("成交数量","volume");
         gainsInfoHeadReal.put("成交价格","price");
         gainsInfoHeadReal.put("成交总金额","amount");
-        gainsInfoHeadReal.put("资金余额","balanceMoney");
-        gainsInfoHeadReal.put("总资产","totalMoney");
+//        gainsInfoHeadReal.put("资金余额","balanceMoney");
+//        gainsInfoHeadReal.put("总资产","totalMoney");
 
     }
 
@@ -37,7 +39,48 @@ public class ImportHeader {
                     return CommonVal.BUSINESS_FLAG.get(key);
                 }
             });
+            gainsInfoHeadFormat.put("price",new IFormatExcel(){
+                public Object format(String key){
+                    BigDecimal bg = new BigDecimal(key);
+                    return new DecimalFormat("#.00").format(bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
+                }
+            });
+            gainsInfoHeadFormat.put("amount",new IFormatExcel(){
+                public Object format(String key){
+                    BigDecimal bg = new BigDecimal(key);
+                    return new DecimalFormat("#.00").format(bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
+                }
+            });
         }
         return gainsInfoHeadFormat;
+    }
+
+    public static LinkedHashMap<String,String> playerMoneyHeadReal = new LinkedHashMap<String,String>();
+    static{
+        playerMoneyHeadReal.put("时间","businessTime");
+        playerMoneyHeadReal.put("资金账号","account");
+        playerMoneyHeadReal.put("资金余额","balanceMoney");
+        playerMoneyHeadReal.put("总资产","totalMoney");
+
+    }
+
+    private static LinkedHashMap<String,IFormatExcel> playerMoneyHeadFormat = new LinkedHashMap<String,IFormatExcel>();
+
+    public static LinkedHashMap<String,IFormatExcel> getPlayerMoneyHeadFormat(){
+        if (playerMoneyHeadFormat.size() < 1) {
+            playerMoneyHeadFormat.put("balanceMoney",new IFormatExcel(){
+                public Object format(String key){
+                    BigDecimal bg = new BigDecimal(key);
+                    return new DecimalFormat("#.00").format(bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
+                }
+            });
+            playerMoneyHeadFormat.put("totalMoney",new IFormatExcel(){
+                public Object format(String key){
+                    BigDecimal bg = new BigDecimal(key);
+                    return new DecimalFormat("#.00").format(bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
+                }
+            });
+        }
+        return playerMoneyHeadFormat;
     }
 }
