@@ -33,4 +33,16 @@ public interface PlayerMoneyService {
     public ResultMessage add(TbPlayerMoney tbPlayerMoney);
 
     public ResultMessage deleteById(Long id);
+
+    /**
+     * 获取总排行榜
+     */
+    public void getTopResultForAll();
+
+    /**
+     * 根据时间查询排行（一般用于月排行）
+     * @param currDate
+     * @param preDate
+     */
+    public void findTopByMonth(String currDate,String preDate);
 }

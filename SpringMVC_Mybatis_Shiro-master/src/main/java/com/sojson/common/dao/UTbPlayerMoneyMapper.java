@@ -1,9 +1,11 @@
 package com.sojson.common.dao;
 
 import com.sojson.common.model.TbPlayerMoney;
+import com.sojson.common.model.vo.TbGainsInfoVo;
 import com.sojson.common.model.vo.TbPlayerMoneyVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UTbPlayerMoneyMapper {
 
@@ -37,18 +39,14 @@ public interface UTbPlayerMoneyMapper {
      */
     int deleteById(Long id);
 
-//    /**
-//     * 查询总榜的内容
-//     */
-//    List<TbPlayerMoneyVo>  findTopForAll();
-//
-//    /**
-//     * 查询月榜
-//     */
-//    List<TbPlayerMoneyVo>  findTopByMonth(Map<String, Object> param);
-//
-//    /**
-//     * 根据身份证查询选手数据
-//     */
-//    List<TbPlayerMoneyVo> getPlayerMoneyByIdCards(List<String> idCards);
+
+    /**
+     * 查询总榜的内容
+     */
+    List<TbPlayerMoneyVo>  findTopForAll();
+
+    /**
+     * 查询月榜
+     */
+    List<TbPlayerMoneyVo>  findTopByMonth(Map<String,Object> param);
 }

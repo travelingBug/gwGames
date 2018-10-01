@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sojson.common.dao.UTbPlayerMoneyMapper" >
+  <resultMap id="PlayerMoneyResultMap" type="com.sojson.common.model.vo.TbPlayerMoneyVo" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ACCOUNT" property="account" jdbcType="VARCHAR" />
+    <result column="BALANCE_MONEY" property="balanceMoney" jdbcType="VARCHAR" />
+    <result column="TOTAL_MONEY" property="totalMoney" jdbcType="VARCHAR" />
+    <result column="BUSINESS_TIME" property="businessTime" jdbcType="TIMESTAMP" />
+    <result column="ACCOUNT_NAME" property="accountName" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="BUSINESS_TIME_STR" property="businessTimeStr" jdbcType="VARCHAR" />
+    <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
+    <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
+
+  </resultMap>
+  <sql id="PlayerMoney_Column_List" >
+    t.ID,t.ACCOUNT,t.TOTAL_MONEY,t.BUSINESS_TIME,p.ACCOUNT_NAME,p.NAME,(DATE_FORMAT(t.BUSINESS_TIME,'%Y-%m-%d %H:%i:%S')) BUSINESS_TIME_STR,t.CRT_TIME,t.MOD_TIME,t.BALANCE_MONEY
+  </sql>
+  <sql id="PlayerMoney_Simple_Column_List" >
+    t.ID,t.ACCOUNT,t.TOTAL_MONEY,t.BUSINESS_TIME,(DATE_FORMAT(t.BUSINESS_TIME,'%Y-%m-%d %H:%i:%S')) BUSINESS_TIME_STR,t.CRT_TIME,t.MOD_TIME,t.BALANCE_MONEY
+  </sql>
+  <sql id="limit_sql">
+  	   <if test="page_sql != null and page_sql != ''">
+      	${page_sql}
+      </if>
+  </sql>
+  
+  <sql id="where_all">
+  	<where>
+      <if test="account != null and account !=''">
+        and t.ACCOUNT = #{account}
+      </if>
+      <if test="bgnTime != null and bgnTime !=''">
+        and t.BUSINESS_TIME  &gt; #{bgnTime}
+      </if>
+      <if test="endTime != null and endTime !=''">
+        and t.BUSINESS_TIME  &lt; #{endTime}
+      </if>
+
+      <if test="businessTime != null and businessTime !=''">
+        and t.BUSINESS_TIME  = #{businessTime}
+      </if>
+      <if test="totalMoney != null and totalMoney !=''">
+        and t.TOTAL_MONEY  = #{totalMoney}
+      </if>
+     </where>
+  </sql>
+
+
+  <sql id="where_query">
+    <where>
+      <if test="account != null and account !=''">
+        and t.ACCOUNT = #{account}
+      </if>
+
+      <if test="businessTime != null and businessTime !=''">
+        and t.BUSINESS_TIME  = #{businessTime}
+      </if>
+      <if test="totalMoney != null and totalMoney !=''">
+        and t.TOTAL_MONEY  = #{totalMoney}
+      </if>
+    </where>
+  </sql>
+
+  <sql id="order_all">
+    ORDER BY t.BUSINESS_TIME DESC,t.crt_time DESC
+  </sql>
+  <select id="findAll" resultMap="PlayerMoneyResultMap" >
+  	select
+    <include refid="PlayerMoney_Column_List" />
+    from tb_player_money t LEFT JOIN tb_player  p ON t.ACCOUNT = p.ACCOUNT
+    <include refid="where_all"/>
+    <include refid="order_all"/>
+    <include refid="limit_sql" />
+  </select>
+
+
+  <select id="findPlayerMoney" resultMap="PlayerMoneyResultMap" >
+    select
+    <include refid="PlayerMoney_Simple_Column_List" />
+    from tb_player_money t
+    <include refid="where_query"/>
+  </select>
+
+  <select id="findCount" resultMap="PlayerMoneyResultMap" >
+ 	 select count(t.id) from  tb_player_money t LEFT JOIN tb_player  p ON t.ACCOUNT = p.ACCOUNT
+  	<include refid="where_all" />
+  </select>
+
+  <select id="findAllNoPage" resultMap="PlayerMoneyResultMap" >
+    select
+    <include refid="PlayerMoney_Column_List" />
+    from tb_player_money
+    <include refid="where_all"/>
+  </select>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbGainsInfo" >
+    insert into tb_player_money (ACCOUNT,BALANCE_MONEY,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME)
+    values ( #{account,jdbcType=VARCHAR},#{balanceMoney,jdbcType=VARCHAR}, #{totalMoney,jdbcType=VARCHAR}, #{businessTime,jdbcType=TIMESTAMP}, #{crtTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.sojson.common.model.TbPlayerMoney" >
+    update tb_player_money
+    <set >
+      <if test="totalMoney != null and totalMoney !=''" >
+        TOTAL_MONEY = #{totalMoney,jdbcType=VARCHAR},
+      </if>
+      <!--<if test="account != null  and account !=''" >-->
+        <!--ACCOUNT = #{account,jdbcType=VARCHAR},-->
+      <!--</if>-->
+
+      <if test="modTime != null and modTime != ''" >
+        MOD_TIME = #{modTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="businessTime != null and businessTime != ''" >
+        BUSINESS_TIME = #{businessTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="balanceMoney != null and balanceMoney != ''" >
+        BALANCE_MONEY = #{balanceMoney,jdbcType=VARCHAR},
+      </if>
+
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into tb_player_money (ACCOUNT,BALANCE_MONEY,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      ( #{item.account,jdbcType=VARCHAR},#{item.balanceMoney,jdbcType=VARCHAR}, #{item.totalMoney,jdbcType=VARCHAR}, #{item.businessTime,jdbcType=TIMESTAMP}, #{item.crtTime,jdbcType=TIMESTAMP}
+      )
+    </foreach>
+  </insert>
+
+  <delete id="deleteById">
+    delete from tb_player_money where id =  #{id,jdbcType=BIGINT}
+  </delete>
+
+
+
+  <select id="findTopForAll" resultMap="PlayerMoneyResultMap" >
+    select  <include refid="PlayerMoney_Column_List" />,p.CAPITAL from tb_player_money t LEFT join  tb_player p ON t.ACCOUNT = p.ACCOUNT where not exists(select 1 from tb_gains_info t2  where t2.ACCOUNT= t.ACCOUNT
+    and t.BUSINESS_TIME &lt;  t2.BUSINESS_TIME)
+  </select>
+
+  <select id="findTopByMonth" resultMap="PlayerMoneyResultMap"  >
+
+    select  <include refid="PlayerMoney_Column_List" />,p.CAPITAL from tb_player_money t LEFT join  tb_player p ON t.ACCOUNT = p.ACCOUNT where date_format(t.BUSINESS_TIME, '%Y-%m') = #{currDate} and  not exists(select 1 from tb_gains_info t2  where t2.ACCOUNT= t.ACCOUNT
+    and date_format(t2.BUSINESS_TIME, '%Y-%m') = #{currDate} and t.BUSINESS_TIME &lt;  t2.BUSINESS_TIME)
+  </select>
+</mapper>

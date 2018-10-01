@@ -1,12 +1,15 @@
 package com.sojson.playermoney.service.impl;
 
+import com.sojson.common.IConstant;
 import com.sojson.common.ImportHeader;
 import com.sojson.common.RegConstant;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.dao.UTbPlayerMoneyMapper;
 import com.sojson.common.model.TbPlayerMoney;
 import com.sojson.common.model.TbPlayer;
+import com.sojson.common.model.dto.PlayerTopInfo;
 import com.sojson.common.model.dto.TbPlayerDto;
+import com.sojson.common.model.vo.TbGainsInfoVo;
 import com.sojson.common.model.vo.TbPlayerMoneyVo;
 import com.sojson.common.utils.ExcelToBeanUtil;
 import com.sojson.common.utils.ExcelUtil;
@@ -15,6 +18,7 @@ import com.sojson.common.utils.StringUtils;
 import com.sojson.core.config.IConfig;
 import com.sojson.core.mybatis.BaseMybatisDao;
 import com.sojson.core.mybatis.page.Pagination;
+import com.sojson.inf.gainsinfo.utis.GainsInfoCache;
 import com.sojson.player.service.PlayerService;
 import com.sojson.playermoney.service.PlayerMoneyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +29,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * Created by lx on 2018/8/27.
@@ -214,5 +216,126 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
 
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
 
+    }
+
+    /**
+     * 获取总排行榜
+     */
+    @Override
+    public void getTopResultForAll(){
+        //获取所有选手的数据
+        List<TbPlayerMoneyVo> topInfos = uTbPlayerMoneyMapper.findTopForAll();
+        //根据身份证统计每个人的信息
+        List<PlayerTopInfo> palyerTopInfos = new ArrayList<PlayerTopInfo>();
+        //统计总收益的排行
+        List<PlayerTopInfo> topInfosClone = new ArrayList<PlayerTopInfo>();
+        //保存已经存在的重复数据
+        List<String> hasAccount = new ArrayList<String>();
+        for (TbPlayerMoneyVo topInfo : topInfos) {
+            //剔除重复数据
+            if (hasAccount.contains(topInfo.getAccount())) {
+                continue;
+            }
+            hasAccount.add(topInfo.getAccount());
+            PlayerTopInfo playerTopInfo = new PlayerTopInfo();
+            playerTopInfo.setAccountName(topInfo.getAccountName());
+            playerTopInfo.setAccount(topInfo.getAccount());
+            playerTopInfo.setTotalMoney(topInfo.getTotalMoney());
+            playerTopInfo.setCapital(topInfo.getCapital());
+            //计算收益率
+            double totleDou = Double.parseDouble(topInfo.getTotalMoney());
+            double capital = Double.parseDouble(String.valueOf(IConstant.capital));
+
+
+            BigDecimal bg = new BigDecimal((totleDou - capital) * 100/capital);
+            double rate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+            playerTopInfo.setYieldRate(rate + "");
+            bg = new BigDecimal(totleDou - capital);
+            playerTopInfo.setYield(bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() + "");
+            //持仓比
+
+            //计算剩余金额
+            double buyMoney = totleDou - Double.parseDouble(String.valueOf(topInfo.getBalanceMoney()));
+            bg = new BigDecimal(buyMoney * 100/totleDou);
+            rate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+            playerTopInfo.setBuyForALLRate(rate + "");
+            palyerTopInfos.add(playerTopInfo);
+            topInfosClone.add(playerTopInfo.clone());
+        }
+        //按照收益率排序
+        Collections.sort(palyerTopInfos,Collections.reverseOrder());
+        //按照总收益排序
+        Collections.sort(topInfosClone, new Comparator<PlayerTopInfo>(){
+            public int compare(PlayerTopInfo p1, PlayerTopInfo p2) {
+                if(Double.parseDouble(p1.getYield()) <= Double.parseDouble(p2.getYield())){
+                    return 1;
+                }
+                return -1;
+            }
+        });
+        GainsInfoCache.putTopForAll(palyerTopInfos);
+
+        GainsInfoCache.putTopForAllByMoney(topInfosClone);
+    }
+
+    /**
+     * 根据时间查询排行（一般用于月排行）
+     * @param currDate
+     * @param preDate
+     */
+    @Override
+    public void findTopByMonth(String currDate,String preDate){
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("currDate",currDate);
+		List<TbPlayerMoneyVo> cuurTopInfos = uTbPlayerMoneyMapper.findTopByMonth(param);
+		param.put("currDate",preDate);
+		List<TbPlayerMoneyVo> preTopInfos = uTbPlayerMoneyMapper.findTopByMonth(param);
+		//根据身份证统计每个人的信息
+		List<PlayerTopInfo> palyerTopMonthInfos = new ArrayList<PlayerTopInfo>();
+		//保存已经存在的重复数据
+		List<String> hasAccount = new ArrayList<String>();
+		for (TbPlayerMoneyVo cuurTopInfo : cuurTopInfos) {
+			//剔除重复数据
+			if (hasAccount.contains(cuurTopInfo.getAccount())) {
+				continue;
+			}
+			hasAccount.add(cuurTopInfo.getAccount());
+
+			PlayerTopInfo playerTopInfo = new PlayerTopInfo();
+			playerTopInfo.setAccountName(cuurTopInfo.getAccountName());
+			playerTopInfo.setAccount(cuurTopInfo.getAccount());
+			playerTopInfo.setTotalMoney(cuurTopInfo.getTotalMoney());
+			playerTopInfo.setCapital(cuurTopInfo.getCapital()); //默认先设置本金为当前本金，（因为初始化第一个月就是用本金）
+
+			//***********************************计算收益率
+			//找到上个月最后一条记录做为本金
+			for (TbPlayerMoneyVo preTopInfo : preTopInfos) {
+				if (preTopInfo.getAccount().equals(cuurTopInfo.getAccount())) {
+					//以上个月最后一天的资金做为本金计算收益
+					playerTopInfo.setCapital(preTopInfo.getTotalMoney());
+					break;
+				}
+			}
+            //计算收益率
+            double totleDou = Double.parseDouble(playerTopInfo.getTotalMoney());
+            double capital = Double.parseDouble(playerTopInfo.getCapital());
+            BigDecimal bg = new BigDecimal((totleDou - capital) * 100/capital);
+            double rate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+            playerTopInfo.setYieldRate(rate + "");
+
+            bg = new BigDecimal(totleDou - capital);
+            playerTopInfo.setYield(bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() + "");
+            //持仓比
+
+            //计算剩余金额
+            double buyMoney = totleDou - Double.parseDouble(String.valueOf(cuurTopInfo.getBalanceMoney()));
+            bg = new BigDecimal(buyMoney * 100/totleDou);
+            rate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+            playerTopInfo.setBuyForALLRate(rate + "");
+
+			palyerTopMonthInfos.add(playerTopInfo);
+		}
+        Collections.sort(palyerTopMonthInfos,Collections.reverseOrder());
+		GainsInfoCache.putTopForMonth(palyerTopMonthInfos);
     }
 }

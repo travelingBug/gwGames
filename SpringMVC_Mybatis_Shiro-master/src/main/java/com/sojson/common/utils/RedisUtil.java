@@ -97,7 +97,7 @@ public class RedisUtil {
         String value = "";
         try {
             value = jedis.get(key);
-        }catch (JedisDataException e){
+        }catch (Exception e){
             return "";
         }
         return value;

@@ -7,7 +7,7 @@ package com.sojson.common.model.dto;
  * @Date:2018-9-23 15:01
  * @VERSION: 1.0
  */
-public class PlayerTopInfo implements Comparable<PlayerTopInfo> {
+public class PlayerTopInfo implements Comparable<PlayerTopInfo>,Cloneable {
 
     /**
      * 选手昵称
@@ -28,6 +28,11 @@ public class PlayerTopInfo implements Comparable<PlayerTopInfo> {
      * 本金
      */
     private String capital;
+
+    /**
+     * 收益
+     */
+    private String yield;
 
     /**
      * 收益率：（总金额-本金）/本金
@@ -102,6 +107,14 @@ public class PlayerTopInfo implements Comparable<PlayerTopInfo> {
         this.account = account;
     }
 
+    public String getYield() {
+        return yield;
+    }
+
+    public void setYield(String yield) {
+        this.yield = yield;
+    }
+
     @Override
     public int compareTo(PlayerTopInfo o) {
         if (Double.parseDouble(this.yieldRate) >= Double.parseDouble(o.yieldRate)) {
@@ -109,4 +122,18 @@ public class PlayerTopInfo implements Comparable<PlayerTopInfo> {
         }
         return -1;
     }
+
+    @Override
+    public PlayerTopInfo clone() {
+        PlayerTopInfo playerTopInfo = null;
+        try {
+            playerTopInfo = (PlayerTopInfo) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return playerTopInfo;
+    }
+
+
+
 }

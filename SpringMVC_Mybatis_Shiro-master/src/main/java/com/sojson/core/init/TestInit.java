@@ -5,6 +5,7 @@ package com.sojson.core.init;/**
  **/
 
 import com.sojson.inf.gainsinfo.service.InfGainsInfoService;
+import com.sojson.playermoney.service.PlayerMoneyService;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
@@ -20,18 +21,18 @@ import java.util.Calendar;
 public class TestInit {
 
     @Resource
-    InfGainsInfoService infGainsInfoService;
+    PlayerMoneyService playerMoneyService;
 
 
     public void init(){
-//        infGainsInfoService.getTopResultForAll();
-//
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
-//        Calendar cal=Calendar.getInstance();
-//        cal.add(Calendar.MONTH,2);
-//        String currDate = formatter.format(cal.getTime());
-//        cal.add(Calendar.MONTH,-1);
-//        String preDate = formatter.format(cal.getTime());
-//        infGainsInfoService.findTopByMonth(currDate,preDate);
+        playerMoneyService.getTopResultForAll();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
+        Calendar cal=Calendar.getInstance();
+        cal.add(Calendar.MONTH,-1);
+        String currDate = formatter.format(cal.getTime());
+        cal.add(Calendar.MONTH,-1);
+        String preDate = formatter.format(cal.getTime());
+        playerMoneyService.findTopByMonth(currDate,preDate);
     }
 }

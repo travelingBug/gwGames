@@ -7,11 +7,10 @@ import java.util.List;
 
 public interface InfGainsInfoService {
 
-    public void getTopResultForAll();
-
-    public void findTopByMonth(String currDate,String preDate);
 
     public List<PlayerTopInfo> getTopAll(int size);
 
     public List<PlayerTopInfo> getTopMonth(int size);
+
+    public List<PlayerTopInfo> getTopAllByMoney(int size);
 }

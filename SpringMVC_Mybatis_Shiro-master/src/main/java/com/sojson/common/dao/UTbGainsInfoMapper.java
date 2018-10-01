@@ -40,15 +40,6 @@ public interface UTbGainsInfoMapper {
      */
     int deleteById(Long id);
 
-    /**
-     * 查询总榜的内容
-     */
-    List<TbGainsInfoVo>  findTopForAll();
-
-    /**
-     * 查询月榜
-     */
-    List<TbGainsInfoVo>  findTopByMonth(Map<String,Object> param);
 
     /**
      * 根据身份证查询选手数据

@@ -93,45 +93,14 @@
             <div class="floatL table-area">
                 <h3>收益排行</h3>
                 <table class="table1">
-                    <tbody>
+                    <tbody id="topAllByMoney">
                     <tr>
                         <th>排名</th>
                         <th>昵称</th>
                         <th>总资产</th>
-                        <th>收益率</th>
+                        <th>总收益</th>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>a</td>
-                        <td>99999.9</td>
-                        <td>99</td>
-                    </tr>
-                    <tr class="bg">
-                        <td>2</td>
-                        <td>a</td>
-                        <td>99999.9</td>
-                        <td>99</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>a</td>
-                        <td>99999.9</td>
-                        <td>99</td>
-                    </tr>
-                    <tr class="bg">
-                        <td>4</td>
-                        <td>a</td>
-                        <td>99999.9</td>
-                        <td>99</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>a</td>
-                        <td>99999.9</td>
-                        <td>99</td>
-                    </tr>
-                    <tr class="bg">
-                    </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -293,6 +262,48 @@
 </html>
 <script>
     $(function() {
+        $.ajax({
+            type: "POST",
+            url: "interface/gainsInfo/getTopAllByMoney.shtml",
+            data: {size: 5},
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (data) {
+                if (data != null && data.length > 0) {
+                    for (var i = 0 ; i < data.length;i++ ) {
+                        var trClass = '';
+                        if (data.length % 2 == 1) {
+                            trClass = 'bg';
+                        }
+                        var showTop= '<td>'+(i+1)+'</td>';
+                        if (i == 0) {
+                            var showTop= '<td><em class="icon-one">'+(i+1)+'</em></td>';
+                        }
+                        if (i == 1) {
+                            var showTop= '<td><em class="icon-two">'+(i+1)+'</em></td>';
+                        }
+                        if (i == 2) {
+                            var showTop= '<td><em class="icon-three">'+(i+1)+'</em></td>';
+                        }
+                        var html = '<tr class="'+trClass+'">';
+                        html += showTop;
+                        html += '<td>'+data[i].accountName+'</td>';
+
+                        html += '<td>'+data[i].totalMoney+'</td>';
+                        html += '<td>'+data[i].yield+'</td>';
+                        html += '</tr>';
+                        $('#topAllByMoney').append(html);
+                    }
+
+                }
+            },
+            error: function (data) {
+                window.location.href = "/static/vips/register.jsp";
+            }
+        });
+
         $.ajax({
             type: "POST",
             url: "interface/gainsInfo/getTopAll.shtml",

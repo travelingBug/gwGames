@@ -30,7 +30,7 @@ public class InterfaceFilter extends AccessControlFilter {
 		if (StringUtils.hasText(token)) {
 			String content = EncryptUtils.aesDecrypt(token, IConstant.key);
 			//判断接收的参数格式是否正确
-			if (StringUtils.hasText(content) && content.split(",").length == 2) {
+ 			if (StringUtils.hasText(content) && content.split(",").length == 2) {
 				String[] contentArr = content.split(",");
 //				HttpSession session = req.getSession();
 				Object value = RedisUtil.get(contentArr[0]);

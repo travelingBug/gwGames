@@ -40,5 +40,13 @@ public class InfGainsInfoController extends BaseController {
 		return infGainsInfoService.getTopMonth(size);
 	}
 
+	@RequestMapping(value="getTopAllByMoney",method=RequestMethod.POST)
+	@ResponseBody
+	public List<PlayerTopInfo> getTopAllByMoney(int size){
+		return infGainsInfoService.getTopAllByMoney(size);
+	}
+
+
+
 
 }
