@@ -45,4 +45,9 @@ public interface UTbGainsInfoMapper {
      * 根据身份证查询选手数据
      */
     List<TbGainsInfoVo> getGainsInfoByIdCards(List<String> idCards);
+
+    /**
+     * 根据身份证查询选手数据
+     */
+    List<TbGainsInfoVo> findAll(Object param);
 }

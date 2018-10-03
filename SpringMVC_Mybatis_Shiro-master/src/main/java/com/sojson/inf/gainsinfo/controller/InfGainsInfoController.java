@@ -5,6 +5,9 @@ import com.sojson.common.controller.BaseController;
 import com.sojson.common.model.TbPlayer;
 import com.sojson.common.model.dto.PlayerTopInfo;
 import com.sojson.common.model.dto.TbPlayerDto;
+import com.sojson.common.model.vo.TbGainsInfoVo;
+import com.sojson.common.service.CommonService;
+import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.inf.gainsinfo.service.InfGainsInfoService;
 import com.sojson.inf.player.service.TbPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -26,6 +32,9 @@ public class InfGainsInfoController extends BaseController {
 
 	@Autowired
 	InfGainsInfoService infGainsInfoService;
+
+	@Resource
+	CommonService commonService;
 
 	@RequestMapping(value="getTopAll",method=RequestMethod.POST)
 	@ResponseBody
@@ -45,6 +54,47 @@ public class InfGainsInfoController extends BaseController {
 	public List<PlayerTopInfo> getTopAllByMoney(int size){
 		return infGainsInfoService.getTopAllByMoney(size);
 	}
+
+
+	@RequestMapping(value="getStrategy",method=RequestMethod.POST)
+	@ResponseBody
+	public ResultMessage getStrategy(HttpServletRequest request,String account) throws Exception {
+		ResultMessage msg = new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
+			String endTime = commonService.getTimeByToken(request);
+			if (endTime == null) {
+				msg = new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"您还未购买观赛券，请购买后再进行观赛!");
+			} else {
+				Collection<TbGainsInfoVo> datas = infGainsInfoService.getStrategy(account,endTime);
+				msg.setData(datas);
+			}
+		return msg;
+	}
+
+	@RequestMapping(value="getTransactionInfo",method=RequestMethod.POST)
+	@ResponseBody
+	public ResultMessage getTransactionInfo(HttpServletRequest request,String account, Integer pageNo) throws Exception{
+		ResultMessage msg = new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
+			String endTime = commonService.getTimeByToken(request);
+			if (endTime == null) {
+				msg = new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"您还未购买观赛券，请购买后再进行观赛!");
+			} else {
+				Pagination<TbGainsInfoVo> datas = infGainsInfoService.getTransactionInfo(account,endTime, pageNo, pageSize);
+				msg.setData(datas);
+			}
+		return msg;
+	}
+
+	@RequestMapping(value="validLevel",method=RequestMethod.POST)
+	@ResponseBody
+	public ResultMessage validLevel(HttpServletRequest request) throws Exception{
+		ResultMessage msg = new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
+			String endTime = commonService.getTimeByToken(request);
+			if (endTime == null) {
+				msg = new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"您还未购买观赛券，请购买后再进行观赛!");
+			}
+		return msg;
+	}
+
 
 
 

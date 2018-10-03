@@ -358,12 +358,12 @@
             dataType: "json",
             beforeSend: function(request) {
                 request.setRequestHeader("Authorization", getAuthorization());
-                window.location.href="/static/home.jsp";
+
             },
             success: function(data) {
                 if (data.level == 1) {
                     sessionStorage.setItem("sessionId", data.data);
-
+                    window.location.href="/static/home.jsp";
                 } else {
                     layer.alert(data.messageText, {
                         icon: 0,

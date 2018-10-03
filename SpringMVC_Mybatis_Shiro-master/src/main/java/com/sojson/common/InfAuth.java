@@ -14,6 +14,8 @@ public class InfAuth {
 
     public static List<String> NEED_LOGIN = new ArrayList<String>();
     static{
-//        NEED_LOGIN.add("interface/gainsInfo/getTopAll.shtml");
+        NEED_LOGIN.add("interface/gainsInfo/getStrategy.shtml");
+        NEED_LOGIN.add("interface/gainsInfo/getTransactionInfo.shtml");
+        NEED_LOGIN.add("interface/gainsInfo/validLevel.shtml");
     }
 }

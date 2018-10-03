@@ -335,7 +335,7 @@
                         html += '<td class="red">'+data[i].yieldRate+'</td>';
                         html += '<td>'+data[i].buyForALLRate+'</td>';
                         html += '<td>'+data[i].totalMoney+'</td>';
-                        html += '<td><a class="red">观赛</a></td>';
+                        html += '<td><a class="red" href="/static/gains/strategy.jsp?account='+$.trim(data[i].account)+'">观赛</a></td>';
                         html += '</tr>';
                         $('#topAll').append(html);
                     }
@@ -378,7 +378,7 @@
                         html += '<td class="red">'+data[i].yieldRate+'</td>';
                         html += '<td>'+data[i].buyForALLRate+'</td>';
                         html += '<td>'+data[i].totalMoney+'</td>';
-                        html += '<td><a class="red">观赛</a></td>';
+                        html += '<td><a class="red"  href="/static/gains/strategy.jsp?account='+$.trim(data[i].account)+'">观赛</a></td>';
                         html += '</tr>';
                         $('#topMonth').append(html);
                     }

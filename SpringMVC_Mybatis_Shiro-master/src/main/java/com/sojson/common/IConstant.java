@@ -25,6 +25,30 @@ public interface IConstant {
     }
 
     /**
+     * 交易标志
+     * 0:证券买入
+     * 1:证券卖出
+     * 2:证券买入
+     * 3:证券卖出
+     */
+    public enum BUSINESS_FLAG {
+        /** 证券买入 */
+        BOND_BUY((byte)0),
+        /** 证券卖出 */
+        BOND_SELL((byte)1),
+        /** 证券买入 */
+        FUND_BUY((byte)3),
+        /** 证券卖出 */
+        FUND_SELL((byte)4);
+
+        public byte v;
+        private BUSINESS_FLAG(byte v) {
+            this.v = v;
+        }
+    }
+
+
+    /**
      * 审核状态
      * 0:未审核 1：审核通过 2：审核不通过
      */

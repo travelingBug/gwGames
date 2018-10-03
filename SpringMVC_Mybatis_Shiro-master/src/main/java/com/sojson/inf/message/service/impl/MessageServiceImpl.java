@@ -22,8 +22,8 @@ public class MessageServiceImpl implements MessageService {
 	public ResultMessage send(String telPhone){
 		ResultMessage msg = vaildCanSend(telPhone);
 		if (msg.getLevel() == ResultMessage.MSG_LEVEL.SUCC.v) {
-			String result = SendMsgUtil.sendMsg(telPhone);
-//			String result = SendMsgUtil.sendMsgTest(telPhone);
+//			String result = SendMsgUtil.sendMsg(telPhone);
+			String result = SendMsgUtil.sendMsgTest(telPhone);
 			if (Integer.parseInt(result) > 0) {
 				msg =  new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "短信发送成功");
 			} else {
@@ -58,8 +58,8 @@ public class MessageServiceImpl implements MessageService {
 	public ResultMessage sendValidCode(String telPhone){
 		ResultMessage msg = vaildCanSend(telPhone);
 		if (msg.getLevel() == ResultMessage.MSG_LEVEL.SUCC.v) {
-			String result = SendMsgUtil.sendValidCode(telPhone);
-//			String result = SendMsgUtil.sendMsgTest(telPhone);
+//			String result = SendMsgUtil.sendValidCode(telPhone);
+			String result = SendMsgUtil.sendMsgTest(telPhone);
 			if (Integer.parseInt(result) > 0) {
 				msg =  new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "短信发送成功");
 			} else {

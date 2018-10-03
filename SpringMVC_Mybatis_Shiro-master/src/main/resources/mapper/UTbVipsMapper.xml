@@ -94,4 +94,8 @@
       AND d.PASSWORD = #{password}
     </if>
   </select>
+
+  <select id="getLevelByPhone" parameterType="String" resultType="byte" >
+    select d.level from  tb_vip d where d.phone = #{phone}
+  </select>
 </mapper>

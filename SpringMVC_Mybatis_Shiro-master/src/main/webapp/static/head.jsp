@@ -110,6 +110,35 @@
             if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     }
+
+    function getBusinessFlagStr(flag){
+        if (flag == 0) {
+            return "证券买入";
+        }else if (flag == 1) {
+            return "证券卖出";
+        }else if (flag == 2) {
+            return "基金申购";
+        }else if (flag == 3) {
+            return "基金赎回";
+        }
+        return "";
+    }
+
+    function errorMsg(msg){
+        layer.alert(msg, {
+            icon: 2,
+            skin: 'layui-layer-lan'
+        });
+    }
+
+
+    function warnMsg(msg){
+        layer.alert(msg, {
+            icon: 0,
+            skin: 'layui-layer-lan'
+        });
+    }
+
 //    jQuery.extend({
 //        "Encrypt": function (word) {
 //            var key = CryptoJS.enc.Utf8.parse("tJjwxDz4WF0Sf9JT");

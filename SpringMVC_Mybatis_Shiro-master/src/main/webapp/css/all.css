@@ -126,7 +126,7 @@ select option {
 	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/bm_bg.png',sizingMethod='scale');
 }
 .pageWrapper2 {
-	min-height: 500px;
+	min-height: 1500px;
 	width: 100%;
 	position:relative;
 	min-width:1000px;
@@ -241,7 +241,12 @@ select option {
 .page-nav li a, .page-nav li span {
 	padding: 10px;
 }
-
+.page-nav li a {
+	color: #888888;
+}
+.page-nav li a:hover {
+	color: #e33434;
+}
 
 /* 8、pop modal
  * -------------------------------------------------- */
@@ -452,6 +457,7 @@ select option {
 .width-120 { width: 120px!important;}
 .width-105 { width: 105px!important;}
 .width-90 { width: 90px!important;}
+select.width-240 { width: 260px!important;}
 
 /* 11、margin
  * -------------------------------------------------- */
@@ -561,7 +567,7 @@ select option {
 /* 17、pager
  * -------------------------------------------------- */
 .pager {
-	margin: 0;
+	margin:20px 0 0 0;
 	overflow:hidden;
 }
 .pager .page-numb {
@@ -606,7 +612,7 @@ select option {
 	transition:all 0.3s;
 }
 .pager ul li span {
-	color:#2aabf2;
+	color:#ec4b2f;
 	font-weight:bold;
 }
 .pager ul li .icon i {
@@ -832,15 +838,17 @@ select option {
 	background:#cd3434;
 	color:#fff;
 }
-#registerForm .disable{
-	background-color: #7b8996;
+.btn-zf {
+	background: #e33434;
+	font-size: 14px;
+	padding: 15px 50px;
+	margin: 10px 0 20px 80px;
 	color: #fff;
-	width:150px;
-	height:44px;
-	line-height:44px;
-	text-align:center;
-	display:block;
-	font-size:16px;
+	float: left;
+}
+.btn-zf:hover {
+	background: #d82a2a;
+	color: #fff;
 }
 
 /* 24、tabs
@@ -888,6 +896,9 @@ select option {
 .table1 tr td.red, .table1 tr td .red {
 	color:#ec4b2f;
 }
+.table1 tr td.yellow, .table1 tr td .yellow {
+	color: #c8a470;
+}
 .table1 tr td .red:hover {
 	color: #f56329;
 }
@@ -918,10 +929,12 @@ select option {
 	color:#f90606;
 }
 
+
 /* 26、box
  * -------------------------------------------------- */
 .top-box {
 	overflow: hidden;
+	background: #fff;
 }
 .top-box .content {
 	width:1000px;
@@ -1095,6 +1108,19 @@ select option {
 	background:#eeeeee;
 	display: block;
 }
+.style1 .main-box {
+	padding-bottom: 0;
+	border: none;
+}
+.style1 .mid-banner-1 {
+	margin-top: 40px;
+}
+.style1 .contact-box .content {
+	margin: 40px auto;
+}
+.bg-white {
+	box-shadow: 0 2px 5px #eee;
+}
 .ld-box {
 	width:28%;
 	height: 300px;
@@ -1189,7 +1215,9 @@ select option {
 	padding: 10px;
 }
 .head-cont-box {
-	float: left;margin-left: 20px;
+	float: left;
+	margin-left: 20px;
+	position: relative;
 }
 .head-cont-box h3 {
 	font-size: 22px;
@@ -1212,9 +1240,30 @@ select option {
 	border-radius: 40px;
 	margin: 0 0 0 10px;
 }
+.head-cont-box h3 .border-style1 {
+	width: 70px;
+	font-size: 12px;
+	height: 26px;
+	line-height: 26px;
+	float: left;
+}
+.head-cont-box h3 .border-style1:hover {
+	background: #cd3434;
+}
 .head-cont-box p {
 	padding: 20px 0 10px 0;
 	color: #888;
+}
+.head-cont-box p b {
+	color: #e33434;
+	font-weight: normal;
+	margin-right: 3px;
+}
+.head-cont-box .red {
+	padding-top: 0;
+	font-size: 20px;
+	color: #e33434;
+	font-weight: bold;
 }
 .head-cont-box .day {
 	font-size: 16px;
@@ -1225,6 +1274,49 @@ select option {
 	font-size: 22px;
 	color: #e33434;
 	margin-left: 10px;
+}
+.head-cont-box .text-area {
+	overflow: hidden;
+	padding: 20px 0 0 0;
+}
+.head-cont-box .text-area .L, .head-cont-box .text-area .R {
+	float: left;
+	padding: 0 20px
+}
+.head-cont-box .text-area .L {
+	border-right: 1px solid #dadada;
+	padding-left: 0!important;
+}
+.head-cont-box .text-area .title {
+	border-bottom: none;
+	font-size: 14px;
+}
+.head-cont-box .text-area p {
+	padding: 0;
+	font-size: 20px;
+	line-height: 26px;
+	color: #323232;
+}
+.head-cont-box .btns {
+	position: absolute;
+	right: 40px;
+	top: 80px;
+}
+.head-cont-box .btns .btn {
+	padding: 8px 20px;
+	border: 1px solid #e33434;
+	display: block;
+	float: left;
+	margin-left: 20px;
+	color: #e33434;
+}
+.head-cont-box .btns .btn:hover {
+	background: #fefafa;
+}
+.head-cont-box .btns .btn.disable, .head-cont-box .btns .btn.disable:hover {
+	color: #bdbdbd;
+	border: 1px solid #bdbdbd;
+	background: #fff;
 }
 .select-box {
 	overflow: hidden;
@@ -1297,18 +1389,18 @@ select option {
 .select-box .on p {
 	color: #323232;
 }
-.select-box .one {
-	margin: 20px 100px;
+.select-box .title-style {
 	float: left;
+	line-height: 80px;
+	margin-right: 20px;
 }
-.select-box .one .select-cont {
+.select-box .select-cont {
 	overflow: hidden;
 	margin: 20px 0;
-	height: 40px;
 	line-height: 40px;
 	padding-bottom: 10px;
 }
-.select-box .one .select-cont .select-btn {
+.select-box .select-cont .select-btn {
 	height: 40px;
 	width: 100px;
 	line-height: 40px;
@@ -1321,10 +1413,10 @@ select option {
 	position: relative;
 	cursor: pointer;
 }
-.select-box .one .select-cont .select-btn:hover {
+.select-box .select-cont .select-btn:hover {
 	opacity: 0.85;
 }
-.select-box .one .select-cont .select-btn .icon-on {
+.select-box .select-cont .select-btn .icon-on {
 	background: url(../images/icon_select_on.png) no-repeat;
 	width: 30px;
 	height: 30px;
@@ -1332,10 +1424,83 @@ select option {
 	right: 0;
 	top:0;
 }
-.select-box .one .select-cont .on {
+.select-box .select-cont .on {
 	border:2px solid #e33434;
 	color: #e33434;
 }
+.select-box .select-cont .one {
+	padding: 10px;
+	overflow: hidden;
+	border: 1px solid #f7f7f7;
+	margin-bottom: 20px;
+}
+.select-box .select-cont .one:hover {
+	opacity: 0.85;
+	cursor: pointer;
+}
+.select-box .select-cont .one p {
+	float: left;
+	padding: 10px;
+	line-height: 20px;
+	font-size: 16px;
+	width: 160px;
+}
+.select-box .select-cont .one.on {
+	border: 2px solid #2f85df;
+}
+.select-box .select-cont .one .radio-style {
+	width: 50px;
+}
+.select-box .select-cont .one input {
+	height: auto;
+}
+.select-box .select-cont .one p.tit {
+	font-size: 20px;
+	width: 250px;
+	text-align:left;
+}
+.select-box .select-cont .one p b {
+	font-size: 18px;
+	color: #e33434;
+	margin: 0 5px;
+}
+.select-box .select-cont .add-btn {
+	border: 1px dashed #b7b7b7;
+	color: #3a9afe;
+	font-size: 14px;
+	padding: 15px 20px;
+}
+.select-box .select-cont .input-numb {
+	overflow: hidden;
+}
+.select-box .select-cont .input-numb input {
+	float: left;
+	border: 1px solid #b7b7b7;
+	padding: 0;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	margin: 5px;
+}
+.select-box .select-cont .add-btn:hover {
+	color: #1f7ee1;
+}
+.select-box .select-cont .tip {
+	color: #aaaaaa;
+}
+.cont-box .content {
+	width: 1000px;
+	margin: 20px auto;
+	overflow: hidden;
+}
+.cont-box .content .title {
+	color: #323232;
+	margin: 20px;
+	border-bottom:1px solid #ebebeb;
+	padding-bottom: 10px;
+}
+
+
 /* 27、list
  * -------------------------------------------------- */
 .list1 li {
@@ -1419,6 +1584,37 @@ select option {
 	line-height: 24px;
 	text-align: center;
 	margin-right: 10px;
+}
+.list4 .item {
+	margin: 10px 20px;
+	overflow: hidden;
+	padding: 15px 0;
+	border-bottom: 1px solid #eee;
+}
+.list4 .item img {
+	float: left;
+	width: 170px;
+	height: 100px;
+}
+.list4 .item .text {
+	width: 760px;
+	margin-left: 20px;
+	overflow: hidden;
+	float: left;
+}
+.list4 .item .text h3 {
+	color: #323232;
+	font-size: 16px;
+	line-height: 38px;
+}
+.list4 .item .text p {
+	color: #777777;
+}
+.list4 .item .text p a {
+	color: #e33434;
+}
+.list4 .item .text p a:hover {
+	color: #b91e1e;
 }
 
 
@@ -1597,6 +1793,82 @@ select option {
 }
 .bg-white {
 	background: #fff;
+}
+.border-style1 {
+	border-radius: 0!important;
+}
+.text-div .icon {
+	position: absolute;
+	right: 15px;
+	top: 15px;
+	width: 28px;
+	height: 28px;
+}
+.text-div .icon:hover {
+	opacity: 0.8;
+}
+.text-div .content .one-area .title {
+	width: 70px;
+	height: 20px;
+	background: #f6e8d1;
+	display: block;
+	line-height: 20px;
+	font-size:16px;
+	color: #323232;
+	font-weight: bold;
+	padding-left: 5px;
+	font-family:"微软雅黑";
+	padding-bottom: 0;
+}
+.text-div .content .one-area {
+	margin: 30px 0;
+	font-family:"微软雅黑";
+	font-size:14px;
+}
+.text-div .content .one-area p {
+	margin: 20px 0;
+	font-size: 14px;
+	line-height: 26px;
+}
+.main-box .text-div .content {
+	margin-top: 0;
+}
+.detail .content {
+	padding:40px;
+	width: 920px;
+}
+.detail .content .title {
+	font-size: 22px;
+	margin: 0;
+	border: none;	
+	color: #222;
+}
+.detail .content .infor {
+	border-bottom: 1px solid #ebebeb;
+	padding-bottom: 10px;
+	overflow: hidden;
+	color: #aaa;
+}
+.detail .content .detail-cont p {
+	margin: 10px 0;
+}
+.detail .content .detail-cont img {
+	display: block;
+	margin: 20px auto;
+}
+.recharge .float-div {
+	width: 500px;
+	margin-left: -250px;
+	top:5%;
+}
+.recharge .float-div .title {
+	margin: 20px 25px 0 25px;
+	padding-bottom: 15px;
+	font-size: 16px;
+	border-bottom: 1px solid #e0e0e0;
+}
+.recharge .float-div .table2 tr td select {
+	border: 1px solid #ebebeb;
 }
 
 

@@ -12,4 +12,6 @@ public interface UTbVipsMapper {
     void delete(String id);
 
     TbVips findUserByPhone(TbVips entity);
+
+    byte getLevelByPhone(String phone);
 }

@@ -1,0 +1,12 @@
+package com.sojson.common.service;
+
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * @Author: hy
+ * @Description:
+ * @Date:${Time} ${Date}
+ **/
+public interface CommonService {
+    String getTimeByToken(HttpServletRequest request) throws Exception;
+}
