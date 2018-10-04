@@ -49,4 +49,6 @@ public interface UTbPlayerMoneyMapper {
      * 查询月榜
      */
     List<TbPlayerMoneyVo>  findTopByMonth(Map<String,Object> param);
+
+    List<TbPlayerMoneyVo>  findAll(Object param);
 }

@@ -6,6 +6,7 @@ import com.sojson.common.model.TbPlayer;
 import com.sojson.common.model.dto.PlayerTopInfo;
 import com.sojson.common.model.dto.TbPlayerDto;
 import com.sojson.common.model.vo.TbGainsInfoVo;
+import com.sojson.common.model.vo.TbPlayerMoneyVo;
 import com.sojson.common.service.CommonService;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.inf.gainsinfo.service.InfGainsInfoService;
@@ -96,7 +97,19 @@ public class InfGainsInfoController extends BaseController {
 	}
 
 
-
+	@RequestMapping(value="getPlayerMoney4Account",method=RequestMethod.POST)
+	@ResponseBody
+	public ResultMessage getPlayerMoney4Account(HttpServletRequest request,String account) throws Exception{
+		ResultMessage msg = new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
+		String endTime = commonService.getTimeByToken(request);
+		if (endTime == null) {
+			msg = new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"您还未购买观赛券，请购买后再进行观赛!");
+		} else {
+			TbPlayerMoneyVo data = infGainsInfoService.getPlayerMoney4Account(account,endTime);
+			msg.setData(data);
+		}
+		return msg;
+	}
 
 
 }

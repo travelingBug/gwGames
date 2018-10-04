@@ -12,6 +12,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class InterfaceFilter extends AccessControlFilter {
 	@Override
@@ -43,20 +44,24 @@ public class InterfaceFilter extends AccessControlFilter {
 					}
 				}
 				if (flag) { //需要验证登录
-					if (value == null) {
+					if (value == null || "".equals(value.toString())) {
 						return Boolean.FALSE;
 					}
 				}
-				if ((value == null && IConstant.defSessionId.equals(contentArr[0]))
-						|| value != null) {
+//				if ((value == null && IConstant.defSessionId.equals(contentArr[0]))
+//						|| (value != null && !"".equals(value.toString()))) {
 					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					//更新最后操作时间
+//					if (value != null && !"".equals(value.toString())) {
+//						RedisUtil.save(contentArr[0],RedisUtil.get(contentArr[0]).split(",")[0] + "," + new Date().getTime());
+//					}
 					try{
 						formatter.parse(contentArr[1]);
 						return Boolean.TRUE;
 					}catch(Exception e){
 						return Boolean.FALSE;
 					}
-				}
+//				}
 
 			}
 		}

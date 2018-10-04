@@ -11,7 +11,7 @@
 <base href="<%=basePath%>">
 
 <link href="<%=basePath%>/css/all.css" rel="stylesheet" type="text/css" />
-<link href="<%=basePath%>/js/common/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+<%--<link href="<%=basePath%>/js/common/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>--%>
 <script baseUrl="<%=basePath%>" src="<%=basePath%>/js/common/jquery/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="<%=basePath%>/js/encrypt/aes.js"></script>
 <script type="text/javascript" src="<%=basePath%>/js/encrypt/mode-ecb.js"></script>
@@ -20,7 +20,11 @@
 <%--<script type="text/javascript" src="<%=basePath%>/js/utils/extend.js"></script>--%>
 <script>
     sessionStorage.setItem("key", '<%=key %>');
-    sessionStorage.setItem("defSessionId", '<%=defSessionId %>');
+    putDefToken();
+
+    function putDefToken(){
+        sessionStorage.setItem("defSessionId", '<%=defSessionId %>');
+    }
     function encrypt(word) {
                 var key = CryptoJS.enc.Utf8.parse(sessionStorage.getItem("key"));
                 var srcs = CryptoJS.enc.Utf8.parse(word);
@@ -82,6 +86,7 @@
             }
 
             function getAuthorization(){
+
                 var sessionId = getSessionId();
                 var date = new Date().Format("yyyy-MM-dd HH:mm:ss");
                 return encrypt(sessionId + "," + date);

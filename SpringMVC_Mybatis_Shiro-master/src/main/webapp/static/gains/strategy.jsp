@@ -69,18 +69,18 @@
                 <img src="images/img_head.png"/>
             </div>
             <div class="head-cont-box">
-                <h3><span>ITS-GUSHEN</span><a class="tag border-style1">关注</a></h3>
+                <h3><span id="accountName"></span><a class="tag border-style1">关注</a></h3>
                 <div class="text-area">
                     <div class="L">
-                        <p class="numb">68803.32</p>
+                        <p class="numb" id="totalMoney"></p>
                         <p class="title">总资产</p>
                     </div>
                     <div class="R">
-                        <p class="numb">55211.32</p>
+                        <p class="numb" id="balanceMoney"></p>
                         <p class="title">资金余额</p>
                     </div>
                 </div>
-                <p>数据日期：2018年09月15日</p>
+                <p id="businessTime"></p>
             </div>
         </div>
         <div class="content bg-white">
@@ -103,20 +103,11 @@
         <div class="content bg-white">
             <div class="tab1">
                 <a class="on">当日交易明细</a>
-                <a>当日交易明细</a>
             </div>
             <div class="table-area1">
                 <table class="table1" id="transactionInfoTable">
                     <tbody id="transactionInfo">
-                    <tr>
-                        <th>交易时间</th>
-                        <th>证券代码</th>
-                        <th>证券简称</th>
-                        <th>成交均价（元）</th>
-                        <th>成交量</th>
-                        <th>成交金额（元）</th>
-                        <th>业务名称</th>
-                    </tr>
+
 
                     </tbody>
                 </table>
@@ -157,8 +148,9 @@
 </div>
 </body>
 <script>
+    var account = '${param.account}';
     $(function() {
-        var account = '${param.account}';
+
         $.ajax({
             type: "POST",
             url: "interface/gainsInfo/validLevel.shtml",
@@ -169,6 +161,33 @@
             },
             success: function (data) {
                if(data.level ==  1){
+
+                   //获取用户信息
+                   $.ajax({
+                       type: "POST",
+                       url: "interface/gainsInfo/getPlayerMoney4Account.shtml",
+                       data: {account:account},
+                       dataType: "json",
+                       beforeSend: function (request) {
+                           request.setRequestHeader("Authorization", getAuthorization());
+                       },
+                       success: function (result) {
+                           if(result.level ==  1){
+                               var accountData = result.data;
+                               $('#accountName').html(accountData.accountName);
+                               $('#balanceMoney').html(accountData.balanceMoney);
+                               $('#totalMoney').html(accountData.totalMoney);
+                               $('#businessTime').html('数据日期：'+accountData.businessTimeStr);
+                           } else {
+                               warnMsg('请购券后进行观赛！');
+                               window.location.href = result.data;
+                           }
+                       },
+                       error: function (result) {
+                           putDefToken();
+                           window.location.href = "/static/vips/register.jsp";
+                       }
+                   });
 
                    //获取策略信息
                    $.ajax({
@@ -196,52 +215,11 @@
                            }
                        },
                        error: function (result) {
+                           putDefToken();
                            window.location.href = "/static/vips/register.jsp";
                        }
                    });
-                   //获取交易明细
-                   $.ajax({
-                       type: "POST",
-                       url: "interface/gainsInfo/getTransactionInfo.shtml",
-                       data: {account:account},
-                       dataType: "json",
-                       beforeSend: function (request) {
-                           request.setRequestHeader("Authorization", getAuthorization());
-                       },
-                       success: function (result) {
-                           if(result.level ==  1){
-                               var transactionInfoData = result.data.list;
-                               if (transactionInfoData != null && transactionInfoData.length > 0) {
-                                   for (var i = 0 ; i < transactionInfoData.length ; i++) {
-                                       var bg = "";
-                                       if (i%2 == 1) {
-                                           bg = "class='bg'";
-                                       }
-                                       var transactionInfoHtml = '<tr ' + bg + '><td>';
-                                       transactionInfoHtml += transactionInfoData[i].businessTimeStr +'</td>';
-                                       transactionInfoHtml += '<td class="yellow">'+transactionInfoData[i].sharesCode +'</td>';
-                                       transactionInfoHtml += '<td class="yellow">'+transactionInfoData[i].sharesName +'</td>';
-                                       transactionInfoHtml += '<td >'+transactionInfoData[i].price +'</td>';
-                                       transactionInfoHtml += '<td >'+transactionInfoData[i].volume +'</td>';
-                                       transactionInfoHtml += '<td >'+transactionInfoData[i].amount +'</td>';
-                                       transactionInfoHtml += '<td>'+ getBusinessFlagStr(transactionInfoData[i].businessFlag) +'</td></tr>';
-
-                                       $('#transactionInfo').append(transactionInfoHtml);
-
-                                   }
-                                 $('#transactionInfoTable').after(result.data.portalPageHtml);
-                               } else {
-                                   $('#transactionInfo').append('<tr><td  colspan="7">暂无交易数据</td></tr>');
-                               }
-                           } else {
-                               warnMsg('请购券后进行观赛！');
-                               window.location.href = result.data;
-                           }
-                       },
-                       error: function (result) {
-                           window.location.href = "/static/vips/register.jsp";
-                       }
-                   });
+                   goPageByAjax(1);
 
 
 
@@ -255,6 +233,7 @@
             error: function (data) {
                 warnMsg('请登录后再观赛！');
                 setTimeout(function(){
+                    putDefToken();
                     window.location.href = "/static/vips/register.jsp";
                 }, 1000);
 
@@ -262,5 +241,55 @@
         });
 
     });
+    
+    function goPageByAjax(pageNo) {
+        //获取交易明细
+        $.ajax({
+            type: "POST",
+            url: "interface/gainsInfo/getTransactionInfo.shtml",
+            data: {account:account,pageNo:pageNo},
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (result) {
+                if(result.level ==  1){
+                    var transactionInfoData = result.data.list;
+                    $('#transactionInfo').html('');
+                    $('.pager').remove();
+                    $('#transactionInfo').append('<tr><th>交易时间</th><th>证券代码</th><th>证券简称</th><th>成交均价（元）</th><th>成交量</th><th>成交金额（元）</th><th>业务名称</th></tr>');
+                    if (transactionInfoData != null && transactionInfoData.length > 0) {
+                        for (var i = 0 ; i < transactionInfoData.length ; i++) {
+                            var bg = "";
+                            if (i%2 == 1) {
+                                bg = "class='bg'";
+                            }
+                            var transactionInfoHtml = '<tr ' + bg + '><td>';
+                            transactionInfoHtml += transactionInfoData[i].businessTimeStr +'</td>';
+                            transactionInfoHtml += '<td class="yellow">'+transactionInfoData[i].sharesCode +'</td>';
+                            transactionInfoHtml += '<td class="yellow">'+transactionInfoData[i].sharesName +'</td>';
+                            transactionInfoHtml += '<td >'+transactionInfoData[i].price +'</td>';
+                            transactionInfoHtml += '<td >'+transactionInfoData[i].volume +'</td>';
+                            transactionInfoHtml += '<td >'+transactionInfoData[i].amount +'</td>';
+                            transactionInfoHtml += '<td>'+ getBusinessFlagStr(transactionInfoData[i].businessFlag) +'</td></tr>';
+
+                            $('#transactionInfo').append(transactionInfoHtml);
+
+                        }
+                        $('#transactionInfoTable').after(result.data.portalPageHtml);
+                    } else {
+                        $('#transactionInfo').append('<tr><td  colspan="7">暂无交易数据</td></tr>');
+                    }
+                } else {
+                    warnMsg('请购券后进行观赛！');
+                    window.location.href = result.data;
+                }
+            },
+            error: function (result) {
+                putDefToken();
+                window.location.href = "/static/vips/register.jsp";
+            }
+        });
+    }
 </script>
 </html>

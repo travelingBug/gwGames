@@ -46,7 +46,7 @@ public class CommonServiceImpl implements CommonService {
             dar.setTime(date);
 
             int preHour = 0;
-            byte level = uTbVipsMapper.getLevelByPhone(phone.toString());
+            byte level = uTbVipsMapper.getLevelByPhone(phone.toString().split(",")[0]);
             if (level == IConstant.VIP_LEVEL.VIP_A.v) {
                 preHour = -48;
             } else if (level == IConstant.VIP_LEVEL.VIP_B.v) {

@@ -3,8 +3,10 @@ package com.sojson.inf.gainsinfo.service.impl;
 import com.sojson.common.IConstant;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.dao.UTbGainsInfoMapper;
+import com.sojson.common.dao.UTbPlayerMoneyMapper;
 import com.sojson.common.model.dto.PlayerTopInfo;
 import com.sojson.common.model.vo.TbGainsInfoVo;
+import com.sojson.common.model.vo.TbPlayerMoneyVo;
 import com.sojson.core.mybatis.BaseMybatisDao;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.gainsinfo.service.GainsInfoService;
@@ -23,6 +25,9 @@ public class InfGainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> 
 
 	@Resource
 	UTbGainsInfoMapper uTbGainsInfoMapper;
+
+	@Resource
+	UTbPlayerMoneyMapper uTbPlayerMoneyMapper;
 
 	@Resource
 	GainsInfoService gainsInfoService;
@@ -51,27 +56,46 @@ public class InfGainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> 
 		//key是股票代码
 		Map<String, TbGainsInfoVo> strategyMap = new HashMap<String, TbGainsInfoVo>();
 		for (TbGainsInfoVo vo : gainsInfoVos) {
+			int volume = vo.getVolume();
+			if (vo.getBusinessFlag() == IConstant.BUSINESS_FLAG.BOND_SELL.v
+					|| vo.getBusinessFlag() == IConstant.BUSINESS_FLAG.FUND_SELL.v) { //卖出
+				volume = volume * -1;
+			}
+			vo.setVolume(volume);
 			if (strategyMap.get(vo.getSharesCode()) == null) {
 				strategyMap.put(vo.getSharesCode(), vo);
 			} else {
-				if (vo.getBusinessFlag() == IConstant.BUSINESS_FLAG.BOND_BUY.v
-						|| vo.getBusinessFlag() == IConstant.BUSINESS_FLAG.FUND_BUY.v) { //买入
-					strategyMap.get(vo.getSharesCode()).setVolume(strategyMap.get(vo.getSharesCode()).getVolume() + vo.getVolume());
-				} else if (vo.getBusinessFlag() == IConstant.BUSINESS_FLAG.BOND_SELL.v
-						|| vo.getBusinessFlag() == IConstant.BUSINESS_FLAG.FUND_SELL.v) { //卖出
-					strategyMap.get(vo.getSharesCode()).setVolume(strategyMap.get(vo.getSharesCode()).getVolume() - vo.getVolume());
-				}
+				strategyMap.get(vo.getSharesCode()).setVolume(strategyMap.get(vo.getSharesCode()).getVolume() + volume);
+
 			}
 		}
-
-		return strategyMap.values();
+		List<TbGainsInfoVo> showGainsInfos = new ArrayList<TbGainsInfoVo>();
+		for (TbGainsInfoVo vo : strategyMap.values()) {
+			if (vo.getVolume() > 0 ){
+				showGainsInfos.add(vo);
+			}
+		}
+		return showGainsInfos;
 	}
 
+	@Override
 	public Pagination<TbGainsInfoVo> getTransactionInfo(String account, String endTime,Integer pageNo, Integer pageSize){
 		ResultMessage msg = new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("account",account);
 		param.put("endTime",endTime);
 		return gainsInfoService.findByPage(param,pageNo,pageSize);
+	}
+
+	@Override
+	public TbPlayerMoneyVo getPlayerMoney4Account(String account, String endTime){
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("account",account);
+		param.put("endTime",endTime);
+		List<TbPlayerMoneyVo> vos = uTbPlayerMoneyMapper.findAll(param);
+		TbPlayerMoneyVo vo = vos.get(0);
+		vo.setBusinessTimeStr(endTime);
+		return vo;
+
 	}
 }

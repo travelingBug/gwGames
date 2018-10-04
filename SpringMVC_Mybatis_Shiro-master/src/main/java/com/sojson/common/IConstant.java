@@ -102,4 +102,9 @@ public interface IConstant {
 
     //父类ID
     String parentId = "0";
+
+    /**
+     * token开头标示
+     */
+    String TOKEN_PRE="tk:";
 }

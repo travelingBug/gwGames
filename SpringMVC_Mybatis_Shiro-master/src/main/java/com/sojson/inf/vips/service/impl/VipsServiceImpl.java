@@ -104,7 +104,9 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
         if(null == vip){
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "电话号码或密码错误！");
         }
-        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "登录成功！", req.getSession().getId());
+        String userId = IConstant.TOKEN_PRE+req.getSession().getId();
+        RedisUtil.save(userId,vip.getPhone()+","+new Date().getTime());
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "登录成功！", userId);
     }
 
     private ResultMessage beforeUpdateVaild(TbVips entity){
