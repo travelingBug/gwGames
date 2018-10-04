@@ -9,8 +9,11 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
+import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.*;
 
@@ -23,7 +26,7 @@ public class HttpClientUtils {
         try{
             httpClient = new SSLClient();
             httpPost = new HttpPost(url);
-            httpPost.addHeader("Content-Type", "text/html");
+            httpPost.addHeader("Content-Type", "application/x-www-form-urlencoded");
             StringEntity se = new StringEntity(jsonstr);
             se.setContentType("text/html");
             se.setContentEncoding("UTF-8");
@@ -66,15 +69,17 @@ public class HttpClientUtils {
                     String key = item.getKey();
                     String val = item.getValue();
                     if (!(val == "" || val == null)) {
-                        sb.append(key + ":" + val + ":");
+                        sb.append(key + "=" + val + "&");
                     }
                 }
 
             }
             result = sb.toString();
-
+            result += "key=b36b5b4794f15d42";
+            System.out.println(result);
             //进行MD5加密
             result = DigestUtils.md5Hex(result).toUpperCase();
+            System.out.println(result);
         } catch (Exception e) {
             return null;
         }
@@ -88,35 +93,34 @@ public class HttpClientUtils {
         aaa.remove("pr_ver");
         aaa.remove("merchant_id");
 
-        String signPars = getSign(aaa);
-        signPars += "key="+uKey;
-        String sign = signPars.toUpperCase();
+        String sign = getSign(aaa);
 
         return sign;
     }
 
     public static Map<String,String> createData(){
         Map<String,String> map = new HashMap<String,String>();
-        map.put("key", "b36b5b4794f15d42");
-        map.put("method", "anonymousPayOrder");
         map.put("merchant_id", "151010002");
-        map.put("pr_id", "1012");
-        map.put("pr_ver", "QuickPay0.21");
+        map.put("pr_id", "1005");
+        map.put("pr_ver", "agreementPay0.2");
 
+        map.put("http","http");
+        map.put("domain","d-test.xadtsc.cn");
+        map.put("merchantid","151010002");
         map.put("step","p1");
-        map.put("out_trade_no","20180828161936622123456789");
-        map.put("orderBody", "手机");
-        map.put("out_trade_date", "20180929");
-        map.put("mercUserNo", "");
-        map.put("total_fee","0.50");
+        map.put("out_trade_no","201810022247458812");
+        map.put("orderBody", "充值");
+        map.put("out_trade_date", "20181002");
+        map.put("mercUserNo", "a518");
+        map.put("total_fee","0.5");
         map.put("bank_code", "CMB");
         map.put("bank_no","1001");
-        map.put("notify_url","http://www.baidu.com");
+        map.put("notify_url","http://192.168.9.189/zftd/return_url.php");
         map.put("cardNo","6214830122565251");
         map.put("cardNm","互联网");
         map.put("idTyp","00");
-        map.put("idNo","123123123123");
-        map.put("mblNo","15882094486");
+        map.put("idNo","341126197709218366");
+        map.put("mblNo","15011509330");
         map.put("smsCode","123456");
 
         return map;
@@ -139,10 +143,11 @@ public class HttpClientUtils {
 
         String url = "http://d-test.xadtsc.cn/gateway/method.do";
         Map<String,String> map = new HashMap<String,String>();
-        map.put("method", "anonymousPayOrder");
+        map.put("method", "agreementPay");
         map.put("merchant_id", "151010002");
-        map.put("pr_id","1012");
-        map.put("pr_ver","QuickPay0.21");
+        map.put("pr_id","1005");
+        map.put("pr_ver","agreementPay0.2");
+
         map.put("sign",createSign());
         map.put("tranData", createTranData());
 
@@ -158,11 +163,10 @@ public class HttpClientUtils {
             }
 
         }
-        String str = "sb.toString()";
-
+        String str = sb.substring(0,sb.length()-1).toString();
+        System.out.println(str);
 
         String httpOrgCreateTestRtn = HttpClientUtils.doPost(url, str);
-
         System.out.println(httpOrgCreateTestRtn);
 
 
