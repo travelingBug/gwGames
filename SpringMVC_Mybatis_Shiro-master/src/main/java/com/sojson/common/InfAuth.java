@@ -17,5 +17,9 @@ public class InfAuth {
         NEED_LOGIN.add("interface/gainsInfo/getStrategy.shtml");
         NEED_LOGIN.add("interface/gainsInfo/getTransactionInfo.shtml");
         NEED_LOGIN.add("interface/gainsInfo/validLevel.shtml");
+        NEED_LOGIN.add("interface/gainsInfo/addfollow.shtml");
+        NEED_LOGIN.add("interface/gainsInfo/cancelFollow.shtml");
+
+
     }
 }

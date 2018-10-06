@@ -59,4 +59,15 @@ public class CommonServiceImpl implements CommonService {
             dar.add(java.util.Calendar.HOUR_OF_DAY, preHour);
             return dft.format(dar.getTime());
     }
+
+    @Override
+    public String getUserPhone(HttpServletRequest request) throws Exception{
+        String token = request.getHeader("Authorization");
+        String content = EncryptUtils.aesDecrypt(token, IConstant.key);
+        //判断接收的参数格式是否正确
+        String[] contentArr = content.split(",");
+        Object phone = RedisUtil.get(contentArr[0]);
+        return phone.toString().split(",")[0];
+
+    }
 }

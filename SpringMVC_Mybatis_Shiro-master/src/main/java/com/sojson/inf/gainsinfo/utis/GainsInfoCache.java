@@ -80,6 +80,33 @@ public class GainsInfoCache {
         return topForYour;
     }
 
+    /**
+     * 分页查询内存数据
+     * @param pageSize
+     * @param pageNo
+     * @return
+     */
+    public static List<PlayerTopInfo>  getTopAllByPage(int pageSize,int pageNo){
+        List<PlayerTopInfo> topForYour = new ArrayList<PlayerTopInfo>();
+        int end = pageSize * pageNo;
+        int start = (pageNo - 1) * pageSize;
+        synchronized (lock) {
+            int i = 0;
+            for (PlayerTopInfo playerTopInfo : topForAll) {
+                if (topForAll.size() > i && i >= start && i < end) {
+                    topForYour.add(playerTopInfo);
+                }
+
+                i++;
+            }
+        }
+        return topForYour;
+    }
+
+    public static int  getTopAllSize(){
+        return topForAll.size();
+    }
+
     public static void putTopForMonth(List<PlayerTopInfo> topMonth){
         synchronized (lock) {
             topForMonth.clear();
@@ -98,6 +125,27 @@ public class GainsInfoCache {
                     }
                     i++;
                 }
+            }
+        }
+        return topForYour;
+    }
+
+    public static int  getTopMonthSize(){
+        return topForMonth.size();
+    }
+
+    public static List<PlayerTopInfo>  getTopMonthByPage(int pageSize,int pageNo){
+        List<PlayerTopInfo> topForYour = new ArrayList<PlayerTopInfo>();
+        int end = pageSize * pageNo;
+        int start = (pageNo - 1) * pageSize;
+        synchronized (lock) {
+            int i = 0;
+            for (PlayerTopInfo playerTopInfo : topForMonth) {
+                if (topForMonth.size() > i && i >= start && i < end) {
+                    topForYour.add(playerTopInfo);
+                }
+
+                i++;
             }
         }
         return topForYour;

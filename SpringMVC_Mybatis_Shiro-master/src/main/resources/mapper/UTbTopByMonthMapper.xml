@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sojson.common.dao.UTbTopByMonthMapper" >
+  <resultMap id="BaseResultMap" type="com.sojson.common.model.TbTopByMonth" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="MONTH" property="month" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_NAME" property="accountName" jdbcType="VARCHAR" />
+    <result column="ACCOUNT" property="account" jdbcType="VARCHAR" />
+    <result column="TOTAL_MONEY" property="totalMoney" jdbcType="VARCHAR" />
+    <result column="CAPITAL" property="capital" jdbcType="VARCHAR" />
+    <result column="YIELD" property="yield" jdbcType="VARCHAR" />
+    <result column="YIELD_RATE" property="yieldRate" jdbcType="VARCHAR" />
+    <result column="BUY_MONEY" property="buyMoney" jdbcType="VARCHAR" />
+    <result column="BUY_FOR_ALL_RATE" property="buyForALLRate" jdbcType="VARCHAR" />
+    <result column="RANK" property="rank" jdbcType="INTEGER" />
+
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID,MONTH,ACCOUNT_NAME,ACCOUNT,TOTAL_MONEY,CAPITAL,YIELD,YIELD_RATE,BUY_MONEY,BUY_FOR_ALL_RATE,RANK
+  </sql>
+
+  
+  <sql id="where_all">
+  	<where>
+  	  <if test="month != null and month !='' " >
+        and MONTH = #{month}
+      </if>
+    </where>
+  </sql>
+
+  <!-- 普通查询 -->
+  <select id="findAll" resultMap="BaseResultMap" >
+  	 select 
+    <include refid="Base_Column_List" />
+    from tb_top_by_month
+    <include refid="where_all"/>
+    <include refid="order_all"/>
+    <include refid="limit_sql" />
+  </select>
+
+  <select id="findCount" resultMap="BaseResultMap"  >
+    select count(id) from  tb_top_by_month
+    <include refid="where_all" />
+  </select>
+
+  <select id="getMonths"  resultType="String">
+    SELECT MONTH FROM tb_top_by_month GROUP BY MONTH ORDER BY ID DESC
+  </select>
+
+
+  <insert id="insert"  parameterType="com.sojson.common.model.TbTopByMonth" >
+    insert into tb_top_by_month (MONTH,ACCOUNT_NAME,ACCOUNT,TOTAL_MONEY,CAPITAL,YIELD,YIELD_RATE,BUY_MONEY,BUY_FOR_ALL_RATE,RANK
+      )
+    values ( #{month,jdbcType=VARCHAR}, #{accountName ,jdbcType=VARCHAR},#{account,jdbcType=VARCHAR}
+    , #{totalMoney,jdbcType=VARCHAR}, #{capital ,jdbcType=VARCHAR},#{yield,jdbcType=VARCHAR}
+     , #{yieldRate,jdbcType=VARCHAR}, #{buyMoney ,jdbcType=VARCHAR},#{buyForALLRate,jdbcType=VARCHAR},#{rank,jdbcType=INTEGER}
+      )
+  </insert>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into tb_top_by_month (MONTH,ACCOUNT_NAME,ACCOUNT,TOTAL_MONEY,CAPITAL,YIELD,YIELD_RATE,BUY_MONEY,BUY_FOR_ALL_RATE,RANK) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.month,jdbcType=VARCHAR}, #{item.accountName ,jdbcType=VARCHAR},#{item.account,jdbcType=VARCHAR}
+      , #{item.totalMoney,jdbcType=VARCHAR}, #{item.capital ,jdbcType=VARCHAR},#{item.yield,jdbcType=VARCHAR}
+      , #{item.yieldRate,jdbcType=VARCHAR}, #{item.buyMoney ,jdbcType=VARCHAR},#{item.buyForALLRate,jdbcType=VARCHAR},#{item.rank,jdbcType=INTEGER}
+      )
+    </foreach>
+  </insert>
+
+  <sql id="limit_sql">
+    <if test="page_sql != null and page_sql != ''">
+      ${page_sql}
+    </if>
+  </sql>
+
+  <sql id="order_all">
+    ORDER BY MONTH DESC,RANK
+  </sql>
+</mapper>

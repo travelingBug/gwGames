@@ -1240,6 +1240,15 @@ select.width-240 { width: 260px!important;}
 	border-radius: 40px;
 	margin: 0 0 0 10px;
 }
+.head-cont-box h3 .tag_has {
+	text-align: center;
+	width: 50px;
+	height: 30px;
+	border: 1px solid #e33434;
+	font-size: 14px;
+	border-radius: 40px;
+	margin: 0 0 0 10px;
+}
 .head-cont-box h3 .border-style1 {
 	width: 70px;
 	font-size: 12px;

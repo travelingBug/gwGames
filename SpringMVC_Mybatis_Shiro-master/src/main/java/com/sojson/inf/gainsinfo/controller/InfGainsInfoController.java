@@ -3,6 +3,8 @@ package com.sojson.inf.gainsinfo.controller;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
 import com.sojson.common.model.TbPlayer;
+import com.sojson.common.model.TbTopByMonth;
+import com.sojson.common.model.TbVipFollowPlayer;
 import com.sojson.common.model.dto.PlayerTopInfo;
 import com.sojson.common.model.dto.TbPlayerDto;
 import com.sojson.common.model.vo.TbGainsInfoVo;
@@ -43,6 +45,18 @@ public class InfGainsInfoController extends BaseController {
 		return infGainsInfoService.getTopAll(size);
 	}
 
+	@RequestMapping(value="getTopAllByPage",method=RequestMethod.POST)
+	@ResponseBody
+	public Pagination<PlayerTopInfo> getTopAllByPage(Integer pageSize,Integer pageNo){
+		if (pageSize == null || pageSize <= 0) {
+			pageSize = 10;
+		}
+		if (pageNo == null || pageNo <= 0) {
+			pageNo = 1;
+		}
+		return infGainsInfoService.getTopAllByPage(pageSize,pageNo);
+	}
+
 	@RequestMapping(value="getTopMonth",method=RequestMethod.POST)
 	@ResponseBody
 	public List<PlayerTopInfo> getTopMonth(int size){
@@ -50,11 +64,24 @@ public class InfGainsInfoController extends BaseController {
 		return infGainsInfoService.getTopMonth(size);
 	}
 
+	@RequestMapping(value="getTopMonthByPage",method=RequestMethod.POST)
+	@ResponseBody
+	public Pagination<PlayerTopInfo> getTopMonthByPage(Integer pageSize,Integer pageNo){
+		if (pageSize == null || pageSize <= 0) {
+			pageSize = 10;
+		}
+		if (pageNo == null || pageNo <= 0) {
+			pageNo = 1;
+		}
+		return infGainsInfoService.getTopMonthByPage(pageSize,pageNo);
+	}
+
 	@RequestMapping(value="getTopAllByMoney",method=RequestMethod.POST)
 	@ResponseBody
 	public List<PlayerTopInfo> getTopAllByMoney(int size){
 		return infGainsInfoService.getTopAllByMoney(size);
 	}
+
 
 
 	@RequestMapping(value="getStrategy",method=RequestMethod.POST)
@@ -102,14 +129,49 @@ public class InfGainsInfoController extends BaseController {
 	public ResultMessage getPlayerMoney4Account(HttpServletRequest request,String account) throws Exception{
 		ResultMessage msg = new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
 		String endTime = commonService.getTimeByToken(request);
+		String phone = commonService.getUserPhone(request);
 		if (endTime == null) {
 			msg = new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"您还未购买观赛券，请购买后再进行观赛!");
 		} else {
-			TbPlayerMoneyVo data = infGainsInfoService.getPlayerMoney4Account(account,endTime);
+			TbPlayerMoneyVo data = infGainsInfoService.getPlayerMoney4Account(account,phone,endTime);
 			msg.setData(data);
 		}
 		return msg;
 	}
 
+	@RequestMapping(value="addfollow",method=RequestMethod.POST)
+	@ResponseBody
+	public ResultMessage addfollow(HttpServletRequest request, TbVipFollowPlayer tbVipFollowPlayer) throws Exception{
+		String phone = commonService.getUserPhone(request);
+		tbVipFollowPlayer.setVipPhone(phone);
+		ResultMessage msg = infGainsInfoService.addFollow(tbVipFollowPlayer);
+		return msg;
+	}
 
+	@RequestMapping(value="cancelFollow",method=RequestMethod.POST)
+	@ResponseBody
+	public ResultMessage cancelFollow(HttpServletRequest request, TbVipFollowPlayer tbVipFollowPlayer) throws Exception{
+		String phone = commonService.getUserPhone(request);
+		tbVipFollowPlayer.setVipPhone(phone);
+		ResultMessage msg = infGainsInfoService.cancelFollow(tbVipFollowPlayer);
+		return msg;
+	}
+
+	@RequestMapping(value="getMonths",method=RequestMethod.POST)
+	@ResponseBody
+	public List<String> getMonths(){
+		return infGainsInfoService.getMonths();
+	}
+
+	@RequestMapping(value="getTopMonthHisByPage",method=RequestMethod.POST)
+	@ResponseBody
+	public Pagination<TbTopByMonth> getTopMonthHisByPage(String month, Integer pageSize, Integer pageNo ){
+		if (pageSize == null || pageSize <= 0) {
+			pageSize = 10;
+		}
+		if (pageNo == null || pageNo <= 0) {
+			pageNo = 1;
+		}
+		return infGainsInfoService.getTopMonthHisByPage(month,pageSize,pageNo);
+	}
 }

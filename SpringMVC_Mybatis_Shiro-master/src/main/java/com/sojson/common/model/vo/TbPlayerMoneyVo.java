@@ -1,5 +1,6 @@
 package com.sojson.common.model.vo;
 
+import com.sojson.common.IConstant;
 import com.sojson.common.model.TbPlayerMoney;
 
 /**
@@ -27,6 +28,11 @@ public class TbPlayerMoneyVo extends TbPlayerMoney {
      * 本金
      */
     private String capital;
+
+    /**
+     * 是否关注 1已关注 0未关注
+     */
+    private byte isFollow = IConstant.YES_OR_NO.NO.v;
 
     public String getAccountName() {
         return accountName;
@@ -59,5 +65,13 @@ public class TbPlayerMoneyVo extends TbPlayerMoney {
 
     public void setCapital(String capital) {
         this.capital = capital;
+    }
+
+    public byte getIsFollow() {
+        return isFollow;
+    }
+
+    public void setIsFollow(byte isFollow) {
+        this.isFollow = isFollow;
     }
 }

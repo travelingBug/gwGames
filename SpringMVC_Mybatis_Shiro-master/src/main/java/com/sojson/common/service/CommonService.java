@@ -9,4 +9,6 @@ import javax.servlet.http.HttpServletRequest;
  **/
 public interface CommonService {
     String getTimeByToken(HttpServletRequest request) throws Exception;
+
+    String getUserPhone(HttpServletRequest request) throws Exception;
 }

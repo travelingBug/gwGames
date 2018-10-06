@@ -4,6 +4,10 @@ import com.sojson.common.IConstant;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.dao.UTbGainsInfoMapper;
 import com.sojson.common.dao.UTbPlayerMoneyMapper;
+import com.sojson.common.dao.UTbTopByMonthMapper;
+import com.sojson.common.dao.UTbVipFollowPlayerMapper;
+import com.sojson.common.model.TbTopByMonth;
+import com.sojson.common.model.TbVipFollowPlayer;
 import com.sojson.common.model.dto.PlayerTopInfo;
 import com.sojson.common.model.vo.TbGainsInfoVo;
 import com.sojson.common.model.vo.TbPlayerMoneyVo;
@@ -12,6 +16,7 @@ import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.gainsinfo.service.GainsInfoService;
 import com.sojson.inf.gainsinfo.service.InfGainsInfoService;
 import com.sojson.inf.gainsinfo.utis.GainsInfoCache;
+import com.sojson.topbymonth.service.TopByMonthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +35,26 @@ public class InfGainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> 
 	UTbPlayerMoneyMapper uTbPlayerMoneyMapper;
 
 	@Resource
+	UTbVipFollowPlayerMapper uTbVipFollowPlayerMapper;
+
+	@Resource
 	GainsInfoService gainsInfoService;
+
+	@Resource
+	UTbTopByMonthMapper uTbTopByMonthMapper;
+
+	@Resource
+	TopByMonthService topByMonthService;
 
 	@Override
 	public List<PlayerTopInfo> getTopAll(int size){
 		return GainsInfoCache.getTopAllForSize(size);
+	}
+
+	@Override
+	public Pagination<PlayerTopInfo> getTopAllByPage(int pageSize,int pageNo){
+		Pagination<PlayerTopInfo> page = new Pagination<PlayerTopInfo>(pageNo, pageSize,GainsInfoCache.getTopAllSize(), GainsInfoCache.getTopAllByPage(pageSize,pageNo));
+		return page;
 	}
 
 	@Override
@@ -45,6 +65,13 @@ public class InfGainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> 
 	@Override
 	public List<PlayerTopInfo> getTopAllByMoney(int size){
 		return GainsInfoCache.getTopAllByMoneyForSize(size);
+	}
+
+
+	@Override
+	public Pagination<PlayerTopInfo> getTopMonthByPage(int pageSize,int pageNo){
+		Pagination<PlayerTopInfo> page = new Pagination<PlayerTopInfo>(pageNo, pageSize,GainsInfoCache.getTopMonthSize(), GainsInfoCache.getTopMonthByPage(pageSize,pageNo));
+		return page;
 	}
 
 	@Override
@@ -88,14 +115,77 @@ public class InfGainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> 
 	}
 
 	@Override
-	public TbPlayerMoneyVo getPlayerMoney4Account(String account, String endTime){
+	public TbPlayerMoneyVo getPlayerMoney4Account(String account,String vipPhone, String endTime){
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("account",account);
 		param.put("endTime",endTime);
 		List<TbPlayerMoneyVo> vos = uTbPlayerMoneyMapper.findAll(param);
+		param.remove("endTime");
+		param.put("vipPhone",vipPhone);
+		List<TbVipFollowPlayer> follows = uTbVipFollowPlayerMapper.findAll(param);
 		TbPlayerMoneyVo vo = vos.get(0);
+		if (follows.size() > 0) {
+			vo.setIsFollow(IConstant.YES_OR_NO.YES.v);
+		}
 		vo.setBusinessTimeStr(endTime);
 		return vo;
 
 	}
+
+	/**
+	 * 添加关注
+	 * @param tbVipFollowPlayer
+	 * @return
+	 */
+	@Override
+	public ResultMessage addFollow(TbVipFollowPlayer tbVipFollowPlayer){
+		List<TbVipFollowPlayer> follows = uTbVipFollowPlayerMapper.findAll(tbVipFollowPlayer);
+		if (follows.size() > 0) {
+			return new ResultMessage(ResultMessage.MSG_LEVEL.HINT.v,"此选手已经关注过了");
+		}
+		uTbVipFollowPlayerMapper.insert(tbVipFollowPlayer);
+		return  new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"关注成功!");
+	}
+
+	/**
+	 * 取消关注
+	 * @param tbVipFollowPlayer
+	 * @return
+	 */
+	@Override
+	public ResultMessage cancelFollow(TbVipFollowPlayer tbVipFollowPlayer){
+		List<TbVipFollowPlayer> follows = uTbVipFollowPlayerMapper.findAll(tbVipFollowPlayer);
+		if (follows.size() <= 0) {
+			return new ResultMessage(ResultMessage.MSG_LEVEL.HINT.v,"此选手不再关注列表！");
+		}
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("account",tbVipFollowPlayer.getAccount());
+		param.put("vipPhone",tbVipFollowPlayer.getVipPhone());
+		uTbVipFollowPlayerMapper.deleteByVipPlayer(param);
+		return  new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"取消关注成功!");
+
+	}
+
+	/**
+	 * 获取历史月度冠军的月份
+	 * @return
+	 */
+	@Override
+	public List<String> getMonths(){
+		return uTbTopByMonthMapper.getMonths();
+	}
+
+	/**
+	 * 根据月份查询出历史月份的比赛排名
+	 * @param month
+	 * @param pageSize
+	 * @param pageNo
+	 * @return
+	 */
+	public Pagination<TbTopByMonth>  getTopMonthHisByPage(String month, int pageSize, int pageNo ){
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("month",month);
+		return topByMonthService.findByPage(param, pageNo, pageSize);
+	}
+
 }

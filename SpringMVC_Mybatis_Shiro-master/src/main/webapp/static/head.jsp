@@ -129,6 +129,10 @@
         return "";
     }
 
+    function shortMsg(msg){
+        layer.msg(msg);
+    }
+
     function errorMsg(msg){
         layer.alert(msg, {
             icon: 2,

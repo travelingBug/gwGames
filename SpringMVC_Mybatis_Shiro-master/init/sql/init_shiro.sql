@@ -227,3 +227,35 @@ CREATE TABLE `tb_vip_record` (
 
 ALTER TABLE tb_dealer ADD SEAT_NUM varchar(10);
 ALTER TABLE tb_dealer ADD INVITE_NUM varchar(10);
+
+/**
+ * 会员关注选手表
+ */
+DROP TABLE IF EXISTS `tb_vip_follow_player`;
+CREATE TABLE `tb_vip_follow_player` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `VIP_PHONE` varchar(11) NOT NULL,
+  `ACCOUNT` varchar(32) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+drop table if exists tb_top_by_month;
+
+/*==============================================================*/
+/* Table: tb_top_by_month                                 */
+/*==============================================================*/
+create table tb_top_by_month
+(
+   ID                   bigint not null auto_increment comment '主键',
+   MONTH                varchar(10)  not null comment '月份',
+   ACCOUNT_NAME         varchar(50) not null comment '选手昵称',
+   ACCOUNT              varchar(50) not null comment '选手资金账号',
+   TOTAL_MONEY          varchar(20) not null comment '总资产',
+   CAPITAL              varchar(20) not null comment '本金',
+   YIELD                varchar(20) not null comment '收益',
+   YIELD_RATE           varchar(20) not null comment '收益率',
+   BUY_MONEY            varchar(20) not null comment '购买总金额',
+   BUY_FOR_ALL_RATE     varchar(20) not null comment '持仓比',
+   RANK                 int(5) not null comment '排名',
+   primary key (ID)
+);

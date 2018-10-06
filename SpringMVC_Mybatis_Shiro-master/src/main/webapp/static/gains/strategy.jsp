@@ -7,57 +7,7 @@
 </head>
 <body>
 <div class="pageWrapper2 bg-gray me style1">
-    <div class="top-bar"></div>
-    <div class="top-box">
-        <div class="content">
-            <div class="logo"></div>
-            <div class="right-area">
-                <a class="link"><i class="icon icon-weibo"></i>官方微博</a>
-                <a class="btn-contact"></a>
-            </div>
-        </div>
-    </div>
-    <div class="header">
-        <div class="content">
-            <ul class="list1">
-                <li><a>大赛首页</a></li>
-                <li>|</li>
-                <li><a>赛事规则</a></li>
-                <li>|</li>
-                <li><a>奖项设置</a></li>
-                <li>|</li>
-                <li><a>赛事报道</a></li>
-                <li>|</li>
-                <li><a>比赛排名</a></li>
-                <li>|</li>
-                <li><a>月度冠军</a></li>
-                <li>|</li>
-                <li><a>APP下载</a></li>
-                <li>|</li>
-                <li class="on"><a>我的账户</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="slider-box">
-        <ul class="slider-dot">
-            <li class="on"></li>
-            <li></li>
-            <li></li>
-        </ul>
-        <ul class="slider-content">
-            <li>
-                <div class="banner">
-                    <img src="images/banner_home_01.png"/>
-                    <div class="bottom-link">
-                        <div class="content">
-                            <div class="links">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
+    <%@include file="../top.jsp" %>
     <ul class="page-nav">
         <li><a>比赛排名</a></li>
         <li>></li>
@@ -69,7 +19,7 @@
                 <img src="images/img_head.png"/>
             </div>
             <div class="head-cont-box">
-                <h3><span id="accountName"></span><a class="tag border-style1">关注</a></h3>
+                <h3><span id="accountName"></span><a class="tag border-style1" id="has_follow">关注</a><a class="tag_has border-style1" id="no_follow" style="display: none;">已关注</a></h3>
                 <div class="text-area">
                     <div class="L">
                         <p class="numb" id="totalMoney"></p>
@@ -114,35 +64,7 @@
 
             </div>
         </div>
-        <div class="main-box mid-banner-1">
-            <div class="content">
-                <a class="link">关闭</a>
-                <a class="btn">
-                    <p>点击下载<span>DOWNLOAD</span></p>
-                    <i class="icon-arrow-down"></i>
-                </a>
-            </div>
-        </div>
-        <div class="main-box contact-box">
-            <div class="content">
-                <div class="left-area">
-                    <div class="logo-white"></div>
-                    <div class="one-area">
-                        <i class="icon icon-phone"></i>
-                        <p>客服热线 AM9:00-PM5:00</br>028-87689938</p>
-                    </div>
-                    <div class="one-area">
-                        <i class="icon icon-qq"></i>
-                        <p>客服QQ</br>1 930 621 578</p>
-                    </div>
-                </div>
-                <div class="right-area">
-                    <div class="one-area"><i class="img-wechat-1"></i><p>订阅号</p></div>
-                    <div class="one-area"><i class="img-wechat-2"></i><p>服务号</p></div>
-                    <p class="text">大赛官方微信公众号</p>
-                </div>
-            </div>
-        </div>
+        <%@include file="../bottom.jsp" %>
     </div>
     <%@include file="../footer.jsp" %>
 </div>
@@ -178,6 +100,10 @@
                                $('#balanceMoney').html(accountData.balanceMoney);
                                $('#totalMoney').html(accountData.totalMoney);
                                $('#businessTime').html('数据日期：'+accountData.businessTimeStr);
+                               //判断是否关注
+                               if (accountData.isFollow == 1){
+                                   hasFollow();
+                               }
                            } else {
                                warnMsg('请购券后进行观赛！');
                                window.location.href = result.data;
@@ -240,6 +166,52 @@
             }
         });
 
+        $('#has_follow').click(function(){
+            $.ajax({
+                type: "POST",
+                url: "interface/gainsInfo/addfollow.shtml",
+                data: {account:account},
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Authorization", getAuthorization());
+                },
+                success: function (result) {
+                    if(result.level ==  1){
+                        shortMsg(result.messageText);
+                        hasFollow();
+                    } else {
+                        warnMsg(result.messageText);
+                    }
+                },
+                error: function (result) {
+                    errorMsg("关注失败，请稍后再试！");
+                }
+            });
+        });
+
+        $('#no_follow').click(function(){
+            $.ajax({
+                type: "POST",
+                url: "interface/gainsInfo/cancelFollow.shtml",
+                data: {account:account},
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Authorization", getAuthorization());
+                },
+                success: function (result) {
+                    if(result.level ==  1){
+                        shortMsg(result.messageText);
+                        noFollow();
+                    } else {
+                        warnMsg(result.messageText);
+                    }
+                },
+                error: function (result) {
+                    errorMsg("取消关注失败，请稍后再试！");
+                }
+            });
+        });
+
     });
     
     function goPageByAjax(pageNo) {
@@ -290,6 +262,16 @@
                 window.location.href = "/static/vips/register.jsp";
             }
         });
+    }
+
+    function hasFollow(){
+        $('#has_follow').css('display','none');
+        $('#no_follow').css('display','');
+    }
+
+    function noFollow(){
+        $('#no_follow').css('display','none');
+        $('#has_follow').css('display','');
     }
 </script>
 </html>

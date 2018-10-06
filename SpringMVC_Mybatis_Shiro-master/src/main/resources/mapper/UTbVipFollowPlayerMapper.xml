@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sojson.common.dao.UTbVipFollowPlayerMapper" >
+  <resultMap id="BaseResultMap" type="com.sojson.common.model.TbVipFollowPlayer" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="VIP_PHONE" property="vipPhone" jdbcType="VARCHAR" />
+    <result column="ACCOUNT" property="account" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, VIP_PHONE, ACCOUNT
+  </sql>
+
+  
+  <sql id="where_all">
+  	<where>
+  	  <if test="vipPhone != null and vipPhone !='' " >
+        and VIP_PHONE = #{vipPhone}
+      </if>
+        <if test="account != null and account !='' " >
+            and ACCOUNT = #{account}
+        </if>
+    </where>
+  </sql>
+
+  <!-- 普通查询 -->
+  <select id="findAll" resultMap="BaseResultMap" >
+  	 select 
+    <include refid="Base_Column_List" />
+    from tb_vip_follow_player
+    <include refid="where_all"/>
+  </select>
+
+  <delete id="deleteByVipPlayer" parameterType="java.util.Map" >
+    delete from tb_vip_follow_player
+    where VIP_PHONE = #{vipPhone,jdbcType=VARCHAR} and ACCOUNT = #{account,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert"  parameterType="com.sojson.common.model.TbVipFollowPlayer" >
+    insert into tb_vip_follow_player (id, VIP_PHONE, ACCOUNT
+      )
+    values (#{id,jdbcType=INTEGER}, #{vipPhone,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}
+      )
+  </insert>
+</mapper>

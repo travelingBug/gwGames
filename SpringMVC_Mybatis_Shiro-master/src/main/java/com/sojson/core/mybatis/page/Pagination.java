@@ -124,7 +124,7 @@ public class Pagination<T> extends SimplePage implements java.io.Serializable,
 	 */
 	public String getPortalPageHtml(){
 		int totalPage = (int)Math.ceil((double)totalCount/pageSize);
-		StringBuffer pageHtml = new StringBuffer("<div class='pager'><ul class='floatR'>");
+		StringBuffer pageHtml = new StringBuffer("<div class='pager' id='pager'><ul class='floatR'>");
 		pageHtml.append("<li><a  class='text' href='javascript:;' onclick='goPageByAjax(1)'>首页</a></li>");
 		if (this.getPageNo() > 1) {
 			pageHtml.append("<li><a  class='icon' href='javascript:;'  onclick='goPageByAjax(" + (this.getPageNo() - 1) + ")'>&lt;</a></li>");
@@ -140,6 +140,32 @@ public class Pagination<T> extends SimplePage implements java.io.Serializable,
 			pageHtml.append("<li><a class='icon' href='javascript:;'  onclick='goPageByAjax(" + (this.getPageNo() + 1) + ")'>&gt;</a></li>");
 		}
 		pageHtml.append("<li><a class='icon' href='javascript:;'  onclick='goPageByAjax("+(totalPage)+")'>尾页</a></li>");
+		pageHtml.append("</ul><span class='page-numb'>第"+this.getPageNo()+"页 / 共"+totalPage+"页</span></div>");
+		return pageHtml.toString();
+	}
+
+	/**
+	 * 门户网站的ajax分页2(页面有2个分页的时候的处理)
+	 * @return
+	 */
+	public String getPortalPageHtml2(){
+		int totalPage = (int)Math.ceil((double)totalCount/pageSize);
+		StringBuffer pageHtml = new StringBuffer("<div class='pager' id='pager2'><ul class='floatR'>");
+		pageHtml.append("<li><a  class='text' href='javascript:;' onclick='goPageByAjax2(1)'>首页</a></li>");
+		if (this.getPageNo() > 1) {
+			pageHtml.append("<li><a  class='icon' href='javascript:;'  onclick='goPageByAjax2(" + (this.getPageNo() - 1) + ")'>&lt;</a></li>");
+		}
+		for (int i = (this.getPageNo()-2<=0?1:this.getPageNo()-2),no = 1; i <= this.getTotalPage()&& no <6 ; i++,no++) {
+			if (this.getPageNo() == i) {
+				pageHtml.append("<li><span class='numb on'>"+i+"</span></li>");
+			}else{
+				pageHtml.append("<li><a class='numb' href='javascript:;' onclick='goPageByAjax2("+i+")'>"+i+"</a></li>");
+			}
+		}
+		if (this.getPageNo() < totalPage) {
+			pageHtml.append("<li><a class='icon' href='javascript:;'  onclick='goPageByAjax2(" + (this.getPageNo() + 1) + ")'>&gt;</a></li>");
+		}
+		pageHtml.append("<li><a class='icon' href='javascript:;'  onclick='goPageByAjax2("+(totalPage)+")'>尾页</a></li>");
 		pageHtml.append("</ul><span class='page-numb'>第"+this.getPageNo()+"页 / 共"+totalPage+"页</span></div>");
 		return pageHtml.toString();
 	}
