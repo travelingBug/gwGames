@@ -70,15 +70,15 @@
                     $('#topAll').append('<tr><th>排名</th><th>选手</th><th>总收益</th><th>持仓比</th><th>总资产</th><th>操作</th></tr>');
                     if (topAllData != null && topAllData.length > 0) {
                         for (var i = 0 ; i < topAllData.length ; i++) {
-                            var showTop= '<td>'+(i+1)+'</td>';
-                            if (i == 0) {
-                                var showTop= '<td><em class="icon-one">'+(i+1)+'</em></td>';
+                            var showTop= '<td>'+topAllData[i].rank+'</td>';
+                            if (topAllData[i].rank == 1) {
+                                var showTop= '<td><em class="icon-one">'+topAllData[i].rank+'</em></td>';
                             }
-                            if (i == 1) {
-                                var showTop= '<td><em class="icon-two">'+(i+1)+'</em></td>';
+                            if (topAllData[i].rank == 2) {
+                                var showTop= '<td><em class="icon-two">'+topAllData[i].rank+'</em></td>';
                             }
-                            if (i == 2) {
-                                var showTop= '<td><em class="icon-three">'+(i+1)+'</em></td>';
+                            if (topAllData[i].rank == 3) {
+                                var showTop= '<td><em class="icon-three">'+topAllData[i].rank+'</em></td>';
                             }
                             var bg = "";
                             if (i%2 == 1) {
@@ -120,15 +120,15 @@
                 $('#topMonth').append('<tr><th>排名</th><th>选手</th><th>总收益</th><th>持仓比</th><th>总资产</th><th>操作</th></tr>');
                 if (topMonthData != null && topMonthData.length > 0) {
                     for (var i = 0 ; i < topMonthData.length ; i++) {
-                        var showTop= '<td>'+(i+1)+'</td>';
-                        if (i == 0) {
-                            var showTop= '<td><em class="icon-one">'+(i+1)+'</em></td>';
+                        var showTop= '<td>'+topMonthData[i].rank+'</td>';
+                        if (topMonthData[i].rank == 1) {
+                            var showTop= '<td><em class="icon-one">'+topMonthData[i].rank+'</em></td>';
                         }
-                        if (i == 1) {
-                            var showTop= '<td><em class="icon-two">'+(i+1)+'</em></td>';
+                        if (topMonthData[i].rank == 2) {
+                            var showTop= '<td><em class="icon-two">'+topMonthData[i].rank+'</em></td>';
                         }
-                        if (i == 2) {
-                            var showTop= '<td><em class="icon-three">'+(i+1)+'</em></td>';
+                        if (topMonthData[i].rank == 3) {
+                            var showTop= '<td><em class="icon-three">'+topMonthData[i].rank+'</em></td>';
                         }
                         var bg = "";
                         if (i%2 == 1) {

@@ -49,6 +49,11 @@ public class PlayerTopInfo implements Comparable<PlayerTopInfo>,Cloneable {
      */
     private String buyForALLRate;
 
+    /**
+     * 排名
+     */
+    private Integer rank;
+
     public String getAccountName() {
         return accountName;
     }
@@ -113,6 +118,14 @@ public class PlayerTopInfo implements Comparable<PlayerTopInfo>,Cloneable {
 
     public void setYield(String yield) {
         this.yield = yield;
+    }
+
+    public Integer getRank() {
+        return rank;
+    }
+
+    public void setRank(Integer rank) {
+        this.rank = rank;
     }
 
     @Override

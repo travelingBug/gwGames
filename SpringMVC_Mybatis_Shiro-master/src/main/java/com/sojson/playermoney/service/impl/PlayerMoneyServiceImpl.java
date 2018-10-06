@@ -273,6 +273,10 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
                 return -1;
             }
         });
+        for (int i = 0 ; i < palyerTopInfos.size(); i++) {
+            palyerTopInfos.get(i).setRank(i+1);
+            topInfosClone.get(i).setRank(i+1);
+        }
         GainsInfoCache.putTopForAll(palyerTopInfos);
 
         GainsInfoCache.putTopForAllByMoney(topInfosClone);
@@ -335,7 +339,11 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
 
 			palyerTopMonthInfos.add(playerTopInfo);
 		}
+
         Collections.sort(palyerTopMonthInfos,Collections.reverseOrder());
+        for (int i = 0 ; i < palyerTopMonthInfos.size(); i++) {
+            palyerTopMonthInfos.get(i).setRank(i+1);
+        }
 		GainsInfoCache.putTopForMonth(palyerTopMonthInfos);
     }
 }
