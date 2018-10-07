@@ -27,6 +27,7 @@ public class ToTimer{
 	TopByMonthService topByMonthService;
 
 	@Scheduled(cron = "00 00 01 01 * ? ")
+//@Scheduled(cron = "00 42 10 * * ? ")
 	public void run() {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
 		Calendar cal=Calendar.getInstance();

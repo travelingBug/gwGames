@@ -5,28 +5,27 @@
         <div class="logo"></div>
         <div class="right-area">
             <a class="link"><i class="icon icon-weibo"></i>官方微博</a>
-            <a class="btn-contact"></a>
         </div>
     </div>
 </div>
 <div class="header">
     <div class="content">
-        <ul class="list1">
-            <li><a>大赛首页</a></li>
+        <ul class="list1" id="menu_list">
+            <li><a href="/static/home.jsp">大赛首页</a></li>
             <li>|</li>
-            <li><a>赛事规则</a></li>
+            <li><a href="/static/rule/rule.jsp">赛事规则</a></li>
             <li>|</li>
-            <li><a>奖项设置</a></li>
+            <li><a href="/static/rule/bonus.jsp">奖项设置</a></li>
             <li>|</li>
             <li><a>赛事报道</a></li>
             <li>|</li>
-            <li><a>比赛排名</a></li>
+            <li><a href="/static/rank/ranking.jsp">比赛排名</a></li>
             <li>|</li>
-            <li><a>月度冠军</a></li>
+            <li><a href="/static/rank/rankMonth.jsp">月度冠军</a></li>
             <li>|</li>
             <li><a>APP下载</a></li>
             <li>|</li>
-            <li class="on"><a>我的账户</a></li>
+            <li><a>我的账户</a></li>
         </ul>
     </div>
 </div>
@@ -52,3 +51,13 @@
         </li>
     </ul>
 </div>
+<script>
+    $(function() {
+        $('#menu_list').find('a').each(function () {
+            if ($(this).attr('href') == window.location.pathname) {
+             $(this).parent().attr("class",'on');
+            }
+        });
+
+    });
+</script>
