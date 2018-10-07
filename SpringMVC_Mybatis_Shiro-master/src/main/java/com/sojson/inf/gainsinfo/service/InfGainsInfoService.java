@@ -37,4 +37,6 @@ public interface InfGainsInfoService {
     public List<String> getMonths();
 
     public Pagination<TbTopByMonth>  getTopMonthHisByPage(String month, int pageSize, int pageNo );
+
+    Pagination<PlayerTopInfo> getTopAllByAccount(String phone, int pageSize,int pageNo);
 }

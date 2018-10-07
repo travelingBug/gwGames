@@ -174,4 +174,18 @@ public class InfGainsInfoController extends BaseController {
 		}
 		return infGainsInfoService.getTopMonthHisByPage(month,pageSize,pageNo);
 	}
+
+	@RequestMapping(value="getTopAllByAccount",method=RequestMethod.POST)
+	@ResponseBody
+	public Pagination<PlayerTopInfo> getTopAllByAccount(HttpServletRequest request,Integer pageSize,Integer pageNo) throws Exception{
+//		String phone = commonService.getUserPhone(request);
+		String phone = "15828029800";
+		if (pageSize == null || pageSize <= 0) {
+			pageSize = 10;
+		}
+		if (pageNo == null || pageNo <= 0) {
+			pageNo = 1;
+		}
+		return infGainsInfoService.getTopAllByAccount(phone,pageSize,pageNo);
+	}
 }

@@ -103,6 +103,27 @@ public class GainsInfoCache {
         return topForYour;
     }
 
+    /**
+     * 分页查询当前用户关注的数据
+     * @param pageSize
+     * @param pageNo
+     * @return
+     */
+    public static List<PlayerTopInfo>  getTopAllByAccount(List<PlayerTopInfo> topAllByAccount,int pageSize,int pageNo){
+        List<PlayerTopInfo> topForYour = new ArrayList<PlayerTopInfo>();
+        int end = pageSize * pageNo;
+        int start = (pageNo - 1) * pageSize;
+        int i = 0;
+        for (PlayerTopInfo playerTopInfo : topAllByAccount) {
+            if (topAllByAccount.size() > i && i >= start && i < end) {
+                topForYour.add(playerTopInfo);
+            }
+
+            i++;
+        }
+        return topForYour;
+    }
+
     public static int  getTopAllSize(){
         return topForAll.size();
     }

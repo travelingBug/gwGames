@@ -17,7 +17,6 @@ import com.sojson.gainsinfo.service.GainsInfoService;
 import com.sojson.inf.gainsinfo.service.InfGainsInfoService;
 import com.sojson.inf.gainsinfo.utis.GainsInfoCache;
 import com.sojson.topbymonth.service.TopByMonthService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -186,6 +185,25 @@ public class InfGainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> 
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("month",month);
 		return topByMonthService.findByPage(param, pageNo, pageSize);
+	}
+
+	@Override
+	public Pagination<PlayerTopInfo> getTopAllByAccount(String phone,int pageSize, int pageNo) {
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("vipPhone", phone);
+
+		List<PlayerTopInfo> allFollowPlayerTops = new ArrayList<PlayerTopInfo>();
+		List<TbVipFollowPlayer> followPlayers = uTbVipFollowPlayerMapper.findAll(params);
+		List<PlayerTopInfo> allPlayerTops = GainsInfoCache.getTopAllForSize(GainsInfoCache.getTopAllSize());
+		for(int i=0; i<followPlayers.size(); i++){
+			for(int j=0; j<allPlayerTops.size(); j++){
+				if(followPlayers.get(i).getAccount().equals(allPlayerTops.get(j).getAccount())){
+					allFollowPlayerTops.add(allPlayerTops.get(i));
+				}
+			}
+		}
+		Pagination<PlayerTopInfo> page = new Pagination<PlayerTopInfo>(pageNo, pageSize,followPlayers.size(), GainsInfoCache.getTopAllByAccount(allFollowPlayerTops,pageSize,pageNo));
+		return page;
 	}
 
 }
