@@ -42,8 +42,8 @@
                 <div class="bottom-link">
                     <div class="content">
                         <div class="links">
-                            <a class="link floatL"><i class="icon icon-bmcs"></i>报名参赛</a>
-                            <a class="link floatR"><i class="icon icon-gszc"></i>观赛注册</a>
+                            <a class="link floatL"><i class="icon icon-bmcs" href="/static/signup/index.jsp"></i>报名参赛</a>
+                            <a class="link floatR"><i class="icon icon-gszc" href="/static/vips/register.jsp"></i>观赛注册</a>
                         </div>
                     </div>
                 </div>
