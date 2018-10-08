@@ -4,6 +4,7 @@ package com.sojson.core.init;/**
  * @Date:${Time} ${Date}
  **/
 
+import com.sojson.common.utils.RedisUtil;
 import com.sojson.inf.gainsinfo.service.InfGainsInfoService;
 import com.sojson.playermoney.service.PlayerMoneyService;
 
@@ -25,6 +26,8 @@ public class TestInit {
 
 
     public void init(){
+//        RedisUtil.getRedis();
+//        RedisUtil.removeAll();
         playerMoneyService.getTopResultForAll();
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");

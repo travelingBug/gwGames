@@ -25,6 +25,11 @@
     function putDefToken(){
         sessionStorage.setItem("defSessionId", '<%=defSessionId %>');
     }
+
+    function putTokenToDef(){
+        sessionStorage.setItem("sessionId", '<%=defSessionId %>');
+        sessionStorage.removeItem("nickName");
+    }
     function encrypt(word) {
                 var key = CryptoJS.enc.Utf8.parse(sessionStorage.getItem("key"));
                 var srcs = CryptoJS.enc.Utf8.parse(word);

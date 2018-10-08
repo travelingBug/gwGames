@@ -3,8 +3,9 @@
 <div class="top-box">
     <div class="content">
         <div class="logo"></div>
-        <div class="right-area">
+        <div class="right-area" id="topHead">
             <a class="link"><i class="icon icon-weibo"></i>官方微博</a>
+
         </div>
     </div>
 </div>
@@ -41,7 +42,7 @@
                 <img src="images/banner_home_01.png"/>
                 <div class="bottom-link">
                     <div class="content">
-                        <div class="links">
+                        <div class="links" id="navigation">
                             <a class="link floatL"><i class="icon icon-bmcs" href="/static/signup/index.jsp"></i>报名参赛</a>
                             <a class="link floatR"><i class="icon icon-gszc" href="/static/vips/register.jsp"></i>观赛注册</a>
                         </div>
@@ -59,5 +60,32 @@
             }
         });
 
+        if (sessionStorage.getItem("nickName") != null && sessionStorage.getItem("nickName") != '') {
+            $('#topHead').append('<a class="link" >'+sessionStorage.getItem("nickName")+'</a>');
+            $('#topHead').append('<a class="link" id="loginOut">[注销]</a>');
+            $('#navigation').css('display','none');
+            $('#loginOut').click(function(){
+                $.ajax({
+                    type: "POST",
+                    url: "interface/vips/loginOut.shtml",
+                    data: {},
+                    dataType: "json",
+                    beforeSend: function(request) {
+                        request.setRequestHeader("Authorization", getAuthorization());
+
+                    },
+                    success: function(data) {
+                        putTokenToDef();
+                        window.location.href="/static/home.jsp";
+                    },
+                    error: function(data) {
+                        putTokenToDef();
+                    }
+                });
+            });
+        } else {
+            $('#topHead').append('<a class="link" href="/static/vips/register.jsp">[登录]</a>');
+        }
     });
+
 </script>

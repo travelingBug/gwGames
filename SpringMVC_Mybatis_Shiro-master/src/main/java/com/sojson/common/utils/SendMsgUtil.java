@@ -28,8 +28,8 @@ public class SendMsgUtil {
             e.printStackTrace();
         }
         int code = (int)((Math.random()*9+1)*100000);
-        RedisUtil redisUtil = RedisUtil.getRedis();
-        redisUtil.save(phone, code+","+ new Date().getTime());
+//        RedisUtil redisUtil = RedisUtil.getRedis();
+        RedisUtil.save(phone, code+","+ new Date().getTime());
 
         String msg = msg_1 + code + msg_2;
 
@@ -68,8 +68,8 @@ public class SendMsgUtil {
             e.printStackTrace();
         }
         int code = (int)((Math.random()*9+1)*100000);
-        RedisUtil redisUtil = RedisUtil.getRedis();
-        redisUtil.save(phone, code+","+ new Date().getTime());
+//        RedisUtil redisUtil = RedisUtil.getRedis();
+        RedisUtil.save(phone, code+","+ new Date().getTime());
 
         String msg = msg_3;
 
@@ -110,8 +110,8 @@ public class SendMsgUtil {
             e.printStackTrace();
         }
         int code = (int)((Math.random()*9+1)*100000);
-        RedisUtil redisUtil = RedisUtil.getRedis();
-        redisUtil.save(phone, code+","+ new Date().getTime());
+//        RedisUtil redisUtil = RedisUtil.getRedis();
+        RedisUtil.save(phone, code+","+ new Date().getTime());
 
         String msg = msg_1 + code + msg_4;
 
@@ -143,8 +143,8 @@ public class SendMsgUtil {
     public static String sendMsgTest(String phone) {
 
 
-        RedisUtil redisUtil = RedisUtil.getRedis();
-        redisUtil.save(phone, "123456,"+ new Date().getTime());
+//        RedisUtil redisUtil = RedisUtil.getRedis();
+        RedisUtil.save(phone, "123456,"+ new Date().getTime());
 
         return "1";
     }

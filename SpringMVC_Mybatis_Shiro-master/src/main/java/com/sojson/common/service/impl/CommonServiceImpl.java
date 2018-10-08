@@ -68,6 +68,26 @@ public class CommonServiceImpl implements CommonService {
         String[] contentArr = content.split(",");
         Object phone = RedisUtil.get(contentArr[0]);
         return phone.toString().split(",")[0];
+    }
 
+    @Override
+    public String getNickName(HttpServletRequest request) throws Exception{
+        String token = request.getHeader("Authorization");
+        String content = EncryptUtils.aesDecrypt(token, IConstant.key);
+        String[] contentArr = content.split(",");
+        String value = RedisUtil.get(contentArr[0]);
+        //判断接收的参数格式是否正确
+        if (value.indexOf(",") >=0 ) {
+            return value.substring(value.indexOf(",") + 1);
+        }
+        return null;
+    }
+
+    @Override
+    public String getToken(HttpServletRequest request) throws Exception{
+        String token = request.getHeader("Authorization");
+        String content = EncryptUtils.aesDecrypt(token, IConstant.key);
+        //判断接收的参数格式是否正确
+        return content.split(",")[0];
     }
 }

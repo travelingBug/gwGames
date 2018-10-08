@@ -44,7 +44,7 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
 
     protected Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 
-    RedisUtil redisUtil = RedisUtil.getRedis();
+//    RedisUtil redisUtil = RedisUtil.getRedis();
 
     @SuppressWarnings("unchecked")
 
@@ -78,9 +78,9 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
             uTbVipsMapper.insert(entity);
             msg.setMessageText("注册成功！");
             //删除redies缓存
-            redisUtil.delete(entity.getPhone());
+            RedisUtil.delete(entity.getPhone());
 
-            redisUtil.save(req.getSession().getId(), entity.getPhone());
+            RedisUtil.save(req.getSession().getId(), entity.getPhone());
         }else{
             msg.setData("");
         }
@@ -104,8 +104,22 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
         if(null == vip){
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "电话号码或密码错误！");
         }
-        String userId = IConstant.TOKEN_PRE+req.getSession().getId();
-        RedisUtil.save(userId,vip.getPhone()+","+new Date().getTime());
+        //踢出之前登录的用户，单点登录
+        Map<String,String> allKey = RedisUtil.getAll();
+        if (allKey != null && allKey.size() > 0) {
+            for (String key : allKey.keySet()) {
+                //所有的登录token是以tk:开头的
+                if (key.startsWith(IConstant.TOKEN_PRE)) {
+                    //判断是不是同一个手机号
+                    String value = RedisUtil.get(key);
+                    if (value != null && vip.getPhone().equals(value.split(",")[0])) {
+                        RedisUtil.delete(key);
+                    }
+                }
+            }
+        }
+        String userId = IConstant.TOKEN_PRE+StringUtils.getUUID32();
+        RedisUtil.save(userId,vip.getPhone()+","+vip.getNickName());
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "登录成功！", userId);
     }
 
@@ -149,7 +163,7 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
 
         //验证短信验证码
 
-        String code = redisUtil.get(dto.getPhone());
+        String code = RedisUtil.get(dto.getPhone());
         if (StringUtils.isBlank(code)) {
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"未找到对应验证码！");
         }
@@ -166,6 +180,17 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
         pwd = String.format("%s#%s",phone,pwd);
         pwd = MathUtil.getMD5(pwd);
         return pwd;
+    }
+
+
+    @Override
+    public ResultMessage loginOut(String token) {
+        try{
+            RedisUtil.delete(token);
+        }catch(Exception e){
+
+        }
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
 
 

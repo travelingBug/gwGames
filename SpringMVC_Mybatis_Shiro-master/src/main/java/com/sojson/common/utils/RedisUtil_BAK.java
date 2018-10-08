@@ -3,7 +3,6 @@ package com.sojson.common.utils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.exceptions.JedisDataException;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -11,26 +10,63 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by lx on 2018/8/21.
  */
-public class RedisUtil {
+public class RedisUtil_BAK {
 
-    static Map<String,String> jedis = new ConcurrentHashMap<String,String>();
+    private static Jedis jedis;//非切片额客户端连接
+    private static JedisPool jedisPool;//非切片连接池
+    private static RedisUtil_BAK instance;
 
 
+    public synchronized static RedisUtil_BAK getRedis(){
+        if(instance==null){
+            instance = new RedisUtil_BAK();
+        }
+        return instance;
+    }
+
+    private RedisUtil_BAK(){
+        initialPool();
+        jedis = jedisPool.getResource();
+    }
+
+    /**
+     * 初始化非切片池
+     */
+    private static void initialPool(){
+        // 池基本配置
+        JedisPoolConfig config = new JedisPoolConfig();
+        config.setMaxIdle(100);
+        config.setMaxTotal(100);
+        config.setTestOnBorrow(false);
+
+        jedisPool = new JedisPool(config,"127.0.0.1",6379,100000);
+    }
+
+    /**
+     * 刷新生命周期
+     * @param sessionId
+     */
+    public static void reflushLifeCycle(String sessionId){
+        jedis.expire(sessionId, 60*60*2);
+    }
+
+    public static void removeAll(){
+        jedis.flushAll();
+        jedis.flushDB();
+    }
     /**
      * 新增
      * @param sessionId
      * @param userId
      */
     public static void save(String sessionId, String userId){
-        jedis.put(sessionId, userId);
+        jedis.set(sessionId, userId);
     }
 
     /**
@@ -38,7 +74,7 @@ public class RedisUtil {
      * @param sessionId
      */
     public static void delete(String sessionId){
-        jedis.remove(sessionId);
+        jedis.del(sessionId);
     }
 
     /**
@@ -48,7 +84,7 @@ public class RedisUtil {
     public static Map<String,String> getAll(){
         Map<String,String> map = new HashMap<String,String>();
 
-        Set<String> keys = jedis.keySet();
+        Set<String> keys = jedis.keys("*");
         for(String key : keys){
             String val = jedis.get(key);
             map.put(key, val);
@@ -89,18 +125,18 @@ public class RedisUtil {
 
 
 
-//    public static void main(String[] args) {
-//        BufferedImage imgMap = drawTranslucentStringPic(400, 80, 36,"AT123321312");
-//        File imgFile=new File("D://aaa.png");
-//        try
-//        {
-//            ImageIO.write(imgMap, "PNG", imgFile);
-//        } catch (IOException e)
-//        {
-//            e.printStackTrace();
-//        }
-//        System.out.println("生成完成");
-//    }
+    public static void main(String[] args) {
+        BufferedImage imgMap = drawTranslucentStringPic(400, 80, 36,"AT123321312");
+        File imgFile=new File("D://aaa.png");
+        try
+        {
+            ImageIO.write(imgMap, "PNG", imgFile);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        System.out.println("生成完成");
+    }
 
 
 

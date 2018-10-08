@@ -110,7 +110,7 @@
                            }
                        },
                        error: function (result) {
-                           putDefToken();
+                           putTokenToDef();
                            window.location.href = "/static/vips/register.jsp";
                        }
                    });
@@ -141,7 +141,7 @@
                            }
                        },
                        error: function (result) {
-                           putDefToken();
+                           putTokenToDef();
                            window.location.href = "/static/vips/register.jsp";
                        }
                    });
@@ -159,7 +159,7 @@
             error: function (data) {
                 warnMsg('请登录后再观赛！');
                 setTimeout(function(){
-                    putDefToken();
+                    putTokenToDef();
                     window.location.href = "/static/vips/register.jsp";
                 }, 1000);
 
@@ -258,7 +258,7 @@
                 }
             },
             error: function (result) {
-                putDefToken();
+                putTokenToDef();
                 window.location.href = "/static/vips/register.jsp";
             }
         });

@@ -3,6 +3,7 @@ package com.sojson.inf.vips.controller;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
 import com.sojson.common.model.TbVips;
+import com.sojson.common.service.CommonService;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.inf.vips.service.VipsService;
 import com.sojson.user.service.UUserService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
@@ -31,6 +33,9 @@ public class VipsController extends BaseController {
 
     @Autowired
     UUserService userService;
+
+    @Resource
+    CommonService commonService;
 
     /**
      * 注册
@@ -113,5 +118,12 @@ public class VipsController extends BaseController {
     @ResponseBody
     public Map<String,Object> forbidUserById(Long id, Long status){
         return userService.updateForbidUserById(id,status);
+    }
+
+    @RequestMapping(value="loginOut",method=RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage loginOut(HttpServletRequest request) throws Exception {
+        String token = commonService.getToken(request);
+        return vipsService.loginOut(token);
     }
 }

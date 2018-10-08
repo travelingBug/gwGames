@@ -363,7 +363,30 @@
             success: function(data) {
                 if (data.level == 1) {
                     sessionStorage.setItem("sessionId", data.data);
-                    window.location.href="/static/home.jsp";
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: "interface/gainsInfo/getNickName.shtml",
+                        data: {},
+                        dataType: "json",
+                        beforeSend: function (request) {
+                            request.setRequestHeader("Authorization", getAuthorization());
+
+                        },
+                        success: function (result) {
+                            sessionStorage.setItem("nickName", result.data);
+                            window.location.href="/static/home.jsp";
+                        },
+                        error: function(data1) {
+                            putTokenToDef();
+                            layer.alert('系统错误，请联系管理员！', {
+                                icon: 2,
+                                skin: 'layui-layer-lan'
+                            });
+                        }
+                    });
+
                 } else {
                     layer.alert(data.messageText, {
                         icon: 0,
@@ -372,6 +395,7 @@
                 }
             },
             error: function(data) {
+                putTokenToDef();
                 layer.alert('系统错误，请联系管理员！', {
                     icon: 2,
                     skin: 'layui-layer-lan'

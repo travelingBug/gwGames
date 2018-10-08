@@ -188,4 +188,11 @@ public class InfGainsInfoController extends BaseController {
 		}
 		return infGainsInfoService.getTopAllByAccount(phone,pageSize,pageNo);
 	}
+
+	@RequestMapping(value="getNickName",method=RequestMethod.POST)
+	@ResponseBody
+	public ResultMessage getNickName(HttpServletRequest request) throws Exception{
+		String nickName = commonService.getNickName(request);
+		return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"获取成功",nickName);
+	}
 }

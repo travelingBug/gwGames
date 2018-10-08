@@ -22,7 +22,7 @@ public class TbPlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> impleme
 	@Autowired
 	UTbPlayerMapper uTbPlayerMapper;
 
-	RedisUtil redisUtil = RedisUtil.getRedis();
+//	RedisUtil redisUtil = RedisUtil.getRedis();
 	@Override
 	public ResultMessage insert(TbPlayerDto dto) {
 		//数据验证
@@ -36,7 +36,7 @@ public class TbPlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> impleme
 			uTbPlayerMapper.insert(dto);
 			msg.setMessageText("申请成功！");
 			//删除redies缓存
-			redisUtil.delete(dto.getTelPhone());
+			RedisUtil.delete(dto.getTelPhone());
 
 			SendMsgUtil.sendAdminMsg("18019565656,18980907645,15982113122");
 		}
@@ -69,7 +69,7 @@ public class TbPlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> impleme
 
 		//验证短信验证码
 
-		String code = redisUtil.get(dto.getTelPhone());
+		String code = RedisUtil.get(dto.getTelPhone());
 		if (StringUtils.isBlank(code)) {
 			return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"未找到对应验证码！");
 		}

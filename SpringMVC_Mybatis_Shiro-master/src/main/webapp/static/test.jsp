@@ -54,7 +54,6 @@
 <script>
     $("#buttonSubmit").click(function(){
         var data =$('#addForm').serializeArray();
-        debugger
         $.ajax({
             type: "POST",
             url: "interface/player/save.shtml",

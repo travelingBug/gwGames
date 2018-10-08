@@ -13,7 +13,7 @@ import java.util.Date;
 @Service
 public class MessageServiceImpl implements MessageService {
 
-	RedisUtil redisUtil = RedisUtil.getRedis();
+//	RedisUtil redisUtil = RedisUtil.getRedis();
 	/**
 	 * 发送短信验证
 	 * @param telPhone
@@ -43,7 +43,7 @@ public class MessageServiceImpl implements MessageService {
 		if (StringUtils.isBlank(telPhone) || telPhone.length() != 11 || !telPhone.matches(RegConstant.numReg)) {
 			return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"手机号码格式不正确！");
 		}
-		String code = redisUtil.get(telPhone);
+		String code = RedisUtil.get(telPhone);
 		if (!StringUtils.isBlank(code)) {
 			String[] codeArr = code.split(",");
 			if (codeArr.length == 2) {
