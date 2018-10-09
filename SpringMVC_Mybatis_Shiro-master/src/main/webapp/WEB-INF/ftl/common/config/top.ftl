@@ -151,6 +151,20 @@
                           </ul>
                       </li>
 				  </@shiro.hasAnyRoles>
+
+			  <#--拥有 角色888888（管理员）-->
+				  <@shiro.hasAnyRoles name='888888'>
+                      <li class="dropdown ${(index==9)?string('active','')}">
+                          <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="${basePath}/stopdate/list.shtml">
+                              系统配置<span class="caret"></span>
+                          </a>
+                          <ul class="dropdown-menu">
+							  <@shiro.hasPermission name="/stopdate/list.shtml">
+                                  <li><a href="${basePath}/stopdate/list.shtml">系统配置</a></li>
+							  </@shiro.hasPermission>
+                          </ul>
+                      </li>
+				  </@shiro.hasAnyRoles>
 			  </ul>
 	           <ul class="nav navbar-nav  pull-right" >
 				<li class="dropdown ${(index==10)?string('active','')}" style="color:#fff;">

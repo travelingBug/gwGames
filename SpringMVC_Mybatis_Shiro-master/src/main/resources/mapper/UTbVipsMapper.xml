@@ -98,4 +98,11 @@
   <select id="getLevelByPhone" parameterType="String" resultType="byte" >
     select d.level from  tb_vip d where d.phone = #{phone}
   </select>
+
+  <update id="updateEndTimeByStop" parameterType="java.lang.Long">
+    update tb_vip
+    set
+      END_TIME = DATE_ADD(END_TIME, INTERVAL #{endTime} second)
+    where LEVEL != 0 and DEL_FLAG = 0
+  </update>
 </mapper>

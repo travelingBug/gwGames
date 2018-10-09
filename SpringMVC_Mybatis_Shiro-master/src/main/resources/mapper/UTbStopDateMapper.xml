@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sojson.common.dao.UTbStopDateMapper" >
+  <resultMap id="BaseResultMap" type="com.sojson.common.model.TbStopDate" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="stop_flag" property="stopFlag" jdbcType="TINYINT" />
+    <result column="bgn_Time" property="bgnTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, stop_flag, bgn_Time, end_time
+  </sql>
+
+  <select id="findAll" resultMap="BaseResultMap" >
+  	 select 
+    <include refid="Base_Column_List" />
+    from tb_stop_date where id = 1
+  </select>
+  
+
+  <update id="update" parameterType="com.sojson.common.model.TbStopDate" >
+    update tb_stop_date
+    <set >
+      <if test="stopFlag != null" >
+        stop_flag = #{stopFlag},
+      </if>
+      <if test="bgnTime != null" >
+        bgn_Time = #{bgnTime},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId}
+      </if>
+    </set>
+    where id = 1
+  </update>
+
+  <insert id="insertHis" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbStopDateHis" >
+    insert into tb_stop_date_his (BGN_TIME, END_TIME, BGN_USER_ID, END_USER_ID)
+    values (#{bgnTime}, #{endTime}, #{bgnUserId}, #{endUserId})
+  </insert>
+</mapper>

@@ -127,7 +127,7 @@
 			    			layer.msg('登录成功！');
 			    			setTimeout(function(){
 			    				//登录返回
-				    			window.location.href= result.back_url || "${basePath}/";
+				    			window.location.href="${basePath}/user/index.shtml";
 			    			},1000)
 			    		}
 			    	},"json");

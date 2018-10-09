@@ -14,4 +14,6 @@ public interface UTbVipsMapper {
     TbVips findUserByPhone(TbVips entity);
 
     byte getLevelByPhone(String phone);
+
+    int updateEndTimeByStop(Long endTime);
 }

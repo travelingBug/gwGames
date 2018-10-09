@@ -269,12 +269,29 @@ create table tb_stop_date
 (
    ID                   bigint not null auto_increment comment '主键',
    STOP_FLAG               tinyint(4) NOT NULL comment '停止标示（0：未停止，1：已停止）',
-   BGN_TIME           datetime NOT NULL comment '开始时间',
-   END_TIME              datetime NOT NULL comment '结束时间',
-   USER_ID           bigint(20) NOT NULL comment '操作人员',
+   BGN_TIME           datetime comment '开始时间',
+   END_TIME              datetime comment '结束时间',
+   USER_ID           bigint(20)  comment '操作人员',
    primary key (ID)
 );
 
+INSERT INTO tb_stop_date (ID,STOP_FLAG) VALUES(1,0);
+
+
+drop table if exists tb_stop_date_his;
+
+/*==============================================================*/
+/* Table: tb_stop_date                                 */
+/*==============================================================*/
+create table tb_stop_date_his
+(
+   ID                   bigint not null auto_increment comment '主键',
+   BGN_TIME           datetime comment '开始时间',
+   END_TIME              datetime comment '结束时间',
+   BGN_USER_ID           bigint(20)  comment '开始操作人员',
+	 END_USER_ID           bigint(20)  comment '结束操作人员',
+   primary key (ID)
+);
 
 /*==============================================================*/
 /* Table: tb_event_report 赛事报道                              */
