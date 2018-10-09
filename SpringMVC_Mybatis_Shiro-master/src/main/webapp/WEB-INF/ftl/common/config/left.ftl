@@ -170,3 +170,19 @@
     </div>
 	</@shiro.hasAnyRoles>
 </#macro>
+
+<#macro eventReport index>
+	<@shiro.hasAnyRoles name='888888'>
+    <div id="one" class="col-md-2">
+        <ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
+			<@shiro.hasPermission name="/eventReport/list.shtml">
+                <li class="${(index==1)?string('active',' ')}">
+                    <a href="${basePath}/eventReport/list.shtml">
+                        <i class="glyphicon glyphicon-chevron-right"></i>赛事报道列表
+                    </a>
+                </li>
+			</@shiro.hasPermission>
+        </ul>
+    </div>
+	</@shiro.hasAnyRoles>
+</#macro>

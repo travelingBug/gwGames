@@ -137,6 +137,20 @@
                           </ul>
                       </li>
 				  </@shiro.hasAnyRoles>
+
+			  		<#--拥有 角色888888（管理员）-->
+				  <@shiro.hasAnyRoles name='888888'>
+                      <li class="dropdown ${(index==8)?string('active','')}">
+                          <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="${basePath}/eventReport/list.shtml">
+                              赛事报道管理<span class="caret"></span>
+                          </a>
+                          <ul class="dropdown-menu">
+							  <@shiro.hasPermission name="/eventReport/list.shtml">
+                                  <li><a href="${basePath}/eventReport/list.shtml">赛事报道列表</a></li>
+							  </@shiro.hasPermission>
+                          </ul>
+                      </li>
+				  </@shiro.hasAnyRoles>
 			  </ul>
 	           <ul class="nav navbar-nav  pull-right" >
 				<li class="dropdown ${(index==10)?string('active','')}" style="color:#fff;">

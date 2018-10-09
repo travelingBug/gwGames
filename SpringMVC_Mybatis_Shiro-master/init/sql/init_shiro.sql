@@ -274,3 +274,19 @@ create table tb_stop_date
    USER_ID           bigint(20) NOT NULL comment '操作人员',
    primary key (ID)
 );
+
+
+/*==============================================================*/
+/* Table: tb_event_report 赛事报道                              */
+/*==============================================================*/
+DROP TABLE IF EXISTS `tb_event_report`;
+CREATE TABLE `tb_event_report` (
+  `ID` varchar(32) NOT NULL,
+  `TITLE` varchar(200) DEFAULT NULL,
+  `COVER` varchar(200) DEFAULT NULL,
+  `DESCRIBED` varchar(2000) DEFAULT NULL,
+  `CONTENT` text DEFAULT NULL,
+  `CRT_TIME` datetime DEFAULT NULL,
+  `VOLUME` int(5) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

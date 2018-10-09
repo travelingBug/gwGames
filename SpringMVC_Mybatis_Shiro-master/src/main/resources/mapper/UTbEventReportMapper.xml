@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sojson.common.dao.UTbEventReportMapper" >
+  <resultMap id="EventReportResultMap" type="com.sojson.common.model.TbEventReport" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="COVER" property="cover" jdbcType="VARCHAR" />
+    <result column="DESCRIBED" property="described" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
+    <result column="VOLUME" property="volume" jdbcType="INTEGER" />
+
+  </resultMap>
+  <sql id="EventReport_Column_List" >
+    t.ID,t.TITLE,t.COVER,t.DESCRIBED,t.CONTENT,t.VOLUME,t.CRT_TIME
+  </sql>
+
+  <sql id="limit_sql">
+  	   <if test="page_sql != null and page_sql != ''">
+      	${page_sql}
+      </if>
+  </sql>
+  
+  <sql id="where_all">
+  	<where>
+  	  <if test="title != null and title !='' " >
+        and t.TITLE like LOWER(CONCAT('%',#{title,jdbcType=VARCHAR},'%'))
+      </if>
+     </where>
+  </sql>
+
+
+  <sql id="order_all">
+    ORDER BY t.crt_time DESC
+  </sql>
+  <select id="findAll" resultMap="EventReportResultMap" >
+  	select
+    <include refid="EventReport_Column_List" />
+    from tb_event_report t
+    <include refid="where_all"/>
+    <include refid="order_all"/>
+    <include refid="limit_sql" />
+  </select>
+
+
+  <select id="findById" parameterType="java.lang.String" resultMap="EventReportResultMap" >
+    select
+    <include refid="EventReport_Column_List" />
+    from tb_event_report t where t.ID  = #{id}
+  </select>
+
+  <select id="findCount" resultMap="EventReportResultMap" >
+ 	 select count(t.id) from  tb_event_report t
+  	<include refid="where_all" />
+  </select>
+
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbEventReport" >
+    insert into tb_event_report (ID,TITLE,COVER,DESCRIBED,CONTENT,CRT_TIME,VOLUME)
+    values ( #{id,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},#{cover,jdbcType=VARCHAR},#{described,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},
+       #{crtTime,jdbcType=TIMESTAMP}, #{volume,jdbcType=INTEGER}
+      )
+  </insert>
+
+  <update id="update" parameterType="com.sojson.common.model.TbEventReport" >
+    update tb_event_report
+    <set >
+      <if test="title != null and title !=''" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="cover != null  and cover !=''" >
+        COVER = #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="described != null and described !=''" >
+        DESCRIBED = #{described,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null and content != ''" >
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="volume != null and volume != ''" >
+        VOLUME = #{volume,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+  <delete id="deleteById">
+    delete from tb_event_report where id =  #{id,jdbcType=VARCHAR}
+  </delete>
+
+
+
+
+</mapper>
