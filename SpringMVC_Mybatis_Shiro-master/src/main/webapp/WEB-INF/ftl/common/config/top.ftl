@@ -148,6 +148,9 @@
 							  <@shiro.hasPermission name="/eventReport/list.shtml">
                                   <li><a href="${basePath}/eventReport/list.shtml">赛事报道列表</a></li>
 							  </@shiro.hasPermission>
+							  <@shiro.hasPermission name="/problem/list.shtml">
+                                  <li><a href="${basePath}/problem/list.shtml">常见问题列表</a></li>
+							  </@shiro.hasPermission>
                           </ul>
                       </li>
 				  </@shiro.hasAnyRoles>

@@ -307,3 +307,17 @@ CREATE TABLE `tb_event_report` (
   `VOLUME` int(5) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+
+/*==============================================================*/
+/* Table: tb_problem 常见问题                             */
+/*==============================================================*/
+DROP TABLE IF EXISTS `tb_problem`;
+CREATE TABLE `tb_problem` (
+  `ID` varchar(32) NOT NULL,
+  `PROBLEM` varchar(200) DEFAULT NULL,
+  `ANSWER` text DEFAULT NULL,
+  `CRT_TIME` datetime DEFAULT NULL,
+  `VOLUME` int(5) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

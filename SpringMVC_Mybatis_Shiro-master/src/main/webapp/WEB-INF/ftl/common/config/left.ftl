@@ -182,6 +182,14 @@
                     </a>
                 </li>
 			</@shiro.hasPermission>
+
+			<@shiro.hasPermission name="/problem/list.shtml">
+                <li class="${(index==2)?string('active',' ')}">
+                    <a href="${basePath}/problem/list.shtml">
+                        <i class="glyphicon glyphicon-chevron-right"></i>常见问题列表
+                    </a>
+                </li>
+			</@shiro.hasPermission>
         </ul>
     </div>
 	</@shiro.hasAnyRoles>

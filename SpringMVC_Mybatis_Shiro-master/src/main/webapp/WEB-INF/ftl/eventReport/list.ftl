@@ -438,9 +438,9 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="report_title_add" class="col-md-2 control-label">序号</label>
+                                            <label for="report_volume_add" class="col-md-2 control-label">序号</label>
                                             <div class="col-md-10">
-                                                <input type="text" class="form-control" id="report_title_add" name="volume" value="100"/>
+                                                <input type="text" class="form-control" id="report_volume_add" name="volume" value="100"/>
                                             </div>
                                         </div>
                                     </div>
