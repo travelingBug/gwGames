@@ -18,7 +18,7 @@
             <li>|</li>
             <li><a href="/static/rule/bonus.jsp">奖项设置</a></li>
             <li>|</li>
-            <li><a>赛事报道</a></li>
+            <li><a href="/static/eventReport/eventReport.jsp">赛事报道</a></li>
             <li>|</li>
             <li><a href="/static/rank/ranking.jsp">比赛排名</a></li>
             <li>|</li>

@@ -11,6 +11,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>股王大赛</title>
     <%@include file="head.jsp" %>
+    <style>
+        .imgylclass{
+            height: 100%;width:100%;border:0;
+        }
+    </style>
 </head>
 <body>
 <div class="float-layer">
@@ -51,28 +56,8 @@
                     </tbody>
                 </table>
             </div>
-            <div class="list2">
-                <div class="oneline">
-                    <div class="img"><img src="images/list_img_01.png"/></div>
-                    <div class="text">
-                        <div class="tit"><h3>富甲资讯行业交流会在杭州顺利召开</h3><a>MORE</a></div>
-                        <p>2018年5月27日，富甲资讯行业交流会在杭州顺利召开，富甲资讯总裁黄可及其他高层领导参加会议。</p>
-                    </div>
-                </div>
-                <div class="oneline">
-                    <div class="img"><img src="images/list_img_01.png"/></div>
-                    <div class="text">
-                        <div class="tit"><h3>富甲资讯行业交流会在杭州顺利召开</h3><a>MORE</a></div>
-                        <p>2018年5月27日，富甲资讯行业交流会在杭州顺利召开，富甲资讯总裁黄可及其他高层领导参加会议。</p>
-                    </div>
-                </div>
-                <div class="oneline">
-                    <div class="img"><img src="images/list_img_01.png"/></div>
-                    <div class="text">
-                        <div class="tit"><h3>富甲资讯行业交流会在杭州顺利召开</h3><a>MORE</a></div>
-                        <p>2018年5月27日，富甲资讯行业交流会在杭州顺利召开，富甲资讯总裁黄可及其他高层领导参加会议。</p>
-                    </div>
-                </div>
+            <div class="list2" id="eventReport">
+
             </div>
         </div>
     </div>
@@ -181,6 +166,45 @@
 </html>
 <script>
     $(function() {
+        //赛事报道
+        $.ajax({
+            type: "POST",
+            url: "interface/eventreport/list.shtml",
+            data: {pageSize: 3},
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (data) {
+                if (data != null && data.list != null && data.list.length > 0) {
+                    var reportData = data.list;
+                    for (var i = 0 ; i < reportData.length;i++ ) {
+
+                        var html = '<div class="oneline" id="'+reportData[i].id+'" style="cursor:pointer;">';
+                        var more = "";
+                        if (i == 0) {
+                            more = '<a href="/static/eventReport/eventReport.jsp">MORE</a>'
+                        }
+                        html += '<div class="img" style="width: 14%;height: 4%;"><img  class="imgylclass" src="'+reportData[i].cover+'"/></div>';
+                        html += '<div class="text">';
+                        html += '<div class="tit"><h3>'+reportData[i].title+'</h3>'+more+'</div>';
+                        html += '<p>'+reportData[i].described+'</p>';
+                        html += '</div></div>';
+                        $('#eventReport').append(html);
+                        $('#'+reportData[i].id ).click(function(){
+                            window.location.href = "/static/eventReport/eventReportDetail.jsp?id="+$(this).attr("id");
+                        });
+                    }
+
+
+
+                }
+            },
+            error: function (data) {
+            }
+        });
+
+
         $.ajax({
             type: "POST",
             url: "interface/gainsInfo/getTopAllByMoney.shtml",
@@ -324,5 +348,7 @@
             $('#monthShow').css('display','block');
             $('#allShow').css('display','none');
         });
+
+
     });
 </script>

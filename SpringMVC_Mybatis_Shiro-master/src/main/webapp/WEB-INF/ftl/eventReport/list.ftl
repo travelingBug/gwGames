@@ -361,7 +361,7 @@
                                         <div class="form-group">
                                             <label for="report_described_edit" class="col-md-2 control-label">简介</label>
                                             <div class="col-md-10">
-                                                <textarea   class="form-control" id="report_described_edit" name="described" rows="3"></textarea>
+                                                <textarea   class="form-control" id="report_described_edit" name="described" rows="3" maxlength="50"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -432,7 +432,7 @@
                                         <div class="form-group">
                                             <label for="report_described_add" class="col-md-2 control-label">简介</label>
                                             <div class="col-md-10">
-                                                <textarea   class="form-control" id="report_described_add" name="described" rows="3"></textarea>
+                                                <textarea   class="form-control" id="report_described_add" name="described" rows="3" maxlength="50"></textarea>
                                             </div>
                                         </div>
                                     </div>
