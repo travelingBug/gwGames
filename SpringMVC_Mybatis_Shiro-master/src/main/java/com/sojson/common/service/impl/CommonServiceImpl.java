@@ -52,7 +52,7 @@ public class CommonServiceImpl implements CommonService {
             } else if (level == IConstant.VIP_LEVEL.VIP_B.v) {
                 preHour = -24;
             } else if (level == IConstant.VIP_LEVEL.VIP_C.v) {
-                preHour = -2;
+                preHour = 0;
             } else { //没有开通会员
                 return null;
             }

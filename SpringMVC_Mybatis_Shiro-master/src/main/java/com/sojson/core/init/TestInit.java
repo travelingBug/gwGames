@@ -32,7 +32,7 @@ public class TestInit {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
         Calendar cal=Calendar.getInstance();
-        cal.add(Calendar.MONTH,-1);
+//        cal.add(Calendar.MONTH,-1);
         String currDate = formatter.format(cal.getTime());
         cal.add(Calendar.MONTH,-1);
         String preDate = formatter.format(cal.getTime());

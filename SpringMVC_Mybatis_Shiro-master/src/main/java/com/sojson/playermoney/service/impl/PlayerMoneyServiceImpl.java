@@ -30,6 +30,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -43,6 +44,7 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
 
     @Resource
     PlayerService playerService;
+
 
     /**
      * 导入参赛选手数据
@@ -119,6 +121,15 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
                 return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"EXCEL解析失败！");
             }
 
+        //重新计算排名
+            getTopResultForAll();
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
+            Calendar cal=Calendar.getInstance();
+            String currDate = formatter.format(cal.getTime());
+            cal.add(Calendar.MONTH,-1);
+            String preDate = formatter.format(cal.getTime());
+            findTopByMonth(currDate,preDate);
         }
         return msg;
     }

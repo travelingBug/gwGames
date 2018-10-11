@@ -81,7 +81,7 @@
             <div class="tab1">
                 <a class="on" id="all">总收益排行榜</a>
                 <a id="month">月收益排行榜</a>
-                <a class="link">查看更多</a>
+                <a class="link" href="/static/rank/ranking.jsp">查看更多</a>
             </div>
             <div class="table-area1" id="allShow">
                 <h3><i class="icon icon-ranking"></i>首届股神大赛总收益排行</h3>
