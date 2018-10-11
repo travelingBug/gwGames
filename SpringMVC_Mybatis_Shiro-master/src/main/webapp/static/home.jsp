@@ -15,24 +15,33 @@
         .imgylclass{
             height: 100%;width:100%;border:0;
         }
+        .more{
+            position: absolute;
+            line-height: 20px;
+            background:#e1c9a6;
+            color: #8f6e40;
+        }
+        .more:hover {
+            background: #edd7b8;
+        }
     </style>
 </head>
 <body>
 <div class="float-layer">
     <div class="content">
         <div class="fw-box">
-            <a class="icon icon-close"></a>
+            <a class="icon icon-close" id="closeQQ"></a>
             <div class="btns">
-                <a class="btn btn-zxzx"></a>
-                <a class="btn btn-cjwt"></a>
+                <a class="btn btn-zxzx" href="tencent://message/?uin=1930621578&Site=http://60.205.189.94&Menu=yes"></a>
+                <a class="btn btn-cjwt" href="/static/problem/problem.jsp"></a>
                 <a class="btn btn-appxz"></a>
             </div>
         </div>
         <div class="zn-box">
-            <a class="icon icon-close"></a>
+            <a class="icon icon-close" id="closeDoor"></a>
             <div class="btns">
-                <a class="btn btn-gszc"></a>
-                <a class="btn btn-bmcs"></a>
+                <a class="btn btn-gszc" href="/static/vips/register.jsp"></a>
+                <a class="btn btn-bmcs"  href="/static/signup/index.jsp"></a>
             </div>
         </div>
     </div>
@@ -133,31 +142,18 @@
     </div>
     <div class="main-box border-none">
         <div class="title"><div class="title-4"></div></div>
-        <div class="content">
+        <div class="content" id="problemDiv">
             <div class="list3 floatL">
-                <ul>
-                    <li><a><i>1</i>我可以网络购物吗?</a></li>
-                    <li><a><i>2</i>我可以网络购物吗?</a></li>
-                    <li><a><i>3</i>我可以网络购物吗?</a></li>
-                    <li><a><i>4</i>我可以网络购物吗?</a></li>
-                    <li><a><i>5</i>我可以网络购物吗?</a></li>
+                <ul  id="problemL">
                 </ul>
             </div>
             <div class="list3 floatR">
-                <ul>
-                    <li><a><i>6</i>我可以网络购物吗?</a></li>
-                    <li><a><i>7</i>我可以网络购物吗?</a></li>
-                    <li><a><i>8</i>我可以网络购物吗?</a></li>
-                    <li><a><i>9</i>我可以网络购物吗?</a></li>
-                    <li><a><i>10</i>我可以网络购物吗?</a></li>
+                <ul  id="problemR">
                 </ul>
             </div>
+
         </div>
-        <ul class="slider-dot">
-            <li class="on"></li>
-            <li></li>
-            <li></li>
-        </ul>
+
     </div>
     <%@include file="bottom.jsp" %>
     <%@include file="footer.jsp" %>
@@ -166,6 +162,44 @@
 </html>
 <script>
     $(function() {
+        $('#closeDoor').click(function () {
+            $('#closeDoor').parent().css('display','none');
+        });
+        $('#closeQQ').click(function () {
+            $('#closeQQ').parent().css('display','none');
+        });
+        //常见问题
+        $.ajax({
+            type: "POST",
+            url: "interface/problem/list.shtml",
+            data: {pageSize: 10},
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (data) {
+                if (data != null && data.list != null && data.list.length > 0) {
+                    var problemData = data.list;
+                    for (var i = 0 ; i < problemData.length;i++ ) {
+
+                        var html = '<li><a href="/static/problem/problemDetail.jsp?id='+problemData[i].id+'"><i>'+(i+1)+'</i>'+problemData[i].problem+'</a></li>';
+                        if (i%2 == 0) {
+                            $('#problemL').append(html);
+                        } else {
+                            $('#problemR').append(html);
+                        }
+                    }
+                }
+                $('#problemDiv').after('<div style="width:98%;text-align: center;cursor:pointer;" id="problemMore"><a class="more">MORE</a></div>')
+                $('#problemMore').click(function(){
+                    window.location.href = "/static/problem/problem.jsp";
+                });
+            },
+            error: function (data) {
+            }
+        });
+
+
         //赛事报道
         $.ajax({
             type: "POST",
