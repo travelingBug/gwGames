@@ -99,7 +99,7 @@ public class Test
 //        String pwd = String.format("%s#%s","123","123");
 //        pwd = MathUtil.getMD5(pwd);
 //        System.out.println(pwd);
-
+String[] accountArr = {"5788158","5737087","5717756","5775945","5735530","5771978","5760065","5781504","5772176","5702997","5785716","5759258","5772377","5719671","5747333","5785374","5719976","5740511","5761283","5718463","5784304","5708334","5702702","5721883","5722977","5745732","5752033","5716834","5776277","5796003","5780083","30401342","5767462","5751541","30407693","5764456","50091836","5705693","5739980","5738202","5780386","5736295","5703249","5710715","5789596","30400668","5778847","5768403","5773127","5753291"};
         FileOutputStream fos=new FileOutputStream(new File("D:/12.sql"));
         OutputStreamWriter osw=new OutputStreamWriter(fos, "UTF-8");
         BufferedWriter bw=new BufferedWriter(osw);
@@ -109,20 +109,22 @@ public class Test
         Map<Integer,Double> balanceMoneyMap = new HashMap<Integer,Double>();
 
         //插入300个参赛选手
-        for (int i = 0; i < 300 ; i++) {
+        for (int i = 0; i < 50 ; i++) {
             idCards.add(i);
             String playerData = player + "'"+ StringUtils.getUUID32()+"',";
-            playerData += "'ACCOUNT测试账号"+i+"',";
+            playerData += "'测试账号A"+i+"',";
             playerData += "'测试账号"+i+"',";
             playerData += "'"+i+"',";
             playerData += "'"+i+"',";
             playerData += "0,";
             playerData += "1,";
-            playerData += "'2018-09-21 00:00:00',"+i+",'300000');";
+            playerData += "'2018-09-21 00:00:00',"+accountArr[i]+",'300000');";
             bw.write(playerData+"\t\n");
             playerMoney.put(i,300000d);
             balanceMoneyMap.put(i,300000d);
+            System.out.println(playerData);
         }
+
 
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 

@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.sojson.common.ResultMessage;
+import com.sojson.common.utils.RedisUtil;
 import net.sf.json.JSONObject;
 
 import org.apache.shiro.authc.DisabledAccountException;
@@ -161,4 +163,64 @@ public class UserLoginController extends BaseController {
 		}
 		return resultMap;
 	}
+
+
+	/**
+	 * 重置跳转
+	 * @return
+	 */
+	@RequestMapping(value="recharge",method=RequestMethod.GET)
+	public ModelAndView recharge(){
+
+		return new ModelAndView("user/recharge");
+	}
+
+	/**
+	 * 重置密码
+	 * @return
+	 */
+	@RequestMapping(value="rePass",method=RequestMethod.POST)
+	@ResponseBody
+	public ResultMessage rePass(String phone,String code){
+		String smsCode = RedisUtil.get(phone);
+		if (StringUtils.isBlank(phone) ||StringUtils.isBlank(code) ) {
+			return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"请填写手机号码和验证码！");
+		}
+		if (StringUtils.isBlank(smsCode)) {
+			return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"未找到对应验证码！");
+		}
+		String[] codeArr = smsCode.split(",");
+		if (codeArr.length != 2 || !codeArr[0].equalsIgnoreCase(code)) {
+			return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"验证码错误！");
+		}
+		UUser user = userService.findUserByEmail(phone);
+		if (user == null) {
+			return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"电话号码错误！");
+		}
+		user.setPswd("123456");
+		//加工密码
+		user = UserManager.md5Pswd(user);
+		//修改密码
+		userService.updateByPrimaryKeySelective(user);
+
+		//删除redies缓存
+		RedisUtil.delete(phone);
+		return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"重置成功，请尽快修改密码！");
+	}
+
+	/**
+	 * 重置跳转
+	 * @return
+	 */
+	@RequestMapping(value="userPhone",method=RequestMethod.POST)
+	@ResponseBody
+	public ResultMessage userPhone(String phone){
+		ResultMessage msg = new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
+		UUser user = userService.findUserByEmail(phone);
+		if (user == null) {
+			msg = new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v);
+		}
+		return msg;
+	}
+
 }

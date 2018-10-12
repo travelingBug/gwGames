@@ -2,6 +2,7 @@
 <html lang="zh-cn">
     <head>
         <meta charset="utf-8">
+	<#include "../head.ftl" >
         <title>登录</title>
         <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
         <link rel="icon" href="https://open.sojson.com/favicon.ico" type="image/x-icon" />
@@ -56,6 +57,9 @@
                             <span class="us_uer"></span>
                             <input name="password" class="text password" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
                         </div>
+						<div style="width: 100%;text-align: right">
+							<a style="color: white;font-size:small;" href="/u/recharge.shtml" id="recharge">忘记密码？</a>
+						</div>
                         <div class="mb2"><a class="act-but submit" id="login" href="javascript:;" style="color: #FFFFFF">登录</a></div>
                     </form>
                 </div>
@@ -63,7 +67,7 @@
         </div>
         </div><!-- /container -->
         <!-- Javascript -->
-       <script  src="http://open.sojson.com/common/jquery/jquery1.8.3.min.js"></script>
+       <#--<script  src="http://open.sojson.com/common/jquery/jquery1.8.3.min.js"></script>-->
         <script src="http://open.sojson.com/common/MD5.js"></script>
         <#--<script src="http://open.sojson.com/itboy/js/itboy/app/supersized.3.2.7.min.js"></script>-->
         <#--<script src="http://open.sojson.com/itboy/js/itboy/app/supersized-init.js"></script>-->
