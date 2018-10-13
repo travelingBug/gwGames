@@ -11,6 +11,7 @@ import com.sojson.player.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,11 @@ public class PlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> implement
         //数据验证
         ResultMessage msg = beforeUpdateVaild(entity);
         if (msg.getLevel() == ResultMessage.MSG_LEVEL.SUCC.v) {
-            entity.setModTime(new Date()); //设置修改时间
+            Date currentTime = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String dateStr = formatter.format(currentTime);
+            entity.setModTime(currentTime); //设置修改时间
+            entity.setAuditTime(dateStr);
             uTbPlayerMapper.updateByPrimaryKeySelective(entity);
         }
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);

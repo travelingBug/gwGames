@@ -81,6 +81,16 @@ public class TbVips implements Serializable {
 
     private String verfiCode;
 
+    private String img;
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
     public String getVerfiCode() {
         return verfiCode;
     }

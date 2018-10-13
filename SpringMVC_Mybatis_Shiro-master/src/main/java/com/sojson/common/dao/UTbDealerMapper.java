@@ -19,4 +19,6 @@ public interface UTbDealerMapper {
     List<TbDealer> findAll(Object param);
 
     TbDealer findDealerByUserId(Long userId);
+
+    TbDealer findDealerByPhone(String telPhone);
 }

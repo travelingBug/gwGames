@@ -49,7 +49,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                    <h4 class="modal-title" id="dealerLinkModalLabel">分享</h4>
+                                    <h4 class="modal-title" id="dealerLinkModalLabel">开户二维码/链接</h4>
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group" style="text-align: center;">

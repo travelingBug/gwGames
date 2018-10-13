@@ -21,6 +21,10 @@
 
 				$("#dealer_edit_btn_submit").click(function(){
 					var data = $("#dealer_edit_form").serialize();
+                    if($("#dealer_edit_phone").hasClass("has-error")){
+                        layer.msg('验证错误！');
+                        return false;
+                    }
                     $.post('${basePath}/dealer/editDealer.shtml',data,function(result){
                         if(result && result.level != 1){
                             return layer.msg(result.messageText,so.default),!0;
@@ -35,6 +39,10 @@
 
                 $("#dealer_add_btn_submit").click(function(){
 					var data = $("#form1").serialize();
+					if($("#dealer_add_phone").hasClass("has-error")){
+                        layer.msg('验证错误！');
+						return false;
+					}
                     $.post('${basePath}/dealer/addDealer.shtml',
 							data,
 							function(result){
@@ -49,6 +57,28 @@
                     },'json');
                 });
 			});
+
+			function valiPhone(obj){
+                var phone = obj.value;
+				var data = {
+					"phone":phone
+				}
+                $.post('${basePath}/dealer/valiPhone.shtml',data,function(result){
+                    if(result && result.level != 1){
+                        $(obj).addClass("has-error");
+                        $(obj).parent(".form-group").removeClass("has-success");
+                        $(obj).parent(".form-group").addClass("has-error");
+                        $(obj).siblings(".form-control-feedback").removeClass("glyphicon-ok");
+						$(obj).siblings(".form-control-feedback").addClass("glyphicon-remove");
+                    }else{
+                        $(obj).removeClass("has-error");
+                        $(obj).parent(".form-group").removeClass("has-error");
+                        $(obj).parent(".form-group").addClass("has-success");
+                        $(obj).siblings(".form-control-feedback").removeClass("glyphicon-remove");
+                        $(obj).siblings(".form-control-feedback").addClass("glyphicon-ok");
+					}
+                },'json');
+			}
 
 			function _edit(id, name, phone, address, type){
 				$("#dealer_edit_id").val(id);
@@ -175,8 +205,11 @@
 											<input type="text" name="loginName" class="form-control" id="dealer_add_loginName" placeholder="账号">
 											<label for="dealer_add_name">名称</label>
 											<input type="text" name="name" class="form-control" id="dealer_add_name" placeholder="名称">
-											<label for="dealer_add_phone">手机号码</label>
-											<input type="text" name="phone" class="form-control" id="dealer_add_phone" placeholder="手机号码">
+											<div class="form-group has-feedback">
+												<label for="dealer_add_phone">手机号码</label>
+												<input type="text" name="phone" class="form-control" onblur="valiPhone(this);" id="dealer_add_phone" placeholder="手机号码">
+                                                <span class="glyphicon form-control-feedback"></span>
+											</div>
 											<label for="dealer_add_address">联系地址</label>
 											<input type="text" name="address" class="form-control" id="dealer_add_address" placeholder="地址">
 											<label for="dealer_add_type">返点类型</label>
@@ -210,8 +243,11 @@
 										<input type="hidden" name="id" id="dealer_edit_id">
                                         <label for="dealer_name">名称</label>
                                         <input type="text" name="name" class="form-control" id="dealer_edit_name" placeholder="名称">
-                                        <label for="dealer_add_phone">手机号码</label>
-                                        <input type="text" name="phone" class="form-control" id="dealer_edit_phone" placeholder="手机号码">
+										<div class="form-group has-feedback">
+											<label for="dealer_add_phone">手机号码</label>
+											<input type="text" name="phone" class="form-control" onblur="valiPhone(this);" id="dealer_edit_phone" placeholder="手机号码">
+											<span class="glyphicon form-control-feedback"></span>
+										</div>
                                         <label for="dealer_add_address">联系地址</label>
                                         <input type="text" name="address" class="form-control" id="dealer_edit_address" placeholder="地址">
                                         <label for="dealer_add_type">返点类型</label>

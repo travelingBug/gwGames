@@ -186,6 +186,12 @@ public class DealerController extends BaseController {
         return new ModelAndView("dealer/vipsList");
     }
 
+    @RequestMapping(value = "valiPhone", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage valiPhone(String phone, HttpServletRequest req) {
+        return dealerService.validPhone(phone);
+    }
+
 
 //    @RequestMapping(value="countDealerVip",method=RequestMethod.POST)
 //    @ResponseBody

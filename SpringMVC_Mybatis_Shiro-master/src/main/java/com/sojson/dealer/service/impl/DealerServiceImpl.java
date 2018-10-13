@@ -309,4 +309,13 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "查询成功！", strArray);
 
     }
+
+    @Override
+    public ResultMessage validPhone(String telPhone){
+        TbDealer dealer = uTbDealerMapper.findDealerByPhone(telPhone);
+        if(null != dealer){
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "电话号码已经存在！");
+        }
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
+    }
 }

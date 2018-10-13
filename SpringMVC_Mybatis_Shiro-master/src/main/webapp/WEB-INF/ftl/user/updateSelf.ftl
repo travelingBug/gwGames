@@ -26,16 +26,16 @@
 					<form id="formId" enctype="multipart/form-data" action="${basePath}/user/updateSelf.shtml" method="post">
 						  <input type="hidden" value="${token.id}" name="id"/>
 						  <div class="form-group">
-						    <label for="nickname">昵称</label>
-						    <input type="text" class="form-control" autocomplete="off" id="nickname" maxlength="8" name="nickname" value="${token.nickname?default('未设置')}" placeholder="请输入昵称">
+						    <label for="nickname">企业/员工名称（不可修改）</label>
+						    <input type="text" class="form-control" disabled autocomplete="off" id="nickname" maxlength="8" name="nickname" value="${token.nickname?default('未设置')}" placeholder="请输入昵称">
 						  </div>
 						  <div class="form-group">
-						    <label for="email">Email（不准修改）</label>
+						    <label for="email">Telphone（不可修改）</label>
 						    <input type="text" class="form-control " disabled autocomplete="off" id="email" maxlength="64" name="email" value="${token.email?default('未设置')}" placeholder="请输入帐号">
 						  </div>
-						  <div class="form-group">
-							  <button type="submit" class="btn btn-success">确定修改</button>
-						  </div>
+						  <#--<div class="form-group">-->
+							  <#--<button type="submit" class="btn btn-success">确定修改</button>-->
+						  <#--</div>-->
 						</form>
 					
 				</div>

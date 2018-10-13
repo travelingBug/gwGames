@@ -19,7 +19,7 @@
                 <img src="images/img_head.png"/>
             </div>
             <div class="head-cont-box">
-                <h3><span>ITS-GUSHEN</span></h3>
+                <h3><span id="nickname"></span></h3>
                 <p><b>A</b>类会员剩余天数</p>
                 <p class="red">20天</p>
                 <div class="btns">
@@ -39,6 +39,18 @@
                 </table>
             </div>
         </div>
+
+        <div class="content bg-white">
+            <div class="tab1">
+                <a class="on">充值记录</a>
+            </div>
+            <div class="table-area1" id="depositRecordDiv">
+                <table class="table1" id="depositRecordTable">
+                    <tbody id="depositRecord">
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <%@include file="../bottom.jsp" %>
     <%@include file="../footer.jsp" %>
@@ -46,9 +58,32 @@
 </body>
 <script>
     $(function() {
+        queryVipsInfo();
+
+        queryDepositRecordPage(1,"depositRecord");
+
         goPageByAjax(1);
 
     });
+
+    function queryVipsInfo(){
+        var sessionId = sessionStorage.getItem("sessionId");
+        $.ajax({
+            type: "POST",
+            url: "interface/vips/queryVipsInfo.shtml",
+            data: {sessionId:sessionId},
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (result) {
+                $("#nickname").text(result.nickName);
+            }, error: function (result) {
+
+            }
+
+        });
+    }
 
     function goPageByAjax(pageNo) {
         //获取交易明细
@@ -126,6 +161,69 @@
                 errorMsg("取消关注失败，请稍后再试！");
             }
         });
+    }
+
+    function queryDepositRecordPage(pageNo,id) {
+        //获取交易明细
+        $.ajax({
+            type: "POST",
+            url: "interface/gainsInfo/getTopMonthHisByPage.shtml",
+            data: {pageNo:pageNo},
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (result) {
+                var recordData = result.list;
+                $('#tb'+id).html('');
+                $('#pager'+id).remove();
+                $('#tb'+id).append('<tr><th></th><th>充值等级</th><th>充值金额</th><th>充值时间</th></tr>');
+                if (recordData != null && recordData.length > 0) {
+                    for (var i = 0 ; i < recordData.length ; i++) {
+                        var showTop= '<td>'+recordData[i].rank+'</td>';
+                        var bg = "";
+                        if (i%2 == 1) {
+                            bg = "class='bg'";
+                        }
+                        var recordHtml = '<tr ' + bg + '>';
+                        recordHtml += '<td>'+recordData[i].level +'</td>';
+                        recordHtml += showTop;
+                        recordHtml += '<td>'+recordData[i].amount +'</td>';
+                        recordHtml += '<td>'+recordData[i].crt_time +'</td>';
+
+
+                        $('#tb'+id).append(recordHtml);
+
+                    }
+                    $('#table'+id+'').after(getPager(id,result));
+                } else {
+                    $('#tb'+id).append('<tr><td  colspan="3">暂无数据</td></tr>');
+                }
+            }
+        });
+    }
+
+    function getPager(id,result){
+        var totalPage = Math.ceil((result.totalCount/result.pageSize));
+        var pager = "<div class='pager' id='pager"+id+"'><ul class='floatR'>";
+        pager +="<li><a  class='text' href='javascript:;' onclick='queryDepositRecordPage(1,\""+id+"\")'>首页</a></li>";
+        if (result.pageNo > 1) {
+            pager += "<li><a  class='icon' href='javascript:;'  onclick='queryDepositRecordPage(" + (result.pageNo - 1) + ",\""+id+"\")'>&lt;</a></li>";
+        }
+        for (var i = (result.pageNo-2<=0?1:result.pageNo-2),no = 1; i <= result.totalPage && no < 6 ; i++,no++) {
+            if (result.pageNo == i) {
+                pager += "<li><span class='numb on'>"+i+"</span></li>";
+            }else{
+                pager += "<li><a class='numb' href='javascript:;' onclick='queryDepositRecordPage("+i+",\""+id+"\")'>"+i+"</a></li>";
+            }
+        }
+        if (result.pageNo < totalPage) {
+            pager +="<li><a class='icon' href='javascript:;'  onclick='queryDepositRecordPage(" + (result.pageNo + 1) + ",\""+id+"\")'>&gt;</a></li>";
+        }
+        pager +="<li><a class='icon' href='javascript:;'  onclick='queryDepositRecordPage("+(totalPage)+",\""+id+"\")'>尾页</a></li>";
+        pager +="</ul><span class='page-numb'>第"+result.pageNo+"页 / 共"+totalPage+"页</span></div>";
+
+        return pager;
     }
 
 </script>

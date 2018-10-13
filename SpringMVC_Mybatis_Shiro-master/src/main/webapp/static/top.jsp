@@ -44,7 +44,7 @@
                     <div class="content">
                         <div class="links" id="navigation">
                             <a class="link floatL"><i class="icon icon-bmcs" href="/static/signup/index.jsp"></i>报名参赛</a>
-                            <a class="link floatR"><i class="icon icon-gszc" href="/static/vips/register.jsp"></i>观赛注册</a>
+                            <a class="link floatR"><i class="icon icon-gszc" href="/static/vips/register.jsp?a=2"></i>观赛注册</a>
                         </div>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
         });
 
         if (sessionStorage.getItem("nickName") != null && sessionStorage.getItem("nickName") != '') {
-            $('#topHead').append('<a class="link" >'+sessionStorage.getItem("nickName")+'</a>');
+            $('#topHead').append('<a class="link" href="/static/vips/vips_center.jsp">'+sessionStorage.getItem("nickName")+'</a>');
             $('#topHead').append('<a class="link" id="loginOut">[注销]</a>');
             $('#navigation').css('display','none');
             $('#loginOut').click(function(){
@@ -84,7 +84,7 @@
                 });
             });
         } else {
-            $('#topHead').append('<a class="link" href="/static/vips/register.jsp">[登录]</a>');
+            $('#topHead').append('<a class="link" href="/static/vips/register.jsp?a=1">[登录]</a>');
         }
     });
 

@@ -37,4 +37,5 @@ public interface DealerService {
 
     ResultMessage queryLink(String userId);
 
+    public ResultMessage validPhone(String telPhone);
 }

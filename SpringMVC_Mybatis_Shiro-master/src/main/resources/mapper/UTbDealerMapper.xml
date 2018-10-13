@@ -104,4 +104,11 @@
     from tb_dealer d
     where d.FK_USER_ID = #{userId}
   </select>
+
+  <select id="findDealerByPhone" resultMap="dealerResultMap" >
+    select
+    <include refid="dealer_Column_List" />
+    from tb_dealer d
+    where d.PHONE = #{phone}
+  </select>
 </mapper>

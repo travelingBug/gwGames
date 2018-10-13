@@ -1,5 +1,6 @@
 package com.sojson.common.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -41,7 +42,7 @@ public class TbPlayer implements Serializable{
 
     /**
      * 审核标记
-     * 0:未审核 1：审核通过 2：审核不通过
+     * 0:未审核 1：审核通过未加微信 2：审核不通过  3:审核通过已加微信
      */
 	private Byte auditFlag;
 
@@ -64,6 +65,46 @@ public class TbPlayer implements Serializable{
      * 备注
      */
     private String bz = "";
+
+    /**
+     * 审核人
+     */
+    private String auditer;
+
+    /**
+     * 审核时间
+     */
+    private String auditTime;
+
+    /**
+     * 微信号码
+     */
+    private String wechat;
+
+    public String getAuditer() {
+        return auditer;
+    }
+
+    public void setAuditer(String auditer) {
+        this.auditer = auditer;
+    }
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    public String getAuditTime() {
+        return auditTime;
+    }
+
+    public void setAuditTime(String auditTime) {
+        this.auditTime = auditTime;
+    }
+
+    public String getWechat() {
+        return wechat;
+    }
+
+    public void setWechat(String wechat) {
+        this.wechat = wechat;
+    }
 
     public String getId() {
         return id;

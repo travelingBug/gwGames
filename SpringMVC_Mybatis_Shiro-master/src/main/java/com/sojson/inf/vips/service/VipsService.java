@@ -23,5 +23,8 @@ public interface VipsService {
     ResultMessage login(TbVips entity, HttpServletRequest req);
 
     ResultMessage validPhone(String telPhone);
-    public ResultMessage loginOut(String token);
+
+    ResultMessage loginOut(String token);
+
+    TbVips queryVipsInfo(String sessionId);
 }

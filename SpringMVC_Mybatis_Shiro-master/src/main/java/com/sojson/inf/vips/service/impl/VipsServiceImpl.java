@@ -9,6 +9,7 @@ import com.sojson.common.model.TbVips;
 import com.sojson.common.utils.MathUtil;
 import com.sojson.common.utils.RedisUtil;
 import com.sojson.common.utils.StringUtils;
+import com.sojson.common.utils.WaterMarkUtil;
 import com.sojson.core.config.IConfig;
 import com.sojson.core.mybatis.BaseMybatisDao;
 import com.sojson.core.mybatis.page.Pagination;
@@ -22,7 +23,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -73,10 +79,23 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
             entity.setDelFlag(TbVips._0);
             entity.setCrtTime(date);
             entity.setPassword(md5Pswd(entity.getPhone(), entity.getPassword()));
-            entity.setLevel(IConstant.VIP_LEVEL.VIP_0.v);
-            //插入会员信息
-            uTbVipsMapper.insert(entity);
+            entity.setLevel(IConstant.VIP_LEVEL.VIP_0.v);//插入会员信息
+            int vipId = uTbVipsMapper.insert(entity);
             msg.setMessageText("注册成功！");
+
+            String watermark = entity.getInviteCode();
+            watermark = watermark.substring(0,2);
+            watermark = watermark + String.format("%03d", vipId);
+            BufferedImage imgMap = WaterMarkUtil.drawTranslucentStringPic(400, 80, 36,watermark);
+            String path = IConfig.get("qrCode_path");
+            File imgFile = new File("D://qrcode/"+entity.getPhone()+".jpg");
+            try
+            {
+                ImageIO.write(imgMap, "JPG", imgFile);
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
             //删除redies缓存
             RedisUtil.delete(entity.getPhone());
 
@@ -191,6 +210,18 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
 
         }
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
+    }
+
+    @Override
+    public TbVips queryVipsInfo(String sessionId) {
+        String[] arr = RedisUtil.get(sessionId).split(",");
+        String phone = arr[0];
+        TbVips entity = new TbVips();
+        entity.setPhone(phone);
+
+        TbVips vip = uTbVipsMapper.findUserByPhone(entity);
+
+        return vip;
     }
 
 

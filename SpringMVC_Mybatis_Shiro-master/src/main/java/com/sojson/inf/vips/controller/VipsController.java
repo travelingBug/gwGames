@@ -114,10 +114,10 @@ public class VipsController extends BaseController {
         return new ModelAndView("vips/list");
     }
 
-    @RequestMapping(value="forbidUserById",method=RequestMethod.POST)
+    @RequestMapping(value="queryVipsInfo",method=RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> forbidUserById(Long id, Long status){
-        return userService.updateForbidUserById(id,status);
+    public TbVips queryVipsInfo(String sessionId){
+        return vipsService.queryVipsInfo(sessionId);
     }
 
     @RequestMapping(value="loginOut",method=RequestMethod.POST)
@@ -125,5 +125,11 @@ public class VipsController extends BaseController {
     public ResultMessage loginOut(HttpServletRequest request) throws Exception {
         String token = commonService.getToken(request);
         return vipsService.loginOut(token);
+    }
+
+    @RequestMapping(value="forbidUserById",method=RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> forbidUserById(Long id, Long status){
+        return userService.updateForbidUserById(id,status);
     }
 }

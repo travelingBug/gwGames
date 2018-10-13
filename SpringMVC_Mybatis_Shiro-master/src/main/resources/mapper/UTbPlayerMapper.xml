@@ -12,9 +12,12 @@
     <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
     <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
     <result column="ACCOUNT" property="account" jdbcType="VARCHAR" />
+    <result column="AUDITER" property="auditer" jdbcType="VARCHAR" />
+    <result column="AUDIT_TIME" property="auditTime" jdbcType="VARCHAR" />
+    <result column="WECHAT" property="wechat" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Player_Column_List" >
-    ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,crt_time,ACCOUNT,BZ,ACCOUNT
+    ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,crt_time,ACCOUNT,BZ,ACCOUNT,AUDITER,DATE_FORMAT(AUDIT_TIME,'%Y-%m-%d %H:%i:%s') as AUDIT_TIME,WECHAT
   </sql>
   <sql id="limit_sql">
   	   <if test="page_sql != null and page_sql != ''">
@@ -106,6 +109,15 @@
       </if>
       <if test="modTime != null and modTime != ''" >
         MOD_TIME = #{modTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditer != null and auditer != ''" >
+        AUDITER = #{auditer,jdbcType=TINYINT},
+      </if>
+      <if test="auditTime != null and auditTime != ''" >
+        AUDIT_TIME = #{auditTime,jdbcType=TINYINT},
+      </if>
+      <if test="wechat != null and wechat != ''" >
+        WECHAT = #{wechat,jdbcType=TINYINT}
       </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}

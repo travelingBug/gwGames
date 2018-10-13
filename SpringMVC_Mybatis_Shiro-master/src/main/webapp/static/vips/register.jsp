@@ -18,7 +18,7 @@
                 <div class="one"><div class="input-area"><i class="icon-pw"></i><input class="width-250 pwd" name="password" type="password"/></div></div>
                 <div class="one"><div class="left-area"><!--<input type="radio" class="radio">自动登录</div><a class="right-area">找回密码？</a>--></div></div>
                 <div class="one"><a class="login-btn" id="loginBtn">登录</a></div>
-                <div class="one"><p>还没有账号？<a class="link">立即注册</a></p></div>
+                <div class="one"><p>还没有账号？<a class="link" href="/static/vips/register.jsp?a=2">立即注册</a></p></div>
             </form>
         </div>
     </div>
@@ -29,7 +29,7 @@
         <div class="content">
             <div class="logo"></div>
             <div class="right-area">
-                <p>已有账号？请直接<a class="link loginBtn" href="javascript:;">登录</a></p>
+                <p>已有账号？请直接<a class="link loginBtn" href="/static/vips/register.jsp?a=1">登录</a></p>
             </div>
         </div>
     </div>
@@ -85,7 +85,10 @@
 </html>
 <script>
     $(function(){
-        $(".login").hide();
+        var a = getUrlParam('a') || 2;
+        if(a!=1){
+            $(".login").hide();
+        }
 
 //        $("#seatNum").text(getUrlParam('seatNum'));
         $("#inviteCode").val(getUrlParam('inviteNum'));
@@ -324,6 +327,7 @@
                 request.setRequestHeader("Authorization", getAuthorization());
             },
             success: function(data) {
+                debugger;
                 if (data.level == 1) {
                     $('#registerForm')[0].reset();
                     sessionStorage.setItem("sessionId", data.data);

@@ -47,6 +47,20 @@
                         }
                     },'json');
                 });
+
+				$("#player_wechat_submit").click(function(){
+					var data = $("#play_wechat_form").serialize();
+					$.post('${basePath}/player/auditById.shtml',data,function(result){
+						if(result && result.level != 1){
+							return layer.msg(result.messageText,so.default),!0;
+						}else{
+							layer.msg('微信添加成功！');
+							setTimeout(function(){
+								$('#playerForm').submit();
+							},1000);
+						}
+					},'json');
+				});
 				</@shiro.hasPermission>
 
 				$("#i_refresh").click(function(){
@@ -66,6 +80,14 @@
 
 					$("#playerAuditModal").modal();
                 });
+            }
+
+            //根据ID数组，删除
+            function _addwechat(id, status){
+                    $("#player_wechat_id").val(id);
+                    $("#player_wechat_status").val(status);
+
+                    $("#playerWechatModal").modal();
             }
 
 			function _edit(id, name, account, bz){
@@ -94,7 +116,8 @@
 							<select name="auditFlag" class="form-control">
                                 <option value="">全部</option>
                                 <option value="0">待审核</option>
-                                <option value="1">通过</option>
+                                <option value="1">通过未加微信</option>
+                                <option value="3">通过已加微信</option>
                                 <option value="2">不通过</option>
 							</select>
 					      </div>
@@ -117,6 +140,9 @@
 							<th>报名时间</th>
 							<th>备注</th>
 							<th>审核状态</th>
+							<th>审核人</th>
+							<th>审核时间</th>
+							<th>微信号码</th>
 							<th>操作</th>
 						</tr>
 						<#if page?exists && page.list?size gt 0 >
@@ -134,11 +160,16 @@
 										<#if it.auditFlag==0>
 											待审核
 										<#elseif it.auditFlag==1>
-											通过
+											通过未加微信
+										<#elseif it.auditFlag==3>
+                                            通过已加微信
 										<#elseif it.auditFlag==2>
 											未通过
 										</#if>
 									</td>
+									<td>${it.auditer!""}</td>
+									<td>${it.auditTime!""}</td>
+									<td>${it.wechat!""}</td>
 									<td>
 										<@shiro.hasPermission name="/player/auditById.shtml">
 											<#if it.auditFlag==0>
@@ -151,6 +182,9 @@
 											</#if>
 										</@shiro.hasPermission>
                                         <a href="javascript:_edit('${it.id}', '${it.accountName}','${it.account}','${it.bz}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#playerEditModal"></i></a>
+										<#if it.auditFlag==1>
+                                            <a href="javascript:_addwechat('${it.id}','3');"><i class="fab fa-weixin pass" title="微信"></i></a>
+										</#if>
 									</td>
 								</tr>
 							</#list>
@@ -208,6 +242,8 @@
 											<input type="hidden" name="auditFlag" id="player_audit_status">
 											<label for="player_account">资金账号</label>
 											<input type="text" name="account" class="form-control" placeholder="资金账号">
+                                            <label for="player_account">审核人</label>
+                                            <input type="text" name="auditer" disabled class="form-control" placeholder="审核人" value="${token.email}">
 											<label for="player_bz">备注</label>
 											<textarea name="bz" class="form-control" placeholder="备注"></textarea>
                                         </form>
@@ -216,6 +252,31 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
                                     <button type="button" id="player_audit_submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-save normal"></i>&nbsp;保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="playerWechatModal" tabindex="-1" role="dialog" aria-labelledby="playerWechatModalLabel">
+                        <div class="modal-dialog" role="document" style="width:30%;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title" id="playerWechatModalLabel">添加微信</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <form id="play_wechat_form" action="#" method="post">
+                                            <input type="hidden" name="id" id="player_wechat_id">
+                                            <input type="hidden" name="auditFlag" id="player_wechat_status">
+                                            <label for="player_wechat">微信号码</label>
+                                            <input type="text" name="wechat" class="form-control" placeholder="微信号码">
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                                    <button type="button" id="player_wechat_submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-save normal"></i>&nbsp;保存</button>
                                 </div>
                             </div>
                         </div>
