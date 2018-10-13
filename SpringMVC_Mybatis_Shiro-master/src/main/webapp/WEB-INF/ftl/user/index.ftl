@@ -39,7 +39,7 @@
 							<td>${token.lastLoginTime?string('yyyy-MM-dd HH:mm')}</td>
 						</tr>
                         <tr>
-                            <th>分享</th>
+                            <th>开户二维码/链接</th>
                             <td><i class="fas fa-link" onclick="_queryLink('${userId}');"></i></td>
                         </tr>
 					</table>
