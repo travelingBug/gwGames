@@ -84,18 +84,10 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
             msg.setMessageText("注册成功！");
 
             String watermark = entity.getInviteCode();
-            watermark = watermark.substring(0,2);
+            watermark = watermark.substring(0,3);
             watermark = watermark + String.format("%05d", vipId);
-            BufferedImage imgMap = WaterMarkUtil.drawTranslucentStringPic(400, 80, 36,watermark);
             String path = IConfig.get("qrCode_path_real");
-            File imgFile = new File(path+"/"+entity.getPhone()+".jpg");
-            try
-            {
-                ImageIO.write(imgMap, "JPG", imgFile);
-            } catch (IOException e)
-            {
-                e.printStackTrace();
-            }
+            WaterMarkUtil.markImg(path+entity.getPhone()+".png",watermark);
             //删除redies缓存
             RedisUtil.delete(entity.getPhone());
 

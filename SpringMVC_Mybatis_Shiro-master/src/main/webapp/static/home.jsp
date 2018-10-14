@@ -309,8 +309,8 @@
                         var html = '<tr class="'+trClass+'">';
                         html += showTop;
                         html += '<td>'+data[i].accountName+'</td>';
-                        html += '<td class="red">'+data[i].yieldRate+'</td>';
-                        html += '<td>'+data[i].buyForALLRate+'</td>';
+                        html += '<td class="red">'+data[i].yieldRate+'%</td>';
+                        html += '<td>'+data[i].buyForALLRate+'%</td>';
                         html += '<td>'+data[i].totalMoney+'</td>';
                         html += '<td><a class="red" href="/static/gains/strategy.jsp?account='+$.trim(data[i].account)+'">观赛</a></td>';
                         html += '</tr>';
@@ -352,8 +352,8 @@
                         var html = '<tr class="'+trClass+'">';
                         html += showTop;
                         html += '<td>'+data[i].accountName+'</td>';
-                        html += '<td class="red">'+data[i].yieldRate+'</td>';
-                        html += '<td>'+data[i].buyForALLRate+'</td>';
+                        html += '<td class="red">'+data[i].yieldRate+'%</td>';
+                        html += '<td>'+data[i].buyForALLRate+'%</td>';
                         html += '<td>'+data[i].totalMoney+'</td>';
                         html += '<td><a class="red"  href="/static/gains/strategy.jsp?account='+$.trim(data[i].account)+'">观赛</a></td>';
                         html += '</tr>';

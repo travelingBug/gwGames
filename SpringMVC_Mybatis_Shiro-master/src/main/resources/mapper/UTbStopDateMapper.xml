@@ -9,7 +9,7 @@
     <result column="user_id" property="userId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, stop_flag, bgn_Time, end_time
+    id, stop_flag, bgn_Time, end_time,user_id
   </sql>
 
   <select id="findAll" resultMap="BaseResultMap" >
@@ -22,18 +22,18 @@
   <update id="update" parameterType="com.sojson.common.model.TbStopDate" >
     update tb_stop_date
     <set >
-      <if test="stopFlag != null" >
+      <!--<if test="stopFlag != null" >-->
         stop_flag = #{stopFlag},
-      </if>
-      <if test="bgnTime != null" >
+      <!--</if>-->
+      <!--<if test="bgnTime != null" >-->
         bgn_Time = #{bgnTime},
-      </if>
-      <if test="endTime != null" >
+      <!--</if>-->
+      <!--<if test="endTime != null" >-->
         end_time = #{endTime},
-      </if>
-      <if test="userId != null" >
+      <!--</if>-->
+      <!--<if test="userId != null" >-->
         user_id = #{userId}
-      </if>
+      <!--</if>-->
     </set>
     where id = 1
   </update>

@@ -33,7 +33,7 @@
                 <p id="businessTime"></p>
             </div>
         </div>
-        <div class="content bg-white">
+        <div class="content bg-white" id="zhcg">
             <div class="tab1">
                 <a class="on">账户持股</a>
             </div>
@@ -50,7 +50,7 @@
                 </table>
             </div>
         </div>
-        <div class="content bg-white">
+        <div class="content bg-white" id="drjymx">
             <div class="tab1">
                 <a class="on">当日交易明细</a>
             </div>
@@ -72,6 +72,13 @@
 <script>
     var account = '${param.account}';
     $(function() {
+
+        $(document).keydown(function(event){
+            //屏蔽F5刷新键
+            if(event.keyCode==116){
+                return false;
+            }
+        });
 
         $.ajax({
             type: "POST",
@@ -148,6 +155,29 @@
                    goPageByAjax(1);
 
 
+                   /**
+                    * 防伪标记
+                    */
+                   $.ajax({
+                       type: "POST",
+                       url: "interface/gainsInfo/getMarking.shtml",
+                       data: {},
+                       dataType: "json",
+                       beforeSend: function (request) {
+                           request.setRequestHeader("Authorization", getAuthorization());
+                       },
+                       success: function (result) {
+                           if(result.level ==  1){
+                              $('#zhcg').css("background-image","url("+result.data+")");
+                              $('#drjymx').css("background-image","url("+result.data+")");
+
+                           }
+                       },
+                       error: function (result) {
+                       }
+                   });
+
+
 
                } else {
                    warnMsg(data.messageText);
@@ -212,6 +242,10 @@
             });
         });
 
+        setTimeout(function(){
+            $(document).unbind('keydown');
+        }, 2500);
+
     });
     
     function goPageByAjax(pageNo) {
@@ -273,5 +307,8 @@
         $('#no_follow').css('display','none');
         $('#has_follow').css('display','');
     }
+
+
+
 </script>
 </html>

@@ -259,17 +259,17 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
 
 
             BigDecimal bg = new BigDecimal((totleDou - capital) * 100/capital);
-            double rate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-            playerTopInfo.setYieldRate(rate + "");
+            String rate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+            playerTopInfo.setYieldRate(rate );
             bg = new BigDecimal(totleDou - capital);
-            playerTopInfo.setYield(bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() + "");
+            playerTopInfo.setYield(bg.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
             //持仓比
 
             //计算剩余金额
             double buyMoney = totleDou - Double.parseDouble(String.valueOf(topInfo.getBalanceMoney()));
             bg = new BigDecimal(buyMoney * 100/totleDou);
-            rate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-            playerTopInfo.setBuyForALLRate(rate + "");
+            rate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+            playerTopInfo.setBuyForALLRate(rate);
             palyerTopInfos.add(playerTopInfo);
             topInfosClone.add(playerTopInfo.clone());
         }
@@ -335,18 +335,18 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
             double totleDou = Double.parseDouble(playerTopInfo.getTotalMoney());
             double capital = Double.parseDouble(playerTopInfo.getCapital());
             BigDecimal bg = new BigDecimal((totleDou - capital) * 100/capital);
-            double rate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-            playerTopInfo.setYieldRate(rate + "");
+            String rate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+            playerTopInfo.setYieldRate(rate);
 
             bg = new BigDecimal(totleDou - capital);
-            playerTopInfo.setYield(bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() + "");
+            playerTopInfo.setYield(bg.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
             //持仓比
 
             //计算剩余金额
             double buyMoney = totleDou - Double.parseDouble(String.valueOf(cuurTopInfo.getBalanceMoney()));
             bg = new BigDecimal(buyMoney * 100/totleDou);
-            rate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-            playerTopInfo.setBuyForALLRate(rate + "");
+            rate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+            playerTopInfo.setBuyForALLRate(rate);
 
 			palyerTopMonthInfos.add(playerTopInfo);
 		}

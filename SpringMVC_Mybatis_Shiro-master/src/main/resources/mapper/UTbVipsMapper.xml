@@ -99,10 +99,14 @@
     select d.level from  tb_vip d where d.phone = #{phone}
   </select>
 
-  <update id="updateEndTimeByStop" parameterType="java.lang.Long">
-    update tb_vip
+  <update id="updateEndTimeByStop">
+    update tb_vip t
     set
-      END_TIME = DATE_ADD(END_TIME, INTERVAL #{endTime} second)
-    where LEVEL != 0 and DEL_FLAG = 0
+    END_TIME = DATE_ADD(END_TIME, INTERVAL (
+
+    timestampdiff(SECOND,case when timestampdiff(SECOND,t.CRT_TIME,(select s.BGN_TIME from tb_stop_date s)) > 0 then (select s.BGN_TIME from tb_stop_date s) else t.CRT_TIME end ,now())
+    ) second)
+    where LEVEL != 0 and DEL_FLAG = 0;
+
   </update>
 </mapper>

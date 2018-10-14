@@ -58,15 +58,15 @@ public class StopDateServiceImpl extends BaseMybatisDao<UTbStopDateMapper> imple
             his.setEndTime(new Date());
             his.setBgnUserId(oldVo.getUserId());
             his.setEndUserId(TokenManager.getUserId());
-            //计算两个时间间隔多少秒
-            long waitTime = (his.getEndTime().getTime() - his.getBgnTime().getTime())/1000;
+            //停止结束后加上时间
+            uTbVipsMapper.updateEndTimeByStop();
             oldVo.setBgnTime(null);
             oldVo.setEndTime(null);
             oldVo.setUserId(null);
+            oldVo.setStopFlag(tbStopDate.getStopFlag());
             uTbStopDateMapper.update(oldVo);
             uTbStopDateMapper.insertHis(his);
-            //停止结束后加上时间
-            uTbVipsMapper.updateEndTimeByStop(waitTime);
+
         } else {
             return new ResultMessage(ResultMessage.MSG_LEVEL.HINT.v,"停止标识错误!");
         }

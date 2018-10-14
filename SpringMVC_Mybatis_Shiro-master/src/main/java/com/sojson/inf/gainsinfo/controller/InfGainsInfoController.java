@@ -10,6 +10,7 @@ import com.sojson.common.model.dto.TbPlayerDto;
 import com.sojson.common.model.vo.TbGainsInfoVo;
 import com.sojson.common.model.vo.TbPlayerMoneyVo;
 import com.sojson.common.service.CommonService;
+import com.sojson.core.config.IConfig;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.inf.gainsinfo.service.InfGainsInfoService;
 import com.sojson.inf.player.service.TbPlayerService;
@@ -194,5 +195,13 @@ public class InfGainsInfoController extends BaseController {
 	public ResultMessage getNickName(HttpServletRequest request) throws Exception{
 		String nickName = commonService.getNickName(request);
 		return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"获取成功",nickName);
+	}
+
+	@RequestMapping(value="getMarking",method=RequestMethod.POST)
+	@ResponseBody
+	public ResultMessage getMarking(HttpServletRequest request) throws Exception{
+		String phone = commonService.getUserPhone(request);
+		phone = IConfig.get("qrCode_path")+phone+".png";
+		return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"获取成功",phone);
 	}
 }
