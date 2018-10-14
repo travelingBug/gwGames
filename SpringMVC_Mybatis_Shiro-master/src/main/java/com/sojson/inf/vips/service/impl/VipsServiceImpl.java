@@ -85,10 +85,10 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
 
             String watermark = entity.getInviteCode();
             watermark = watermark.substring(0,2);
-            watermark = watermark + String.format("%03d", vipId);
+            watermark = watermark + String.format("%05d", vipId);
             BufferedImage imgMap = WaterMarkUtil.drawTranslucentStringPic(400, 80, 36,watermark);
-            String path = IConfig.get("qrCode_path");
-            File imgFile = new File(path+entity.getPhone()+".jpg");
+            String path = IConfig.get("qrCode_path_real");
+            File imgFile = new File(path+"/"+entity.getPhone()+".jpg");
             try
             {
                 ImageIO.write(imgMap, "JPG", imgFile);
