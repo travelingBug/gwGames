@@ -86,6 +86,49 @@
         } else {
             $('#topHead').append('<a class="link" href="/static/vips/register.jsp?a=1">[登录]</a>');
         }
+
+
+        //banner和广告位设置
+        $.ajax({
+            type: "POST",
+            url: "interface/homeconfig/getData.shtml",
+            data: {},
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (data) {
+                if (data.level == 1) {
+                    var advert = data.data.advert;
+                    if (advert != null && advert.length > 0) {
+                        $('#advert_bottom').css("background-image","url("+advert[0].imgPath+")");
+                        $('#advert_bottom').click(function () {
+                            var url = advert[0].url;
+                            if (!(url.startWith('http://') || url.startWith('https://'))) {
+                                url = 'http://'+url;
+                            }
+                            window.location.href = url;
+                        });
+                    }
+
+                    var banner = data.data.banner;
+                    if (banner != null && banner.length > 0) {
+
+                    }
+                }
+            },
+            error: function (data) {
+            }
+        });
     });
 
+    String.prototype.startWith=function(s){
+        if(s==null||s==""||this.length==0||s.length>this.length)
+            return false;
+        if(this.substr(0,s.length)==s)
+            return true;
+        else
+            return false;
+        return true;
+    }
 </script>

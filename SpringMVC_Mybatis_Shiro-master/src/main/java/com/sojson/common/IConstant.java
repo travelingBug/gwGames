@@ -67,6 +67,25 @@ public interface IConstant {
     }
 
     /**
+     * 位置标示
+     * 0:banner首页横幅
+     * 1:广告
+     */
+    public enum PATH_FLAG {
+        /** 首页横幅 */
+        BANNER((byte)0),
+        /** 首页广告 */
+        ADVERT_HOME((byte)1),
+        /** 底部广告 */
+        ADVERT_BOTTOM((byte)2);
+
+        public byte v;
+        private PATH_FLAG(byte v) {
+            this.v = v;
+        }
+    }
+
+    /**
      * VIP类型
      * 1:500-A 2：2000-B 3：3000-C
      */

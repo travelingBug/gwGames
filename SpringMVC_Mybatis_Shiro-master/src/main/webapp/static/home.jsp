@@ -72,7 +72,7 @@
     </div>
     <div class="main-box border-none">
         <div class="content">
-            <div class="mid-banner"></div>
+            <div class="mid-banner" id="advert_home"></div>
         </div>
     </div>
     <div class="main-box">
@@ -168,6 +168,35 @@
         $('#closeQQ').click(function () {
             $('#closeQQ').parent().css('display','none');
         });
+
+        $.ajax({
+            type: "POST",
+            url: "interface/homeconfig/getHomeAdvert.shtml",
+            data: {},
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (data) {
+                if (data.level == 1) {
+                    var advert = data.data;
+                    if (advert != null && advert.length > 0) {
+                        $('#advert_home').css("background-image","url("+advert[0].imgPath+")");
+                        $('#advert_home').click(function () {
+                            var url = advert[0].url;
+                            if (!(url.startWith('http://') || url.startWith('https://'))) {
+                                url = 'http://'+url;
+                            }
+                            window.location.href = url;
+                        });
+                    }
+                }
+            },
+            error: function (data) {
+            }
+        });
+
+
         //常见问题
         $.ajax({
             type: "POST",

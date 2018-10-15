@@ -206,6 +206,13 @@
                     </a>
                 </li>
 			</@shiro.hasPermission>
+			<@shiro.hasPermission name="/homeConfig/list.shtml">
+                <li class="${(index==2)?string('active',' ')}">
+                    <a href="${basePath}/homeConfig/list.shtml">
+                        <i class="glyphicon glyphicon-chevron-right"></i>首页配置
+                    </a>
+                </li>
+			</@shiro.hasPermission>
         </ul>
     </div>
 	</@shiro.hasAnyRoles>

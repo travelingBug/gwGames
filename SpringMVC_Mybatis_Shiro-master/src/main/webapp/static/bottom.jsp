@@ -1,11 +1,6 @@
 <%@ page pageEncoding="utf-8"%>
 <div class="main-box mid-banner-1">
-    <div class="content">
-        <a class="link">关闭</a>
-        <a class="btn">
-            <p>点击下载<span>DOWNLOAD</span></p>
-            <i class="icon-arrow-down"></i>
-        </a>
+    <div class="content" id="advert_bottom">
     </div>
 </div>
 <div class="main-box contact-box">

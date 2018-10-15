@@ -321,3 +321,19 @@ CREATE TABLE `tb_problem` (
   `VOLUME` int(5) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+
+/*==============================================================*/
+/* Table: tb_home_config 首页配置                           */
+/*==============================================================*/
+DROP TABLE IF EXISTS `tb_home_config`;
+CREATE TABLE `tb_home_config` (
+  `ID` varchar(32) NOT NULL,
+  `TITLE` varchar(200) NOT NULL,
+  `IMG_PATH` varchar(200) NOT NULL,
+  `URL` varchar(500) NOT NULL,
+  `PATH_FLAG` tinyint(4) NOT NULL comment '位置信息（0：首页BANNER，1：广告）',
+  `CRT_TIME` datetime DEFAULT NULL,
+  `VOLUME` int(5) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
