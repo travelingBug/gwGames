@@ -126,7 +126,7 @@ select option {
 	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94:8080/images/bm_bg.png',sizingMethod='scale');
 }
 .pageWrapper2 {
-	min-height: 1500px;
+	min-height: 1000px;
 	width: 100%;
 	position:relative;
 	min-width:1000px;
@@ -1868,7 +1868,7 @@ select.width-240 { width: 260px!important;}
 .recharge .float-div {
 	width: 500px;
 	margin-left: -250px;
-	top:5%;
+	top:50%;
 }
 .recharge .float-div .title {
 	margin: 20px 25px 0 25px;
@@ -1920,8 +1920,10 @@ select.width-240 { width: 260px!important;}
 	margin: auto;
 	display: inline-block;
 	background-color:white;
+}
 
-
+#pay_bank_div{
+	display: none;
 }
 
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sojson.common.dao.UTbVipsBankCardMapper" >
+  <resultMap id="vipsCardResultMap" type="com.sojson.common.model.TbVipsCard" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="CARD_NO" property="cardNo" jdbcType="VARCHAR" />
+    <result column="CARD_CODE" property="cardCode" jdbcType="VARCHAR" />
+    <result column="CARD_NAME" property="cardName" jdbcType="VARCHAR" />
+    <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="card_Column_List" >
+    ID,PHONE,CARD_NO,CARD_CODE,CARD_NAME,ID_NO
+  </sql>
+
+
+  <select id="findAll" resultMap="vipsCardResultMap" >
+  	select
+    <include refid="card_Column_List" />
+    from tb_vip_bank_card
+    <if test="phone != null and phone !='' " >
+      and PHONE = #{phone}
+    </if>
+    ORDER BY ID
+  </select>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbVipsCard" >
+    insert into tb_vip_bank_card (ID,PHONE,CARD_NO,CARD_CODE,CARD_NAME,ID_NO,BANK_NAME)
+    values (#{id},#{phone},#{cardNo},#{cardCode},#{cardName},#{idNo},#{bankName})
+  </insert>
+  
+  <delete id="delete" parameterType="String">
+    DELETE FROM tb_vip_bank_card WHERE PHONE = #{phone}
+  </delete>
+
+
+</mapper>

@@ -34,3 +34,20 @@
     color: #ffffff !important;
     font-size: 2rem;
 }
+
+#pay_bank_div i{
+    font-size: 1.5rem;
+}
+
+#pay_bank_div .pass{
+    color:#82c91e;
+}
+
+#pay_bank_div .fail{
+    color:#f06595;
+}
+
+#pay_bank_div .icon-vali{
+    width:2rem;
+    height: 2rem;
+}
