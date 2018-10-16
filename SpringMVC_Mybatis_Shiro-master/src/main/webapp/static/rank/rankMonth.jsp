@@ -90,7 +90,7 @@
         $.ajax({
             type: "POST",
             url: "interface/gainsInfo/getTopMonthHisByPage.shtml",
-            data: {month:month,pageNo:pageNo},
+            data: {month:month,pageNo:pageNo,pageSize:30},
             dataType: "json",
             beforeSend: function (request) {
                 request.setRequestHeader("Authorization", getAuthorization());
@@ -128,7 +128,7 @@
                         $('#tb'+month).append(topMonthHtml);
 
                     }
-                    $('#table'+month+'').after(getPager(month,result));
+                    //$('#table'+month+'').after(getPager(month,result));
                 } else {
                     $('#tb'+month).append('<tr><td  colspan="7">暂无数据</td></tr>');
                 }

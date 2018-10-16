@@ -81,6 +81,27 @@ public class GainsInfoCache {
     }
 
     /**
+     * 获取排行榜的倒数
+     * @param size
+     * @return
+     */
+    public static List<PlayerTopInfo>  getLastTopAllForSize(int size){
+        List<PlayerTopInfo> topForYour = new ArrayList<PlayerTopInfo>();
+        synchronized (lock) {
+            if (size > 0) {
+                int c = 0;
+                for (int i = topForAll.size() - 1; i >= 0  ;i--) {
+                    if (topForAll.size() > c && size > c && i >= 30) {
+                        topForYour.add(topForAll.get(i));
+                    }
+                    c ++;
+                }
+            }
+        }
+        return topForYour;
+    }
+
+    /**
      * 分页查询内存数据
      * @param pageSize
      * @param pageNo
@@ -167,6 +188,27 @@ public class GainsInfoCache {
                 }
 
                 i++;
+            }
+        }
+        return topForYour;
+    }
+
+    /**
+     * 获取月排行榜的倒数
+     * @param size
+     * @return
+     */
+    public static List<PlayerTopInfo>  getLastTopMonthSize(int size){
+        List<PlayerTopInfo> topForYour = new ArrayList<PlayerTopInfo>();
+        synchronized (lock) {
+            if (size > 0) {
+                int c = 0;
+                for (int i = topForMonth.size() - 1; i >= 0  ;i--) {
+                    if (topForMonth.size() > c && size > c && i >= 30) {
+                        topForYour.add(topForMonth.get(i));
+                    }
+                    c ++;
+                }
             }
         }
         return topForYour;
