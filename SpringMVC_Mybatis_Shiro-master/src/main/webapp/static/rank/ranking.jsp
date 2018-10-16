@@ -8,6 +8,7 @@
 <body>
 <div class="pageWrapper2">
     <%@include file="../top.jsp" %>
+    <%@include file="../banner.jsp" %>
     <div class="main-box">
         <div class="content">
             <div class="tab1">

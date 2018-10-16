@@ -8,6 +8,7 @@
 <body>
 <div class="pageWrapper2 bg-gray me style1">
     <%@include file="../top.jsp" %>
+    <%@include file="../banner.jsp" %>
     <ul class="page-nav">
         <li><a>比赛排名</a></li>
         <li>></li>

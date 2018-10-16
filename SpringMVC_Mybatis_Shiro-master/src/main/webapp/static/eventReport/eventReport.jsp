@@ -8,6 +8,7 @@
 <body>
 <div class="pageWrapper2">
     <%@include file="../top.jsp" %>
+    <%@include file="../banner.jsp" %>
         <div class="cont-box">
             <div class="content bg-white">
                 <h3 class="title">赛事报道</h3>

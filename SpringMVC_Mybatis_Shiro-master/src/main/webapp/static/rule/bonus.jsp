@@ -8,6 +8,7 @@
 <body>
 <div class="pageWrapper2">
     <%@include file="../top.jsp" %>
+    <%@include file="../banner.jsp" %>
     <div class="main-box">
         <div class="content">
             <div style="width: 100%;height: 100%;text-align: center;"  >

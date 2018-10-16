@@ -13,7 +13,7 @@
             </div>
             <div class="one-area">
                 <i class="icon icon-qq"></i>
-                <p>客服QQ</br>1 930 621 578</p>
+                <p>客服QQ</br>1930621578</p>
             </div>
         </div>
         <div class="right-area">

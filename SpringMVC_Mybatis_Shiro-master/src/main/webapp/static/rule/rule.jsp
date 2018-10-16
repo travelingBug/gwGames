@@ -8,11 +8,11 @@
 <body>
 <div class="pageWrapper2">
     <%@include file="../top.jsp" %>
+    <%@include file="../banner.jsp" %>
         <div class="main-box mt-30">
             <div class="content bg-white">
                 <div class="tab1">
                     <a class="on">赛事介绍</a>
-                    <a>赛事规则</a>
                 </div>
                 <div class="text-div">
                 <div class="content">
