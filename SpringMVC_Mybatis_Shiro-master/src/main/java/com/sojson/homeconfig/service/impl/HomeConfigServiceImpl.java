@@ -97,8 +97,6 @@ public class HomeConfigServiceImpl extends BaseMybatisDao<UTbHomeConfigMapper> i
                 LoggerUtils.error(GainsInfoServiceImpl.class,"文件上传失败："+e.getMessage());
                 return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"文件上传失败！");
             }
-        } else {
-            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"请上传图片!");
         }
         uTbHomeConfigMapper.update(tbHomeConfig);
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);

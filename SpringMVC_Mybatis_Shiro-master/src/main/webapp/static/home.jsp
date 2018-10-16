@@ -9,7 +9,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>股王大赛</title>
+    <title>天下股神实盘大赛</title>
     <%@include file="head.jsp" %>
     <style>
         .imgylclass{
@@ -37,7 +37,7 @@
                 <a class="btn btn-appxz"></a>
             </div>
         </div>
-        <div class="zn-box">
+        <div class="zn-box"   style="display:none;">
             <a class="icon icon-close" id="closeDoor"></a>
             <div class="btns">
                 <a class="btn btn-gszc" href="/static/vips/register.jsp"></a>
@@ -60,6 +60,7 @@
                         <th>昵称</th>
                         <th>总资产</th>
                         <th>总收益</th>
+                        <th>操作</th>
                     </tr>
 
                     </tbody>
@@ -140,7 +141,7 @@
             </div>
         </div>
     </div>
-    <div class="main-box border-none">
+    <div class="main-box border-none"  style="display: none;">
         <div class="title"><div class="title-4"></div></div>
         <div class="content" id="problemDiv">
             <div class="list3 floatL">
@@ -299,6 +300,7 @@
 
                         html += '<td>'+data[i].totalMoney+'</td>';
                         html += '<td>'+data[i].yield+'</td>';
+                        html += '<td><a class="red" href="/static/gains/strategy.jsp?account='+$.trim(data[i].account)+'">观赛</a></td>';
                         html += '</tr>';
                         $('#topAllByMoney').append(html);
                     }
