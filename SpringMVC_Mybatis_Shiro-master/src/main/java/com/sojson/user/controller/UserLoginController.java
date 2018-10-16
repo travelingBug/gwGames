@@ -193,7 +193,7 @@ public class UserLoginController extends BaseController {
 		if (codeArr.length != 2 || !codeArr[0].equalsIgnoreCase(code)) {
 			return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"验证码错误！");
 		}
-		UUser user = userService.findUserByEmail(phone);
+		UUser user = userService.findUserByDealerPhone(phone);
 		if (user == null) {
 			return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"电话号码错误！");
 		}
@@ -216,7 +216,7 @@ public class UserLoginController extends BaseController {
 	@ResponseBody
 	public ResultMessage userPhone(String phone){
 		ResultMessage msg = new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
-		UUser user = userService.findUserByEmail(phone);
+		UUser user = userService.findUserByDealerPhone(phone);
 		if (user == null) {
 			msg = new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v);
 		}

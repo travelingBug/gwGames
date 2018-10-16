@@ -199,7 +199,10 @@ public class UUserServiceImpl extends BaseMybatisDao<UUserMapper> implements UUs
 		return resultMap;
 	
 	}
-	
-	
+
+	@Override
+	public UUser findUserByDealerPhone(String phone) {
+		return userMapper.findUserByDealerPhone(phone);
+	}
 	
 }
