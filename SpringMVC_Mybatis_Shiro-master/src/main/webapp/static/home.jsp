@@ -41,7 +41,7 @@
             <a class="icon icon-close" id="closeDoor"></a>
             <div class="btns">
                 <a class="btn btn-gszc" href="/static/vips/register.jsp"></a>
-                <a class="btn btn-bmcs"  href="/static/signup/index.jsp"></a>
+                <a class="btn btn-bmcs"  href="/static/signup/signup.jsp"></a>
             </div>
         </div>
     </div>

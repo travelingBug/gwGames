@@ -27,7 +27,7 @@
     <div class="top-bar"></div>
     <div class="top-box">
         <div class="content">
-            <div class="logo"></div>
+            <div class="logo" id="toHomeLogo"></div>
             <div class="right-area">
                 <p>已有账号？请直接<a class="link loginBtn" href="/static/vips/register.jsp?a=1">登录</a></p>
             </div>
@@ -85,6 +85,9 @@
 </html>
 <script>
     $(function(){
+        $('#toHomeLogo').click(function () {
+            window.location.href="/static/home.jsp";
+        });
         var a = getUrlParam('a') || 2;
         if(a!=1){
             $(".login").hide();
