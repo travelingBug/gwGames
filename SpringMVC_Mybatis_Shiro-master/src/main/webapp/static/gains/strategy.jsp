@@ -270,7 +270,7 @@
                         for (var i = 0 ; i < transactionInfoData.length ; i++) {
                             var bg = "";
                             if (i%2 == 1) {
-                                bg = "class='bg'";
+                                bg = "class=''";
                             }
                             var transactionInfoHtml = '<tr ' + bg + '><td>';
                             transactionInfoHtml += transactionInfoData[i].businessTimeStr +'</td>';

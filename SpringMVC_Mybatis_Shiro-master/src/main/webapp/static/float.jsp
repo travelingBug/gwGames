@@ -5,8 +5,8 @@
             <a class="icon icon-close" id="closeQQ"></a>
             <div class="btns">
                 <a class="btn btn-zxzx" href="tencent://message/?uin=1930621578&Site=http://60.205.189.94&Menu=yes"></a>
-                <a class="btn btn-cjwt" href="/static/problem/problem.jsp"></a>
                 <a class="btn btn-appxz"></a>
+                <a class="btn btn-gywm" href="/static/aboutme/aboutme.jsp"></a>
             </div>
         </div>
         <div class="zn-box"   style="display:none;">
