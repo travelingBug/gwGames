@@ -4,7 +4,7 @@
     <div class="content">
         <div class="logo" id="topLogo"></div>
         <div class="right-area" id="topHead">
-            <a class="link"><i class="icon icon-weibo"></i>官方微博</a>
+            <%--<a class="link"><i class="icon icon-weibo"></i>官方微博</a>--%>
 
         </div>
     </div>
@@ -26,7 +26,7 @@
             <li></li>
             <li><a>APP下载</a></li>
             <li></li>
-            <li><a href="/static/vips/vips_center.jsp">我的账户</a></li>
+            <li><a href="/static/vips/vips_center.jsp">我的特权</a></li>
         </ul>
     </div>
 </div>

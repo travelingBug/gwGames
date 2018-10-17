@@ -134,7 +134,7 @@
                 </ul>
                 <ul class="floatR">
                     <li><a href="javascript:;" id="gameBonus">奖金设置</a></li>
-                    <li><a href="javascript:;" style="color: #5e5e5e">赛事报道</a></li>
+                    <li><a href="/static/home.jsp" >赛事报道</a></li>
                 </ul>
             </div>
             <div class="btn-bm">

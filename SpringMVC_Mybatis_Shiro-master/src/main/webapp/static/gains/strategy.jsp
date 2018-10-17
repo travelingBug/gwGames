@@ -6,6 +6,7 @@
     <%@include file="../head.jsp" %>
 </head>
 <body>
+<%@include file="../float.jsp" %>
 <div class="pageWrapper2 bg-gray me style1">
     <%@include file="../top.jsp" %>
     <%@include file="../banner.jsp" %>

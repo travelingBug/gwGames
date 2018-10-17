@@ -42,29 +42,29 @@
                 <table class="table2">
                     <tbody>
                     <tr>
-                        <th>昵称：</th>
+                        <th><span style="color: red;">*</span>昵称：</th>
                         <td id="nickNameTd"><input id="nickName" name="nickName" class="input width-240" /></td>
                     </tr>
                     <tr>
-                        <th>密码：</th>
+                        <th><span style="color: red;">*</span>密码：</th>
                         <td id="pwdTd"><input id="pwd" name="password" type="password" class="input width-240 pwd" /></td>
                     </tr>
                     <tr>
-                        <th>确认密码：</th>
+                        <th><span style="color: red;">*</span>确认密码：</th>
                         <td id="rePwdTd"><input id="rePwd" type="password" class="input width-240 pwd" /></td>
                     </tr>
                     <tr>
-                        <th>推荐码：</th>
+                        <th><span style="color: red;">*</span>推荐码：</th>
                         <td id="inviteCodeTd">
                             <input id="inviteCode" name="inviteCode" class="input width-240" />
                         </td>
                     </tr>
                     <tr>
-                        <th>手机号：</th>
+                        <th><span style="color: red;">*</span>手机号：</th>
                         <td><input id="telPhone" name="phone" class="input width-240"/></td>
                     </tr>
                     <tr>
-                        <th>验证码：</th>
+                        <th><span style="color: red;">*</span>验证码：</th>
                         <td>
                             <input id="verfiCode" name="verfiCode" class="input width-100" />
                             <a class="yzm" id="sendVerfiCode">获取验证码</a>

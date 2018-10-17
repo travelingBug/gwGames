@@ -6,12 +6,13 @@
     <%@include file="../head.jsp" %>
 </head>
 <body>
+<%@include file="../float.jsp" %>
 <div class="pageWrapper2">
     <%@include file="../top.jsp" %>
     <%@include file="../banner.jsp" %>
         <div class="cont-box detail">
             <div class="content bg-white">
-                <h3 class="title" id="title"></h3>
+                <h3 class="title" id="title" style="text-align: center"></h3>
                 <div class="infor">
                     <p class="floatL" id="crtTime"></p>
                     <p class="floatR"></p>
