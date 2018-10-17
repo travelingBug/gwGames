@@ -330,11 +330,10 @@
                 request.setRequestHeader("Authorization", getAuthorization());
             },
             success: function(data) {
-                debugger;
                 if (data.level == 1) {
                     $('#registerForm')[0].reset();
                     sessionStorage.setItem("sessionId", data.data);
-                    window.location.href="/static/home.jsp";
+                    window.location.href="/static/vips/vips_pay.jsp";
                 } else {
                     layer.alert(data.messageText, {
                         icon: 0,
