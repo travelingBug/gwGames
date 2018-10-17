@@ -27,4 +27,6 @@ public interface VipsService {
     ResultMessage loginOut(String token);
 
     TbVips queryVipsInfo(String sessionId);
+
+    void updateLevelByEndTIme(Map<String,Object> param);
 }

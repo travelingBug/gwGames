@@ -70,6 +70,11 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
 
+    @Override
+    public void updateLevelByEndTIme(Map<String,Object> param) {
+        uTbVipsMapper.updateLevelByEndTIme(param);
+    }
+
     @Transactional
     @Override
     public ResultMessage insert(TbVips entity, HttpServletRequest req) {
