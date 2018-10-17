@@ -43,4 +43,6 @@ public interface UUserService {
 	Map<String, Object> addRole2User(Long userId, String ids);
 
 	Map<String, Object> deleteRoleByUserIds(String userIds);
+
+	public UUser findUserByDealerPhone(String phone);
 }

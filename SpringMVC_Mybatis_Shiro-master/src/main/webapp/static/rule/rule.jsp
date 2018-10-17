@@ -2,17 +2,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>股王大赛</title>
+    <title>天下股神实盘大赛</title>
     <%@include file="../head.jsp" %>
 </head>
 <body>
+<%@include file="../float.jsp" %>
 <div class="pageWrapper2">
     <%@include file="../top.jsp" %>
+    <%@include file="../banner.jsp" %>
         <div class="main-box mt-30">
             <div class="content bg-white">
                 <div class="tab1">
                     <a class="on">赛事介绍</a>
-                    <a>赛事规则</a>
                 </div>
                 <div class="text-div">
                 <div class="content">

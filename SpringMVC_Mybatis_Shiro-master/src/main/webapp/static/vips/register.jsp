@@ -1,9 +1,10 @@
 <%@ page pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@include file="../head.jsp" %>
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>股王大赛</title>
-    <%@include file="../head.jsp" %>
+    <link href="css/all.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div class="overlay layer-small login">
@@ -26,7 +27,7 @@
     <div class="top-bar"></div>
     <div class="top-box">
         <div class="content">
-            <div class="logo"></div>
+            <div class="logo" id="toHomeLogo"></div>
             <div class="right-area">
                 <p>已有账号？请直接<a class="link loginBtn" href="/static/vips/register.jsp?a=1">登录</a></p>
             </div>
@@ -41,29 +42,29 @@
                 <table class="table2">
                     <tbody>
                     <tr>
-                        <th>昵称：</th>
+                        <th><span style="color: red;">*</span>昵称：</th>
                         <td id="nickNameTd"><input id="nickName" name="nickName" class="input width-240" /></td>
                     </tr>
                     <tr>
-                        <th>密码：</th>
+                        <th><span style="color: red;">*</span>密码：</th>
                         <td id="pwdTd"><input id="pwd" name="password" type="password" class="input width-240 pwd" /></td>
                     </tr>
                     <tr>
-                        <th>确认密码：</th>
+                        <th><span style="color: red;">*</span>确认密码：</th>
                         <td id="rePwdTd"><input id="rePwd" type="password" class="input width-240 pwd" /></td>
                     </tr>
                     <tr>
-                        <th>推荐码：</th>
+                        <th><span style="color: red;">*</span>推荐码：</th>
                         <td id="inviteCodeTd">
                             <input id="inviteCode" name="inviteCode" class="input width-240" />
                         </td>
                     </tr>
                     <tr>
-                        <th>手机号：</th>
+                        <th><span style="color: red;">*</span>手机号：</th>
                         <td><input id="telPhone" name="phone" class="input width-240"/></td>
                     </tr>
                     <tr>
-                        <th>验证码：</th>
+                        <th><span style="color: red;">*</span>验证码：</th>
                         <td>
                             <input id="verfiCode" name="verfiCode" class="input width-100" />
                             <a class="yzm" id="sendVerfiCode">获取验证码</a>
@@ -78,13 +79,15 @@
             </form>
         </div>
     </div>
-    <%@include file="../bottom.jsp" %>
     <%@include file="../footer.jsp" %>
 </div>
 </body>
 </html>
 <script>
     $(function(){
+        $('#toHomeLogo').click(function () {
+            window.location.href="/static/home.jsp";
+        });
         var a = getUrlParam('a') || 2;
         if(a!=1){
             $(".login").hide();

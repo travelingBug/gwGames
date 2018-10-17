@@ -16,4 +16,6 @@ public interface UTbVipsMapper {
     byte getLevelByPhone(String phone);
 
     int updateEndTimeByStop();
+
+    int updateLevelByEndTIme(Object param);
 }

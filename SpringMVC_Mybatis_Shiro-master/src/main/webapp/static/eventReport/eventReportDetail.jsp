@@ -2,15 +2,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>股王大赛</title>
+    <title>天下股神实盘大赛</title>
     <%@include file="../head.jsp" %>
 </head>
 <body>
+<%@include file="../float.jsp" %>
 <div class="pageWrapper2">
     <%@include file="../top.jsp" %>
+    <%@include file="../banner.jsp" %>
         <div class="cont-box detail">
             <div class="content bg-white">
-                <h3 class="title" id="title"></h3>
+                <h3 class="title" id="title" style="text-align: center"></h3>
                 <div class="infor">
                     <p class="floatL" id="crtTime"></p>
                     <p class="floatR"></p>

@@ -9,7 +9,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>股王大赛</title>
+    <title>天下股神实盘大赛</title>
     <%@include file="head.jsp" %>
     <style>
         .imgylclass{
@@ -24,30 +24,14 @@
         .more:hover {
             background: #edd7b8;
         }
+
     </style>
 </head>
 <body>
-<div class="float-layer">
-    <div class="content">
-        <div class="fw-box">
-            <a class="icon icon-close" id="closeQQ"></a>
-            <div class="btns">
-                <a class="btn btn-zxzx" href="tencent://message/?uin=1930621578&Site=http://60.205.189.94&Menu=yes"></a>
-                <a class="btn btn-cjwt" href="/static/problem/problem.jsp"></a>
-                <a class="btn btn-appxz"></a>
-            </div>
-        </div>
-        <div class="zn-box">
-            <a class="icon icon-close" id="closeDoor"></a>
-            <div class="btns">
-                <a class="btn btn-gszc" href="/static/vips/register.jsp"></a>
-                <a class="btn btn-bmcs"  href="/static/signup/index.jsp"></a>
-            </div>
-        </div>
-    </div>
-</div>
+<%@include file="float.jsp" %>
 <div class="pageWrapper2">
     <%@include file="top.jsp" %>
+    <%@include file="banner.jsp" %>
     <div class="main-box">
         <div class="title"><div class="title-1"></div></div>
         <div class="content">
@@ -60,6 +44,7 @@
                         <th>昵称</th>
                         <th>总资产</th>
                         <th>总收益</th>
+                        <th>操作</th>
                     </tr>
 
                     </tbody>
@@ -140,7 +125,7 @@
             </div>
         </div>
     </div>
-    <div class="main-box border-none">
+    <div class="main-box border-none"  style="display: none;">
         <div class="title"><div class="title-4"></div></div>
         <div class="content" id="problemDiv">
             <div class="list3 floatL">
@@ -162,12 +147,6 @@
 </html>
 <script>
     $(function() {
-        $('#closeDoor').click(function () {
-            $('#closeDoor').parent().css('display','none');
-        });
-        $('#closeQQ').click(function () {
-            $('#closeQQ').parent().css('display','none');
-        });
 
         $.ajax({
             type: "POST",
@@ -299,6 +278,7 @@
 
                         html += '<td>'+data[i].totalMoney+'</td>';
                         html += '<td>'+data[i].yield+'</td>';
+                        html += '<td><a class="red" href="/static/gains/strategy.jsp?account='+$.trim(data[i].account)+'">观赛</a></td>';
                         html += '</tr>';
                         $('#topAllByMoney').append(html);
                     }

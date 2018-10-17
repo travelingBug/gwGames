@@ -36,10 +36,10 @@ public interface IConstant {
         BOND_BUY((byte)0),
         /** 证券卖出 */
         BOND_SELL((byte)1),
-        /** 证券买入 */
-        FUND_BUY((byte)3),
-        /** 证券卖出 */
-        FUND_SELL((byte)4);
+        /** 基金申购 */
+        FUND_BUY((byte)2),
+        /** 基金赎回 */
+        FUND_SELL((byte)3);
 
         public byte v;
         private BUSINESS_FLAG(byte v) {

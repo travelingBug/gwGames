@@ -4,7 +4,7 @@
 <%--shiro 标签 --%>
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>股王大赛</title>
+    <title>天下股神实盘大赛</title>
     <%@include file="../head.jsp" %>
 </head>
 
@@ -134,7 +134,7 @@
                 </ul>
                 <ul class="floatR">
                     <li><a href="javascript:;" id="gameBonus">奖金设置</a></li>
-                    <li><a href="javascript:;" style="color: #5e5e5e">赛事报道</a></li>
+                    <li><a href="/static/home.jsp" >赛事报道</a></li>
                 </ul>
             </div>
             <div class="btn-bm">
