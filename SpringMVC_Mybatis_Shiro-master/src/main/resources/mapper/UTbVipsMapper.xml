@@ -109,4 +109,12 @@
     where LEVEL != 0 and DEL_FLAG = 0;
 
   </update>
+
+  <update id="updateLevelByEndTIme">
+    update tb_vip t
+    set
+    t.Level = 0
+    where t.level != 0 AND DEL_FLAG = 0 AND t.END_TIME &lt;= #{nowDate,jdbcType=TIMESTAMP} ;
+
+  </update>
 </mapper>
