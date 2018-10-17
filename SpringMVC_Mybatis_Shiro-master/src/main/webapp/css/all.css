@@ -1413,6 +1413,7 @@ select.width-240 { width: 260px!important;}
 	margin: 20px 0;
 	line-height: 40px;
 	padding-bottom: 10px;
+	padding-top: 4px;
 }
 .select-box .select-cont .select-btn {
 	height: 40px;

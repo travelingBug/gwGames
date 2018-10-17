@@ -2,7 +2,7 @@ package com.sojson.inf.vips.service;
 
 import com.sojson.common.ResultMessage;
 import com.sojson.common.model.TbVipsCard;
-import org.springframework.stereotype.Service;
+import com.sojson.common.model.TbVipsOrder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -13,10 +13,11 @@ import java.util.Map;
  */
 public interface VipsBankCardService {
 
-    ResultMessage insert(TbVipsCard entity,String sessionId, HttpServletRequest req);
+    ResultMessage insert(TbVipsCard entity);
 
-    ResultMessage delete(String id);
+    ResultMessage delete(String cardNo);
 
-    List<TbVipsCard> findList(String sessionId);
+    List<TbVipsCard> findList(Map<String,String> params);
 
+    ResultMessage addOrder(TbVipsOrder entity, HttpServletRequest req);
 }

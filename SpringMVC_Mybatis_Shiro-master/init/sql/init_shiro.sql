@@ -337,3 +337,30 @@ CREATE TABLE `tb_home_config` (
   `VOLUME` int(5) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+CREATE TABLE `tb_vip_bank_card` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `PHONE` varchar(20) NOT NULL,
+  `CARD_NO` varchar(32) NOT NULL,
+  `CARD_CODE` varchar(8) NOT NULL,
+  `CARD_NAME` varchar(8) DEFAULT NULL,
+  `ID_NO` varchar(32) DEFAULT NULL,
+  `BANK_NAME` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8
+
+CREATE TABLE `tb_vip_order` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ORDER_NO` varchar(20) NOT NULL,
+  `ORDER_TITLE` varchar(10) DEFAULT NULL,
+  `ORDER_DATE` varchar(10) NOT NULL,
+  `VIP_ID` int(10) DEFAULT NULL,
+  `FEE` varchar(8) NOT NULL,
+  `BANK_CODE` varchar(8) NOT NULL,
+  `CARD_NO` varchar(32) NOT NULL,
+  `CARD_NAME` varchar(10) NOT NULL,
+  `ID_NO` varchar(32) NOT NULL,
+  `PHONE` varchar(12) NOT NULL,
+  `STATUS` int(2) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8

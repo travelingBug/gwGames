@@ -210,9 +210,7 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
     }
 
     @Override
-    public TbVips queryVipsInfo(String sessionId) {
-        String[] arr = RedisUtil.get(sessionId).split(",");
-        String phone = arr[0];
+    public TbVips queryVipsInfo(String phone) {
         TbVips entity = new TbVips();
         entity.setPhone(phone);
 

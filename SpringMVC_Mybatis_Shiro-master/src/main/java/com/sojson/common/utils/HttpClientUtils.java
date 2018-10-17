@@ -15,6 +15,7 @@ import sun.misc.BASE64Encoder;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -86,14 +87,13 @@ public class HttpClientUtils {
         return result;
     }
 
-    public static String createSign(){
+    public static String createSign(Map<String,String> map){
         String uKey = "b36b5b4794f15d42";
-        Map<String,String> aaa = createData();
-        aaa.remove("pr_id");
-        aaa.remove("pr_ver");
-        aaa.remove("merchant_id");
+        map.remove("pr_id");
+        map.remove("pr_ver");
+        map.remove("merchant_id");
 
-        String sign = getSign(aaa);
+        String sign = getSign(map);
 
         return sign;
     }
@@ -126,21 +126,19 @@ public class HttpClientUtils {
         return map;
     }
 
-    public static String createTranData(){
-        Map<String,String> aaa = createData();
-        aaa.remove("pr_id");
-        aaa.remove("pr_ver");
-        aaa.remove("merchant_id");
+    public static String createTranData(Map<String,String> map){
+        map.remove("pr_id");
+        map.remove("pr_ver");
+        map.remove("merchant_id");
 
-        JSONObject jsonObject = JSONObject.fromObject(aaa);
+        JSONObject jsonObject = JSONObject.fromObject(map);
         byte[] bt = jsonObject.toString().getBytes();
         String trandata = (new BASE64Encoder()).encodeBuffer(bt);
 
         return trandata;
     }
 
-    public static void main(String[] args){
-
+    public static String sendReq(Map<String,String> params){
         String url = "http://d-test.xadtsc.cn/gateway/method.do";
         Map<String,String> map = new HashMap<String,String>();
         map.put("method", "agreementPay");
@@ -148,8 +146,8 @@ public class HttpClientUtils {
         map.put("pr_id","1005");
         map.put("pr_ver","agreementPay0.2");
 
-        map.put("sign",createSign());
-        map.put("tranData", createTranData());
+        map.put("sign",createSign(params));
+        map.put("tranData", createTranData(params));
 
         List<Map.Entry<String, String>> infoIds = new ArrayList<Map.Entry<String, String>>(map.entrySet());
         StringBuilder sb = new StringBuilder();
@@ -169,7 +167,11 @@ public class HttpClientUtils {
         String httpOrgCreateTestRtn = HttpClientUtils.doPost(url, str);
         System.out.println(httpOrgCreateTestRtn);
 
+        return httpOrgCreateTestRtn;
+    }
 
+    public static void main(String[] args){
+        sendReq(createData());
 
     }
 }

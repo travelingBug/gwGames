@@ -74,7 +74,7 @@
         ,ADDRESS = #{address}
       </if>
     </set>
-    where ID = #{id,jdbcType=VARCHAR}
+    where PHONE = #{phone,jdbcType=VARCHAR}
   </update>
 
   <update id="delete" parameterType="String">

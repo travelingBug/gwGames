@@ -4,6 +4,7 @@ import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
 import com.sojson.common.model.TbVips;
 import com.sojson.common.model.TbVipsCard;
+import com.sojson.common.model.TbVipsOrder;
 import com.sojson.common.service.CommonService;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.inf.vips.service.VipsBankCardService;
@@ -20,6 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +38,9 @@ public class VipsBankCardController extends BaseController {
     @Autowired
     VipsBankCardService vipsBankCardService;
 
+    @Autowired
+    CommonService commonService;
+
     /**
      * 新增
      *
@@ -42,21 +49,33 @@ public class VipsBankCardController extends BaseController {
      */
     @RequestMapping(value = "addBankCard", method = RequestMethod.POST)
     @ResponseBody
-    public ResultMessage addBank(TbVipsCard entity,String sessionId,HttpServletRequest req) {
-        return vipsBankCardService.insert(entity, sessionId, req);
+    public ResultMessage addBank(TbVipsCard entity,HttpServletRequest req){
+        ResultMessage msg = null;
+        try {
+            String phone = commonService.getUserPhone(req);
+            if(phone!=null && !phone.equals("")) {
+                entity.setPhone(phone);
+                msg = vipsBankCardService.insert(entity);
+            }else{
+                return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "手机号码为空");
+            }
+        }catch (Exception e){
+            e.getStackTrace();
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "绑定失败");
+        }
+        return msg;
     }
 
     /**
      * 删除
      *
-     * @param id
      * @param req
      * @return
      */
     @RequestMapping(value = "delBankCard", method = RequestMethod.GET)
     @ResponseBody
-    public ResultMessage delBankCard(String id, HttpServletRequest req) {
-        return vipsBankCardService.delete(id);
+    public ResultMessage delBankCard(String cardNo, HttpServletRequest req) {
+        return vipsBankCardService.delete(cardNo);
     }
 
     /**
@@ -66,9 +85,55 @@ public class VipsBankCardController extends BaseController {
      */
     @RequestMapping(value = "list")
     @ResponseBody
-    public List<TbVipsCard> list(String sessionId) {
-
-        List<TbVipsCard> list = vipsBankCardService.findList(sessionId);
+    public List<TbVipsCard> list(HttpServletRequest req) throws Exception{
+        String phone = commonService.getUserPhone(req);
+        Map<String,String> params = new HashMap<>();
+        params.put("phone",phone);
+        List<TbVipsCard> list = vipsBankCardService.findList(params);
         return list;
     }
+
+    @RequestMapping(value = "addOrder", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage pay(TbVipsOrder order, HttpServletRequest req){
+        ResultMessage msg = null;
+        try {
+            String phone = commonService.getUserPhone(req);
+            if(phone!=null && !phone.equals("")) {
+                Map<String,String> params = new HashMap<>();
+                params.put("phone",phone);
+                params.put("cardNo",order.getCardNo());
+                List<TbVipsCard> list = vipsBankCardService.findList(params);
+
+                if(list.size()<=0){
+                    return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "未绑定银行卡");
+                }
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
+                SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
+                Date date = new Date();
+                String orderNo = sdf.format(date);
+                String orderDate = sdf1.format(date);
+
+                TbVipsCard card = list.get(0);
+                order.setPhone(card.getPhone());
+                order.setCardNo(card.getCardNo());
+                order.setCardName(card.getCardName());
+                order.setIdNo(card.getIdNo());
+                order.setBankCode(card.getCardCode());
+                order.setOrderNo(orderNo);
+                order.setOrderDate(orderDate);
+                order.setVipId(card.getId()+"");
+                order.setOrderTitle("充值");
+                msg = vipsBankCardService.addOrder(order,req);
+            }else{
+                return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "登录异常");
+            }
+        }catch (Exception e){
+            e.getStackTrace();
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "创建订单失败");
+        }
+        return msg;
+    }
+
+
 }

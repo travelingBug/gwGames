@@ -11,16 +11,17 @@
     <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="card_Column_List" >
-    ID,PHONE,CARD_NO,CARD_CODE,CARD_NAME,ID_NO
+    ID,PHONE,CARD_NO,CARD_CODE,CARD_NAME,ID_NO,BANK_NAME
   </sql>
 
 
-  <select id="findAll" resultMap="vipsCardResultMap" >
+  <select id="findList" parameterType="map" resultMap="vipsCardResultMap" >
   	select
     <include refid="card_Column_List" />
     from tb_vip_bank_card
-    <if test="phone != null and phone !='' " >
-      and PHONE = #{phone}
+    where PHONE = #{phone,jdbcType=VARCHAR}
+    <if test="cardNo!='' and cardNo != null">
+      AND CARD_NO = #{cardNo,jdbcType=VARCHAR}
     </if>
     ORDER BY ID
   </select>
@@ -31,7 +32,7 @@
   </insert>
   
   <delete id="delete" parameterType="String">
-    DELETE FROM tb_vip_bank_card WHERE PHONE = #{phone}
+    DELETE FROM tb_vip_bank_card WHERE CARD_NO = #{cardNo,jdbcType=VARCHAR}
   </delete>
 
 

@@ -92,11 +92,11 @@ public interface IConstant {
     public enum VIP_LEVEL {
         /**0*/
         VIP_0((byte)0),
-        /** 500-A  */
+        /** 5000-A  */
         VIP_A((byte)1),
         /** 2000-B*/
         VIP_B((byte)2),
-        /**3000-C*/
+        /**500-C*/
         VIP_C((byte)3);
 
         public byte v;

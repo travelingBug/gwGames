@@ -116,8 +116,9 @@ public class VipsController extends BaseController {
 
     @RequestMapping(value="queryVipsInfo",method=RequestMethod.POST)
     @ResponseBody
-    public TbVips queryVipsInfo(String sessionId){
-        return vipsService.queryVipsInfo(sessionId);
+    public TbVips queryVipsInfo(HttpServletRequest req) throws Exception{
+        String phone = commonService.getUserPhone(req);
+        return vipsService.queryVipsInfo(phone);
     }
 
     @RequestMapping(value="loginOut",method=RequestMethod.POST)

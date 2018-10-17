@@ -21,16 +21,15 @@
             <div class="head-box">
                 <img src="images/img_head.png"/>
             </div>
-            <div class="head-cont-box">
-                <h3><span>ITS-GUSHEN</span><span class="tag">B类</span></h3>
-                <p class="day">剩余观看比赛日期<b>20天</b></p>
-                <p>目前权限：前20名选手早盘午盘实盘赛况。</p>
+            <div class="head-cont-box" id="pay_vip_info">
+                <h3><span id="nickName">ITS-GUSHEN</span></h3>
+                <%--<p class="day">剩余观看比赛日期<b>20天</b></p>--%>
+                <p id="level_info"></p>
             </div>
         </div>
         <div class="content bg-white">
             <div class="select-box">
-                <div class="one-area on">
-                    <i class="icon-on"></i>
+                <div class="one-area">
                     <div class="img-area">
                         <span class="L">A类</span>
                         <span class="R">¥5000/月</span>
@@ -51,49 +50,36 @@
                     </div>
                     <p>前20名选手48小时实盘赛况</p>
                 </div>
+                <input type="hidden" id="pay_ticket"/>
             </div>
             <div class="select-box">
                 <p class="title-style">选择方式：</p>
                 <div class="select-cont">
-                    <a class="select-btn">充值</a>
-                    <a class="select-btn on"><i class="icon-on"></i>升级</a>
+                    <a class="select-btn on"><i class="icon-on"></i>充值</a>
                 </div>
             </div>
             <div class="select-box">
                 <p class="title-style">支付方式：</p>
-                <div class="select-cont">
-                    <div class="one">
-                        <p class="radio-style"><input type="radio"/></p>
-                        <p class="tit">中国建设银行</p>
-                        <p>***1231</p>
-                        <p>储蓄卡|快捷</p>
-                        <p>支付<b>5000.00</b>元</p>
-                    </div>
-                    <div class="one on">
-                        <p class="radio-style"><input type="radio"/></p>
-                        <p class="tit">中国建设银行</p>
-                        <p>***1231</p>
-                        <p>储蓄卡|快捷</p>
-                        <p>支付<b>5000.00</b>元</p>
-                    </div>
-                    <a class="add-btn" id="pay_add_bank">添加快捷/网银付款</a>
+                <div class="select-cont" id="pay_list">
                 </div>
             </div>
-            <div class="select-box">
-                <p class="title-style">支付密码：</p>
+            <div class="select-box" id="pay_yzm">
+                <p class="title-style">验证码：</p>
                 <div class="select-cont">
                     <div class="input-numb">
-                        <input type="password" class="width-60"/>
-                        <input type="password" class="width-60"/>
-                        <input type="password" class="width-60"/>
-                        <input type="password" class="width-60"/>
-                        <input type="password" class="width-60"/>
-                        <input type="password" class="width-60"/>
+                        <input type="text" class="width-60" maxlength="1"/>
+                        <input type="text" class="width-60" maxlength="1"/>
+                        <input type="text" class="width-60" maxlength="1"/>
+                        <input type="text" class="width-60" maxlength="1"/>
+                        <input type="text" class="width-60" maxlength="1"/>
+                        <input type="text" class="width-60" maxlength="1"/>
+                        <input type="hidden" id="smsCode"/>
+                        <a class="yzm width-60" id="sendSmsCode" onclick="sendSmsCode();">获取验证码</a>
                     </div>
-                    <p class="tip">请输入6位数字支付密码</p>
+                    <p class="tip">请输入验证码</p>
                 </div>
             </div>
-            <a class="btn-zf">确认支付</a>
+            <a class="btn-zf" id="pay_zf" onclick="pay();">确认支付</a>
         </div>
     </div>
     <%@include file="../bottom.jsp" %>
@@ -135,14 +121,6 @@
                         <span class="icon-vali"></span>
                     </td>
                 </tr>
-                <%--<tr>--%>
-                    <%--<th>手     机：</th>--%>
-                    <%--<td><input class="input width-240"/><span class="icon-vali"></span></td>--%>
-                <%--</tr>--%>
-                <%--<tr>--%>
-                    <%--<th>短信验证：</th>--%>
-                    <%--<td><input class="input width-100" /><a class="yzm">获取验证码</a></td>--%>
-                <%--</tr>--%>
                 <tr>
                     <th></th>
                     <td><a class="btn-register" onclick="addBank();" id="pay_add_btn">同意开通</a></td>
@@ -156,7 +134,8 @@
 </body>
 <script>
     $(function() {
-        openOrCloseAddBank();
+
+        queryVipsCards();
 
         getBankCardInfo();
 
@@ -164,13 +143,48 @@
 
         set4space();
 
+        $("#pay_icon_close").click(function(){
+            $("#pay_bank_div").hide();
+        });
+
+        switchTicket();
+
+        focusNextInput();
+
+        queryVipsInfo();
+
     });
 
+    var smsCodeFlag = false;
+    var payFlag = false;
+    var p1 = false;
+
+    function canSendSmsCode() {
+        valiParams();
+        if (smsCodeFlag) {
+            $('#sendSmsCode').removeAttr('disabled');
+            $('#sendSmsCode').attr('class', 'yzm');
+        } else {
+            $('#sendSmsCode').attr('disabled', 'disabled');
+            $('#sendSmsCode').attr('class', 'yzm-disable');
+        }
+    }
+
+    function canPay() {
+        valiPay();
+        if (payFlag && smsCodeFlag && p1) {
+            $('#pay_zf').removeAttr('disabled');
+            $('#pay_zf').attr('class', 'btn-zf');
+        } else {
+            $('#pay_zf').attr('disabled', 'disabled');
+            $('#pay_zf').attr('class', 'btn-zf-disable');
+        }
+    }
     /**
-     * 打开/关闭添加银行
+     * 打开添加银行
      */
-    function openOrCloseAddBank(){
-        $("#pay_add_bank").click(function(){
+    function openAddBank(){
+//        $("#pay_add_bank").click(function(){
             $("#pay_bank_div").show();
 
             $("#pay_bank").text();
@@ -182,11 +196,7 @@
             $('body,html').animate({
                 scrollTop: 1100
             }, 500);
-        });
-
-        $("#pay_icon_close").click(function(){
-            $("#pay_bank_div").hide();
-        });
+//        });
     }
 
     /**
@@ -302,35 +312,68 @@
 
     function addBank(){
 
-        $("#pay_add_btn").click(function(){
+//        $("#pay_add_btn").click(function(){
 
             if($("#pay_table").find(".fail").length<=0){
-                var sessionId = sessionStorage.getItem("sessionId");
                 var payBank = $("#pay_bank").text();
                 var cardNo = Trim($("#pay_bank_no").val(), "g");
                 var cardCode = Trim($("#cardCode").val(),"g");
                 var payName = Trim($("#pay_name").val(),"g");
                 var idNo = Trim($("#pay_cardno").val(),"g");
-                var bankInfo = "bankName="+payBank+"&cardNo="+cardNo+"&cardCode="+cardCode+"&cardName="+payName+"&idNo="+idNo;
+                var bankInfo = {
+                    "bankName":payBank,
+                    "cardNo":cardNo,
+                    "cardCode":cardCode,
+                    "cardName":payName,
+                    "idNo":idNo
+                }
 
                 $.ajax({
                     type: "POST",
                     url: "interface/vipsBankCard/addBankCard.shtml",
-                    data: {bankInfo,sessionId},
+                    data: bankInfo,
                     dataType: "json",
                     beforeSend: function (request) {
                         request.setRequestHeader("Authorization", getAuthorization());
                     },
                     success: function (result) {
                         $("#pay_bank_div").hide();
+                        layer.alert(result.messageText, {
+                            icon: 0,
+                            skin: 'layui-layer-lan'
+                        });
+                        queryVipsCards();
                     }, error: function (result) {
 
                     }
 
                 });
             }
-        });
+//        });
 
+    }
+
+    function delBank(cardNo){
+        $.ajax({
+            type: "GET",
+            url: "interface/vipsBankCard/delBankCard.shtml",
+            data: {"cardNo":cardNo},
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (result) {
+                $("#pay_bank_div").hide();
+                layer.alert(result.messageText, {
+                    icon: 0,
+                    skin: 'layui-layer-lan'
+                });
+                queryVipsCards();
+            }, error: function (result) {
+
+            }
+
+        });
     }
 
     /**
@@ -347,6 +390,272 @@
             $(obj).siblings(".icon-vali").append("<i class='fas fa-times-circle fail' title='"+msg+"'></i>");
         }
     }
+
+    /**
+     * 查询银行卡列表
+     */
+    function queryVipsCards(){
+        $.ajax({
+            type: "POST",
+            url: "interface/vipsBankCard/list.shtml",
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (result) {
+                setCardsData(result);
+            }, error: function (result) {
+
+            }
+
+        });
+    }
+
+    /**
+     * 设置数据
+     * @param data
+     */
+    function setCardsData(data){
+        $("#pay_list").empty();
+        var html = "";
+        for(var i=0; i<data.length; i++) {
+            var cardNo = data[i].cardNo;
+            cardNo = cardNo.replace(/^.+(.{4})$/g, "******$1");
+            html += '<div class="one" data-card="'+data[i].cardNo+'"><p class="radio-style"><input type="radio"/></p>' +
+                    '<p class="tit">'+data[i].bankName+'</p><p>'+cardNo+'</p><p>储蓄卡|快捷</p>' +
+                    '<p id="icon-bank-del"><i class="far fa-trash-alt del" title="删除" onclick="delBank(\''+data[i].cardNo+'\')"></i></p></div>';
+        }
+        $("#pay_list").append(html);
+        $("#pay_list .one:last-child").addClass("on");
+        $("#pay_list .one:last-child").find("input[type='radio']").attr("checked","checked");
+        var length = $("#pay_list .one").length;
+        if(length<5){
+            $("#pay_list").append('<a class="add-btn" id="pay_add_bank" onclick="openAddBank();">添加快捷/网银付款</a>');
+        }
+
+        canSendSmsCode();
+
+        canPay();
+    }
+
+    function switchTicket(){
+        $(".one-area").click(function(){
+            var index = $(".one-area").index(this);
+            var fee = 0;
+            if(index==0){
+                fee = 5000;
+            }else if(index==1){
+                fee = 2000;
+            }else if(index==2){
+                fee = 500;
+            }
+            $("#pay_ticket").val(fee);
+
+            $(".one-area i").remove();
+            $(this).addClass("on");
+            $(this).siblings().removeClass("on");
+            $(this).prepend('<i class="icon-on"></i>');
+
+            canSendSmsCode();
+        });
+    }
+
+    function focusNextInput(){
+        $("#pay_yzm").find(':text').on('keyup', function(e) {
+
+            var c=$(this);
+            if(/[^\d]/.test(c.val())){//替换非数字字符
+                var temp_amount=c.val().replace(/[^\d{1}]/g,'');
+                $(this).val(temp_amount);
+            }
+
+//            var index = $("#pay_yzm").find(':text').index(this);
+//            var inputs = $("#pay_yzm").find(':text');
+//            for(var i = 0;i<inputs.length;i++){
+//                // 如果是最后一个，则焦点回到第一个
+//                if(i==(inputs.length-1)){
+//                    inputs[0].focus(); break;
+//                }else if(index == inputs[i]){
+//                    inputs[i+1].focus(); break;
+//                }
+//            }
+            payFlag = valiPay();
+            if(payFlag){
+                var str = "";
+                $("#pay_yzm").find(':text').each(function(n){
+                    if($(this).val()!=""){
+                        str += $(this).val();
+                    }
+                });
+                $("#smsCode").val(str);
+                canPay();
+            }
+        });
+    }
+
+
+    //倒计时
+    var countdown=60;
+    var canClick=false;
+    var isCountDown = false;
+    function sendSmsCode(){
+        if(!smsCodeFlag){
+            return false;
+        }
+
+        var fee = $("#pay_ticket").val();
+        var smsCode = $("#smsCode").val();
+        var cardNo = $("#pay_list .on").attr("data-card");
+        var data = {
+            "fee":fee,
+            "smsCode":smsCode,
+            "cardNo":cardNo,
+            "step":"p1"
+        }
+        $.ajax({
+            type: "POST",
+            url: "interface/vipsBankCard/addOrder.shtml",
+            dataType: "json",
+            data: data,
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (result) {
+                layer.alert(result.messageText, {
+                    icon: 0,
+                    skin: 'layui-layer-lan'
+                });
+                p1 = true;
+            }, error: function (result) {
+
+            }
+        });
+
+        $('#smsCode').css('color','#5e5e5e');
+        $('#smsCode').attr("href", 'javascript:;');
+        settime();
+    }
+
+    function pay(){
+        if($('#pay_zf').attr('disabled')){
+            return false;
+        }
+
+        var fee = $("#pay_ticket").val();
+        var smsCode = $("#smsCode").val();
+        var cardNo = $("#pay_list .on").attr("data-card");
+        var data = {
+            "fee":fee,
+            "smsCode":smsCode,
+            "cardNo":cardNo,
+            "step":"p3"
+        }
+        $.ajax({
+            type: "POST",
+            url: "interface/vipsBankCard/addOrder.shtml",
+            dataType: "json",
+            data: data,
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (result) {
+                layer.alert(result.messageText, {
+                    icon: 0,
+                    skin: 'layui-layer-lan'
+                });
+                if(result.messageText=="支付成功"){
+                    queryVipsInfo();
+                }
+
+            }, error: function (result) {
+
+            }
+
+        });
+    }
+
+    function valiPay(){
+        var num=0;
+        $("#pay_yzm").find(':text').each(function(n){
+            if($(this).val()==""){
+                num++;
+            }
+        });
+        if(num>0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    function valiParams(){
+        var length = $("#pay_list .one").length;
+        if(length<0) {
+//            layer.alert("请选择绑定银行卡", {
+//                icon: 0,
+//                skin: 'layui-layer-lan'
+//            });
+            return false;
+        }
+
+        var fee = $("#pay_ticket").val();
+        if(fee==0 || fee==""){
+//            layer.alert("请选择票根", {
+//                icon: 0,
+//                skin: 'layui-layer-lan'
+//            });
+            return false;
+        }
+
+        smsCodeFlag = true;
+    }
+
+    function settime() {
+
+        if (countdown == 0) {
+            $('#smsCode').html('获取验证码');
+            countdown = 60;
+            canClick=true;
+            isCountDown = false;
+            return;
+        } else {
+            $('#smsCode').html("获取验证码(" + countdown + "s)");
+            countdown--;
+        }
+        setTimeout(function() {
+                    settime() }
+                ,1000)
+    }
+
+    function queryVipsInfo(){
+        $.ajax({
+            type: "POST",
+            url: "interface/vips/queryVipsInfo.shtml",
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (result) {
+                $("#pay_vip_info #nickName").text(result.nickName);
+                var level = result.level;
+                if(level==1){
+                    $("#pay_vip_info #level").after('<span class="tag" id="level">A类</span>');
+                    $("#pay_vip_info #level_info").text("前20名选手早盘午盘实盘赛况");
+                }else if(level==2){
+                    $("#pay_vip_info #level").text('<span class="tag" id="level">B类</span>');
+                    $("#pay_vip_info #level_info").text("前20名选手24小时实盘赛况");
+                }else if(level==3){
+                    $("#pay_vip_info #level").text('<span class="tag" id="level">C类</span>');
+                    $("#pay_vip_info #level_info").text("前20名选手48小时实盘赛况");
+                }
+
+            }, error: function (result) {
+
+            }
+
+        });
+    }
+
 
 
 </script>

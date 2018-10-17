@@ -69,11 +69,9 @@
     });
 
     function queryVipsInfo(){
-        var sessionId = sessionStorage.getItem("sessionId");
         $.ajax({
             type: "POST",
             url: "interface/vips/queryVipsInfo.shtml",
-            data: {sessionId:sessionId},
             dataType: "json",
             beforeSend: function (request) {
                 request.setRequestHeader("Authorization", getAuthorization());

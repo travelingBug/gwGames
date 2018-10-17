@@ -171,5 +171,6 @@ public class WaterMarkUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("生成完成");
     }
 }
