@@ -140,13 +140,13 @@
 
 
   <select id="findTopForAll" resultMap="PlayerMoneyResultMap" >
-    select  <include refid="PlayerMoney_Column_List" />,p.CAPITAL from tb_player_money t LEFT join  tb_player p ON t.ACCOUNT = p.ACCOUNT where not exists(select 1 from tb_gains_info t2  where t2.ACCOUNT= t.ACCOUNT
+    select  <include refid="PlayerMoney_Column_List" />,p.CAPITAL from tb_player_money t LEFT join  tb_player p ON t.ACCOUNT = p.ACCOUNT where not exists(select 1 from tb_player_money t2  where t2.ACCOUNT= t.ACCOUNT
     and t.BUSINESS_TIME &lt;  t2.BUSINESS_TIME)
   </select>
 
   <select id="findTopByMonth" resultMap="PlayerMoneyResultMap"  >
 
-    select  <include refid="PlayerMoney_Column_List" />,p.CAPITAL from tb_player_money t LEFT join  tb_player p ON t.ACCOUNT = p.ACCOUNT where date_format(t.BUSINESS_TIME, '%Y-%m') = #{currDate} and  not exists(select 1 from tb_gains_info t2  where t2.ACCOUNT= t.ACCOUNT
+    select  <include refid="PlayerMoney_Column_List" />,p.CAPITAL from tb_player_money t LEFT join  tb_player p ON t.ACCOUNT = p.ACCOUNT where date_format(t.BUSINESS_TIME, '%Y-%m') = #{currDate} and  not exists(select 1 from tb_player_money t2  where t2.ACCOUNT= t.ACCOUNT
     and date_format(t2.BUSINESS_TIME, '%Y-%m') = #{currDate} and t.BUSINESS_TIME &lt;  t2.BUSINESS_TIME)
   </select>
 </mapper>

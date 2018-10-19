@@ -7,7 +7,7 @@ font-family:"微软雅黑";
 }
 </style>
 <div class="main-box mid-banner-1">
-    <div class="content" id="advert_bottom">
+    <div class="content" id="advert_bottom" style="cursor: pointer;">
     </div>
 </div>
 <div class="main-box contact-box">

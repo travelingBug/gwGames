@@ -120,7 +120,9 @@
                        },
                        error: function (result) {
                            putTokenToDef();
-                           window.location.href = "/static/vips/register.jsp";
+                           setTimeout(function(){
+                               window.location.href = "/static/vips/register.jsp?a=1";
+                           }, 2500);
                        }
                    });
 
@@ -151,7 +153,9 @@
                        },
                        error: function (result) {
                            putTokenToDef();
-                           window.location.href = "/static/vips/register.jsp";
+                           setTimeout(function(){
+                               window.location.href = "/static/vips/register.jsp?a=1";
+                           }, 2500);
                        }
                    });
                    goPageByAjax(1);
@@ -184,16 +188,16 @@
                } else {
                    warnMsg(data.messageText);
                    setTimeout(function(){
-                       window.location.href = "/static/home.jsp";
-                   }, 1000);
+                       window.location.href = "/static/vips/vips_pay.jsp";
+                   }, 2500);
                }
             },
             error: function (data) {
                 warnMsg('请登录后再观赛！');
                 setTimeout(function(){
                     putTokenToDef();
-                    window.location.href = "/static/vips/register.jsp";
-                }, 1000);
+                    window.location.href = "/static/vips/register.jsp?a=1";
+                }, 2500);
 
             }
         });
@@ -295,7 +299,9 @@
             },
             error: function (result) {
                 putTokenToDef();
-                window.location.href = "/static/vips/register.jsp";
+                setTimeout(function(){
+                    window.location.href = "/static/vips/register.jsp?a=1";
+                }, 2500);
             }
         });
     }

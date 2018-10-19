@@ -9,7 +9,7 @@
                     <div class="content" >
                         <div class="links" id="navigation">
                             <a class="link floatL"  id="toBm"><i class="icon icon-bmcs" ></i>报名参赛</a>
-                            <a class="link floatR"  id="toRegister"><i class="icon icon-gszc" ></i>观赛注册</a>
+                            <a class="link floatR"  id="toStrategy"><i class="icon icon-gszc" ></i>观赛入口</a>
                         </div>
                     </div>
                 </div>
@@ -23,8 +23,8 @@
         $('#toBm').click(function () {
             window.location.href="/static/signup/signup.jsp";
         });
-        $('#toRegister').click(function () {
-            window.location.href="/static/vips/register.jsp?a=2";
+        $('#toStrategy').click(function () {
+            window.location.href="/static/gains/strategy.jsp";
         });
         //banner和广告位设置
         $.ajax({
@@ -53,13 +53,24 @@
                     if (banner != null && banner.length > 0) {
                         for (var i = 0 ; i < banner.length ; i++) {
                             var className = "";
-                            var display = 'style="display:none;"';
+                            var display = 'style="display:none;cursor: pointer;"';
                             if (i == 0) {
                                 className = 'class="on"';
-                                display = "";
+                                display = 'style="cursor: pointer;"';
                             }
-                            $('#choseLi').append('<li '+className+' name="banner_'+i+'"></li>');
+                            $('#choseLi').append('<li '+className+' name="banner_'+i+'" id="banner_'+i+'"></li>');
                             $('#homeBanner').prepend('<img id="banner_'+i+'_img" src="'+banner[i].imgPath+'" ' + display+ '/>');
+                            $("#banner_"+i).click(function(){
+                                if($(this).attr('class') != 'on') {
+                                    $('#choseLi').find('li').each(function(v){
+                                            $(this).attr('class','');
+                                            $('#'+$(this).attr('name')+'_img').css('display','none');
+                                    });
+                                    $(this).attr('class','on');
+                                    $('#'+$(this).attr('name')+'_img').css('display','');
+                                }
+
+                            });
                             $('#banner_'+i+'_img').click(function () {
                                 var url = banner[0].url;
                                 if (!(url.startWith('http://') || url.startWith('https://'))) {
@@ -68,6 +79,14 @@
                                 window.location.href = url;
                             });
                         }
+//                        $('#homeBanner').slidesjs({
+//                            play: {
+//                                active: true,
+//                                auto: true,
+//                                interval: 2000,
+//                                swap: true
+//                            }
+//                        });
                         setInterval("changImg()","4000");
                     }
                 }

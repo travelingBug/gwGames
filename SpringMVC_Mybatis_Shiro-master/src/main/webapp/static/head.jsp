@@ -9,14 +9,19 @@
     String defSessionId = IConstant.defSessionId;
 %>
 <base href="<%=basePath%>">
+<%--<link rel="stylesheet" href="<%=basePath%>/js/common/slides/css/example.css">--%>
+<!--[if lte IE 9]> <link href="<%=basePath%>/css/all_lt_IE9.css" rel="stylesheet" type="text/css" /><![endif]-->
+<!--[if gt IE 9]> <link href="<%=basePath%>/css/all.css" rel="stylesheet" type="text/css" /><![endif]-->
+<!--[if !IE]><!--> <link href="<%=basePath%>/css/all.css" rel="stylesheet" type="text/css" /><!--<![endif]-->
 
-<link href="<%=basePath%>/css/all.css" rel="stylesheet" type="text/css" />
 <%--<link href="<%=basePath%>/js/common/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>--%>
+
 <script baseUrl="<%=basePath%>" src="<%=basePath%>/js/common/jquery/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="<%=basePath%>/js/encrypt/aes.js"></script>
 <script type="text/javascript" src="<%=basePath%>/js/encrypt/mode-ecb.js"></script>
 <script  src="<%=basePath%>/js/common/layer/layer.js"></script>
 <script  src="<%=basePath%>/js/common/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script  src="<%=basePath%>/js/common/slides/jquery.slides.min.js"></script>
 <%--<script type="text/javascript" src="<%=basePath%>/js/utils/extend.js"></script>--%>
 <script>
     sessionStorage.setItem("key", '<%=key %>');

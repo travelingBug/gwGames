@@ -166,7 +166,7 @@
                                   <li><a href="${basePath}/stopdate/list.shtml">系统配置</a></li>
 							  </@shiro.hasPermission>
 							  <@shiro.hasPermission name="/homeConfig/list.shtml">
-                                  <li><a href="${basePath}/stopdate/list.shtml">首页配置</a></li>
+                                  <li><a href="${basePath}/homeConfig/list.shtml">首页配置</a></li>
 							  </@shiro.hasPermission>
                           </ul>
                       </li>

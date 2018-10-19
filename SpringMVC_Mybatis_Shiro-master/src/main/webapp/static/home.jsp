@@ -57,7 +57,7 @@
     </div>
     <div class="main-box border-none">
         <div class="content">
-            <div class="mid-banner" id="advert_home"></div>
+            <div class="mid-banner" id="advert_home" style="cursor: pointer;"></div>
         </div>
     </div>
     <div class="main-box">
@@ -293,7 +293,7 @@
         $.ajax({
             type: "POST",
             url: "interface/gainsInfo/getTopAll.shtml",
-            data: {size: 10},
+            data: {size: 20},
             dataType: "json",
             beforeSend: function (request) {
                 request.setRequestHeader("Authorization", getAuthorization());
@@ -336,7 +336,7 @@
         $.ajax({
             type: "POST",
             url: "interface/gainsInfo/getTopMonth.shtml",
-            data: {size: 10},
+            data: {size: 20},
             dataType: "json",
             beforeSend: function (request) {
                 request.setRequestHeader("Authorization", getAuthorization());

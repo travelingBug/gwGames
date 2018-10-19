@@ -20,10 +20,10 @@
                 <div class="detail-cont" id="content">
                 </div>
             </div>
-            <%@include file="../bottom.jsp" %>
-            <%@include file="../footer.jsp" %>
-        </div>
 
+        </div>
+    <%@include file="../bottom.jsp" %>
+    <%@include file="../footer.jsp" %>
 </div>
 </body>
 <script>

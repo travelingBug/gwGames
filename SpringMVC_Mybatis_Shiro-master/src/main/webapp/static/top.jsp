@@ -2,7 +2,7 @@
 <div class="top-bar"></div>
 <div class="top-box">
     <div class="content">
-        <div class="logo" id="topLogo"></div>
+        <div class="logo" id="topLogo" style="cursor: pointer;"></div>
         <div class="right-area" id="topHead">
             <%--<a class="link"><i class="icon icon-weibo"></i>官方微博</a>--%>
 
@@ -43,8 +43,8 @@
         });
 
         if (sessionStorage.getItem("nickName") != null && sessionStorage.getItem("nickName") != '') {
-            $('#topHead').append('<a class="link" href="/static/vips/vips_center.jsp">'+sessionStorage.getItem("nickName")+'</a>');
-            $('#topHead').append('<a class="link" id="loginOut">[注销]</a>');
+            $('#topHead').append('<a class="introduce" style="color:red;" href="/static/vips/vips_center.jsp">欢迎您，'+sessionStorage.getItem("nickName")+'</a>');
+            $('#topHead').append('<a class="introduce" style="color:red;" id="loginOut">[注销]</a>');
             $('#navigation').css('display','none');
             $('#loginOut').click(function(){
                 $.ajax({
@@ -66,7 +66,7 @@
                 });
             });
         } else {
-            $('#topHead').append('<a class="link" href="/static/vips/register.jsp?a=1">[登录]</a>');
+            $('#topHead').append('<a class="introduce" style="color:red;" href="/static/vips/register.jsp?a=1">[登录]</a>');
         }
 
 

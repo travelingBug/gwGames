@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>股王大赛</title>
-    <link href="css/all.css" rel="stylesheet" type="text/css" />
+    <%--<link href="css/all.css" rel="stylesheet" type="text/css" />--%>
 </head>
 <body>
 <div class="overlay layer-small login">
@@ -27,7 +27,7 @@
     <div class="top-bar"></div>
     <div class="top-box">
         <div class="content">
-            <div class="logo" id="toHomeLogo"></div>
+            <div class="logo" id="toHomeLogo" style="cursor: pointer;"></div>
             <div class="right-area">
                 <p>已有账号？请直接<a class="link loginBtn" href="/static/vips/register.jsp?a=1">登录</a></p>
             </div>
