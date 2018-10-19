@@ -29,4 +29,6 @@ public interface VipsService {
     TbVips queryVipsInfo(String phone);
 
     void updateLevelByEndTIme(Map<String,Object> param);
+
+    String getSurplusTime(String phone);
 }

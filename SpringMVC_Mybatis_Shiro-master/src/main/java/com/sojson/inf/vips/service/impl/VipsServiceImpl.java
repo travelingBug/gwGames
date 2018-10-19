@@ -220,4 +220,32 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
     }
 
 
+    @Override
+    public String getSurplusTime(String phone){
+        //剩余时间
+        String surplusMin = uTbVipsMapper.getSurplusMin(phone);
+        if (StringUtils.isBlank(surplusMin)){
+            return surplusMin;
+        }
+        Integer surplus = Integer.parseInt(surplusMin);
+        //计算剩余天数和小时
+        //天数
+        int day = surplus/(24*60);
+        int hour = (surplus - 24*60*day) / 60;
+
+        String surplusTime = "";
+        if (day > 0) {
+            surplusTime = "剩余观赛时间："+day+"天，";
+        }
+        if (hour == 0 && StringUtils.isBlank(surplusTime)) {
+            surplusTime = "剩余剩余观赛时间：小于1小时";
+        } else if (StringUtils.isBlank(surplusTime)) {
+            surplusTime = "剩余剩余观赛时间："+ hour+"小时";
+        } else {
+            surplusTime += hour+"小时";
+        }
+
+        return surplusTime;
+    }
+
 }
