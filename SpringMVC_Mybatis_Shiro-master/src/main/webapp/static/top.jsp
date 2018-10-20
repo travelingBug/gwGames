@@ -43,8 +43,9 @@
         });
 
         if (sessionStorage.getItem("nickName") != null && sessionStorage.getItem("nickName") != '') {
-            $('#topHead').append('<a class="introduce" style="font-size: 18px;color:#484848" href="/static/vips/vips_center.jsp">欢迎您，'+sessionStorage.getItem("nickName")+'</a>');
-            $('#topHead').append('<a class="introduce" style="font-size: 18px;color:#484848" id="loginOut">[注销]</a>');
+            $('#topHead').append('<a class="introduce" style="color:red;" href="/static/vips/vips_center.jsp">欢迎您，'+sessionStorage.getItem("nickName")+'</a>');
+            $('#topHead').append('<a class="introduce" style="color:red;" id="loginOut">[注销]</a>');
+            $('#topHead').append('<a class="introduce" style="color:red;" id="changePass">[修改密码]</a>');
             $('#navigation').css('display','none');
             $('#loginOut').click(function(){
                 $.ajax({
@@ -65,6 +66,29 @@
                     }
                 });
             });
+
+            $('#changePass').click(function(){
+                window.location.href="/static/vips/changePass.jsp";
+
+//                $.ajax({
+//                    type: "POST",
+//                    url: "interface/vips/editVips.shtml",
+//                    data: {},
+//                    dataType: "json",
+//                    beforeSend: function(request) {
+//                        request.setRequestHeader("Authorization", getAuthorization());
+//
+//                    },
+//                    success: function(data) {
+//                        putTokenToDef();
+//                        window.location.href="/static/vips/vips_center.jsp";
+//                    },
+//                    error: function(data) {
+//                        putTokenToDef();
+//                    }
+//                });
+            });
+
         } else {
             $('#topHead').append('<a style="font-size: 18px;color:#484848;font-family:"微软雅黑";" href="/static/vips/register.jsp?a=1"><i class="fas fa-user"></i>登录</a>');
             $('#topHead').append('&nbsp;&nbsp; ');

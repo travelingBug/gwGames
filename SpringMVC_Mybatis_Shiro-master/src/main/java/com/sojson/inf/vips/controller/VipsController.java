@@ -81,8 +81,8 @@ public class VipsController extends BaseController {
      */
     @RequestMapping(value = "editVips", method = RequestMethod.POST)
     @ResponseBody
-    public ResultMessage editVips(TbVips entity, HttpServletRequest req) {
-        return vipsService.update(entity);
+    public ResultMessage editVips(TbVips entity, HttpServletRequest req) throws Exception{
+        return vipsService.update(entity,req);
     }
 
     /**
@@ -132,5 +132,12 @@ public class VipsController extends BaseController {
     @ResponseBody
     public Map<String,Object> forbidUserById(Long id, Long status){
         return userService.updateForbidUserById(id,status);
+    }
+
+    @RequestMapping(value = "valiPass", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage valiPass(String pwd, HttpServletRequest req) throws Exception{
+        String phone = commonService.getUserPhone(req);
+        return vipsService.validatePwd(pwd, phone);
     }
 }

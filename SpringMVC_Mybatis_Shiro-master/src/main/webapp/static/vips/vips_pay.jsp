@@ -22,8 +22,8 @@
                 <img src="images/img_head.png"/>
             </div>
             <div class="head-cont-box" id="pay_vip_info">
-                <h3><span id="nickName">ITS-GUSHEN</span></h3>
-                <%--<p class="day">剩余观看比赛日期<b>20天</b></p>--%>
+                <h3><span id="nickName"></span><span id="level"></span></h3>
+                <p class="day" id="endTime"></p>
                 <p id="level_info"></p>
             </div>
         </div>
@@ -55,7 +55,7 @@
             <div class="select-box">
                 <p class="title-style">选择方式：</p>
                 <div class="select-cont">
-                    <a class="select-btn on"><i class="icon-on"></i>充值</a>
+                    <a class="select-btn on"><i class="icon-on"></i>购票</a>
                 </div>
             </div>
             <div class="select-box">
@@ -67,12 +67,12 @@
                 <p class="title-style">验证码：</p>
                 <div class="select-cont">
                     <div class="input-numb">
-                        <input type="text" class="width-60" maxlength="1"/>
-                        <input type="text" class="width-60" maxlength="1"/>
-                        <input type="text" class="width-60" maxlength="1"/>
-                        <input type="text" class="width-60" maxlength="1"/>
-                        <input type="text" class="width-60" maxlength="1"/>
-                        <input type="text" class="width-60" maxlength="1"/>
+                        <input type="text" class="width-60 smsCode" readonly="true" maxlength="1"/>
+                        <input type="text" class="width-60 smsCode" readonly="true" maxlength="1"/>
+                        <input type="text" class="width-60 smsCode" readonly="true" maxlength="1"/>
+                        <input type="text" class="width-60 smsCode" readonly="true" maxlength="1"/>
+                        <input type="text" class="width-60 smsCode" readonly="true" maxlength="1"/>
+                        <input type="text" class="width-60 smsCode" readonly="true" maxlength="1"/>
                         <input type="hidden" id="smsCode"/>
                         <a class="yzm width-60" id="sendSmsCode" onclick="sendSmsCode();">获取验证码</a>
                     </div>
@@ -118,6 +118,13 @@
                     <th>证件号码：</th>
                     <td>
                         <input class="input width-240" id="pay_cardno" name="idNo"/>
+                        <span class="icon-vali"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>手机号码：</th>
+                    <td>
+                        <input class="input width-240" id="pay_phone" name="bankPhone"/>
                         <span class="icon-vali"></span>
                     </td>
                 </tr>
@@ -184,7 +191,6 @@
      * 打开添加银行
      */
     function openAddBank(){
-//        $("#pay_add_bank").click(function(){
             $("#pay_bank_div").show();
 
             $("#pay_bank").text();
@@ -194,9 +200,8 @@
             $("#pay_cardno").val();
 
             $('body,html').animate({
-                scrollTop: 1100
+                scrollTop: 700
             }, 500);
-//        });
     }
 
     /**
@@ -235,25 +240,6 @@
                 var temp_amount=c.val().replace(/[^\d]/g,'');
                 $(this).val(temp_amount);
             }
-            //只对输入数字时进行处理
-//            if((e.which >= 48 && e.which <= 57) ||
-//                    (e.which >= 96 && e.which <= 105 )){
-//                //获取当前光标的位置
-//                var caret = this.selectionStart;
-//                //获取当前的value
-//                var value = this.value;
-//                //从左边沿到坐标之间的空格数
-//                var sp =  (value.slice(0, caret).match(/\s/g) || []).length;
-//                //去掉所有空格
-//                var nospace = value.replace(/\s/g, '');
-//                //重新插入空格
-//                var curVal = this.value = nospace.replace(/\D+/g,"").replace(/(\d{4})/g, "$1 ").trim();
-//                //从左边沿到原坐标之间的空格数
-//                var curSp = (curVal.slice(0, caret).match(/\s/g) || []).length;
-//                //修正光标位置
-//                this.selectionEnd = this.selectionStart = caret + curSp - sp;
-//
-//            }
 
             var value=$(this).val().replace(/\s/g,'').replace(/(\d{4})(?=\d)/g,"$1 ");
             $(this).val(value)
@@ -320,12 +306,14 @@
                 var cardCode = Trim($("#cardCode").val(),"g");
                 var payName = Trim($("#pay_name").val(),"g");
                 var idNo = Trim($("#pay_cardno").val(),"g");
+                var bankPhone = $("#pay_phone").val();
                 var bankInfo = {
                     "bankName":payBank,
                     "cardNo":cardNo,
                     "cardCode":cardCode,
                     "cardName":payName,
-                    "idNo":idNo
+                    "idNo":idNo,
+                    "bankPhone":bankPhone
                 }
 
                 $.ajax({
@@ -443,11 +431,11 @@
             var index = $(".one-area").index(this);
             var fee = 0;
             if(index==0){
-                fee = 5000;
+                fee = "A";
             }else if(index==1){
-                fee = 2000;
+                fee = "B";
             }else if(index==2){
-                fee = 500;
+                fee = "C";
             }
             $("#pay_ticket").val(fee);
 
@@ -469,16 +457,17 @@
                 $(this).val(temp_amount);
             }
 
-//            var index = $("#pay_yzm").find(':text').index(this);
-//            var inputs = $("#pay_yzm").find(':text');
-//            for(var i = 0;i<inputs.length;i++){
-//                // 如果是最后一个，则焦点回到第一个
-//                if(i==(inputs.length-1)){
-//                    inputs[0].focus(); break;
-//                }else if(index == inputs[i]){
-//                    inputs[i+1].focus(); break;
-//                }
-//            }
+            if(e.keyCode>=48&&e.keyCode<=57){
+                /*输入0-9*/
+                changeDiv();
+
+            }else if(e.keyCode=="8") {
+                /*退格回删事件*/
+                returnDiv();
+
+            }
+
+
             payFlag = valiPay();
             if(payFlag){
                 var str = "";
@@ -492,7 +481,6 @@
             }
         });
     }
-
 
     //倒计时
     var countdown=60;
@@ -591,7 +579,7 @@
     function valiParams(){
         var length = $("#pay_list .one").length;
         if(length<0) {
-//            layer.alert("请选择绑定银行卡", {
+//            layer.alert("请绑定银行卡", {
 //                icon: 0,
 //                skin: 'layui-layer-lan'
 //            });
@@ -600,7 +588,7 @@
 
         var fee = $("#pay_ticket").val();
         if(fee==0 || fee==""){
-//            layer.alert("请选择票根", {
+//            layer.alert("请选择观赛门票", {
 //                icon: 0,
 //                skin: 'layui-layer-lan'
 //            });
@@ -639,14 +627,22 @@
                 $("#pay_vip_info #nickName").text(result.nickName);
                 var level = result.level;
                 if(level==1){
-                    $("#pay_vip_info #level").after('<span class="tag" id="level">A类</span>');
+                    $("#pay_vip_info #level").text('A类');
                     $("#pay_vip_info #level_info").text("前20名选手早盘午盘实盘赛况");
+                    $("#pay_vip_info #level_info").addClass("tag");
                 }else if(level==2){
-                    $("#pay_vip_info #level").text('<span class="tag" id="level">B类</span>');
+                    $("#pay_vip_info #level").text('B类');
                     $("#pay_vip_info #level_info").text("前20名选手24小时实盘赛况");
+                    $("#pay_vip_info #level_info").addClass("tag");
                 }else if(level==3){
-                    $("#pay_vip_info #level").text('<span class="tag" id="level">C类</span>');
+                    $("#pay_vip_info #level").text('C类');
                     $("#pay_vip_info #level_info").text("前20名选手48小时实盘赛况");
+                    $("#pay_vip_info #level_info").addClass("tag");
+                }else {
+                    $("#pay_vip_info #level_info").removeClass("tag");
+                }
+                if(result.endTimeStr!=null) {
+                    $("#pay_vip_info #endTime").text(result.endTimeStr);
                 }
 
             }, error: function (result) {
@@ -655,6 +651,58 @@
 
         });
     }
+
+    /**
+     * 设置默认选中
+     **/
+    var paw = $(".smsCode");
+    var pawCount=paw.length;
+    /*设置第一个输入框默认选中*/
+    $(paw[0]).addClass("yzm-highLight");
+    paw[0].readOnly=false;
+    paw[0].focus();
+
+    /*定义自动选中下一个输入框事件*/
+    var changeDiv = function(){
+        for(var i=0;i<pawCount;i++){
+            if(paw[i].value.length=="1"){
+                if((i+1)<pawCount) {
+                    /*处理当前输入框*/
+                paw[i].blur();
+                $(paw[i]).removeClass("yzm-highLight");
+//                paw[i].readOnly = true;
+
+                    /*处理下一个输入框*/
+                $(paw[i + 1]).addClass("yzm-highLight");
+                paw[i + 1].focus();
+                paw[i + 1].readOnly = false;
+                }
+            }
+        }
+    };
+
+    /*回删时选中上一个输入框事件*/
+    var returnDiv = function(){
+        for(var i=0;i<pawCount;i++){
+            console.log(i);
+            if(paw[i].value.length=="0"){
+                if(i>=0) {
+                    /*处理当前输入框*/
+                    console.log(i);
+                    paw[i].blur();
+                    $(paw[i]).removeClass("yzm-highLight");
+                    paw[i].readOnly = true;
+
+                    /*处理上一个输入框*/
+                    $(paw[i - 1]).addClass("yzm-highLight");
+                    paw[i - 1].focus();
+                    paw[i - 1].readOnly = false;
+                    paw[i - 1].value = "";
+                    break;
+                }
+            }
+        }
+    };
 
 
 

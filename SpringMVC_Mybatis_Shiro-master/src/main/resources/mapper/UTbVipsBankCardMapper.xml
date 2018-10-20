@@ -9,9 +9,10 @@
     <result column="CARD_NAME" property="cardName" jdbcType="VARCHAR" />
     <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
     <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="BANK_PHONE" property="bankPhone" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="card_Column_List" >
-    ID,PHONE,CARD_NO,CARD_CODE,CARD_NAME,ID_NO,BANK_NAME
+    ID,PHONE,CARD_NO,CARD_CODE,CARD_NAME,ID_NO,BANK_NAME,BANK_PHONE
   </sql>
 
 
@@ -27,8 +28,8 @@
   </select>
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbVipsCard" >
-    insert into tb_vip_bank_card (ID,PHONE,CARD_NO,CARD_CODE,CARD_NAME,ID_NO,BANK_NAME)
-    values (#{id},#{phone},#{cardNo},#{cardCode},#{cardName},#{idNo},#{bankName})
+    insert into tb_vip_bank_card (ID,PHONE,CARD_NO,CARD_CODE,CARD_NAME,ID_NO,BANK_NAME,BANK_PHONE)
+    values (#{id},#{phone},#{cardNo},#{cardCode},#{cardName},#{idNo},#{bankName},#{bankPhone})
   </insert>
   
   <delete id="delete" parameterType="String">

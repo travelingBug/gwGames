@@ -14,7 +14,7 @@ public interface VipsService {
     Pagination<TbVips> findByPage(Map<String, Object> resultMap, Integer pageNo,
                                   Integer pageSize);
 
-    ResultMessage update(TbVips entity);
+    ResultMessage update(TbVips entity, HttpServletRequest req) throws Exception;
 
     ResultMessage insert(TbVips entity, HttpServletRequest req);
 
@@ -31,4 +31,6 @@ public interface VipsService {
     void updateLevelByEndTIme(Map<String,Object> param);
 
     String getSurplusTime(String phone);
+
+    ResultMessage validatePwd(String pwd, String phone);
 }

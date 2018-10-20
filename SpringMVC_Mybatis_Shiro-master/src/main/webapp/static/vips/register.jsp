@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>股王大赛</title>
+    <link href="${basePath}/css/gwGame.css?${_v}" rel="stylesheet"/>
     <%--<link href="css/all.css" rel="stylesheet" type="text/css" />--%>
 </head>
 <body>
@@ -43,25 +44,25 @@
                     <tbody>
                     <tr>
                         <th><span style="color: red;">*</span>昵称：</th>
-                        <td id="nickNameTd"><input id="nickName" name="nickName" class="input width-240" /></td>
+                        <td id="nickNameTd"><input id="nickName" name="nickName" class="input width-240" /><span class="icon-vali"></span></td>
                     </tr>
                     <tr>
                         <th><span style="color: red;">*</span>密码：</th>
-                        <td id="pwdTd"><input id="pwd" name="password" type="password" class="input width-240 pwd" /></td>
+                        <td id="pwdTd"><input id="pwd" name="password" type="password" class="input width-240 pwd" /><span class="icon-vali"></span></td>
                     </tr>
                     <tr>
                         <th><span style="color: red;">*</span>确认密码：</th>
-                        <td id="rePwdTd"><input id="rePwd" type="password" class="input width-240 pwd" /></td>
+                        <td id="rePwdTd"><input id="rePwd" type="password" class="input width-240 pwd" /><span class="icon-vali"></span></td>
                     </tr>
                     <tr>
                         <th><span style="color: red;">*</span>推荐码：</th>
                         <td id="inviteCodeTd">
-                            <input id="inviteCode" name="inviteCode" class="input width-240" />
+                            <input id="inviteCode" name="inviteCode" class="input width-240" /><span class="icon-vali"></span>
                         </td>
                     </tr>
                     <tr>
                         <th><span style="color: red;">*</span>手机号：</th>
-                        <td><input id="telPhone" name="phone" class="input width-240"/></td>
+                        <td><input id="telPhone" name="phone" class="input width-240"/><span class="icon-vali"></span></td>
                     </tr>
                     <tr>
                         <th><span style="color: red;">*</span>验证码：</th>
@@ -72,13 +73,14 @@
                     </tr>
                     <tr>
                         <th></th>
-                        <td><a id="buttonSubmit" class="disable" disabled="disabled">立即注册</a></td>
+                        <td><a id="buttonSubmit" class="btn-zf" disabled="disabled">立即注册</a></td>
                     </tr>
                     </tbody>
                 </table>
             </form>
         </div>
     </div>
+    <%@include file="../bottom.jsp" %>
     <%@include file="../footer.jsp" %>
 </div>
 </body>
@@ -96,6 +98,8 @@
 //        $("#seatNum").text(getUrlParam('seatNum'));
         $("#inviteCode").val(getUrlParam('inviteNum'));
 
+        canSubmit();
+
     });
 
     var nameFlag = false;
@@ -106,24 +110,27 @@
     function canSubmit(){
         if (nameFlag && pwdFlag && inviteCodeFlag && telPhoneFlag) {
             $('#buttonSubmit').removeAttr('disabled');
-            $('#buttonSubmit').attr('class','btn-register');
+            $('#buttonSubmit').attr('class', 'btn-zf');
         } else {
-            $('#buttonSubmit').attr('disabled','disabled');
-            $('#buttonSubmit').attr('class','disable');
+            $('#buttonSubmit').attr('disabled', 'disabled');
+            $('#buttonSubmit').attr('class', 'btn-zf-disable');
         }
     }
 
     $("#nickName").blur(function(){
         var nickName = $('#nickName').val();
         nameFlag = false;
+        var obj = $(this);
         $('#nickNameTd').find('span').remove();
         if(nickName && nickName != null && nickName != ''){
-            $("#nickName").after('<span class="link tip-right"><i class="icon icon-right"></i></span>');
+            setTip(obj,"",1);
+//            $("#nickName").after('<span class="link tip-right"><i class="icon icon-right"></i></span>');
             nameFlag = true;
             canSubmit();
         } else {
-            $('#nickNameTd').find('span').remove();
-            $("#nickName").after('<span class="link tip-wrong"><i class="icon icon-wrong"></i>请输入昵称</span>');
+            setTip(obj,"请输入昵称",0);
+//            $('#nickNameTd').find('span').remove();
+//            $("#nickName").after('<span class="link tip-wrong"><i class="icon icon-wrong"></i>请输入昵称</span>');
         }
     });
 
@@ -132,32 +139,28 @@
         inviteCodeFlag = false;
         $('#inviteCodeTd').find('span').remove();
         if(inviteCode && inviteCode != null && inviteCode != ''){
-//            $.ajax({
-//                type: "POST",
-//                url: "interface/vips/validInviteCode.shtml",
-//                data: {telPhone: telPhone},
-//                dataType: "json",
-//                beforeSend: function (request) {
-//                    request.setRequestHeader("Authorization", getAuthorization());
-//                },
-//                success: function (data) {
-//                    if (data != null && data.length > 0) {
-//                        layer.alert('电话号码已被使用', {
-//                            icon: 0,
-//                            skin: 'layui-layer-lan'
-//                        });
-//                        canClick=false;
-//                        $('#sendVerfiCode').css('color','#5e5e5e');
-//                        $('#sendVerfiCode').attr("href", 'javascript:;');
-//                    } else {
-//                        $('#sendVerfiCode').css('color','#f90606');
-//                        canClick=true;
-//                        telPhoneFlag=true;
-//                        canSubmit();
-//
-//                    }
-//                }
-//            });
+            $.ajax({
+                type: "POST",
+                url: "interface/vips/validInviteCode.shtml",
+                data: {telPhone: telPhone},
+                dataType: "json",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Authorization", getAuthorization());
+                },
+                success: function (data) {
+                    if (data != null && data.length > 0) {
+                        canClick=false;
+                        $('#sendVerfiCode').css('color','#5e5e5e');
+                        $('#sendVerfiCode').attr("href", 'javascript:;');
+                    } else {
+                        $('#sendVerfiCode').css('color','#f90606');
+                        canClick=true;
+                        telPhoneFlag=true;
+                        canSubmit();
+
+                    }
+                }
+            });
             $("#inviteCode").after('<span class="link tip-right"><i class="icon icon-right"></i></span>');
             inviteCodeFlag = true;
             canSubmit();
@@ -425,4 +428,18 @@
         if (r != null) return unescape(r[2]); return null; //返回参数值
     }
 
+    /**
+     *
+     * @param obj 对象
+     * @param msg 提示信息
+     * @param s 1-正确 0-错误
+     */
+    function setTip(obj,msg,s){
+        $(obj).siblings(".icon-vali").empty();
+        if(s){
+            $(obj).siblings(".icon-vali").append("<i class='fas fa-check-circle pass'></i>");
+        }else{
+            $(obj).siblings(".icon-vali").append("<i class='fas fa-times-circle fail' title='"+msg+"'></i>");
+        }
+    }
 </script>

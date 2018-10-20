@@ -26,6 +26,19 @@ public class TbVipsCard {
 
     private String bankName;
 
+    /**
+     * 开户电话
+     */
+    private String bankPhone;
+
+    public String getBankPhone() {
+        return bankPhone;
+    }
+
+    public void setBankPhone(String bankPhone) {
+        this.bankPhone = bankPhone;
+    }
+
     public String getBankName() {
         return bankName;
     }

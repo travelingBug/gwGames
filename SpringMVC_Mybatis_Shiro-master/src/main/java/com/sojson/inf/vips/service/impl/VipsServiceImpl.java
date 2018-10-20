@@ -3,9 +3,12 @@ package com.sojson.inf.vips.service.impl;
 import com.sojson.common.IConstant;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.dao.UTbDealerMapper;
+import com.sojson.common.dao.UTbStopDateMapper;
 import com.sojson.common.dao.UTbVipsMapper;
 import com.sojson.common.model.TbDealer;
+import com.sojson.common.model.TbStopDate;
 import com.sojson.common.model.TbVips;
+import com.sojson.common.service.CommonService;
 import com.sojson.common.utils.MathUtil;
 import com.sojson.common.utils.RedisUtil;
 import com.sojson.common.utils.StringUtils;
@@ -28,10 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by lx on 2018/9/4.
@@ -48,6 +48,12 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
     @Autowired
     MessageService messageService;
 
+    @Autowired
+    UTbStopDateMapper uTbStopDateMapper;
+
+    @Resource
+    CommonService commonService;
+
     protected Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 
 //    RedisUtil redisUtil = RedisUtil.getRedis();
@@ -60,19 +66,40 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
     }
 
     @Override
-    public ResultMessage update(TbVips entity) {
+    public ResultMessage update(TbVips entity, HttpServletRequest req) throws Exception{
         //数据验证
-        ResultMessage msg = beforeUpdateVaild(entity);
-        if (msg.getLevel() == ResultMessage.MSG_LEVEL.SUCC.v) {
+//        ResultMessage msg = beforeUpdateVaild(entity);
+//        if (msg.getLevel() == ResultMessage.MSG_LEVEL.SUCC.v) {
+
+            if(!entity.getPassword().equals("")) {
+                String phone = commonService.getUserPhone(req);
+                entity.setPassword(md5Pswd(phone, entity.getPassword()));
+                entity.setPhone(phone);
+            }else{
+                new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "密码不能为空");
+            }
+
             entity.setModTime(new Date()); //设置修改时间
             uTbVipsMapper.update(entity);
-        }
+//        }
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
 
     @Override
     public void updateLevelByEndTIme(Map<String,Object> param) {
         uTbVipsMapper.updateLevelByEndTIme(param);
+    }
+
+    @Override
+    public ResultMessage validatePwd(String pwd, String phone) {
+        TbVips entity = new TbVips();
+        entity.setPassword(md5Pswd(phone, pwd));
+        entity.setPhone(phone);
+        TbVips vip = uTbVipsMapper.findUserByPhone(entity);
+        if(null == vip){
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "密码错误！");
+        }
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
 
     @Transactional
@@ -141,7 +168,7 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
 
     private ResultMessage beforeUpdateVaild(TbVips entity){
         //修改ID验证
-        if (StringUtils.isBlank(entity.getId())) {
+        if (StringUtils.isBlank(entity.getPhone())) {
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"会员信息错误！");
         }
 
@@ -215,6 +242,8 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
         entity.setPhone(phone);
 
         TbVips vip = uTbVipsMapper.findUserByPhone(entity);
+        String endTimeStr = getSurplusTime(phone);
+        vip.setEndTimeStr(endTimeStr);
 
         return vip;
     }
@@ -223,7 +252,13 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
     @Override
     public String getSurplusTime(String phone){
         //剩余时间
-        String surplusMin = uTbVipsMapper.getSurplusMin(phone);
+        TbStopDate tbStopDate = uTbStopDateMapper.findAll().get(0);
+        String surplusMin = "";
+        if(tbStopDate.equals("1")) {
+            surplusMin = uTbVipsMapper.getSurplusMin(phone);
+        }else{
+            surplusMin = uTbVipsMapper.getSurplusMin2(phone);
+        }
         if (StringUtils.isBlank(surplusMin)){
             return surplusMin;
         }
@@ -235,7 +270,7 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
 
         String surplusTime = "";
         if (day > 0) {
-            surplusTime = "剩余观赛时间："+day+"天，";
+            surplusTime = "剩余观赛时间："+day+"天 ";
         }
         if (hour == 0 && StringUtils.isBlank(surplusTime)) {
             surplusTime = "剩余剩余观赛时间：小于1小时";

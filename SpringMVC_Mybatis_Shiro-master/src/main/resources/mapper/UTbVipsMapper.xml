@@ -73,6 +73,12 @@
       <if test="address != null and address != ''">
         ,ADDRESS = #{address}
       </if>
+      <if test="password != null and password != ''">
+        ,PASSWORD = #{password}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        ,END_TIME = #{endTime}
+      </if>
     </set>
     where PHONE = #{phone,jdbcType=VARCHAR}
   </update>
@@ -122,5 +128,9 @@
   select timestampdiff(MINUTE ,now(),DATE_ADD(END_TIME, INTERVAL (
   timestampdiff(SECOND,case when timestampdiff(SECOND,t.CRT_TIME,(select s.BGN_TIME from tb_stop_date s)) > 0 then (select s.BGN_TIME from tb_stop_date s) else t.CRT_TIME end ,now())
   ) second)) surplus_minute  from tb_vip t  where t.DEL_FLAG = 0 and t.LEVEL != 0 and t.phone = #{phone} ;
+  </select>
+
+  <select id="getSurplusMin2" parameterType="String" resultType="String" >
+     SELECT TIMESTAMPDIFF(MINUTE ,NOW(),t.end_time) FROM tb_vip t where t.DEL_FLAG = 0 and t.LEVEL != 0 and t.phone = #{phone} ;
   </select>
 </mapper>

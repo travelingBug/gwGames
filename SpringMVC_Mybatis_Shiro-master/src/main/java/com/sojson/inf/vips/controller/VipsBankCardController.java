@@ -115,7 +115,7 @@ public class VipsBankCardController extends BaseController {
                 String orderDate = sdf1.format(date);
 
                 TbVipsCard card = list.get(0);
-                order.setPhone(card.getPhone());
+                order.setPhone(card.getBankPhone());
                 order.setCardNo(card.getCardNo());
                 order.setCardName(card.getCardName());
                 order.setIdNo(card.getIdNo());

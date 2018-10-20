@@ -195,7 +195,6 @@ public class DateUtil {
      * @param isoString
      * @param field the time field.
      * @param up Indicates if rolling up or rolling down the field value.
-     * @param expanded use formating char's
      * @exception ParseException if an unknown field value is given.
      */
     public static final String roll(String isoString, String fmt, int field,
@@ -268,8 +267,7 @@ public class DateUtil {
     }
 
     /** java.util.Date
-     * @param dateText  
-     * @param format  
+     * @param format
      * @return
      */
     public static Date stringToDate(String dateString, String format) {
@@ -279,7 +277,6 @@ public class DateUtil {
 
     /**
      * java.util.Date
-     * @param dateText  
      */
     public static Date stringToDate(String dateString) {
         return stringToDate(dateString, ISO_EXPANDED_DATE_FORMAT, LENIENT_DATE);
@@ -348,7 +345,6 @@ public class DateUtil {
     /**
      * 返回固定格式的当前时间
      *   yyyy-MM-dd hh:mm:ss
-     * @param date
      * @return
      */
     public static String dateToStringWithTime( ) {
@@ -386,7 +382,6 @@ public class DateUtil {
     /**
      *  
      * @param date
-     * @param days
      * @return java.util.Date
      */
     public static Date dateIncreaseByMonth(Date date, int mnt) {
@@ -565,8 +560,38 @@ public class DateUtil {
     }
     public static void main(String[] args)
 	{
-    	String timeDir=DateUtil.dateToString(new Date(),DateUtil.ISO_EXPANDED_DATE_FORMAT);
-		System.out.println(timeDir);
+//    	String timeDir=DateUtil.dateToString(new Date(),DateUtil.ISO_EXPANDED_DATE_FORMAT);
+//		System.out.println(timeDir);
+        getDate(22);
 	}
+
+
+    public static String getDate(int daysNum) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        int num = 0;
+        while (num != daysNum) {
+            cal.add(Calendar.DAY_OF_YEAR, 1);
+            String dateStr = sdf.format(cal.getTime());
+            if (isWeekend(cal)) { // 是周末
+
+            } else {
+                num++;
+            }
+        }
+         System.out.println("结果：" + sdf.format(cal.getTime()));
+        return sdf.format(cal.getTime());
+    }
+
+    // 判断是不是周末
+    public static boolean isWeekend(Calendar cal) {
+        if (cal != null) {
+            if ((cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) || (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)) {
+                return true;
+            }
+        }
+        return false;
+    }
     
 }

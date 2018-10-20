@@ -100,3 +100,65 @@
 .yzm-disable:hover {
     color:#e3e3e3;
 }
+
+.yzm-highLight{
+    border: 2px solid deepskyblue !important;
+}
+
+.btn-changePwd {
+    background: #e33434;
+    font-size: 14px;
+    padding: 15px 50px;
+    margin: 10px 0 20px 20px;
+    color: #fff;
+    float: left;
+}
+
+.btn-changePwd:hover {
+    text-decoration: none;
+    cursor: pointer;
+    color: #fff !important;
+}
+
+.btn-changePwd-disable {
+    background: #e3e3e3;
+    font-size: 14px;
+    padding: 15px 50px;
+    margin: 10px 0 20px 20px;
+    color: #fff;
+    float: left;
+}
+
+.btn-changePwd-disable:hover {
+    text-decoration: none;
+    cursor: pointer;
+    color: #fff !important;
+}
+
+#changePassForm .icon-vali{
+    width:2rem;
+    height: 2rem;
+    padding-left: 10px;
+}
+
+#changePassForm i{
+    font-size: 1.5rem;
+}
+
+#changePassForm .pass{
+    color:#82c91e;
+}
+
+#changePassForm .fail{
+    color:#f06595;
+}
+
+#changePassForm .pass{
+    color:#82c91e;
+}
+
+#changePassForm .fail{
+    color:#f06595;
+}
+
+

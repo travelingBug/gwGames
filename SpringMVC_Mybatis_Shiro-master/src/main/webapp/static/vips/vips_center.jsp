@@ -11,7 +11,7 @@
     <%@include file="../top.jsp" %>
     <%@include file="../banner.jsp" %>
     <ul class="page-nav">
-        <li><a>我的账户</a></li>
+        <li><a>我的特权</a></li>
         <li>></li>
         <li><span>用户详情</span></li>
     </ul>
@@ -21,24 +21,13 @@
                 <img src="images/img_head.png"/>
             </div>
             <div class="head-cont-box">
-                <h3><span id="nickname"></span></h3>
-                <p><b>A</b>类会员剩余天数</p>
-                <p class="red">20天</p>
+                <h3><span id="nickname"></span><span class="tag" id="level">C类</span></h3>
+                <p class="day">剩余观看比赛日期<b>20天</b></p>
+                <p id="level_info"></p>
                 <div class="btns">
-                    <a class="btn">续费</a>
-                    <a class="btn disable">升级</a>
+                    <a class="btn" id="payBtn">购票</a>
+                    <%--<a class="btn disable">升级</a>--%>
                 </div>
-            </div>
-        </div>
-        <div class="content bg-white">
-            <div class="tab1">
-                <a class="on">关注选手</a>
-            </div>
-            <div class="table-area1" id="topFollowDiv">
-                <table class="table1" id="topFollowTable">
-                    <tbody id="topFollow">
-                    </tbody>
-                </table>
             </div>
         </div>
 
@@ -62,10 +51,13 @@
     $(function() {
         queryVipsInfo();
 
-        queryDepositRecordPage(1,"depositRecord");
+//        queryDepositRecordPage(1,"depositRecord");
 
-        goPageByAjax(1);
+//        goPageByAjax(1);
 
+        $("#payBtn").click(function(){
+            window.location.href="/static/vips/vips_pay.jsp";
+        });
     });
 
     function queryVipsInfo(){

@@ -83,6 +83,16 @@ public class TbVips implements Serializable {
 
     private String img;
 
+    private String endTimeStr;
+
+    public String getEndTimeStr() {
+        return endTimeStr;
+    }
+
+    public void setEndTimeStr(String endTimeStr) {
+        this.endTimeStr = endTimeStr;
+    }
+
     public String getImg() {
         return img;
     }

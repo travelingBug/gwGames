@@ -108,20 +108,29 @@ public class HttpClientUtils {
         map.put("domain","d-test.xadtsc.cn");
         map.put("merchantid","151010002");
         map.put("step","p1");
-        map.put("out_trade_no","201810022247458812");
+//        map.put("out_trade_no","201810022247458812");//"out_trade_no" -> "201810192009550256"
+        map.put("out_trade_no","201810192009550256");
         map.put("orderBody", "充值");
-        map.put("out_trade_date", "20181002");
-        map.put("mercUserNo", "a518");
+//        map.put("out_trade_date", "20181002");//"out_trade_date" -> "20181019"
+        map.put("out_trade_date", "20181019");
+//        map.put("mercUserNo", "a518");//"mercUserNo" -> "31"
+        map.put("mercUserNo", "31");
+//        map.put("total_fee","0.5");//"total_fee" -> "5000"
         map.put("total_fee","0.5");
-        map.put("bank_code", "CMB");
+//        map.put("bank_code", "CMB");
+        map.put("bank_code", "CCB");
         map.put("bank_no","1001");
         map.put("notify_url","http://192.168.9.189/zftd/return_url.php");
-        map.put("cardNo","6214830122565251");
-        map.put("cardNm","互联网");
+//        map.put("cardNo","6214830122565251");//"cardNo" -> "6227003818190225057"
+        map.put("cardNo","6227003818190225057");
+//        map.put("cardNm","互联网");
+        map.put("cardNm","李旭");
         map.put("idTyp","00");
-        map.put("idNo","341126197709218366");
-        map.put("mblNo","15011509330");
-        map.put("smsCode","123456");
+//        map.put("idNo","341126197709218366");//"idNo" -> "511302198712030715"
+        map.put("idNo","511302198712030715");
+//        map.put("mblNo","15011509330");//"mblNo" -> "15882094486"
+        map.put("mblNo","15882094486");
+        map.put("smsCode","");
 
         return map;
     }
@@ -168,6 +177,13 @@ public class HttpClientUtils {
         System.out.println(httpOrgCreateTestRtn);
 
         return httpOrgCreateTestRtn;
+    }
+
+    public static Map<String,String> createQueryData(){
+        Map<String,String> map = new HashMap<String,String>();
+//        map.put("")
+
+        return map;
     }
 
     public static void main(String[] args){
