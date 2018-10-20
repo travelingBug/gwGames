@@ -9,7 +9,7 @@
 <%@include file="../float.jsp" %>
 <div class="pageWrapper2">
     <%@include file="../top.jsp" %>
-    <%@include file="../banner.jsp" %>
+    <%@include file="../banner_chlid.jsp" %>
         <div class="main-box mt-30">
             <div class="content bg-white">
                 <div class="tab1">

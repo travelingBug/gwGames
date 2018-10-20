@@ -9,7 +9,7 @@
 <%@include file="../float.jsp" %>
 <div class="pageWrapper2 bg-gray me style1">
     <%@include file="../top.jsp" %>
-    <%@include file="../banner.jsp" %>
+    <%@include file="../banner_chlid.jsp" %>
     <ul class="page-nav">
         <li><a>比赛排名</a></li>
         <li>></li>
@@ -20,19 +20,10 @@
             <div class="head-box">
                 <img src="images/img_head.png"/>
             </div>
-            <div class="head-cont-box">
-                <h3><span id="accountName"></span><a class="tag border-style1" id="has_follow">关注</a><a class="tag_has border-style1" id="no_follow" style="display: none;">已关注</a></h3>
-                <div class="text-area">
-                    <div class="L">
-                        <p class="numb" id="totalMoney"></p>
-                        <p class="title">总资产</p>
-                    </div>
-                    <div class="R">
-                        <p class="numb" id="balanceMoney"></p>
-                        <p class="title">资金余额</p>
-                    </div>
-                </div>
-                <p id="businessTime"></p>
+            <div class="head-cont-box" id="pay_vip_info">
+                <h3><span id="nickName"></span><span id="level"></span></h3>
+                <p class="day" id="endTime"></p>
+                <p id="level_info"></p>
             </div>
         </div>
         <div class="content bg-white">
@@ -113,6 +104,7 @@
             },
             success: function (data) {
                if(data.level ==  1){
+                   queryVipsInfo();
                    //排行榜
                    $.ajax({
                        type: "POST",
@@ -152,15 +144,20 @@
                                    var trId = "#trId"+i;
                                    $(trId).click(function () {
 
+                                       if ($(this).find(".icon-down").length > 0) {
+                                           $('#topAll').find("tr[name='childTr']").remove();
+                                           $('#topAll').find(".icon-down").remove();
+                                           $('#topMonth').find("tr[name='childTr']").remove();
+                                           $('#topMonth').find(".icon-down").remove();
+                                           $('#drjymx').css('display','none');
+                                           return;
+                                       }
                                        var reA = "#reA" + $(this).attr("id").replace(/trId/g,'');
                                        $('#topAll').find("tr[name='childTr']").remove();
                                        $('#topAll').find(".icon-down").remove();
                                        $('#topMonth').find("tr[name='childTr']").remove();
                                        $('#topMonth').find(".icon-down").remove();
-                                       if ($(this).find(".icon-down").length > 0) {
-                                           $('#drjymx').css('display','none');
-                                           return;
-                                       }
+
                                        $(reA).append('<i class="icon-down"></i>');
                                        var trId = this;
                                        var account = $(this).find("[name=account]")[0].innerHTML;
@@ -258,15 +255,20 @@
                                    var trId = "#trMonthId"+i;
                                    $(trId).click(function () {
 
+                                       if ($(this).find(".icon-down").length > 0) {
+                                           $('#topAll').find("tr[name='childTr']").remove();
+                                           $('#topAll').find(".icon-down").remove();
+                                           $('#topMonth').find("tr[name='childTr']").remove();
+                                           $('#topMonth').find(".icon-down").remove();
+                                           $('#drjymx').css('display','none');
+                                           return;
+                                       }
                                        var reA = "#reMonthA" + $(this).attr("id").replace(/trMonthId/g,'');
                                        $('#topAll').find("tr[name='childTr']").remove();
                                        $('#topAll').find(".icon-down").remove();
                                        $('#topMonth').find("tr[name='childTr']").remove();
                                        $('#topMonth').find(".icon-down").remove();
-                                       if ($(this).find(".icon-down").length > 0) {
-                                           $('#drjymx').css('display','none');
-                                           return;
-                                       }
+
                                        $(reA).append('<i class="icon-down"></i>');
                                        var trId = this;
                                        var account = $(this).find("[name=account]")[0].innerHTML;
@@ -474,5 +476,42 @@
         return pager;
     }
 
+    function queryVipsInfo(){
+        $.ajax({
+            type: "POST",
+            url: "interface/vips/queryVipsInfo.shtml",
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (result) {
+                $("#pay_vip_info #nickName").text(result.nickName);
+                var level = result.level;
+                $("#level-data").val(level);
+                if(level==1){
+                    $("#pay_vip_info #level").text('A类');
+                    $("#pay_vip_info #level_info").text("前20名选手早盘午盘实盘赛况");
+                    $("#pay_vip_info #level").addClass("tag");
+                }else if(level==2){
+                    $("#pay_vip_info #level").text('B类');
+                    $("#pay_vip_info #level_info").text("前20名选手24小时实盘赛况");
+                    $("#pay_vip_info #level").addClass("tag");
+                }else if(level==3){
+                    $("#pay_vip_info #level").text('C类');
+                    $("#pay_vip_info #level_info").text("前20名选手48小时实盘赛况");
+                    $("#pay_vip_info #level").addClass("tag");
+                }else {
+                    $("#pay_vip_info #level").removeClass("tag");
+                }
+                if(result.endTimeStr!=null) {
+                    $("#pay_vip_info #endTime").text(result.endTimeStr);
+                }
+
+            }, error: function (result) {
+
+            }
+
+        });
+    }
 </script>
 </html>

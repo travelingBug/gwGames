@@ -20,9 +20,9 @@
             <li></li>
             <li><a href="/static/eventReport/eventReport.jsp">赛事报道</a></li>
             <li></li>
-            <li><a href="/static/rank/ranking.jsp">年度排行榜</a></li>
+            <li><a href="/static/rank/ranking.jsp">年度排行</a></li>
             <li></li>
-            <li><a href="/static/rank/rankMonth.jsp">月度排行榜</a></li>
+            <li><a href="/static/rank/rankMonth.jsp">月度排行</a></li>
             <li></li>
             <li><a>APP下载</a></li>
             <li></li>
@@ -43,10 +43,10 @@
         });
 
         if (sessionStorage.getItem("nickName") != null && sessionStorage.getItem("nickName") != '') {
-            $('#topHead').append('<a class="introduce" style="color:red;" href="/static/vips/vips_center.jsp">欢迎您，'+sessionStorage.getItem("nickName")+'</a>');
-            $('#topHead').append('<a class="introduce" style="color:red;" id="loginOut">[注销]</a>');
-            $('#topHead').append('<a class="introduce" style="color:red;" id="changePass">[修改密码]</a>');
-            $('#navigation').css('display','none');
+            $('#topHead').append('<a style="font-size: 18px;color:#484848;font-family:"微软雅黑";" href="/static/vips/vips_center.jsp">欢迎您，'+sessionStorage.getItem("nickName")+'</a>');
+            $('#topHead').append('<a  style="font-size: 18px;color:#484848;font-family:"微软雅黑";" id="loginOut">[注销]</a>');
+            $('#topHead').append('<a  style="font-size: 18px;color:#484848;font-family:"微软雅黑";" id="changePass">[修改密码]</a>');
+//            $('#navigation').css('display','none');
             $('#loginOut').click(function(){
                 $.ajax({
                     type: "POST",

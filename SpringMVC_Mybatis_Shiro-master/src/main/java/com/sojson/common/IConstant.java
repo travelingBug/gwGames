@@ -87,7 +87,7 @@ public interface IConstant {
 
     /**
      * VIP类型
-     * 1:500-A 2：2000-B 3：3000-C
+     * 1:5000-A 2：2000-B 3：500-C
      */
     public enum VIP_LEVEL {
         /**0*/

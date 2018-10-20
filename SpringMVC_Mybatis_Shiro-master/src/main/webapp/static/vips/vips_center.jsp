@@ -9,7 +9,7 @@
 <%@include file="../float.jsp" %>
 <div class="pageWrapper2 bg-gray me style1">
     <%@include file="../top.jsp" %>
-    <%@include file="../banner.jsp" %>
+    <%@include file="../banner_chlid.jsp" %>
     <ul class="page-nav">
         <li><a>我的特权</a></li>
         <li>></li>

@@ -48,11 +48,11 @@ public class CommonServiceImpl implements CommonService {
             int preHour = 0;
             byte level = uTbVipsMapper.getLevelByPhone(phone.toString().split(",")[0]);
             if (level == IConstant.VIP_LEVEL.VIP_A.v) {
-                preHour = -48;
+                preHour = 0;
             } else if (level == IConstant.VIP_LEVEL.VIP_B.v) {
                 preHour = -24;
             } else if (level == IConstant.VIP_LEVEL.VIP_C.v) {
-                preHour = 0;
+                preHour = -48;
             } else { //没有开通会员
                 return null;
             }

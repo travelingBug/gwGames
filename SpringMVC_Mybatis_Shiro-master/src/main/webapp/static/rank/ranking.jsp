@@ -4,12 +4,33 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>天下股神实盘大赛</title>
     <%@include file="../head.jsp" %>
+    <style>
+        .hide-article-box {
+            /*position: absolute;*/
+            z-index: 9999;
+            bottom: 0;
+            width: 100%;
+            padding-top: 160px;
+            background-image: -webkit-gradient(linear,left top, left bottom,from(rgba(255,255,255,0)),color-stop(70%, #fff));
+            background-image: linear-gradient(-180deg,rgba(255,255,255,0) 0%,#fff 70%);
+        }
+
+        .changImgColor{
+            background-color: #EFEFEF;
+            height: 28px;
+            valign:middle;
+        }
+        .changImgColor:hover
+        {
+            background-color:#E6E6E6;
+        }
+    </style>
 </head>
 <body>
 <%@include file="../float.jsp" %>
 <div class="pageWrapper2">
     <%@include file="../top.jsp" %>
-    <%@include file="../banner.jsp" %>
+    <%@include file="../banner_chlid.jsp" %>
     <div class="main-box">
         <div class="content">
             <div class="tab1">
@@ -19,7 +40,16 @@
             <div class="table-area1" id="topAllDiv">
                 <table class="table1" id="topAllTable">
                     <tbody id="topAll">
+                        <tr><th>排名</th><th>选手</th><th>总收益</th><th>持仓比</th><th>总资产</th><th>操作</th></tr>
                     </tbody>
+                </table>
+                <table class="table1">
+                    <tr><td colspan="6" height="20px;"></td></tr>
+                    <tr>
+                        <td colspan="6" class="changImgColor"  style="display: none;cursor: pointer;" id="readAll">
+                            <span style="font-size: 14px;font-family:微软雅黑;">加载更多</span>
+                        </td>
+                    </tr>
                 </table>
             </div>
 
@@ -27,10 +57,20 @@
 
                 <table class="table1" id="topMonthTable">
                     <tbody id="topMonth">
+                    <tr><th>排名</th><th>选手</th><th>总收益</th><th>持仓比</th><th>总资产</th><th>操作</th></tr>
                     </tbody>
+                </table>
+                <table class="table1" >
+                    <tr><td colspan="6" height="20px;"></td></tr>
+                    <tr>
+                        <td colspan="6" class="changImgColor"  style="display: none;cursor: pointer;" id="readMonth">
+                            <span style="font-size: 14px;font-family:微软雅黑;">加载更多</span>
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>
+        <br/><br/><br/>
     </div>
     <%@include file="../bottom.jsp" %>
     <%@include file="../footer.jsp" %>
@@ -67,9 +107,9 @@
             },
             success: function (result) {
                     var topAllData = result.list;
-                    $('#topAll').html('');
-                    $('#pager').remove();
-                    $('#topAll').append('<tr><th>排名</th><th>选手</th><th>总收益</th><th>持仓比</th><th>总资产</th><th>操作</th></tr>');
+//                    $('#topAll').html('');
+//                    $('#pager').remove();
+//                    $('#topAll').append('<tr><th>排名</th><th>选手</th><th>总收益</th><th>持仓比</th><th>总资产</th><th>操作</th></tr>');
                     if (topAllData != null && topAllData.length > 0) {
                         for (var i = 0 ; i < topAllData.length ; i++) {
                             var showTop= '<td>'+topAllData[i].rank+'</td>';
@@ -97,9 +137,18 @@
                             $('#topAll').append(topAllHtml);
 
                         }
-                        $('#topAllTable').after(result.portalPageHtml);
+                        if(result.totalCount > (result.pageNo * result.pageSize)) {
+                            $("#readAll").css('display','');
+                            $("#readAll").unbind('click').click(function () {
+                                goPageByAjax(result.pageNo + 1);
+                            });
+                        } else {
+                            $("#readAll").css('display','none');
+                        }
+
+//                        $('#topAllTable').after(result.portalPageHtml);
                     } else {
-                        $('#topAll').append('<tr><td  colspan="7">暂无数据</td></tr>');
+                        $('#topAll').append('<tr><td  colspan="6">暂无数据</td></tr>');
                     }
                 }
         });
@@ -117,9 +166,9 @@
             },
             success: function (result) {
                 var topMonthData = result.list;
-                $('#topMonth').html('');
-                $('#pager2').remove();
-                $('#topMonth').append('<tr><th>排名</th><th>选手</th><th>总收益</th><th>持仓比</th><th>总资产</th><th>操作</th></tr>');
+//                $('#topMonth').html('');
+//                $('#pager2').remove();
+//                $('#topMonth').append('<tr><th>排名</th><th>选手</th><th>总收益</th><th>持仓比</th><th>总资产</th><th>操作</th></tr>');
                 if (topMonthData != null && topMonthData.length > 0) {
                     for (var i = 0 ; i < topMonthData.length ; i++) {
                         var showTop= '<td>'+topMonthData[i].rank+'</td>';
@@ -147,9 +196,17 @@
                         $('#topMonth').append(topMonthHtml);
 
                     }
-                    $('#topMonthTable').after(result.portalPageHtml2);
+                    if(result.totalCount > (result.pageNo * result.pageSize)) {
+                        $("#readMonth").css('display','');
+                        $("#readMonth").unbind('click').click(function () {
+                            goPageByAjax2(result.pageNo + 1);
+                        });
+                    } else {
+                        $("#readMonth").css('display','none');
+                    }
+//                    $('#topMonthTable').after(result.portalPageHtml2);
                 } else {
-                    $('#topMonth').append('<tr><td  colspan="7">暂无数据</td></tr>');
+                    $('#topMonth').append('<tr><td  colspan="6">暂无数据</td></tr>');
                 }
             }
         });
