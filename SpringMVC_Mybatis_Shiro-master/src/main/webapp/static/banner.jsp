@@ -5,18 +5,29 @@
     <ul class="slider-content">
         <li>
             <div class="banner"  id="homeBanner">
-                <div class="bottom-link">
-                    <div class="content" >
-                        <div class="links" id="navigation">
-                            <a class="link floatL"  id="toBm"><i class="icon icon-bmcs" ></i>报名参赛</a>
-                            <a class="link floatR"  id="toStrategy"><i class="icon icon-gszc" ></i>观赛入口</a>
-                        </div>
-                    </div>
-                </div>
+                <%--<div class="bottom-link">--%>
+                    <%--<div class="content" >--%>
+                        <%--<div class="links" id="navigation">--%>
+                            <%--<a class="link floatL"  id="toBm"><i class="icon icon-bmcs" ></i>报名参赛</a>--%>
+                            <%--<a class="link floatR"  id="toStrategy"><i class="icon icon-gszc" ></i>观赛入口</a>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
             </div>
         </li>
     </ul>
 </div>
+<!--—————————————————————————— 参赛报名条 ————————————————————————-->
+<div class="banner_bottom">
+    <div class="bottom_center" style="padding-top:15px;">
+        <img src="images/bottom_center-01.png"/>
+        <img src="images/bmcs.png" class="img_bmcs" id="toBm" style="cursor: pointer;"/>
+        <img src="images/gszc.png" class="img_gszc" id="toStrategy" style="cursor: pointer;"/>
+
+    </div>
+</div>
+
+<!-----------------------------  end ----------------------------->
 <script>
     $(function() {
 
@@ -61,7 +72,7 @@
                                 display = 'style="cursor: pointer;"';
                             }
                             $('#choseLi').append('<li '+className+' name="banner_'+i+'" id="banner_'+i+'"></li>');
-                            $('#homeBanner').prepend('<img id="banner_'+i+'_img" src="'+banner[i].imgPath+'" ' + display+ '/>');
+                            $('#homeBanner').append('<img id="banner_'+i+'_img" src="'+banner[i].imgPath+'" ' + display+ '/>');
                             $("#banner_"+i).click(function(){
                                 if($(this).attr('class') != 'on') {
                                     $('#choseLi').find('li').each(function(v){

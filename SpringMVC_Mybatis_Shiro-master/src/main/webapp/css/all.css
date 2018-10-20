@@ -762,7 +762,7 @@ select.width-240 { width: 260px!important;}
 .icon-arrow-down { background:url(http://60.205.189.94/images/icon_arrow_down.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94/images/icon_arrow_down.png',sizingMethod='scale');}
 .icon-phone { background:url(http://60.205.189.94/images/icon_phone.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94/images/icon_phone.png',sizingMethod='scale');}
 .icon-qq { background:url(http://60.205.189.94/images/icon_qq.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94/images/icon_qq.png',sizingMethod='scale');}
-.img-wechat-1 { background:url(http://60.205.189.94/images/img_wechat_01.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94/images/img_wechat_01.png',sizingMethod='scale');}
+.img-wechat-1 { background:url(http://60.205.189.94/images/img_wechat_01.jpg)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94/images/img_wechat_01.jpg',sizingMethod='scale');}
 .img-wechat-2 { background:url(http://60.205.189.94/images/img_wechat_02.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94/images/img_wechat_02.png',sizingMethod='scale');}
 .fw-box .icon-close { background:url(http://60.205.189.94/images/icon_close_golden.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94/images/icon_close_golden.png',sizingMethod='scale');}
 .zn-box .icon-close { background:url(http://60.205.189.94/images/icon_close_red.png)no-repeat;background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94/images/icon_close_red.png',sizingMethod='scale');}
@@ -1191,7 +1191,7 @@ select.width-240 { width: 260px!important;}
 .contact-box .content .right-area {
 	float: right;
 	width: 320px;
-	margin-right: 50px;
+	margin-right: -50px;
 }
 .contact-box .content .right-area .one-area {
 	float: left;
@@ -1208,11 +1208,12 @@ select.width-240 { width: 260px!important;}
 	color: #fff;
 }
 .contact-box .content .right-area .text {
-	margin: 30px auto 0 auto;
 	color: #fff;
 	text-align: center;
 	float: left;
 	width: 320px;
+	margin-left: -80px;
+	margin-top: 30px;
 }
 .head-box {
 	float: left;
@@ -2038,6 +2039,28 @@ select.width-240 { width: 260px!important;}
 	margin-right: 0;
 }
 
+
+.banner_bottom {
+	background-color: yellow;
+	height: 70px;
+	line-height: 70px;
+	text-align: center;
+	background: url(../images/banner_bottom.png) no-repeat;
+}
+
+.bottom_center {
+	height: 70px;
+}
+
+
+
+.img_bmcs {
+	margin-left: 150px;
+}
+
+.img_gszc {
+	margin-left: 5px;
+}
 
 
 

@@ -1,5 +1,4 @@
 <%@ page pageEncoding="utf-8"%>
-<div class="top-bar"></div>
 <div class="top-box">
     <div class="content">
         <div class="logo" id="topLogo" style="cursor: pointer;"></div>
@@ -24,7 +23,7 @@
             <li></li>
             <li><a href="/static/rank/rankMonth.jsp">月度排行</a></li>
             <li></li>
-            <li><a>APP下载</a></li>
+            <li><a style="color: #e6e6e6;">APP下载</a></li>
             <li></li>
             <li><a href="/static/vips/vips_center.jsp">我的特权</a></li>
         </ul>
@@ -44,8 +43,8 @@
 
         if (sessionStorage.getItem("nickName") != null && sessionStorage.getItem("nickName") != '') {
             $('#topHead').append('<a style="font-size: 18px;color:#484848;font-family:"微软雅黑";" href="/static/vips/vips_center.jsp">欢迎您，'+sessionStorage.getItem("nickName")+'</a>');
-            $('#topHead').append('<a  style="font-size: 18px;color:#484848;font-family:"微软雅黑";" id="loginOut">[注销]</a>');
-            $('#topHead').append('<a  style="font-size: 18px;color:#484848;font-family:"微软雅黑";" id="changePass">[修改密码]</a>');
+            $('#topHead').append('&nbsp;&nbsp; <a  style="font-size: 18px;color:#484848;font-family:"微软雅黑";" id="loginOut">[注销]</a>');
+            $('#topHead').append('&nbsp;&nbsp; <a  style="font-size: 18px;color:#484848;font-family:"微软雅黑";" id="changePass">[修改密码]</a>');
 //            $('#navigation').css('display','none');
             $('#loginOut').click(function(){
                 $.ajax({

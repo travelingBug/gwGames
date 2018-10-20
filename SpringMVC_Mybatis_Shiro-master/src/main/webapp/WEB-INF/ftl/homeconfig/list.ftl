@@ -121,7 +121,7 @@
                         $("img[myid='imghead_edit']").attr("src","/images/default_img.jpg");
                     }
                     $("#report_title_edit").val(result.title);
-                    $("#report_pathFlag_edit").val(result.url);
+                    $("#report_pathFlag_edit").val(result.pathFlag);
                     $("#report_url_edit").val(result.url);
                     $("#report_volume_edit").val(result.volume);
                     $('#homeConfigEditModal').modal();
@@ -369,9 +369,9 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="report_url" class="col-md-2 control-label">位置</label>
+                                            <label for="report_pathFlag_edit" class="col-md-2 control-label">位置</label>
                                             <div class="col-md-10">
-                                                <select name="pathFlag" class="form-control" id="pathFlag">
+                                                <select name="pathFlag" class="form-control" id="report_pathFlag_edit">
                                                     <option value="0">首页横幅</option>
                                                     <option value="1">首页广告位</option>
                                                     <option value="2">底部广告位</option>
@@ -391,7 +391,7 @@
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <span style="color: red;">
-                                                     注意：<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、首页横幅页面只会展示前3张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：1440*380)。
+                                                     注意：<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、首页横幅页面只会展示前3张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：1440*300)。
                                                         <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、首页广告位只会展示1张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：1000*190)。
                                                         <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、底部广告位只会展示1张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：1440*280)。
 
@@ -454,9 +454,9 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="report_described_add" class="col-md-2 control-label">位置</label>
+                                            <label for="report_pathFlag_add" class="col-md-2 control-label">位置</label>
                                             <div class="col-md-10">
-                                                <select name="pathFlag" class="form-control" id="pathFlag">
+                                                <select name="pathFlag" class="form-control" id="report_pathFlag_add">
                                                     <option value="0">首页横幅</option>
                                                     <option value="1">首页广告位</option>
                                                     <option value="2">底部广告位</option>

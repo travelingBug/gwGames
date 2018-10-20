@@ -107,21 +107,6 @@
         <div class="cont-area">
             <div class="title"><div class="title-3"></div></div>
             <div class="content">
-                <div class="ld-box">
-                    <i class="icon-tj"></i>
-                    <p>专业机构推荐参赛选手</p>
-                    <em></em>
-                </div>
-                <div class="ld-box">
-                    <i class="icon-jd"></i>
-                    <p>指定交易券商全程监督</p>
-                    <em></em>
-                </div>
-                <div class="ld-box">
-                    <i class="icon-gz"></i>
-                    <p>公证机构公证</p>
-                    <em></em>
-                </div>
             </div>
         </div>
     </div>
