@@ -132,8 +132,8 @@
                     <th></th>
                     <td><a class="btn-register" onclick="addBank();" id="pay_add_btn">同意开通</a></td>
                 </tr>
-                </tbody>
                 </form>
+                </tbody>
             </table>
         </div>
     </div>
