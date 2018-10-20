@@ -178,10 +178,6 @@
                 msg('标题不能为空！');
                 return false;
             }
-            if ($("#report_url_edit").val() == null || $("#report_url_edit").val() == '') {
-                msg('链接不能为空！');
-                return false;
-            }
             if ($("#report_volume_edit").val() == null || $("#report_volume_edit").val() == '') {
                 msg('序号不能为空！');
                 return false;
@@ -193,10 +189,6 @@
         function validAddForm(){
             if ($("#report_title_add").val() == null || $("#report_title_add").val() == '') {
                 msg('标题不能为空！');
-                return false;
-            }
-            if ($("#report_url_add").val() == null || $("#report_url_add").val() == '') {
-                msg('简介不能为空！');
                 return false;
             }
 
@@ -399,7 +391,7 @@
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <span style="color: red;">
-                                                     注意：<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、首页横幅页面只会展示前3张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：2880*892)。
+                                                     注意：<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、首页横幅页面只会展示前3张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：1440*380)。
                                                         <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、首页广告位只会展示1张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：1000*190)。
                                                         <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、底部广告位只会展示1张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：1440*280)。
 
@@ -484,7 +476,7 @@
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <span style="color: red;">
-                                                    注意：<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、首页横幅页面只会展示前3张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：2880*892)。
+                                                    注意：<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、首页横幅页面只会展示前3张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：1440*380)。
                                                         <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、首页广告位只会展示1张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：1000*190)。
                                                         <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、底部广告位只会展示1张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：1440*280)。
 

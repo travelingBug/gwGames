@@ -1030,8 +1030,8 @@ select.width-240 { width: 260px!important;}
 	z-index: 99;
 }
 .slider-box .slider-dot li {
-	width: 10px;
-	height: 10px;
+	width: 8px;
+	height: 8px;
 	border-radius: 3px;
 	float: left;
 	margin: 0 2px;

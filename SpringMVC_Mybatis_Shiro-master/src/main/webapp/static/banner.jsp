@@ -42,10 +42,12 @@
                         $('#advert_bottom').css("background-image","url("+advert[0].imgPath+")");
                         $('#advert_bottom').click(function () {
                             var url = advert[0].url;
-                            if (!(url.startWith('http://') || url.startWith('https://'))) {
-                                url = 'http://'+url;
+                            if (url != null && url != ''){
+                                if (!(url.startWith('http://') || url.startWith('https://'))) {
+                                    url = 'http://'+url;
+                                }
+                                window.location.href = url;
                             }
-                            window.location.href = url;
                         });
                     }
 
@@ -71,13 +73,17 @@
                                 }
 
                             });
-                            $('#banner_'+i+'_img').click(function () {
-                                var url = banner[0].url;
-                                if (!(url.startWith('http://') || url.startWith('https://'))) {
-                                    url = 'http://'+url;
-                                }
-                                window.location.href = url;
-                            });
+                            changBanner('#banner_'+i+'_img',banner[i].url);
+//                            var bannerUrl = banner[i].url;
+//                            $('#banner_'+i+'_img').click(function () {
+//                                var url = bannerUrl;
+//                                if (url != null && url != '') {
+//                                    if (!(url.startWith('http://') || url.startWith('https://'))) {
+//                                        url = 'http://' + url;
+//                                    }
+//                                    window.location.href = url;
+//                                }
+//                            });
                         }
 //                        $('#homeBanner').slidesjs({
 //                            play: {
@@ -87,7 +93,7 @@
 //                                swap: true
 //                            }
 //                        });
-                        setInterval("changImg()","4000");
+                        setInterval("changImg()","3000");
                     }
                 }
             },
@@ -136,4 +142,16 @@
             });
         }
     }
+
+    function changBanner(bannerId,url){
+        $(bannerId).click(function () {
+            if (url != null && url != '') {
+                if (!(url.startWith('http://') || url.startWith('https://'))) {
+                    url = 'http://' + url;
+                }
+                window.location.href = url;
+            }
+        });
+    }
+
 </script>
