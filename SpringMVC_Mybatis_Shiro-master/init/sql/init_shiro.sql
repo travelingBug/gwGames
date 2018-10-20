@@ -205,7 +205,7 @@ CREATE TABLE `tb_vip_record` (
   `vip_id` varchar(32) NOT NULL,
   `level` tinyint(4) NOT NULL,
   `crt_time` datetime NOT NULL,
-  `amount` int(12) NOT NULL,
+  `amount` varchar(12) NOT NULL,
   `remark` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;

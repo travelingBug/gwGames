@@ -30,21 +30,21 @@
         <div class="content bg-white">
             <div class="select-box">
                 <div class="one-area">
-                    <div class="img-area">
+                    <div class="img-area img-a">
                         <span class="L">A类</span>
                         <span class="R">¥5000/月</span>
                     </div>
                     <p>前20名选手早盘午盘实盘赛况</p>
                 </div>
                 <div class="one-area">
-                    <div class="img-area">
+                    <div class="img-area img-b">
                         <span class="L">B类</span>
                         <span class="R">¥2000/月</span>
                     </div>
                     <p>前20名选手24小时实盘赛况</p>
                 </div>
                 <div class="one-area">
-                    <div class="img-area">
+                    <div class="img-area img-c">
                         <span class="L">C类</span>
                         <span class="R">¥500/月</span>
                     </div>
@@ -437,12 +437,12 @@
                 }
                 fee = "A";
             }else if(index==1){
-                if(levelData<=2){
+                if(levelData<=2 && levelData>0){
                     return false;
                 }
                 fee = "B";
             }else if(index==2){
-                if(levelData<=3){
+                if(levelData<=3 && levelData>0){
                     return false;
                 }
                 fee = "C";
@@ -562,7 +562,8 @@
                     skin: 'layui-layer-lan'
                 });
                 if(result.messageText=="支付成功"){
-                    queryVipsInfo();
+//                    queryVipsInfo();
+                    window.location.href="/static/gains/strategy.jsp";
                 }
 
             }, error: function (result) {
@@ -671,7 +672,7 @@
     /*设置第一个输入框默认选中*/
     $(paw[0]).addClass("yzm-highLight");
     paw[0].readOnly=false;
-    paw[0].focus();
+//    paw[0].focus();
 
     /*定义自动选中下一个输入框事件*/
     var changeDiv = function(){

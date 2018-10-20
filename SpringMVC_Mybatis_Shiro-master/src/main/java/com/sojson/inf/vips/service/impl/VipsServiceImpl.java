@@ -108,7 +108,7 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
     @Override
     public ResultMessage validInviteCode(String inviteCode) {
         TbDealer entity = uTbDealerMapper.findDealerByInviteCode(inviteCode);
-        if(entity!=null){
+        if(entity==null){
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "推荐码不存在");
         }
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
@@ -124,23 +124,22 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
             entity.setCrtTime(date);
             entity.setPassword(md5Pswd(entity.getPhone(), entity.getPassword()));
             entity.setLevel(IConstant.VIP_LEVEL.VIP_0.v);//插入会员信息
-            int vipId = uTbVipsMapper.insert(entity);
+            uTbVipsMapper.insert(entity);
             msg.setMessageText("注册成功！");
 
             String watermark = entity.getInviteCode();
             watermark = watermark.substring(0,3);
-            watermark = watermark + String.format("%05d", vipId);
+            watermark = watermark + String.format("%05d", entity.getId());
             String path = IConfig.get("qrCode_path_real");
             WaterMarkUtil.markImg(path+entity.getPhone()+".png",watermark);
             //删除redies缓存
             RedisUtil.delete(entity.getPhone());
-
-            RedisUtil.save(req.getSession().getId(), entity.getPhone());
         }else{
-            msg.setData("");
+//            msg.setData("验证错误");
         }
-
-        return new ResultMessage(msg.getLevel(), msg.getMessageText(), req.getSession().getId());
+        String userId = IConstant.TOKEN_PRE+StringUtils.getUUID32();
+        RedisUtil.save(userId, entity.getPhone()+","+entity.getNickName());
+        return new ResultMessage(msg.getLevel(), msg.getMessageText(), userId);
     }
 
     @Override

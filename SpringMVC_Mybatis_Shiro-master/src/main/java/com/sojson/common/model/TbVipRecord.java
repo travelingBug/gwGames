@@ -30,8 +30,17 @@ public class TbVipRecord implements Serializable{
     /**
      * 充值金额
      */
-    private Integer amount;
+    private String amount;
 
+    private String remark;
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public Integer getId() {
         return id;
@@ -65,12 +74,11 @@ public class TbVipRecord implements Serializable{
         this.crtTime = crtTime;
     }
 
-    public Integer getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
-
 }

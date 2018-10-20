@@ -73,7 +73,7 @@
                     </tr>
                     <tr>
                         <th></th>
-                        <td><a id="buttonSubmit" class="btn-zf" disabled="disabled">立即注册</a></td>
+                        <td><a id="buttonSubmit" class="btn-changePwd" disabled="disabled">立即注册</a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -110,10 +110,10 @@
     function canSubmit(){
         if (nameFlag && pwdFlag && inviteCodeFlag && telPhoneFlag) {
             $('#buttonSubmit').removeAttr('disabled');
-            $('#buttonSubmit').attr('class', 'btn-zf');
+            $('#buttonSubmit').attr('class', 'btn-changePwd');
         } else {
             $('#buttonSubmit').attr('disabled', 'disabled');
-            $('#buttonSubmit').attr('class', 'btn-zf-disable');
+            $('#buttonSubmit').attr('class', 'btn-changePwd-disable');
         }
     }
 
@@ -149,7 +149,8 @@
                     request.setRequestHeader("Authorization", getAuthorization());
                 },
                 success: function (data) {
-                    if (data != null && data.length > 0) {
+                    if (data.level!=1) {
+                        setTip(obj,data.messageText,0);
                         canClick=false;
                         $('#sendVerfiCode').css('color','#5e5e5e');
                         $('#sendVerfiCode').attr("href", 'javascript:;');
@@ -208,6 +209,7 @@
 
     $("#telPhone").bind("input propertychange",function(event){
         var telPhone= $("#telPhone").val();
+        var obj = $("#telPhone");
         telPhoneFlag = false;
         if (telPhone && telPhone != null && telPhone != '' && telPhone.length == 11 && !isCountDown ) {
             if (!isPhoneNo(telPhone)) {
@@ -226,15 +228,13 @@
                     request.setRequestHeader("Authorization", getAuthorization());
                 },
                 success: function (data) {
-                    if (data != null && data.length > 0) {
-                        layer.alert('电话号码已被使用', {
-                            icon: 0,
-                            skin: 'layui-layer-lan'
-                        });
+                    if (data.level!=1) {
+                        setTip(obj,"手机号码已被使用",0);
                         canClick=false;
                         $('#sendVerfiCode').css('color','#5e5e5e');
                         $('#sendVerfiCode').attr("href", 'javascript:;');
                     } else {
+                        setTip(obj,"",1);
                         $('#sendVerfiCode').css('color','#f90606');
                         canClick=true;
                         telPhoneFlag=true;
@@ -244,6 +244,7 @@
                 }
             });
         } else {
+            setTip(obj,"请输入正确的手机号码",0);
             canClick=false;
             $('#sendVerfiCode').css('color','#5e5e5e');
             $('#sendVerfiCode').attr("href", 'javascript:;');
@@ -348,9 +349,30 @@
             },
             success: function(data) {
                 if (data.level == 1) {
+
                     $('#registerForm')[0].reset();
                     sessionStorage.setItem("sessionId", data.data);
-                    window.location.href="/static/vips/vips_pay.jsp";
+
+                    $.ajax({
+                        type: "POST",
+                        url: "interface/gainsInfo/getNickName.shtml",
+                        data: {},
+                        dataType: "json",
+                        beforeSend: function (request) {
+                            request.setRequestHeader("Authorization", getAuthorization());
+                        },
+                        success: function (result) {
+                            sessionStorage.setItem("nickName", result.data);
+                            window.location.href="/static/vips/vips_pay.jsp";
+                        },
+                        error: function(data1) {
+                            putTokenToDef();
+                            layer.alert('系统错误，请联系管理员！', {
+                                icon: 2,
+                                skin: 'layui-layer-lan'
+                            });
+                        }
+                    });
                 } else {
                     layer.alert(data.messageText, {
                         icon: 0,

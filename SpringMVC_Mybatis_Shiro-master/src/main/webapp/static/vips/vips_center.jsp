@@ -49,7 +49,7 @@
 </body>
 <script>
     $(function() {
-        queryVipsInfo();
+        goPage();
 
 //        queryDepositRecordPage(1,"depositRecord");
 
@@ -59,6 +59,26 @@
             window.location.href="/static/vips/vips_pay.jsp";
         });
     });
+
+    function goPage(){
+        $.ajax({
+            type: "POST",
+            url: "interface/gainsInfo/validLevel.shtml",
+            data: {},
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (data) {
+                queryVipsInfo();
+            },
+            error: function (data) {
+                putTokenToDef();
+                window.location.href = "/static/vips/register.jsp?a=1";
+
+            }
+        });
+    }
 
     function queryVipsInfo(){
         $.ajax({

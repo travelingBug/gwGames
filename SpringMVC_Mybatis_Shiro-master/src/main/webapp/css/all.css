@@ -1368,11 +1368,21 @@ select.width-240 { width: 260px!important;}
 	display: block;
 	margin: 40px auto;
 }
+.select-box .one-area .img-a{
+	background:url(../images/vip_a.png) no-repeat;
+}
+.select-box .one-area .img-b{
+	background:url(../images/vip_b.png) no-repeat;
+}
+.select-box .one-area .img-c{
+	background:url(../images/vip_c.png) no-repeat;
+}
+
 .select-box .on {
 	border:2px solid #e33434;
 }
 .select-box .on .img-area {
-	background:url(../images/img_charge_bg_on.png) no-repeat;
+	/*background:url(../images/img_charge_bg_on.png) no-repeat;*/
 }
 .select-box .one-area .img-area .L {
 	float: left;
