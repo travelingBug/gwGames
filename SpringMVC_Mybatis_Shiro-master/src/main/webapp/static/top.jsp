@@ -20,9 +20,9 @@
             <li></li>
             <li><a href="/static/eventReport/eventReport.jsp">赛事报道</a></li>
             <li></li>
-            <li><a href="/static/rank/ranking.jsp">比赛排名</a></li>
+            <li><a href="/static/rank/ranking.jsp">年度排行榜</a></li>
             <li></li>
-            <li><a href="/static/rank/rankMonth.jsp">月度冠军</a></li>
+            <li><a href="/static/rank/rankMonth.jsp">月度排行榜</a></li>
             <li></li>
             <li><a>APP下载</a></li>
             <li></li>
@@ -43,8 +43,8 @@
         });
 
         if (sessionStorage.getItem("nickName") != null && sessionStorage.getItem("nickName") != '') {
-            $('#topHead').append('<a class="introduce" style="color:red;" href="/static/vips/vips_center.jsp">欢迎您，'+sessionStorage.getItem("nickName")+'</a>');
-            $('#topHead').append('<a class="introduce" style="color:red;" id="loginOut">[注销]</a>');
+            $('#topHead').append('<a class="introduce" style="font-size: 18px;color:#484848" href="/static/vips/vips_center.jsp">欢迎您，'+sessionStorage.getItem("nickName")+'</a>');
+            $('#topHead').append('<a class="introduce" style="font-size: 18px;color:#484848" id="loginOut">[注销]</a>');
             $('#navigation').css('display','none');
             $('#loginOut').click(function(){
                 $.ajax({
@@ -66,7 +66,9 @@
                 });
             });
         } else {
-            $('#topHead').append('<a class="introduce" style="color:red;" href="/static/vips/register.jsp?a=1">[登录]</a>');
+            $('#topHead').append('<a class="introduce" style="font-size: 18px;color:#484848" href="/static/vips/register.jsp?a=1">[登录]</a>');
+            $('#topHead').append('|');
+            $('#topHead').append('<a class="introduce" style="font-size: 18px;color:#484848" href="/static/vips/register.jsp?a=2">[注册]</a>');
         }
 
 
