@@ -20,9 +20,9 @@
             <div class="head-box">
                 <img src="images/img_head.png"/>
             </div>
-            <div class="head-cont-box">
-                <h3><span id="nickname"></span><span class="tag" id="level">C类</span></h3>
-                <p class="day">剩余观看比赛日期<b>20天</b></p>
+            <div class="head-cont-box" id="center-vip-info">
+                <h3><span id="nickName"></span><span id="level"></span><input type="hidden" id="level-data"/> </h3>
+                <p class="day" id="endTime"></p>
                 <p id="level_info"></p>
                 <div class="btns">
                     <a class="btn" id="payBtn">购票</a>
@@ -89,7 +89,28 @@
                 request.setRequestHeader("Authorization", getAuthorization());
             },
             success: function (result) {
-                $("#nickname").text(result.nickName);
+                $("#center-vip-info #nickname").text(result.nickName);
+
+                var level = result.level;
+                $("#level-data").val(level);
+                if(level==1){
+                    $("#center-vip-info #level").text('A类');
+                    $("#center-vip-info #level_info").text("前20名选手早盘午盘实盘赛况");
+                    $("#center-vip-info #level").addClass("tag");
+                }else if(level==2){
+                    $("#center-vip-info #level").text('B类');
+                    $("#center-vip-info #level_info").text("前20名选手24小时实盘赛况");
+                    $("#center-vip-info #level").addClass("tag");
+                }else if(level==3){
+                    $("#center-vip-info #level").text('C类');
+                    $("#center-vip-info #level_info").text("前20名选手48小时实盘赛况");
+                    $("#center-vip-info #level").addClass("tag");
+                }else {
+                    $("#center-vip-info #level").removeClass("tag");
+                }
+                if(result.endTimeStr!=null) {
+                    $("#center-vip-info #endTime").text(result.endTimeStr);
+                }
             }, error: function (result) {
 
             }
