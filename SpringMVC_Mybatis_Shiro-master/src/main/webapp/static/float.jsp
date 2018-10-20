@@ -4,7 +4,7 @@
 
 
 
-<div class="projectile-frame" style="margin: 15% 30%" id="closeMidDoor">
+<div class="projectile-frame" style="margin: 15% 35%" id="closeMidDoor">
     <div class="content">
         <div class="pf-box">
             <a class="icon icon-close" id="closeMidPopu"></a>

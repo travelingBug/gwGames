@@ -26,7 +26,7 @@
   	  <if test="title != null and title !='' " >
         and t.TITLE like LOWER(CONCAT('%',#{title,jdbcType=VARCHAR},'%'))
       </if>
-      <if test="pathFlag != null" >
+      <if test="pathFlag != null and pathFlag !=''" >
         and t.PATH_FLAG = #{pathFlag,jdbcType=TINYINT}
       </if>
      </where>
@@ -68,21 +68,13 @@
   <update id="update" parameterType="com.sojson.common.model.TbEventReport" >
     update tb_home_config
     <set >
-      <if test="title != null and title !=''" >
         TITLE = #{title,jdbcType=VARCHAR},
-      </if>
       <if test="imgPath != null  and imgPath !=''" >
         IMG_PATH = #{imgPath,jdbcType=VARCHAR},
       </if>
-      <if test="url != null and url !=''" >
         URL = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="pathFlag != null and pathFlag != ''" >
         PATH_FLAG = #{pathFlag,jdbcType=TINYINT},
-      </if>
-      <if test="volume != null and volume != ''" >
-        VOLUME = #{volume,jdbcType=INTEGER},
-      </if>
+        VOLUME = #{volume,jdbcType=INTEGER}
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>

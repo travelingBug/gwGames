@@ -24,9 +24,8 @@ font-family:"微软雅黑";
             </div>
         </div>
         <div class="right-area">
-            <div class="one-area"><i class="img-wechat-1"></i><p>公众号</p></div>
-            <div class="one-area"><i class="img-wechat-2"></i><p>服务号</p></div>
-            <p class="text">大赛官方微信公众号</p>
+            <div class="one-area"><i class="img-wechat-1"></i></div>
+            <p class="text introduce">大赛官方微信公众号</p>
         </div>
     </div>
 </div>
