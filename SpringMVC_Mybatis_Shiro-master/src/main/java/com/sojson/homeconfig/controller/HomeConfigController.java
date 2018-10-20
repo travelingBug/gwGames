@@ -43,6 +43,9 @@ public class HomeConfigController extends BaseController {
     @RequestMapping(value="list")
     public ModelAndView list(Integer pageNo, ModelMap modelMap,@RequestParam Map<String,Object> map){
 
+        if (map.get("pathFlag") == null || StringUtils.isBlank(map.get("pathFlag").toString())) {
+            map.put("pathFlag",null);
+        }
         Pagination<TbHomeConfig> page = homeConfigService.findByPage(map,pageNo,pageSize);
         modelMap.put("page", page);
         modelMap.putAll(map);
