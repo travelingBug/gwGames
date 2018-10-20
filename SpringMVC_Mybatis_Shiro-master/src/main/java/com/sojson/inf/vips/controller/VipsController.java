@@ -140,4 +140,10 @@ public class VipsController extends BaseController {
         String phone = commonService.getUserPhone(req);
         return vipsService.validatePwd(pwd, phone);
     }
+
+    @RequestMapping(value = "validInviteCode", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage validInviteCode(String inviteCode, HttpServletRequest req) throws Exception{
+        return vipsService.validInviteCode(inviteCode);
+    }
 }

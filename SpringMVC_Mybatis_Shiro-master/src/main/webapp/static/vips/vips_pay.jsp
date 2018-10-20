@@ -22,7 +22,7 @@
                 <img src="images/img_head.png"/>
             </div>
             <div class="head-cont-box" id="pay_vip_info">
-                <h3><span id="nickName"></span><span id="level"></span></h3>
+                <h3><span id="nickName"></span><span id="level"></span><input type="hidden" id="level-data"/> </h3>
                 <p class="day" id="endTime"></p>
                 <p id="level_info"></p>
             </div>
@@ -429,12 +429,22 @@
     function switchTicket(){
         $(".one-area").click(function(){
             var index = $(".one-area").index(this);
+            var levelData = $("#level-data").val();
             var fee = 0;
             if(index==0){
+                if(levelData==1) {
+                    return false;
+                }
                 fee = "A";
             }else if(index==1){
+                if(levelData<=2){
+                    return false;
+                }
                 fee = "B";
             }else if(index==2){
+                if(levelData<=3){
+                    return false;
+                }
                 fee = "C";
             }
             $("#pay_ticket").val(fee);
@@ -457,11 +467,11 @@
                 $(this).val(temp_amount);
             }
 
-            if(e.keyCode>=48&&e.keyCode<=57){
+//            if(e.keyCode>=48&&e.keyCode<=57){
                 /*输入0-9*/
                 changeDiv();
 
-            }else if(e.keyCode=="8") {
+            if(e.keyCode=="8") {
                 /*退格回删事件*/
                 returnDiv();
 
@@ -626,20 +636,21 @@
             success: function (result) {
                 $("#pay_vip_info #nickName").text(result.nickName);
                 var level = result.level;
+                $("#level-data").val(level);
                 if(level==1){
                     $("#pay_vip_info #level").text('A类');
                     $("#pay_vip_info #level_info").text("前20名选手早盘午盘实盘赛况");
-                    $("#pay_vip_info #level_info").addClass("tag");
+                    $("#pay_vip_info #level").addClass("tag");
                 }else if(level==2){
                     $("#pay_vip_info #level").text('B类');
                     $("#pay_vip_info #level_info").text("前20名选手24小时实盘赛况");
-                    $("#pay_vip_info #level_info").addClass("tag");
+                    $("#pay_vip_info #level").addClass("tag");
                 }else if(level==3){
                     $("#pay_vip_info #level").text('C类');
                     $("#pay_vip_info #level_info").text("前20名选手48小时实盘赛况");
-                    $("#pay_vip_info #level_info").addClass("tag");
+                    $("#pay_vip_info #level").addClass("tag");
                 }else {
-                    $("#pay_vip_info #level_info").removeClass("tag");
+                    $("#pay_vip_info #level").removeClass("tag");
                 }
                 if(result.endTimeStr!=null) {
                     $("#pay_vip_info #endTime").text(result.endTimeStr);

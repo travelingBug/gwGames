@@ -54,6 +54,9 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
     @Resource
     CommonService commonService;
 
+    @Autowired
+    UTbDealerMapper uTbDealerMapper;
+
     protected Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 
 //    RedisUtil redisUtil = RedisUtil.getRedis();
@@ -98,6 +101,15 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
         TbVips vip = uTbVipsMapper.findUserByPhone(entity);
         if(null == vip){
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "密码错误！");
+        }
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
+    }
+
+    @Override
+    public ResultMessage validInviteCode(String inviteCode) {
+        TbDealer entity = uTbDealerMapper.findDealerByInviteCode(inviteCode);
+        if(entity!=null){
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "推荐码不存在");
         }
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }

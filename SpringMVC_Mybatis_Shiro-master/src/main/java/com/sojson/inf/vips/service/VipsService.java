@@ -33,4 +33,6 @@ public interface VipsService {
     String getSurplusTime(String phone);
 
     ResultMessage validatePwd(String pwd, String phone);
+
+    ResultMessage validInviteCode(String inviteCode);
 }

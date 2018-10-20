@@ -153,12 +153,23 @@
     color:#f06595;
 }
 
-#changePassForm .pass{
+#registerForm .icon-vali{
+    width:2rem;
+    height: 2rem;
+    padding-left: 10px;
+}
+
+#registerForm i{
+    font-size: 1.5rem;
+}
+
+#registerForm .pass{
     color:#82c91e;
 }
 
-#changePassForm .fail{
+#registerForm .fail{
     color:#f06595;
 }
+
 
 

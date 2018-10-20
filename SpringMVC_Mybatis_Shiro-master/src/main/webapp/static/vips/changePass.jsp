@@ -65,29 +65,6 @@
         }
     }
 
-//    $(".pwd").change(function(){
-//        var pwd = $('#newPwd').val();
-//        var rePwd = $('#newRePwd').val();
-//        var objPwd = $('#newPwd');
-//        var objRePwd = $('#newRePwd');
-//        pwdFlag = false;
-//        if(pwd && pwd != null && pwd != '' && rePwd && rePwd != null && rePwd != ''){
-//
-//            if(pwd==rePwd){
-//                setTip(objRePwd,"",1);
-//                pwdFlag = true;
-//                canSubmit();
-//            }else{
-//                setTip(objRePwd,"密码不一致",0);
-//            }
-//        } else if(pwd == null || pwd == '') {
-//            setTip(objPwd,"请输入新密码",0);
-//        } else if(rePwd == null || rePwd == ''){
-//            setTip(objPwd,"",1);
-//            setTip(objRePwd,"请输入确认密码",0);
-//        }
-//    });
-
     $("#newRePwd").on("input propertychange",function(){
         var rePwd = $('#newRePwd').val();
         var objRePwd = $('#newRePwd');

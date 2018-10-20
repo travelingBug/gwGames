@@ -121,7 +121,7 @@
         var nickName = $('#nickName').val();
         nameFlag = false;
         var obj = $(this);
-        $('#nickNameTd').find('span').remove();
+//        $('#nickNameTd').find('span').remove();
         if(nickName && nickName != null && nickName != ''){
             setTip(obj,"",1);
 //            $("#nickName").after('<span class="link tip-right"><i class="icon icon-right"></i></span>');
@@ -137,12 +137,13 @@
     $("#inviteCode").blur(function(){
         var inviteCode = $('#inviteCode').val();
         inviteCodeFlag = false;
-        $('#inviteCodeTd').find('span').remove();
-        if(inviteCode && inviteCode != null && inviteCode != ''){
+//        $('#inviteCodeTd').find('span').remove();
+        var obj = $(this);
+        if(inviteCode != null && inviteCode != ''){
             $.ajax({
                 type: "POST",
                 url: "interface/vips/validInviteCode.shtml",
-                data: {telPhone: telPhone},
+                data: {inviteCode: inviteCode},
                 dataType: "json",
                 beforeSend: function (request) {
                     request.setRequestHeader("Authorization", getAuthorization());
@@ -154,44 +155,54 @@
                         $('#sendVerfiCode').attr("href", 'javascript:;');
                     } else {
                         $('#sendVerfiCode').css('color','#f90606');
+                        setTip(obj,"",1);
                         canClick=true;
                         telPhoneFlag=true;
+                        inviteCodeFlag = true;
                         canSubmit();
 
                     }
                 }
             });
-            $("#inviteCode").after('<span class="link tip-right"><i class="icon icon-right"></i></span>');
-            inviteCodeFlag = true;
-            canSubmit();
+
+//            $("#inviteCode").after('<span class="link tip-right"><i class="icon icon-right"></i></span>');
         } else {
-            $('#inviteCodeTd').find('span').remove();
-            $("#inviteCode").after('<span class="link tip-wrong"><i class="icon icon-wrong"></i>请输入邀请码</span>');
+            setTip(obj,"请输入邀请码",0);
+//            $('#inviteCodeTd').find('span').remove();
+//            $("#inviteCode").after('<span class="link tip-wrong"><i class="icon icon-wrong"></i>请输入邀请码</span>');
         }
     });
 
-    $(".pwd").blur(function(){
-        var pwd = $('#pwd').val();
+    $("#rePwd").on("input propertychange",function(){
         var rePwd = $('#rePwd').val();
-        pwdFlag = false;
-        $('#pwdTd').find('span').remove();
-        $('#rePwdTd').find('span').remove();
-        if(pwd && pwd != null && pwd != '' && rePwd && rePwd != null && rePwd != ''){
-            if(pwd==rePwd){
-                $("#pwd").after('<span class="link tip-right"><i class="icon icon-right"></i></span>');
-                $("#rePwd").after('<span class="link tip-right"><i class="icon icon-right"></i></span>');
+        var objRePwd = $('#rePwd');
+
+        if(rePwd && rePwd != null && rePwd != ''){
+            var pwd = $('#pwd').val();
+            if(pwd==rePwd) {
+                setTip(objRePwd, "", 1);
                 pwdFlag = true;
                 canSubmit();
             }else{
-                $('#rePwdTd').find('span').remove();
-                $("#rePwd").after('<span class="link tip-wrong"><i class="icon icon-wrong"></i>密码不一致</span>');
+                setTip(objRePwd,"密码不一致",0);
+            }
+        } else if(objRePwd == null || objRePwd == '') {
+            setTip(objRePwd,"请输入确认密码",0);
+        }
+    });
+
+    $("#pwd").on("input propertychange",function(){
+        var pwd = $('#pwd').val();
+        var objPwd = $('#pwd');
+
+        if(pwd && pwd != null && pwd != ''){
+            if(pwd.length>=6) {
+                setTip(objPwd, "", 1);
+            }else{
+                setTip(objPwd,"密码最少6位",0);
             }
         } else if(pwd == null || pwd == '') {
-            $('#pwdTd').find('span').remove();
-            $("#pwd").after('<span class="link tip-wrong"><i class="icon icon-wrong"></i>请输入密码</span>');
-        } else if(rePwd == null || rePwd == ''){
-            $('#rePwdTd').find('span').remove();
-            $("#rePwd").after('<span class="link tip-wrong"><i class="icon icon-wrong"></i>请输入确认密码</span>');
+            setTip(objPwd,"请输入新密码",0);
         }
     });
 
@@ -305,16 +316,19 @@
     }
 
     $("#buttonSubmit").click(function(){
+        var obj = $(this);
         var verfiCode = $('#verfiCode').val();
         if (!verfiCode || verfiCode.length != 6) {
-            $('#inviteCodeTd').find('span').remove();
-
-            $("#sendVerfiCode").after('<span class="link tip-wrong"><i class="icon icon-wrong"></i>请输入6位验证码</span>');
+            setTip(obj,"请输入6位验证码",0);
+//            $('#inviteCodeTd').find('span').remove();
+//
+//            $("#sendVerfiCode").after('<span class="link tip-wrong"><i class="icon icon-wrong"></i>请输入6位验证码</span>');
             return;
         }
         var inviteCode = $('#inviteCode').val();
         if(inviteCode && inviteCode != null && inviteCode != ''){
-            $("#inviteCode").after('<span class="link tip-right"><i class="icon icon-right"></i></span>');
+            setTip(obj,"",1);
+//            $("#inviteCode").after('<span class="link tip-right"><i class="icon icon-right"></i></span>');
             inviteCodeFlag = true;
         }
 
