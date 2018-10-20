@@ -89,7 +89,7 @@
                 request.setRequestHeader("Authorization", getAuthorization());
             },
             success: function (result) {
-                $("#center-vip-info #nickname").text(result.nickName);
+                $("#center-vip-info #nickName").text(result.nickName);
 
                 var level = result.level;
                 $("#level-data").val(level);
