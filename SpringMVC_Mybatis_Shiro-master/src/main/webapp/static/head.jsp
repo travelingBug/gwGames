@@ -13,7 +13,7 @@
 <!--[if lte IE 9]> <link href="<%=basePath%>/css/all_lt_IE9.css" rel="stylesheet" type="text/css" /><![endif]-->
 <!--[if gt IE 9]> <link href="<%=basePath%>/css/all.css" rel="stylesheet" type="text/css" /><![endif]-->
 <!--[if !IE]><!--> <link href="<%=basePath%>/css/all.css" rel="stylesheet" type="text/css" /><!--<![endif]-->
-
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 <%--<link href="<%=basePath%>/js/common/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>--%>
 
 <script baseUrl="<%=basePath%>" src="<%=basePath%>/js/common/jquery/jquery-1.11.3.min.js"></script>

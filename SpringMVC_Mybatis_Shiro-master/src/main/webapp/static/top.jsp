@@ -66,9 +66,9 @@
                 });
             });
         } else {
-            $('#topHead').append('<a class="introduce" style="font-size: 18px;color:#484848" href="/static/vips/register.jsp?a=1">[登录]</a>');
-            $('#topHead').append('|');
-            $('#topHead').append('<a class="introduce" style="font-size: 18px;color:#484848" href="/static/vips/register.jsp?a=2">[注册]</a>');
+            $('#topHead').append('<a style="font-size: 18px;color:#484848;font-family:"微软雅黑";" href="/static/vips/register.jsp?a=1"><i class="fas fa-user"></i>登录</a>');
+            $('#topHead').append('&nbsp;&nbsp; ');
+            $('#topHead').append('<a  style="font-size: 18px;color:#484848;font-family:"微软雅黑";" href="/static/vips/register.jsp?a=2"><i class="fas fa-user-plus"></i>注册</a>');
         }
 
 

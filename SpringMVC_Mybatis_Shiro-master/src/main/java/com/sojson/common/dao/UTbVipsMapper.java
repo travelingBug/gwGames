@@ -18,4 +18,6 @@ public interface UTbVipsMapper {
     int updateEndTimeByStop();
 
     int updateLevelByEndTIme(Object param);
+
+    String getSurplusMin(String phone);
 }

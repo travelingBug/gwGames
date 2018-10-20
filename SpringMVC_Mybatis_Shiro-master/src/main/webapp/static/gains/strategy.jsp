@@ -35,37 +35,40 @@
                 <p id="businessTime"></p>
             </div>
         </div>
-        <div class="content bg-white" id="zhcg">
+        <div class="content bg-white">
             <div class="tab1">
                 <a class="on">账户持股</a>
             </div>
-            <div class="table-area1">
+            <div class="table-area1" id="zhcg">
+                <h3><i class="icon icon-ranking"></i>总收益排行榜单</h3>
                 <table class="table1">
-                    <tbody id="strategy">
+                    <tbody id="topAll">
                     <tr>
-                        <th>证券代码</th>
-                        <th>证券简称</th>
-                        <th>当前持股</th>
+                        <th>排名</th>
+                        <th>选手</th>
+                        <th>总收益</th>
+                        <th>持仓比</th>
+                        <th>总资产</th>
+                        <th>操作</th>
                     </tr>
-
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="content bg-white" id="drjymx">
-            <div class="tab1">
-                <a class="on">当日交易明细</a>
-            </div>
-            <div class="table-area1">
-                <table class="table1" id="transactionInfoTable">
-                    <tbody id="transactionInfo">
+        <%--<div class="content bg-white" id="drjymx">--%>
+            <%--<div class="tab1">--%>
+                <%--<a class="on">当日交易明细</a>--%>
+            <%--</div>--%>
+            <%--<div class="table-area1">--%>
+                <%--<table class="table1" id="transactionInfoTable">--%>
+                    <%--<tbody id="transactionInfo">--%>
 
 
-                    </tbody>
-                </table>
+                    <%--</tbody>--%>
+                <%--</table>--%>
 
-            </div>
-        </div>
+            <%--</div>--%>
+        <%--</div>--%>
         <%@include file="../bottom.jsp" %>
     </div>
     <%@include file="../footer.jsp" %>
@@ -92,74 +95,103 @@
             },
             success: function (data) {
                if(data.level ==  1){
-
-                   //获取用户信息
+                   //排行榜
                    $.ajax({
                        type: "POST",
-                       url: "interface/gainsInfo/getPlayerMoney4Account.shtml",
-                       data: {account:account},
+                       url: "interface/gainsInfo/getTopAll.shtml",
+                       data: {size: 20},
                        dataType: "json",
                        beforeSend: function (request) {
                            request.setRequestHeader("Authorization", getAuthorization());
                        },
-                       success: function (result) {
-                           if(result.level ==  1){
-                               var accountData = result.data;
-                               $('#accountName').html(accountData.accountName);
-                               $('#balanceMoney').html(accountData.balanceMoney);
-                               $('#totalMoney').html(accountData.totalMoney);
-                               $('#businessTime').html('数据日期：'+accountData.businessTimeStr);
-                               //判断是否关注
-                               if (accountData.isFollow == 1){
-                                   hasFollow();
+                       success: function (data) {
+                           if (data != null && data.length > 0) {
+                               for (var i = 0 ; i < data.length;i++ ) {
+                                   var trClass = '';
+                                   if (data.length % 2 == 1) {
+                                       trClass = '';
+                                   }
+                                   var showTop= '<td>'+(i+1)+'</td>';
+                                   if (i == 0) {
+                                       var showTop= '<td><em class="icon-one">'+(i+1)+'</em></td>';
+                                   }
+                                   if (i == 1) {
+                                       var showTop= '<td><em class="icon-two">'+(i+1)+'</em></td>';
+                                   }
+                                   if (i == 2) {
+                                       var showTop= '<td><em class="icon-three">'+(i+1)+'</em></td>';
+                                   }
+                                   var html = '<tr class="'+trClass+'" id="trId'+i+'">';
+                                   html += showTop;
+                                   html += '<td>'+data[i].accountName+'</td>';
+                                   html += '<td class="red">'+data[i].yieldRate+'%</td>';
+                                   html += '<td>'+data[i].buyForALLRate+'%</td>';
+                                   html += '<td>'+data[i].totalMoney+'</td>';
+                                   html += '<td name="account" style="display: none">'+data[i].account+'</td>';
+                                   html += '<td><a class="red" id="reA'+i+'">详细</a></td>';
+                                   html += '</tr>';
+                                   $('#topAll').append(html);
+                                   var trId = "#trId"+i;
+                                   $(trId).click(function () {
+                                       if ($(this).find(".icon-down").length > 0) {
+                                           $('#topAll').find("tr[name='childTr']").remove();
+                                           $('#topAll').find(".icon-down").remove();
+                                           return;
+                                       }
+                                       var reA = "#reA" + $(this).attr("id").replace(/trId/g,'');
+                                       $('#topAll').find("tr[name='childTr']").remove();
+                                       $('#topAll').find(".icon-down").remove();
+                                       $(reA).append('<i class="icon-down"></i>');
+                                       var trId = this;
+                                       var account = $(this).find("[name=account]")[0].innerHTML;
+                                       //获取策略信息
+                                       $.ajax({
+                                           type: "POST",
+                                           url: "interface/gainsInfo/getStrategy.shtml",
+                                           data: {account:account},
+                                           dataType: "json",
+                                           beforeSend: function (request) {
+                                               request.setRequestHeader("Authorization", getAuthorization());
+                                           },
+                                           success: function (result) {
+                                               if(result.level ==  1){
+                                                   var strategyHtml = '<tr name="childTr"><td colspan="6"><table class="table1 table-style1"><tbody><tr><th>证券代码</th><th>证券简称</th><th>当前持股</th></tr>';
+                                                   var strategyData = result.data;
+                                                   for (var i = 0 ; i < strategyData.length ; i++) {
+                                                       strategyHtml += '<tr><td class="yellow">';
+                                                       strategyHtml += strategyData[i].sharesCode +'</td><td class="yellow">';
+                                                       strategyHtml += strategyData[i].sharesName +'</td><td>';
+                                                       strategyHtml += strategyData[i].volume +'</td></tr>';
+
+                                                   }
+                                                   strategyHtml +='</tbody></table></td></tr>';
+
+                                                   $(trId).after(strategyHtml);
+                                               } else {
+                                                   warnMsg('请购券后进行观赛！');
+                                                   setTimeout(function(){
+                                                       window.location.href = "/static/vips/vips_pay.jsp";
+                                                   }, 2500);
+
+                                               }
+                                           },
+                                           error: function (result) {
+                                               putTokenToDef();
+                                               setTimeout(function(){
+                                                   window.location.href = "/static/vips/register.jsp?a=1";
+                                               }, 2500);
+                                           }
+                                       });
+                                   });
+                                   
                                }
-                           } else {
-                               warnMsg('请购券后进行观赛！');
-                               window.location.href = result.data;
+
                            }
                        },
-                       error: function (result) {
-                           putTokenToDef();
-                           setTimeout(function(){
-                               window.location.href = "/static/vips/register.jsp?a=1";
-                           }, 2500);
+                       error: function (data) {
+                           window.location.href = "/static/vips/register.jsp?a=1";
                        }
                    });
-
-                   //获取策略信息
-                   $.ajax({
-                       type: "POST",
-                       url: "interface/gainsInfo/getStrategy.shtml",
-                       data: {account:account},
-                       dataType: "json",
-                       beforeSend: function (request) {
-                           request.setRequestHeader("Authorization", getAuthorization());
-                       },
-                       success: function (result) {
-                           if(result.level ==  1){
-                               var strategyData = result.data;
-                               for (var i = 0 ; i < strategyData.length ; i++) {
-                                    var strategyHtml = '<tr><td class="yellow">';
-                                   strategyHtml += strategyData[i].sharesCode +'</td><td class="yellow">';
-                                   strategyHtml += strategyData[i].sharesName +'</td><td>';
-                                   strategyHtml += strategyData[i].volume +'</td></tr>';
-                                   $('#strategy').append(strategyHtml);
-
-                               }
-                           } else {
-                               warnMsg('请购券后进行观赛！');
-                               window.location.href = result.data;
-                           }
-                       },
-                       error: function (result) {
-                           putTokenToDef();
-                           setTimeout(function(){
-                               window.location.href = "/static/vips/register.jsp?a=1";
-                           }, 2500);
-                       }
-                   });
-                   goPageByAjax(1);
-
 
                    /**
                     * 防伪标记
@@ -175,14 +207,103 @@
                        success: function (result) {
                            if(result.level ==  1){
                               $('#zhcg').css("background-image","url("+result.data+")");
-                              $('#drjymx').css("background-image","url("+result.data+")");
+//                              $('#drjymx').css("background-image","url("+result.data+")");
 
                            }
                        },
                        error: function (result) {
                        }
                    });
-
+//                   //获取用户信息
+//                   $.ajax({
+//                       type: "POST",
+//                       url: "interface/gainsInfo/getPlayerMoney4Account.shtml",
+//                       data: {account:account},
+//                       dataType: "json",
+//                       beforeSend: function (request) {
+//                           request.setRequestHeader("Authorization", getAuthorization());
+//                       },
+//                       success: function (result) {
+//                           if(result.level ==  1){
+//                               var accountData = result.data;
+//                               $('#accountName').html(accountData.accountName);
+//                               $('#balanceMoney').html(accountData.balanceMoney);
+//                               $('#totalMoney').html(accountData.totalMoney);
+//                               $('#businessTime').html('数据日期：'+accountData.businessTimeStr);
+//                               //判断是否关注
+//                               if (accountData.isFollow == 1){
+//                                   hasFollow();
+//                               }
+//                           } else {
+//                               warnMsg('请购券后进行观赛！');
+//                               window.location.href = result.data;
+//                           }
+//                       },
+//                       error: function (result) {
+//                           putTokenToDef();
+//                           setTimeout(function(){
+//                               window.location.href = "/static/vips/register.jsp?a=1";
+//                           }, 2500);
+//                       }
+//                   });
+//
+//                   //获取策略信息
+//                   $.ajax({
+//                       type: "POST",
+//                       url: "interface/gainsInfo/getStrategy.shtml",
+//                       data: {account:account},
+//                       dataType: "json",
+//                       beforeSend: function (request) {
+//                           request.setRequestHeader("Authorization", getAuthorization());
+//                       },
+//                       success: function (result) {
+//                           if(result.level ==  1){
+//                               var strategyData = result.data;
+//                               for (var i = 0 ; i < strategyData.length ; i++) {
+//                                    var strategyHtml = '<tr><td class="yellow">';
+//                                   strategyHtml += strategyData[i].sharesCode +'</td><td class="yellow">';
+//                                   strategyHtml += strategyData[i].sharesName +'</td><td>';
+//                                   strategyHtml += strategyData[i].volume +'</td></tr>';
+//                                   $('#strategy').append(strategyHtml);
+//
+//                               }
+//                           } else {
+//                               warnMsg('请购券后进行观赛！');
+//                               window.location.href = result.data;
+//                           }
+//                       },
+//                       error: function (result) {
+//                           putTokenToDef();
+//                           setTimeout(function(){
+//                               window.location.href = "/static/vips/register.jsp?a=1";
+//                           }, 2500);
+//                       }
+//                   });
+//                   goPageByAjax(1);
+//
+//
+//                   /**
+//                    * 防伪标记
+//                    */
+//                   $.ajax({
+//                       type: "POST",
+//                       url: "interface/gainsInfo/getMarking.shtml",
+//                       data: {},
+//                       dataType: "json",
+//                       beforeSend: function (request) {
+//                           request.setRequestHeader("Authorization", getAuthorization());
+//                       },
+//                       success: function (result) {
+//                           if(result.level ==  1){
+//                              $('#zhcg').css("background-image","url("+result.data+")");
+//                              $('#drjymx').css("background-image","url("+result.data+")");
+//
+//                           }
+//                       },
+//                       error: function (result) {
+//                       }
+//                   });
+//
 
 
                } else {

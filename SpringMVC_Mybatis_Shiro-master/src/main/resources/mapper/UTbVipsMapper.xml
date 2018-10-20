@@ -117,4 +117,10 @@
     where t.level != 0 AND DEL_FLAG = 0 AND t.END_TIME &lt;= #{nowDate,jdbcType=TIMESTAMP} ;
 
   </update>
+
+  <select id="getSurplusMin" parameterType="String" resultType="String" >
+  select timestampdiff(MINUTE ,now(),DATE_ADD(END_TIME, INTERVAL (
+  timestampdiff(SECOND,case when timestampdiff(SECOND,t.CRT_TIME,(select s.BGN_TIME from tb_stop_date s)) > 0 then (select s.BGN_TIME from tb_stop_date s) else t.CRT_TIME end ,now())
+  ) second)) surplus_minute  from tb_vip t  where t.DEL_FLAG = 0 and t.LEVEL != 0 and t.phone = #{phone} ;
+  </select>
 </mapper>
