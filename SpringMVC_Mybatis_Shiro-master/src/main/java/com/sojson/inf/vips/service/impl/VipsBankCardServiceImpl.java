@@ -2,9 +2,11 @@ package com.sojson.inf.vips.service.impl;
 
 import com.sojson.common.IConstant;
 import com.sojson.common.ResultMessage;
+import com.sojson.common.dao.UTbVipRecordMapper;
 import com.sojson.common.dao.UTbVipsBankCardMapper;
 import com.sojson.common.dao.UTbVipsMapper;
 import com.sojson.common.dao.UTbVipsOrderMapper;
+import com.sojson.common.model.TbVipRecord;
 import com.sojson.common.model.TbVips;
 import com.sojson.common.model.TbVipsCard;
 import com.sojson.common.model.TbVipsOrder;
@@ -14,6 +16,7 @@ import com.sojson.common.utils.HttpClientUtils;
 import com.sojson.inf.vips.service.VipsBankCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
@@ -35,6 +38,9 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
 
     @Autowired
     CommonService commonService;
+
+    @Autowired
+    UTbVipRecordMapper uTbVipRecordMapper;
 
     @Override
     public ResultMessage insert(TbVipsCard entity) {
@@ -64,6 +70,7 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
         return uTbVipsBankCardMapper.findList(params);
     }
 
+    @Transactional
     @Override
     public ResultMessage addOrder(TbVipsOrder entity, HttpServletRequest req) {
         try {
@@ -73,11 +80,11 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
             map.put("out_trade_date", entity.getOrderDate());
             map.put("mercUserNo", entity.getVipId());
             String fee = entity.getFee();
-            if ("C".equals(fee)) {
+            if ("3".equals(fee)) {
                 entity.setFee("500");
-            } else if ("B".equals(fee)) {
+            } else if ("2".equals(fee)) {
                 entity.setFee("2000");
-            } else if ("A".equals(fee)) {
+            } else if ("1".equals(fee)) {
                 entity.setFee("5000");
             }
             map.put("total_fee", entity.getFee());
@@ -99,14 +106,28 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
                 if (id > 0) {
                     TbVips vip = new TbVips();
                     vip.setPhone(phone);
-                    if ("C".equals(fee)) {
+                    TbVips curVip = uTbVipsMapper.findUserByPhone(vip);
+                    if ("3".equals(fee)) {
                         vip.setLevel(IConstant.VIP_LEVEL.VIP_C.v);
-                    } else if ("B".equals(fee)) {
+                    } else if ("2".equals(fee)) {
+//                        if(curVip.getLevel().toString().equals("0")){
+//                            vip.setEndTime(DateUtil.getDate(22));
+//                        }else if(curVip.getLevel().toString().equals("3")){
+//                            vip.setEndTime(DateUtil.getDate(22));
+//                        }
                         vip.setLevel(IConstant.VIP_LEVEL.VIP_B.v);
-                    } else if ("A".equals(fee)) {
+                    } else if ("1".equals(fee)) {
                         vip.setLevel(IConstant.VIP_LEVEL.VIP_A.v);
                     }
+
+
                     vip.setEndTime(DateUtil.getDate(22));
+
+                    TbVipRecord record = new TbVipRecord();
+                    record.setLevel(vip.getLevel());
+                    record.setVipId(curVip.getId());
+                    record.setAmount(entity.getFee());
+                    uTbVipRecordMapper.addRecord(record);
                     uTbVipsMapper.update(vip);
                 }
 
@@ -118,5 +139,10 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
         }
 
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "请输入验证码");
+    }
+
+    @Override
+    public List<TbVipRecord> findRecord(Map<String, Object> map) {
+        return uTbVipRecordMapper.findAllRecord(map);
     }
 }

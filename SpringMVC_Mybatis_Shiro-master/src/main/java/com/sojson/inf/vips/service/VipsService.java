@@ -1,10 +1,12 @@
 package com.sojson.inf.vips.service;
 
 import com.sojson.common.ResultMessage;
+import com.sojson.common.model.TbVipRecord;
 import com.sojson.common.model.TbVips;
 import com.sojson.core.mybatis.page.Pagination;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**

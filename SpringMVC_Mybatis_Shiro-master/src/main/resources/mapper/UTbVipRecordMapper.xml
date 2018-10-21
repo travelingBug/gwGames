@@ -9,6 +9,15 @@
       <result column="countMoney" property="countMoney" jdbcType="INTEGER" />
   </resultMap>
 
+    <resultMap id="recordMap" type="com.sojson.common.model.TbVipRecord" >
+        <result column="id" property="id" jdbcType="INTEGER" />
+        <result column="vip_id" property="vipId" jdbcType="VARCHAR" />
+        <result column="level" property="level" jdbcType="TINYINT" />
+        <result column="crt_time" property="crtTime" jdbcType="VARCHAR" />
+        <result column="amount" property="amount" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+
   <select id="countByCode" resultMap="CountLevel" >
     select t.INVITAION_CODE,v.level,count(v.id) countNum,SUM(v.amount) countMoney from tb_vip t INNER JOIN tb_vip_record v on t.id = v.vip_id
     <include refid="where_count"/>
@@ -40,7 +49,16 @@
     GROUP BY t.INVITAION_CODE,v.level) a2
         LEFT JOIN (select x.NAME,x.INVITE_NUM from tb_dealer x where x.ID = #{dealerId} or x.PARENT_ID = #{dealerId}) a1
         on a1.INVITE_NUM = a2.INVITAION_CODE
-
     </select>
+
+    <insert id="addRecord" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbVipRecord" >
+        insert into tb_vip_record (id,vip_id,level,crt_time,amount,remark)
+        values (#{id},#{vipId},#{level},now(),#{amount},#{remark})
+    </insert>
+
+    <select id="findAllRecord" resultMap="recordMap" parameterType="map">
+      SELECT * FROM tb_vip_record r LEFT JOIN tb_vip v ON v.id=r.vip_id WHERE v.phone=#{phone}
+    </select>
+
 
 </mapper>

@@ -2,6 +2,7 @@ package com.sojson.inf.vips.controller;
 
 import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
+import com.sojson.common.model.TbVipRecord;
 import com.sojson.common.model.TbVips;
 import com.sojson.common.model.TbVipsCard;
 import com.sojson.common.model.TbVipsOrder;
@@ -133,6 +134,16 @@ public class VipsBankCardController extends BaseController {
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "创建订单失败");
         }
         return msg;
+    }
+
+    @RequestMapping(value = "findRecord")
+    @ResponseBody
+    public List<TbVipRecord> findRecord(HttpServletRequest req) throws Exception{
+        String phone = commonService.getUserPhone(req);
+        Map<String,Object> params = new HashMap<>();
+        params.put("phone",phone);
+        List<TbVipRecord> list = vipsBankCardService.findRecord(params);
+        return list;
     }
 
 

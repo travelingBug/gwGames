@@ -1,6 +1,7 @@
 package com.sojson.inf.vips.service;
 
 import com.sojson.common.ResultMessage;
+import com.sojson.common.model.TbVipRecord;
 import com.sojson.common.model.TbVipsCard;
 import com.sojson.common.model.TbVipsOrder;
 
@@ -20,4 +21,6 @@ public interface VipsBankCardService {
     List<TbVipsCard> findList(Map<String,String> params);
 
     ResultMessage addOrder(TbVipsOrder entity, HttpServletRequest req);
+
+    List<TbVipRecord> findRecord(Map<String,Object> map);
 }

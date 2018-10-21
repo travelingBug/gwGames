@@ -132,7 +132,7 @@
 					<table class="table table-bordered">
 						<tr>
 							<th><input type="checkbox" id="checkAll"/></th>
-							<th>昵称</th>
+							<th class="">昵称</th>
 							<th>姓名</th>
 							<th>资金账号</th>
 							<th>身份证</th>

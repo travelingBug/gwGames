@@ -435,17 +435,17 @@
                 if(levelData==1) {
                     return false;
                 }
-                fee = "A";
+                fee = "1";
             }else if(index==1){
                 if(levelData<=2 && levelData>0){
                     return false;
                 }
-                fee = "B";
+                fee = "2";
             }else if(index==2){
                 if(levelData<=3 && levelData>0){
                     return false;
                 }
-                fee = "C";
+                fee = "3";
             }
             $("#pay_ticket").val(fee);
 
