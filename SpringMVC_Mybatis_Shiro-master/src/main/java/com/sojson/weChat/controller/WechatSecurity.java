@@ -1,5 +1,6 @@
 package com.sojson.weChat.controller;
 
+import com.sojson.core.config.IConfig;
 import com.sojson.weChat.dispatcher.EventDispatcher;
 import com.sojson.weChat.dispatcher.MsgDispatcher;
 import com.sojson.weChat.utils.MessageUtil;
@@ -12,7 +13,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -91,21 +91,21 @@ public class WechatSecurity  {
 
         JSONArray gResBut1 = new JSONArray();
         JSONObject node = new JSONObject();
+        node.put("name","首页");
+        node.put("type","view");
+        node.put("url", IConfig.get("httpUrl_path")+"/static/wx/index.html?t=0");
+        gResBut1.add(node);
         node.put("name","报名");
         node.put("type","view");
-        node.put("url","http://mywx.wonderscd.com/static/h5/index.html");
+        node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=5");
         gResBut1.add(node);
         node.put("name","赛事");
         node.put("type","view");
-        node.put("url","http://mywx.wonderscd.com/static/h5/index.html");
-        gResBut1.add(node);
-        node.put("name","观赛");
-        node.put("type","view");
-        node.put("url","http://mywx.wonderscd.com/static/h5/index.html");
+        node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=4");
         gResBut1.add(node);
         node.put("name","排行榜");
         node.put("type","view");
-        node.put("url","http://mywx.wonderscd.com/static/h5/index.html");
+        node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=2");
         gResBut1.add(node);
 
         JSONObject node1 = new JSONObject();
@@ -116,11 +116,11 @@ public class WechatSecurity  {
         JSONArray gResBut2 = new JSONArray();
         node.put("name","个人中心");
         node.put("type","view");
-        node.put("url","http://mywx.wonderscd.com/static/h5/index.html");
+        node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=3");
         gResBut2.add(node);
-        node.put("name","注册");
+        node.put("name","充值");
         node.put("type","view");
-        node.put("url","http://mywx.wonderscd.com/static/h5/index.html");
+        node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=1");
         gResBut2.add(node);
 
         JSONObject node2 = new JSONObject();
