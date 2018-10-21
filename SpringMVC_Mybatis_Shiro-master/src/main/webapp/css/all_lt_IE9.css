@@ -772,9 +772,11 @@ select.width-240 { width: 260px!important;}
 .btn-appxz {background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94/images/btn_appxz.png',sizingMethod='scale');}
 .btn-bmcs {background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94/images/btn_bmcs.png',sizingMethod='scale');}
 .btn-gszc {background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94/images/btn_gszc.png',sizingMethod='scale');}
-.icon-un {background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon_un.png',sizingMethod='scale');}
-.icon-pw {background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/icon_pw.png',sizingMethod='scale');}
-
+.icon-un {background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94/images/icon_un.png',sizingMethod='scale');}
+.icon-pw {background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94/images/icon_pw.png',sizingMethod='scale');}
+.btn-fzxzx { background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94/images/btn_fzxzx.jpg',sizingMethod='scale');}
+.btn-fcsrk { background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94/images/btn_fcsrk.jpg',sizingMethod='scale');}
+.pf-box .icon-close { background-size: 100%;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94/images/icon_close_white.png',sizingMethod='scale');}
 
 /* 22、img
  * -------------------------------------------------- */

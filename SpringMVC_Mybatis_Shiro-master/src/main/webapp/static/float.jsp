@@ -1,27 +1,6 @@
 <%@ page pageEncoding="utf-8"%>
 
-<!--—————————————————————————————— 新增弹出框部分 ——————————————————————————————-->
 
-
-
-<div class="projectile-frame" style="margin: 15% 35%" id="closeMidDoor">
-    <div class="content">
-        <div class="pf-box">
-            <a class="icon icon-close" id="closeMidPopu"></a>
-        </div>
-        <div class="ch-box">
-            <div class="btns">
-                <a class="btn btn-fzxzx" href="tencent://message/?uin=1930621578&Site=http://60.205.189.94&Menu=yes"></a>
-                <a class="btn btn-fcsrk" href="/static/gains/strategy.jsp"></a>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-<!--——————————————————————————————    end    ——————————————————————————————-->
 
 
 <div class="float-layer">
@@ -46,9 +25,7 @@
 <script>
     $(function() {
 
-        $('#closeMidPopu').click(function () {
-            $('#closeMidDoor').css('display','none');
-        });
+
         $('#closeDoor').click(function () {
             $('#closeDoor').parent().css('display','none');
         });
