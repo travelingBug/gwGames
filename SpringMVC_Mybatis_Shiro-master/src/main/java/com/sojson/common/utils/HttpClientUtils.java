@@ -110,10 +110,10 @@ public class HttpClientUtils {
         map.put("domain","dgw.xadtsc.cn");
         map.put("merchantid","151010005");
         map.put("step","p1");
-        map.put("out_trade_no","201810222019550256");
+        map.put("out_trade_no","201810222331260503");
         map.put("orderBody", "充值");
         map.put("out_trade_date", "20181022");
-        map.put("mercUserNo", "31");
+        map.put("mercUserNo", "37");
         map.put("total_fee","0.5");
         map.put("bank_code", "CCB");
         map.put("bank_no","1001");
@@ -128,14 +128,22 @@ public class HttpClientUtils {
         return map;
     }
 
-    public static String createTranData(Map<String,String> map){
+    public static String createTranData(Map<String,String> map) {
         map.remove("pr_id");
         map.remove("pr_ver");
         map.remove("merchant_id");
-
+        String trandata = "";
+        try {
         JSONObject jsonObject = JSONObject.fromObject(map);
-        byte[] bt = jsonObject.toString().getBytes();
-        String trandata = (new BASE64Encoder()).encodeBuffer(bt);
+        byte[] bt = jsonObject.toString().getBytes("UTF-8");
+        trandata = (new BASE64Encoder()).encodeBuffer(bt);
+
+        BASE64Decoder decoder = new BASE64Decoder();
+
+            System.out.println(new String(decoder.decodeBuffer(trandata), "UTF-8"));
+        }catch (IOException e){
+            e.getStackTrace();
+        }
 
         return trandata;
     }
@@ -225,6 +233,7 @@ public class HttpClientUtils {
             }
 
         }
+
         String str = sb.substring(0,sb.length()-1).toString();
         System.out.println(str);
 
@@ -235,10 +244,11 @@ public class HttpClientUtils {
     }
 
     public static void main(String[] args){
-        sendReq(createData());
+//        sendReq(createData());
 //        sendQueryReq(createQueryData());
 //        String json = "{\"merchantId\":\"80010001\",\"sys_trade_no\":\"d18082416484710228001000175854\",\"out_trade_no\":\"201808240050222702\",\"total_fee\":\"200.00\",\"curType\":\"CNY\",\"tradeDate\":\"20180824\",\"PayStatus\":\"PAY_SUCCESS\",\"OrderStatus\":\"1\",\"pr_ver\":\"b2c0.21\",\"signType\":\"MD5\"}";
 //        JSONObject obj = JSONObject.fromObject(json);
 //        System.out.println(obj.get("PayStatus"));
+
     }
 }

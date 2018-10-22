@@ -25,8 +25,8 @@
     <include refid="card_Column_List" />
     from tb_vip_order
     where PHONE = #{phone,jdbcType=VARCHAR}
-    <if test="cardNo!='' and cardNo != null">
-      AND CARD_NO = #{cardNo,jdbcType=VARCHAR}
+    <if test="orderNo!='' and orderNo != null">
+      AND ORDER_NO = #{orderNo,jdbcType=VARCHAR}
     </if>
     ORDER BY ID
   </select>
@@ -35,5 +35,13 @@
     insert into tb_vip_order (PHONE,CARD_NO,BANK_CODE,CARD_NAME,ID_NO,ORDER_NO,ORDER_TITLE,ORDER_DATE,VIP_ID,FEE,STATUS)
     values (#{phone},#{cardNo},#{bankCode},#{cardName},#{idNo},#{orderNo},#{orderTitle},#{orderDate},#{vipId},#{fee},#{status})
   </insert>
+
+  <update id="update" parameterType="com.sojson.common.model.TbVipsOrder">
+    update tb_vip_order
+    <set >
+      STATUS = 1
+    </set>
+    where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
+  </update>
 
 </mapper>

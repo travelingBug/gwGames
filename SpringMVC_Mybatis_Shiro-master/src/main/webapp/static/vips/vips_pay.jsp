@@ -522,6 +522,7 @@
                     icon: 0,
                     skin: 'layui-layer-lan'
                 });
+                sessionStorage.setItem("orderNo",result.data);
                 p1 = true;
             }, error: function (result) {
 
@@ -541,11 +542,13 @@
         var fee = $("#pay_ticket").val();
         var smsCode = $("#smsCode").val();
         var cardNo = $("#pay_list .on").attr("data-card");
+        var orderNo = sessionStorage.getItem("orderNo");
         var data = {
             "fee":fee,
             "smsCode":smsCode,
             "cardNo":cardNo,
-            "step":"p3"
+            "step":"p3",
+            "orderNo": orderNo
         }
         $.ajax({
             type: "POST",

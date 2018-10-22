@@ -73,11 +73,6 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
     @Override
     public ResultMessage addOrder(TbVipsOrder entity, HttpServletRequest req) {
         try {
-            Map<String, String> map = HttpClientUtils.createData();
-            map.put("out_trade_no", entity.getOrderNo());
-            map.put("orderBody", entity.getOrderTitle());
-            map.put("out_trade_date", entity.getOrderDate());
-            map.put("mercUserNo", entity.getVipId());
             String fee = entity.getFee();
             if ("3".equals(fee)) {
 
@@ -88,6 +83,18 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
 //                entity.setFee("5000");
             }
             entity.setFee("0.5");
+
+            if("p1".equals(entity.getStep())){
+                entity.setStatus(0);
+                int id = uTbVipsOrderMapper.insert(entity);
+            }
+
+            Map<String, String> map = HttpClientUtils.createData();
+            map.put("out_trade_no", entity.getOrderNo());
+            map.put("orderBody", entity.getOrderTitle());
+            map.put("out_trade_date", entity.getOrderDate());
+            map.put("mercUserNo", entity.getVipId());
+
             map.put("total_fee", entity.getFee());
             map.put("bank_code", entity.getBankCode());
             map.put("cardNo", entity.getCardNo());
@@ -105,14 +112,12 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
             JSONObject obj = JSONObject.fromObject(msg);
 
             if ((!"".equals(entity.getSmsCode())) && "p3".equals(entity.getStep())) {
-                entity.setStatus(1);
-                int id = uTbVipsOrderMapper.insert(entity);
+
                 if(!obj.get("PayStatus").equals("PAY_SUCCESS")){
                     return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "支付失败");
-                }
+                }else {
 
-                String phone = commonService.getUserPhone(req);
-                if (id > 0) {
+                    String phone = commonService.getUserPhone(req);
                     TbVips vip = new TbVips();
                     vip.setPhone(phone);
                     TbVips curVip = uTbVipsMapper.findUserByPhone(vip);
@@ -120,19 +125,19 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
                         vip.setEndTime(DateUtil.getDate(22));
                         vip.setLevel(IConstant.VIP_LEVEL.VIP_C.v);
                     } else if ("2".equals(fee)) {
-                        if(curVip.getLevel().toString().equals("0")){
+                        if (curVip.getLevel().toString().equals("0")) {
                             vip.setEndTime(DateUtil.getDate(22));
-                        }else if(curVip.getLevel().toString().equals("3")){
-                            vip.setEndTime(upgrade(curVip.getEndTime(), "3","2"));
+                        } else if (curVip.getLevel().toString().equals("3")) {
+                            vip.setEndTime(upgrade(curVip.getEndTime(), "3", "2"));
                         }
                         vip.setLevel(IConstant.VIP_LEVEL.VIP_B.v);
                     } else if ("1".equals(fee)) {
-                        if(curVip.getLevel().toString().equals("0")){
+                        if (curVip.getLevel().toString().equals("0")) {
                             vip.setEndTime(DateUtil.getDate(22));
-                        }else if(curVip.getLevel().toString().equals("3")){
-                            vip.setEndTime(upgrade(curVip.getEndTime(),"3","1"));
-                        }else if(curVip.getLevel().toString().equals("2")){
-                            vip.setEndTime(upgrade(curVip.getEndTime(), "2","1"));
+                        } else if (curVip.getLevel().toString().equals("3")) {
+                            vip.setEndTime(upgrade(curVip.getEndTime(), "3", "1"));
+                        } else if (curVip.getLevel().toString().equals("2")) {
+                            vip.setEndTime(upgrade(curVip.getEndTime(), "2", "1"));
                         }
                         vip.setLevel(IConstant.VIP_LEVEL.VIP_A.v);
                     }
@@ -143,6 +148,7 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
                     record.setAmount(entity.getFee());
                     uTbVipRecordMapper.addRecord(record);
                     uTbVipsMapper.update(vip);
+                    uTbVipsOrderMapper.update(entity);
                 }
 
                 return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "支付成功");
@@ -152,7 +158,7 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "创建订单失败");
         }
 
-        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "请输入验证码");
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "请输入验证码", entity.getOrderNo());
     }
 
     private String upgrade(String endTime, String oldLevel, String newLevel){

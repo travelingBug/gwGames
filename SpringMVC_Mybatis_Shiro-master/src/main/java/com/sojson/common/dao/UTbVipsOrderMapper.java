@@ -12,4 +12,6 @@ public interface UTbVipsOrderMapper {
     int insert(TbVipsOrder entity);
 
     List<TbVipsOrder> findList(Map<String, String> params);
+
+    void update(TbVipsOrder entity);
 }
