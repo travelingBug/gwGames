@@ -502,11 +502,10 @@
         }
 
         var fee = $("#pay_ticket").val();
-        var smsCode = $("#smsCode").val();
         var cardNo = $("#pay_list .on").attr("data-card");
         var data = {
             "fee":fee,
-            "smsCode":smsCode,
+            "smsCode":"",
             "cardNo":cardNo,
             "step":"p1"
         }

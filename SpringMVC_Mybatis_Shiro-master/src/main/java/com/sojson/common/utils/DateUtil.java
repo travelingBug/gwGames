@@ -562,7 +562,40 @@ public class DateUtil {
 	{
 //    	String timeDir=DateUtil.dateToString(new Date(),DateUtil.ISO_EXPANDED_DATE_FORMAT);
 //		System.out.println(timeDir);
-        getDate(22);
+//        getDate(22);
+        try {
+            long nd = 1000 * 24 * 60 * 60;
+            long nh = 1000 * 60 * 60;
+            Date now = getCurrentDateTime();
+            Date date1 = null;
+            SimpleDateFormat simdate1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String str1 = getDate(22);
+            date1 = simdate1.parse(str1);
+            long diff = date1.getTime()-now.getTime();
+
+            long day = diff / nd;
+            long hour = diff % nd / nh;
+
+            int b = Math.round((day*24+hour)/4);
+
+            int c = Math.round((day*24+hour)/10);
+
+            int d = (int) Math.round((day*24+hour)/2.5);
+            System.out.println(day+"天"+hour+"小时");
+            System.out.println(b);
+            System.out.println(c);
+            System.out.println(d);
+
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(date1);
+            calendar.add(calendar.HOUR_OF_DAY, d);
+            System.out.println(simdate1.format(calendar.getTime()));
+
+
+        }catch (ParseException e) {
+            e.printStackTrace();
+        }
+
 	}
 
 
@@ -583,6 +616,7 @@ public class DateUtil {
          System.out.println("结果：" + sdf.format(cal.getTime()));
         return sdf.format(cal.getTime());
     }
+
 
     // 判断是不是周末
     public static boolean isWeekend(Calendar cal) {
