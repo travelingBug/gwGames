@@ -125,7 +125,7 @@
         </div>
     </div>
     <div class="main-box bg-red">
-        <img src="images/mid_bg.png"/>
+        <img id="img1920" src="images/mid_bg.png"/>
         <div class="cont-area">
             <div class="title"><div class="title-3"></div></div>
             <div class="content">
@@ -154,6 +154,10 @@
 </html>
 <script>
     $(function() {
+        if (screen.width >= 1800)
+        {
+            $('#img1920').attr('src','images/mid_bg_1920.png');
+        }
         $('#closeMidPopu').click(function () {
             $('#closeMidDoor').css('display','none');
         });
