@@ -11,6 +11,7 @@ import org.apache.shiro.web.filter.AccessControlFilter;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -19,13 +20,13 @@ public class InterfaceFilter extends AccessControlFilter {
 	protected boolean isAccessAllowed(ServletRequest request,
 			ServletResponse resp, Object mappedValue) throws Exception {
 		HttpServletRequest req = (HttpServletRequest) request;
-//		HttpServletResponse response = (HttpServletResponse) resp;
-//		response.setHeader("Access-Control-Allow-Origin", "*"); //解决跨域访问报错
-//		response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
-//		 response.setHeader("Access-Control-Max-Age", "3600"); //设置过期时间
-//		 response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, client_id, uuid, Authorization");
-//		 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // 支持HTTP 1.1.
-//		 response.setHeader("Pragma", "no-cache"); // 支持HTTP 1.0. response.setHeader("Expires", "0");
+		HttpServletResponse response = (HttpServletResponse) resp;
+		response.setHeader("Access-Control-Allow-Origin", "*"); //解决跨域访问报错
+		response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
+		 response.setHeader("Access-Control-Max-Age", "3600"); //设置过期时间
+		 response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, client_id, uuid, Authorization");
+		 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // 支持HTTP 1.1.
+		 response.setHeader("Pragma", "no-cache"); // 支持HTTP 1.0. response.setHeader("Expires", "0");
 
 		String token = req.getHeader("Authorization");
 		if (StringUtils.hasText(token)) {
