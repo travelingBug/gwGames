@@ -1,12 +1,10 @@
-package com.sojson.common.model;
-
-import org.springframework.format.annotation.DateTimeFormat;
+package com.sojson.common.model.vo;
 
 import java.io.Serializable;
 import java.util.Date;
 
 
-public class TbVipRecord implements Serializable{
+public class TbVipRecordVo implements Serializable{
 	private static final long serialVersionUID = 1L;
 
     private Integer id;

@@ -95,8 +95,8 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
 
         String seatNum = "";
         if(entity.getParentId().equals("0")) {
-            int count = uTbDealerMapper.queryDealerCount() + 1;
-            seatNum = String.format("%03d", count);
+//            int count = uTbDealerMapper.queryDealerCount() + 1;
+            seatNum = entity.getSeatNum();
         }else{
             seatNum = uTbDealerMapper.getSeatNumByUserId(entity.getParentId());
         }
@@ -317,5 +317,33 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "电话号码已经存在！");
         }
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
+    }
+
+    @Override
+    public ResultMessage valiSeatNum(String seatNum) {
+        TbDealer dealer = uTbDealerMapper.findDealerBySeatNum(seatNum);
+        if(null != dealer){
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "坐席号已经存在！");
+        }
+
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
+    }
+
+    @Override
+    public ResultMessage querySeatNum() {
+        int count = uTbDealerMapper.queryDealerCount() + 1;
+        String seatNum = String.format("%03d", count);
+
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "",seatNum);
+    }
+
+    @Override
+    public TbDealer queryByUserId(String userId) {
+        return uTbDealerMapper.findDealerByUserId(Long.parseLong(userId));
+    }
+
+    @Override
+    public String queryUserType(String userId) {
+        return uTbDealerMapper.queryUserType(userId);
     }
 }

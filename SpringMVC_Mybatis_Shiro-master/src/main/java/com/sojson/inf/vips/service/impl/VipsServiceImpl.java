@@ -114,8 +114,9 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
 
+    @Transactional(readOnly = false)
     @Override
-    public ResultMessage resetPwd(TbVips entity, HttpServletRequest req) throws Exception {
+    public ResultMessage updatePwd(TbVips entity, HttpServletRequest req) throws Exception {
 
         //验证短信验证码
         String code = RedisUtil.get(entity.getPhone());
@@ -127,9 +128,17 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"验证码错误！");
         }
 
-        ResultMessage msg = update(entity, req);
+        if(!entity.getPassword().equals("")) {
+            String phone = entity.getPhone();
+            entity.setPassword(md5Pswd(phone, entity.getPassword()));
+        }else{
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "密码不能为空");
+        }
 
-        return msg;
+        entity.setModTime(new Date()); //设置修改时间
+        uTbVipsMapper.update(entity);
+
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
 
     @Transactional

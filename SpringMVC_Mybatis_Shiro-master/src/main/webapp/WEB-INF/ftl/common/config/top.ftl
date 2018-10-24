@@ -124,7 +124,7 @@
                       </li>
 				  </@shiro.hasAnyRoles>
 
-				  <@shiro.hasAnyRoles name='200001,200002,100004,100005'>
+				  <@shiro.hasAnyRoles name='888888,200001,200002,100004,100005'>
                       <li class="dropdown ${(index==7)?string('active','')}">
                           <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="${basePath}/dealer/vipsList.shtml?parentId=${userId}">
                               会员管理<span class="caret"></span>
@@ -133,7 +133,9 @@
 							  <@shiro.hasPermission name="/dealer/vipsList.shtml">
                                   <li><a href="${basePath}/dealer/vipsList.shtml?parentId=${userId}">会员列表</a></li>
 							  </@shiro.hasPermission>
-
+							  <@shiro.hasPermission name="/dealer/vipsRecordList.shtml">
+                                  <li><a href="${basePath}/dealer/vipsRecordList.shtml?userId=${userId}">购票明细</a></li>
+							  </@shiro.hasPermission>
                           </ul>
                       </li>
 				  </@shiro.hasAnyRoles>

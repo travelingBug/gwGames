@@ -23,4 +23,8 @@ public interface UTbDealerMapper {
     TbDealer findDealerByPhone(String telPhone);
 
     TbDealer findDealerByInviteCode(String telPhone);
+
+    TbDealer findDealerBySeatNum(String seatNum);
+
+    String queryUserType(String userId);
 }

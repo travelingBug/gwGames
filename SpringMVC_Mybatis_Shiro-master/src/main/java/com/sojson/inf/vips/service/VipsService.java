@@ -38,5 +38,5 @@ public interface VipsService {
 
     ResultMessage validInviteCode(String inviteCode);
 
-    ResultMessage resetPwd(TbVips entity, HttpServletRequest req) throws Exception;
+    ResultMessage updatePwd(TbVips entity, HttpServletRequest req) throws Exception;
 }

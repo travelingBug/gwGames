@@ -38,4 +38,12 @@ public interface DealerService {
     ResultMessage queryLink(String userId);
 
     public ResultMessage validPhone(String telPhone);
+
+    ResultMessage valiSeatNum(String seatNum);
+
+    ResultMessage querySeatNum();
+
+    TbDealer queryByUserId(String userId);
+
+    String queryUserType(String userId);
 }

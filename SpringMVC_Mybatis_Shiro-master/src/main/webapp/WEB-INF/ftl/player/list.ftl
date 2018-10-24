@@ -27,7 +27,7 @@
                         }else{
                             layer.msg('编辑成功！');
                             setTimeout(function(){
-                                $('#playerForm').submit();
+                                $('#formId').submit();
                             },1000);
                         }
                     },'json');
@@ -42,7 +42,7 @@
                         }else{
                             layer.msg('审核成功！');
                             setTimeout(function(){
-                                $('#playerForm').submit();
+                                $('#formId').submit();
                             },1000);
                         }
                     },'json');
@@ -56,7 +56,7 @@
 						}else{
 							layer.msg('微信添加成功！');
 							setTimeout(function(){
-								$('#playerForm').submit();
+								$('#formId').submit();
 							},1000);
 						}
 					},'json');
@@ -64,8 +64,8 @@
 				</@shiro.hasPermission>
 
 				$("#i_refresh").click(function(){
-					$("#playerForm")[0].reset();
-                    $('#playerForm').submit();
+					$("#formId")[0].reset();
+                    $('#formId').submit();
 				});
 			});
 
@@ -108,7 +108,7 @@
 				<div class="col-md-10">
 					<h2>选手列表</h2>
 					<hr>
-					<form method="post" action="${basePath}/player/list.shtml" id="playerForm" class="form-inline">
+					<form method="post" action="${basePath}/player/list.shtml" id="formId" class="form-inline">
 						<div clss="well">
 					      <div class="form-group">
 					        <input type="text" class="form-control" style="width: 300px;" value="${findContent?default('')}" 
