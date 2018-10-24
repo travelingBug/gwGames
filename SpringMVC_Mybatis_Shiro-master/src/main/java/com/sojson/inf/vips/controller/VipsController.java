@@ -146,4 +146,10 @@ public class VipsController extends BaseController {
     public ResultMessage validInviteCode(String inviteCode, HttpServletRequest req) throws Exception{
         return vipsService.validInviteCode(inviteCode);
     }
+
+    @RequestMapping(value = "resetPwd", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage resetPwd(TbVips entity, HttpServletRequest req) throws Exception{
+        return vipsService.resetPwd(entity, req);
+    }
 }
