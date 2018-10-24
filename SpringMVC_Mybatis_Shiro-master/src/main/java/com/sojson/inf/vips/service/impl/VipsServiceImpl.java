@@ -114,6 +114,24 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
 
+    @Override
+    public ResultMessage resetPwd(TbVips entity, HttpServletRequest req) throws Exception {
+
+        //验证短信验证码
+        String code = RedisUtil.get(entity.getPhone());
+        if (StringUtils.isBlank(code)) {
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"未找到对应验证码！");
+        }
+        String[] codeArr = code.split(",");
+        if (codeArr.length != 2 || !codeArr[0].equalsIgnoreCase(entity.getVerfiCode())) {
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"验证码错误！");
+        }
+
+        ResultMessage msg = update(entity, req);
+
+        return msg;
+    }
+
     @Transactional
     @Override
     public ResultMessage insert(TbVips entity, HttpServletRequest req) {
@@ -293,5 +311,6 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
 
         return surplusTime;
     }
+
 
 }
