@@ -132,18 +132,18 @@
 					<table class="table table-bordered">
 						<tr>
 							<th><input type="checkbox" id="checkAll"/></th>
-							<th class="">昵称</th>
-							<th>姓名</th>
-							<th>资金账号</th>
-							<th>身份证</th>
-							<th>手机号</th>
-							<th>报名时间</th>
-							<th>备注</th>
-							<th>审核状态</th>
-							<th>审核人</th>
-							<th>审核时间</th>
-							<th>微信号码</th>
-							<th>操作</th>
+							<th width="100">昵称</th>
+							<th width="100">姓名</th>
+							<th width="100">资金账号</th>
+							<th width="100">身份证</th>
+							<th width="100">手机号</th>
+							<th width="150">报名时间</th>
+							<th width="100">备注</th>
+							<th width="170">审核状态</th>
+							<th width="100">审核人</th>
+							<th width="150">审核时间</th>
+							<th width="130">微信号码</th>
+							<th width="100">操作</th>
 						</tr>
 						<#if page?exists && page.list?size gt 0 >
 							<#list page.list as it>

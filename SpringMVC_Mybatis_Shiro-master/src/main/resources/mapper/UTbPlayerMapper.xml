@@ -64,6 +64,8 @@
     <include refid="Player_Column_List" />
     from tb_player
     <include refid="where_all"/>
+    <include refid="order_all"/>
+    <include refid="limit_sql" />
   </select>
   <select id="findCount" resultMap="PlayerResultMap" >
  	 select count(id) from  tb_player
