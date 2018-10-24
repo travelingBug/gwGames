@@ -86,7 +86,7 @@
 			<tx:method name="del*" />
 			<tx:method name="load*" />
 			<tx:method name="init*" />
-
+			<tx:method name="import*" />
 
 
 
@@ -96,7 +96,7 @@
  	<!-- AOP配置--> 
 	<aop:config>
 		<aop:pointcut id="myPointcut"
-			expression="execution(public * com.sojson.*.service.impl.*.*(..))" />
+			expression="execution(public * com.sojson.*.service.impl.*.*(..)) || execution(public * com.sojson.inf.*.service.impl.*.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut" />
 	</aop:config>
 <!--	<aop:config>-->

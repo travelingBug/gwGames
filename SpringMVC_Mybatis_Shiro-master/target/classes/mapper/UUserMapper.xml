@@ -185,4 +185,12 @@
       status = #{status,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <!-- 根据经销商电话查询用户名 -->
+  <select id="findUserByDealerPhone" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from u_user
+    where id in (select FK_USER_ID FROM TB_DEALER d where  d.Phone = #{phone,jdbcType=VARCHAR})
+  </select>
 </mapper>
