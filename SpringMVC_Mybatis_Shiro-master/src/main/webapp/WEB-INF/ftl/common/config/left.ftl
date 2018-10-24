@@ -156,7 +156,7 @@
 </#macro>
 
 <#macro vips index>
-	<@shiro.hasAnyRoles name='888888,200001,200002,100004,100005'>
+	<@shiro.hasAnyRoles name='888888,200001,200002,100004,100005,100006'>
     <div id="one" class="col-md-2">
         <ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
 			<@shiro.hasPermission name="/dealer/vipsList.shtml">
