@@ -19,7 +19,7 @@
 </div>
 </#macro>
 <#macro member index>
-	<@shiro.hasAnyRoles name='888888,100002,100004,10005'>
+	<@shiro.hasAnyRoles name='888888,100002,100004,100005'>
 		<div  id="one" class="col-md-2">
 			<ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
 			  <li class="${(index==1)?string('active',' ')}">
@@ -37,7 +37,7 @@
 	</@shiro.hasAnyRoles>         
 </#macro>
 <#macro role index>
-	<@shiro.hasAnyRoles name='888888,100003,100004,10005'>
+	<@shiro.hasAnyRoles name='888888,100003,100004,100005'>
 		<div id="one" class="col-md-2">
 			<ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
 			 
@@ -74,7 +74,7 @@
 	</@shiro.hasAnyRoles>   
 </#macro>
 <#macro player index>
-	<@shiro.hasAnyRoles name='888888,100002,100004,10005'>
+	<@shiro.hasAnyRoles name='888888,100002,100004,100005'>
     <div  id="one" class="col-md-2">
         <ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
 			<@shiro.hasPermission name="/player/list.shtml">
@@ -109,7 +109,7 @@
 	</@shiro.hasAnyRoles>
 </#macro>
 <#macro dealer index>
-	<@shiro.hasAnyRoles name='888888,100004,10005'>
+	<@shiro.hasAnyRoles name='888888,100004,100005'>
     <div id="one" class="col-md-2">
         <ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
 			<@shiro.hasPermission name="/dealer/list.shtml">
@@ -131,7 +131,7 @@
 	</@shiro.hasAnyRoles>
 </#macro>
 <#macro employee index>
-	<@shiro.hasAnyRoles name='200001,100004,10005'>
+	<@shiro.hasAnyRoles name='200001,100004,100005'>
     <div id="one" class="col-md-2">
         <ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
 			<@shiro.hasPermission name="/dealer/employeeList.shtml">
@@ -156,7 +156,7 @@
 </#macro>
 
 <#macro vips index>
-	<@shiro.hasAnyRoles name='200001,200002,100004,10005'>
+	<@shiro.hasAnyRoles name='200001,200002,100004,100005'>
     <div id="one" class="col-md-2">
         <ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
 			<@shiro.hasPermission name="/dealer/vipsList.shtml">
@@ -172,7 +172,7 @@
 </#macro>
 
 <#macro eventReport index>
-	<@shiro.hasAnyRoles name='888888'>
+	<@shiro.hasAnyRoles name='888888,100006'>
     <div id="one" class="col-md-2">
         <ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
 			<@shiro.hasPermission name="/eventReport/list.shtml">
@@ -196,7 +196,7 @@
 </#macro>
 
 <#macro stopdate index>
-	<@shiro.hasAnyRoles name='888888'>
+	<@shiro.hasAnyRoles name='888888,100006'>
     <div id="one" class="col-md-2">
         <ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
 			<@shiro.hasPermission name="/stopdate/list.shtml">

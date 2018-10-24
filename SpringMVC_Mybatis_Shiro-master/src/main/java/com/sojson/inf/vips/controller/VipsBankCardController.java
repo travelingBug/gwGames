@@ -2,6 +2,7 @@ package com.sojson.inf.vips.controller;
 
 import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
+import com.sojson.common.model.TbVipRecord;
 import com.sojson.common.model.TbVips;
 import com.sojson.common.model.TbVipsCard;
 import com.sojson.common.model.TbVipsOrder;
@@ -108,11 +109,19 @@ public class VipsBankCardController extends BaseController {
                 if(list.size()<=0){
                     return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "未绑定银行卡");
                 }
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
-                SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
-                Date date = new Date();
-                String orderNo = sdf.format(date);
-                String orderDate = sdf1.format(date);
+
+                if(order.getStep().equals("p1")){
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
+                    SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
+                    Date date = new Date();
+                    String orderNo = sdf.format(date);
+                    String orderDate = sdf1.format(date);
+                    order.setOrderNo(orderNo);
+                    order.setOrderDate(orderDate);
+                }else{
+                    String orderDate = order.getOrderNo().substring(0,8);
+                    order.setOrderDate(orderDate);
+                }
 
                 TbVipsCard card = list.get(0);
                 order.setPhone(card.getBankPhone());
@@ -120,8 +129,6 @@ public class VipsBankCardController extends BaseController {
                 order.setCardName(card.getCardName());
                 order.setIdNo(card.getIdNo());
                 order.setBankCode(card.getCardCode());
-                order.setOrderNo(orderNo);
-                order.setOrderDate(orderDate);
                 order.setVipId(card.getId()+"");
                 order.setOrderTitle("充值");
                 msg = vipsBankCardService.addOrder(order,req);
@@ -133,6 +140,16 @@ public class VipsBankCardController extends BaseController {
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "创建订单失败");
         }
         return msg;
+    }
+
+    @RequestMapping(value = "findRecord")
+    @ResponseBody
+    public List<TbVipRecord> findRecord(HttpServletRequest req) throws Exception{
+        String phone = commonService.getUserPhone(req);
+        Map<String,Object> params = new HashMap<>();
+        params.put("phone",phone);
+        List<TbVipRecord> list = vipsBankCardService.findRecord(params);
+        return list;
     }
 
 

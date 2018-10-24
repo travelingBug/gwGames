@@ -435,17 +435,17 @@
                 if(levelData==1) {
                     return false;
                 }
-                fee = "A";
+                fee = "1";
             }else if(index==1){
                 if(levelData<=2 && levelData>0){
                     return false;
                 }
-                fee = "B";
+                fee = "2";
             }else if(index==2){
                 if(levelData<=3 && levelData>0){
                     return false;
                 }
-                fee = "C";
+                fee = "3";
             }
             $("#pay_ticket").val(fee);
 
@@ -502,11 +502,10 @@
         }
 
         var fee = $("#pay_ticket").val();
-        var smsCode = $("#smsCode").val();
         var cardNo = $("#pay_list .on").attr("data-card");
         var data = {
             "fee":fee,
-            "smsCode":smsCode,
+            "smsCode":"",
             "cardNo":cardNo,
             "step":"p1"
         }
@@ -523,6 +522,7 @@
                     icon: 0,
                     skin: 'layui-layer-lan'
                 });
+                sessionStorage.setItem("orderNo",result.data);
                 p1 = true;
             }, error: function (result) {
 
@@ -542,11 +542,13 @@
         var fee = $("#pay_ticket").val();
         var smsCode = $("#smsCode").val();
         var cardNo = $("#pay_list .on").attr("data-card");
+        var orderNo = sessionStorage.getItem("orderNo");
         var data = {
             "fee":fee,
             "smsCode":smsCode,
             "cardNo":cardNo,
-            "step":"p3"
+            "step":"p3",
+            "orderNo": orderNo
         }
         $.ajax({
             type: "POST",
