@@ -122,7 +122,7 @@ public class WechatSecurity  {
         node.put("type","view");
         node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=6");
         gResBut2.add(node);
-        node.put("name","充值");
+        node.put("name","会员权益");
         node.put("type","view");
         node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=1");
         gResBut2.add(node);
