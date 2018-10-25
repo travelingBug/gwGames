@@ -101,9 +101,12 @@ public class InfGainsInfoController extends BaseController {
 
 	@RequestMapping(value="getTransactionInfo",method=RequestMethod.POST)
 	@ResponseBody
-	public ResultMessage getTransactionInfo(HttpServletRequest request,String account, Integer pageNo) throws Exception{
+	public ResultMessage getTransactionInfo(HttpServletRequest request,String account, Integer pageNo, Integer pageSize) throws Exception{
 		ResultMessage msg = new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
 			String endTime = commonService.getTimeByToken(request);
+			if (pageSize == null) {
+				pageSize = 10;
+			}
 			if (endTime == null) {
 				msg = new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"您还未购买观赛券，请购买后再进行观赛!");
 			} else {

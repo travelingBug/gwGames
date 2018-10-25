@@ -21,6 +21,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import sun.misc.BASE64Encoder;
 
 
 public class Test
@@ -45,6 +46,7 @@ public class Test
 
     public static void main(String[] args) throws Exception
     {
+//        new BASE64Encoder
 //        // 第一步，创建一个webbook，对应一个Excel文件
 //        XSSFWorkbook wb = new XSSFWorkbook();
 //        // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet

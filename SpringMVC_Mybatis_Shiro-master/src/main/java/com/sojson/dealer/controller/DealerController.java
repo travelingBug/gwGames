@@ -3,12 +3,14 @@ package com.sojson.dealer.controller;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
 import com.sojson.common.model.TbDealer;
+import com.sojson.common.model.TbVipRecord;
 import com.sojson.common.model.TbVips;
 import com.sojson.common.model.vo.DealerCountVo;
 import com.sojson.common.utils.StringUtils;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.dealer.service.DealerService;
 import com.sojson.dealer.service.VipsListService;
+import com.sojson.dealer.service.VipsRecordListService;
 import com.sojson.user.service.UUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -42,6 +44,9 @@ public class DealerController extends BaseController {
 
     @Autowired
     UUserService userService;
+
+    @Autowired
+    VipsRecordListService vipsRecordListService;
 
     /**
      * 增加经销商
@@ -186,6 +191,35 @@ public class DealerController extends BaseController {
         return new ModelAndView("dealer/vipsList");
     }
 
+    @RequestMapping(value = "vipsRecordList")
+    public ModelAndView vipsRecordList(ModelMap map, Integer pageNo, Integer pageSize,
+                                 String userId) {
+
+        Pagination<TbVipRecord> page = null;
+
+        TbDealer dealer = dealerService.queryByUserId(userId);
+        if(null!=dealer){
+            if("0".equals(dealer.getParentId())){
+                map.put("search","2");
+                map.put("seatNum", dealer.getSeatNum());
+                page = vipsRecordListService.findByPageDealer(map,pageNo,pageSize);
+            }else{
+                map.put("search","3");
+                map.put("inviteCode", dealer.getInviteNum());
+                page = vipsRecordListService.findByPageEmployee(map,pageNo,pageSize);
+            }
+        }else{
+            String type = dealerService.queryUserType(userId);
+            if("888888".equals(type) || "100004".equals(type) || "100005".equals(type) || "100006".equals(type)){
+                map.put("search","1");
+                page = vipsRecordListService.findByPageAdmin(map,pageNo,pageSize);
+            }
+        }
+
+        map.put("page", page);
+        return new ModelAndView("dealer/vipsRecordList");
+    }
+
     @RequestMapping(value = "valiPhone", method = RequestMethod.POST)
     @ResponseBody
     public ResultMessage valiPhone(String phone, HttpServletRequest req) {
@@ -198,5 +232,17 @@ public class DealerController extends BaseController {
 //    public List<DealerCountVo> countDealerVip(@RequestParam Map<String,Object> map){
 //        return
 //    }
+
+    @RequestMapping(value = "valiSeatNum", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage valiSeatNum(String seatNum, HttpServletRequest req) {
+        return dealerService.valiSeatNum(seatNum);
+    }
+
+    @RequestMapping(value = "querySeatNum", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage querySeatNum(HttpServletRequest req) {
+        return dealerService.querySeatNum();
+    }
 
 }

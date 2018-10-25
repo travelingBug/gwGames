@@ -181,7 +181,7 @@ public class UserLoginController extends BaseController {
 	 */
 	@RequestMapping(value="rePass",method=RequestMethod.POST)
 	@ResponseBody
-	public ResultMessage rePass(String phone,String code){
+	public ResultMessage rePass(String phone,String code,String password){
 		String smsCode = RedisUtil.get(phone);
 		if (StringUtils.isBlank(phone) ||StringUtils.isBlank(code) ) {
 			return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"请填写手机号码和验证码！");
@@ -197,7 +197,7 @@ public class UserLoginController extends BaseController {
 		if (user == null) {
 			return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"电话号码错误！");
 		}
-		user.setPswd("123456");
+		user.setPswd(password);
 		//加工密码
 		user = UserManager.md5Pswd(user);
 		//修改密码

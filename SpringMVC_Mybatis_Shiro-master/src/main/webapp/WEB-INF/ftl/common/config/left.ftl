@@ -156,13 +156,20 @@
 </#macro>
 
 <#macro vips index>
-	<@shiro.hasAnyRoles name='200001,200002,100004,100005'>
+	<@shiro.hasAnyRoles name='888888,200001,200002,100004,100005,100006'>
     <div id="one" class="col-md-2">
         <ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
 			<@shiro.hasPermission name="/dealer/vipsList.shtml">
                 <li class="${(index==1)?string('active',' ')}">
                     <a href="${basePath}/dealer/vipsList.shtml?parentId=${userId}">
                         <i class="glyphicon glyphicon-chevron-right"></i>会员列表
+                    </a>
+                </li>
+			</@shiro.hasPermission>
+			<@shiro.hasPermission name="/dealer/vipsRecordList.shtml">
+                <li class="${(index==2)?string('active',' ')}">
+                    <a href="${basePath}/dealer/vipsRecordList.shtml?userId=${userId}">
+                        <i class="glyphicon glyphicon-chevron-right"></i>购票明细
                     </a>
                 </li>
 			</@shiro.hasPermission>

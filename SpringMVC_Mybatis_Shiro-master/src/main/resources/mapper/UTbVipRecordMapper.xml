@@ -18,6 +18,16 @@
         <result column="remark" property="remark" jdbcType="VARCHAR" />
     </resultMap>
 
+    <resultMap id="recordVoMap" type="com.sojson.common.model.vo.TbVipRecordVo" >
+        <result column="id" property="id" jdbcType="INTEGER" />
+        <result column="vip_id" property="vipId" jdbcType="VARCHAR" />
+        <result column="level" property="level" jdbcType="TINYINT" />
+        <result column="crt_time" property="crtTime" jdbcType="VARCHAR" />
+        <result column="amount" property="amount" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    </resultMap>
+
   <select id="countByCode" resultMap="CountLevel" >
     select t.INVITAION_CODE,v.level,count(v.id) countNum,SUM(v.amount) countMoney from tb_vip t INNER JOIN tb_vip_record v on t.id = v.vip_id
     <include refid="where_count"/>
@@ -41,6 +51,74 @@
       </if>
      </where>
   </sql>
+
+    <select id="findAll" parameterType="map" resultMap="recordVoMap" >
+        <if test="search == '1'">
+            SELECT * from tb_vip_record;
+        </if>
+
+        <if test="search == '2'">
+            SELECT * FROM tb_vip_record WHERE vip_id IN(
+            SELECT id FROM tb_vip WHERE INVITAION_CODE IN(
+            SELECT INVITE_NUM FROM tb_dealer WHERE SEAT_NUM=#{seatNum}));
+        </if>
+
+        <if test="search == '3'">
+            SELECT * FROM tb_vip_record WHERE vip_id IN(
+            SELECT id FROM tb_vip WHERE INVITAION_CODE = #{inviteCode});
+        </if>
+    </select>
+
+    <select id="findCount" parameterType="map" resultType="int" >
+        <if test="search == '1'">
+            SELECT count(id) from tb_vip_record;
+        </if>
+
+        <if test="search == '2'">
+            SELECT count(id) FROM tb_vip_record WHERE vip_id IN(
+            SELECT id FROM tb_vip WHERE INVITAION_CODE IN(
+            SELECT INVITE_NUM FROM tb_dealer WHERE SEAT_NUM=#{seatNum}));
+        </if>
+
+        <if test="search == '3'">
+            SELECT count(id) FROM tb_vip_record WHERE vip_id IN(
+            SELECT id FROM tb_vip WHERE INVITAION_CODE = #{inviteCode})
+        </if>
+    </select>
+
+    <select id="findByPageAdminCount" parameterType="map" resultType="int">
+        SELECT count(id) from tb_vip_record;
+    </select>
+
+    <select id="findByPageDealerCount" parameterType="map" resultType="int">
+        SELECT count(id) FROM tb_vip_record WHERE vip_id IN(
+            SELECT id FROM tb_vip WHERE INVITAION_CODE IN(
+            SELECT INVITE_NUM FROM tb_dealer WHERE SEAT_NUM=#{seatNum}));
+    </select>
+
+    <select id="findByPageEmployeeCount" parameterType="map" resultType="int">
+        SELECT count(id) FROM tb_vip_record WHERE vip_id IN(
+            SELECT id FROM tb_vip WHERE INVITAION_CODE = #{inviteCode})
+    </select>
+
+    <select id="findByPageAdmin" parameterType="map" resultMap="recordVoMap" >
+        SELECT r.*,v.nickname as nickname FROM tb_vip_record r LEFT JOIN tb_vip v ON v.id=r.vip_id LIMIT #{start},#{pageSize}
+    </select>
+
+    <select id="findByPageDealer" parameterType="map" resultMap="recordVoMap" >
+        SELECT r.*,v.nickname as nickname FROM tb_vip_record r
+        LEFT JOIN tb_vip v ON r.vip_id=v.id
+         WHERE r.vip_id IN(
+            SELECT id FROM tb_vip WHERE INVITAION_CODE IN(
+            SELECT INVITE_NUM FROM tb_dealer WHERE SEAT_NUM=#{seatNum})) LIMIT #{start},#{pageSize}
+    </select>
+
+    <select id="findByPageEmployee" parameterType="map" resultMap="recordVoMap">
+        SELECT r.*,v.nickname as nickname FROM tb_vip_record r
+        LEFT JOIN tb_vip v ON r.vip_id=v.id
+         WHERE r.vip_id IN(
+            SELECT id FROM tb_vip WHERE INVITAION_CODE = #{inviteCode}) LIMIT #{start},#{pageSize}
+    </select>
 
     <select id="countByEmployee" resultMap="CountLevel" >
         select a1.NAME,a2.INVITAION_CODE,a2.level,a2.countNum,a2.countMoney from

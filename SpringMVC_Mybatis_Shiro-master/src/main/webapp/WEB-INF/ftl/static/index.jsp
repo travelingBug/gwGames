@@ -66,7 +66,7 @@
         <div class="content">
             <div class="one-area">
                 <h3 class="title">大赛赛制</h3>
-                <p>分为总决赛和月赛，总决赛按照正式比赛期间的总收益统计排名，月赛按照自然月收益率排名。</p>
+                <p>分为总决赛和月赛，总决赛按照正式比赛期间的总收益率E统计排名，月赛按照月收益率En排名。(总收益率E和月收益率En定义详见下文)</p>
             </div>
             <div class="one-area">
                 <h3 class="title">奖项设置</h3>

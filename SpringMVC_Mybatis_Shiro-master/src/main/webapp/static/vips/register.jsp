@@ -17,7 +17,7 @@
             <form action="#" method="post" id="loginForm">
                 <div class="one"><div class="input-area" id="loginPhoneDiv"><i class="icon-un"></i><input class="width-250 telPhone" name="phone"/></div></div>
                 <div class="one"><div class="input-area"><i class="icon-pw"></i><input class="width-250 pwd" name="password" type="password"/></div></div>
-                <div class="one"><div class="left-area"><!--<input type="radio" class="radio">自动登录</div><a class="right-area">找回密码？</a>--></div></div>
+                <div class="one"><div class="left-area"><!--<input type="radio" class="radio">自动登录</div>--><a class="right-area" id="forgetPwd" href="javascript:;">忘记密码？</a></div></div>
                 <div class="one"><a class="login-btn" id="loginBtn">登录</a></div>
                 <div class="one"><p>还没有账号？<a class="link" href="/static/vips/register.jsp?a=2">立即注册</a></p></div>
             </form>
@@ -88,6 +88,10 @@
     $(function(){
         $('#toHomeLogo').click(function () {
             window.location.href="/static/home.jsp";
+        });
+
+        $("#forgetPwd").click(function(){
+            window.location.href="/static/vips/forgitPass.jsp";
         });
         var a = getUrlParam('a') || 2;
         if(a!=1){

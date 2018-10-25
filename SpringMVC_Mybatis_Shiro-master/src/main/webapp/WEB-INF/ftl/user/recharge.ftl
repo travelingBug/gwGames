@@ -41,11 +41,31 @@
         <span>重置密码</span>
     </div>
     <div class='login_fields'>
+        <div class='login_fields__password'>
+            <div class='icon'>
+                <img alt="" src='${basePath}/css/recharge/img/lock_icon_copy.png'>
+            </div>
+            <input name="password" placeholder='请重新输入密码' maxlength="16"  id="password" type='password' autocomplete="off" />
+            <div class='validation'>
+                <img alt="" src='${basePath}/css/recharge/img/tick.png'>
+            </div>
+        </div>
+        <div class='login_fields__password'>
+            <div class='icon'>
+                <img alt="" src='${basePath}/css/recharge/img/lock_icon_copy.png'>
+            </div>
+            <input name="password" placeholder='请确认密码' maxlength="16" id="repassword" type='password' autocomplete="off" />
+            <div class='validation'>
+                <img alt="" src='${basePath}/css/recharge/img/tick.png'>
+            </div>
+        </div>
+
+
         <div class='login_fields__user'>
             <div class='icon'>
                 <img alt="" src='${basePath}/css/recharge/img/user_icon_copy.png'>
             </div>
-            <input name="login" placeholder='手机号码' maxlength="16" id="telPhoneId" type='text' autocomplete="off" />
+            <input name="login" placeholder='手机号码' maxlength="11" id="telPhoneId" type='text' autocomplete="off" />
             <div class='validation'>
                 <img alt="" src='${basePath}/css/recharge/img/tick.png'>
             </div>
@@ -57,9 +77,9 @@
             <input  name="code" id="code" placeholder='短信验证码' maxlength="6" type='text' name="ValidateNum" autocomplete="off" style="padding-left: 65px;padding-right: 10px;">
                 <a  id="sendVerfiCode" class='sms' href="javascript:;" style="color: #5e5e5e;">获取验证码</a>
 
-			<div style="width:100%;padding: 20px 30px;">
-            	<div id="drag" style="width: 80%;"></div>
-			</div>
+			<#--<div style="width:100%;padding: 20px 30px;">-->
+            	<#--<div id="drag" style="width: 80%;"></div>-->
+			<#--</div>-->
         </div>
         <div class='login_fields__submit'>
             <input type='button' id="buttonSubmit" value='重置密码'>
@@ -134,13 +154,32 @@
         });
 
         $('#buttonSubmit').click(function (){
-            if (!canSubm) {
-                layer.msg('请先拉动验证滚动条！',function(){});
+//            if (!canSubm) {
+//                layer.msg('请先拉动验证滚动条！',function(){});
+//                return;
+//			}
+            var password = $('#password').val();
+            if (password == null || password == '' || password.length< 6 || password.length > 20 ) {
+                layer.msg('密码范围为6-20位！',function(){});
                 return;
-			}
+            }
+            var repassword = $('#repassword').val();
+            if (password != repassword) {
+                layer.msg('两次密码不一致，请重新输入！',function(){});
+                return;
+            }
+
             var telPhone = $('#telPhoneId').val();
             var code = $('#code').val();
-            $.post("${basePath}/u/rePass.shtml",{phone: telPhone,code:code} ,function(result){
+            if (telPhone == null ||telPhone == '' || telPhone.length != 11 ) {
+                layer.msg('请输入正确的电话号码！',function(){});
+                return;
+            }
+            if (code == null ||code == ''  ) {
+                layer.msg('请输入验证码！',function(){});
+                return;
+            }
+            $.post("${basePath}/u/rePass.shtml",{phone: telPhone,code:code,password:password} ,function(result){
                 if (result == null || result.level == null || result.level != 1) {
                     layer.msg(result.messageText,function(){});
                 } else {
@@ -231,10 +270,10 @@
         return fmt;
     }
 
-    $('#drag').drag();
-    function dragComplete() {
-        canSubm = true;
-    }
+//    $('#drag').drag();
+//    function dragComplete() {
+//        canSubm = true;
+//    }
 </script>
 </body>
 </html>

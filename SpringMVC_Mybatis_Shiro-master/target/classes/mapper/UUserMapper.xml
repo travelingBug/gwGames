@@ -191,6 +191,6 @@
     select
     <include refid="Base_Column_List" />
     from u_user
-    where id in (select FK_USER_ID FROM TB_DEALER d where  d.Phone = #{phone,jdbcType=VARCHAR})
+    where id in (select FK_USER_ID FROM tb_dealer d where  d.Phone = #{phone,jdbcType=VARCHAR})
   </select>
 </mapper>

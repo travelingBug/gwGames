@@ -150,6 +150,6 @@ public class VipsController extends BaseController {
     @RequestMapping(value = "resetPwd", method = RequestMethod.POST)
     @ResponseBody
     public ResultMessage resetPwd(TbVips entity, HttpServletRequest req) throws Exception{
-        return vipsService.resetPwd(entity, req);
+        return vipsService.updatePwd(entity, req);
     }
 }
