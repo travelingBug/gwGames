@@ -20,6 +20,10 @@
                 <a class="btn btn-bmcs"  href="/static/signup/signup.jsp"></a>
             </div>
         </div>
+        <div class="smxz-box" id="appDownload">
+            <img src="images/smxz-ewm.png" class="img-ewm">
+        </div>
+
     </div>
 </div>
 <script>
@@ -31,6 +35,8 @@
         });
         $('#closeQQ').click(function () {
             $('#closeQQ').parent().css('display','none');
+            $('#appDownload').css('display','none');
+
         });
 
     });

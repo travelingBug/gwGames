@@ -6,6 +6,18 @@
     <title>天下股神实盘大赛</title>
     <link href="${basePath}/css/gwGame.css?${_v}" rel="stylesheet"/>
     <%--<link href="css/all.css" rel="stylesheet" type="text/css" />--%>
+    <style>
+        .top-box .content .logo1 {
+            background:url(images/logo-xhbs.png) no-repeat;
+            background-size: 70%;
+            width: 421px;
+            height: 49px;
+            float: left;
+            margin-left: -50px;
+            margin-bottom: 20px;
+            filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://60.205.189.94/images/logo.png',sizingMethod='scale');
+        }
+    </style>
 </head>
 <body>
 <div class="overlay layer-small login">
@@ -27,6 +39,7 @@
 <div class="pageWrapper2 register">
     <div class="top-box">
         <div class="content">
+            <div class="logo1" id="topLogo1" style="cursor: pointer;"></div>
             <div class="logo" id="toHomeLogo" style="cursor: pointer;"></div>
             <div class="right-area">
                 <p>已有账号？请直接<a class="link loginBtn" href="/static/vips/register.jsp?a=1">登录</a></p>
@@ -87,6 +100,10 @@
 <script>
     $(function(){
         $('#toHomeLogo').click(function () {
+            window.location.href="/static/home.jsp";
+        });
+
+        $('#topLogo1').click(function () {
             window.location.href="/static/home.jsp";
         });
 

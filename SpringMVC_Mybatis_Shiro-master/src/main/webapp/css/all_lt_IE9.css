@@ -148,7 +148,7 @@ select option {
 }
 .header .content {
 	margin:auto;
-	width:1100px;
+	width:1200px;
 }
 
 /* 4、footer
@@ -2068,4 +2068,116 @@ select.width-240 { width: 260px!important;}
 }
 
 
+/* styles for download page start */
+.main-one {
+	width: 100%;
+	background: url("../images/bg.png") no-repeat center;
+	background-size: 100% 100%;
+	height: 502px;
+	min-height: 502px;
+	/*下一行为关键设置*/
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/bg.png', sizingMethod='scale');
+}
+.download-main-info {
+	position: relative;
+	width: 1100px;
+	margin: 0px auto;
+}
+.info-title {
+	margin-top: 110px;
+}
+.main-left {
+	width: 420px;
+	float: left;
+}
+.info-left {
+	float: left;
+}
+.info-right {
+	float: right;
+	margin-top: 62px;
+}
+.info-left {
+	margin-top: 60px;
+	text-align: center;
+	font-size: 14px;
+	color: #ffffff;
+}
+.download-icon {
+	color: #ffffff;
+	width: 200px;
+	height: 60px;
+	line-height: 60px;
+	font-size: 16px;
+	border-radius: 4px;
+	text-align: center;
+	border: 1px solid #ffffff;
+	margin-bottom: 28px;
+}
+.download-icon img {
+	position: relative;
+	right: 12px;
+}
+.download-android img {
+	top: 8px;
+}
+.download-ios img {
+	top: 5px;
+}
+.download-icon.active {
+	background: #ffffff;
+	color: #f44747;
+}
+.info-left p {
+	padding-top: 15px;
+}
+.down-logo {
+	position: absolute;
+	right: 0px;
+	top: 76px;
+}
+.main-contact {
+	display: inline-block;
+}
+.contact-qq img {
+	border-right: 1px solid #dfdfdf;
+	padding-right: 52px;
+}
+.main-contact img {
+	margin: 24px 0px;
+}
+.download-main-two {
+	width: 1100px;
+	margin: 85px auto 126px auto;
+}
+.contact-phone {
+	margin-left: 52px;
+}
+/* 清楚浮动 */
+.clearfix {zoom:1;}    /*==for IE6/7 Maxthon2==*/
+.clearfix:after {
+	clear:both;
+	content:'.';
+	display:block;
+	width: 0;
+	height: 0;
+	visibility:hidden;
+}
 
+/* styles for download page end */
+
+.smxz-box {
+	width: 178px;
+	height: 200px;
+	background-color: red;
+	margin-top: 20px;
+	background: url(../images/smxz.png);
+	text-align: center;
+}
+
+.img-ewm {
+	width: 150px;
+	height: 150px;
+	background-color: red;
+	margin-top: 40px;
+}
