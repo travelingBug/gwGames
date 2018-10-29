@@ -251,7 +251,10 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
     @Override
     public List<DealerCountVo> countDealerVipById(Map<String,Object> param){
        TbDealer  tbDealer = uTbDealerMapper.findDealerByUserId(TokenManager.getUserId());
-       param.put("dealerId",tbDealer.getId());
+       //没有经销商。就证明是管理员，可以查看所有
+       if (tbDealer != null) {
+           param.put("dealerId", tbDealer.getId());
+       }
        List<VipRecordCount> vipRecordCounts = uTbVipRecordMapper.countByEmployee(param);
 
         //key是邀请码，value是具体的值
