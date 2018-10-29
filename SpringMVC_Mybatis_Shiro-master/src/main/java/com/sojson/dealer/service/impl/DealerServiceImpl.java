@@ -109,10 +109,21 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
         userService.addRole2User(userEntity.getId(),entity.getRoleId());
         SendMsgUtil.sendDealerMsg(entity.getPhone(),entity.getSeatNum(), entity.getLoginName());
 
+        /**
+         * 用户注册链接
+         */
         String url = IConfig.get("url")+"/static/mobile/index.html?seatNum=" + seatNum+"&inviteNum="+inviteNum;
         String path = IConfig.get("qrCode_path_real");
         String fileName = userEntity.getId() + ".jpg";
         QrCodeUtil.createQrCode(url, path, fileName);
+
+        /**
+         * 报名
+         */
+        String url1 = IConfig.get("real_url")+"/static/wx/index.html?t=5&inviteNum="+inviteNum;
+        String path1 = IConfig.get("qrCode_path_real");
+        String fileName1 = "p"+userEntity.getId() + ".jpg";
+        QrCodeUtil.createQrCode(url1, path1, fileName1);
 
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
