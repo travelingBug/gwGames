@@ -128,7 +128,7 @@ public class WechatSecurity  {
         gResBut2.add(node);
 
         JSONObject node2 = new JSONObject();
-        node2.put("name","vip");
+        node2.put("name","观赛通道");
         node2.put("sub_button",gResBut2);
         gResBut.add(node2);
         /*JSONObject node2 = new JSONObject();
