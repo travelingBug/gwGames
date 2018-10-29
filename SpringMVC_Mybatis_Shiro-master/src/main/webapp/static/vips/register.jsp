@@ -39,7 +39,7 @@
 <div class="pageWrapper2 register">
     <div class="top-box">
         <div class="content">
-            <div class="logo1" id="topLogo1" style="cursor: pointer;"></div>
+            <%--<div class="logo1" id="topLogo1" style="cursor: pointer;"></div>--%>
             <div class="logo" id="toHomeLogo" style="cursor: pointer;"></div>
             <div class="right-area">
                 <p>已有账号？请直接<a class="link loginBtn" href="/static/vips/register.jsp?a=1">登录</a></p>
@@ -103,9 +103,9 @@
             window.location.href="/static/home.jsp";
         });
 
-        $('#topLogo1').click(function () {
-            window.location.href="/static/home.jsp";
-        });
+//        $('#topLogo1').click(function () {
+//            window.location.href="/static/home.jsp";
+//        });
 
         $("#forgetPwd").click(function(){
             window.location.href="/static/vips/forgitPass.jsp";
