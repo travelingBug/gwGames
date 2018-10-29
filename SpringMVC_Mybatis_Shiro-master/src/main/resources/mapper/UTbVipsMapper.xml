@@ -13,6 +13,7 @@
     <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
     <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
     <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
+    <result column="belong" property="belong" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="vips_Column_List" >
     d.ID,d.NICKNAME,d.INVITAION_CODE,d.LEVEL,d.PHONE,d.ADDRESS,d.END_TIME,d.crt_time,d.PASSWORD
@@ -27,7 +28,8 @@
   	<where>
       d.DEL_FLAG = 0
       <if test="findContent != null and findContent !=''">
-        and (d.NICKNAME like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%')))
+        and (d.NICKNAME like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%'))
+        or d.PHONE like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%')))
       </if>
       <if test="inviteCode != null and inviteCode !='' " >
         and d.INVITAION_CODE = #{inviteCode}
@@ -40,7 +42,7 @@
   </sql>
   <select id="findAll" resultMap="vipsResultMap" >
   	select
-    <include refid="vips_Column_List" />
+    <include refid="vips_Column_List" />,v.NAME as belong
     from tb_vip d
     LEFT JOIN tb_dealer v
     ON v.INVITE_NUM = d.INVITAION_CODE
@@ -132,5 +134,23 @@
 
   <select id="getSurplusMin2" parameterType="String" resultType="String" >
      SELECT TIMESTAMPDIFF(MINUTE ,NOW(),t.end_time) FROM tb_vip t where t.DEL_FLAG = 0 and t.LEVEL != 0 and t.phone = #{phone} ;
+  </select>
+
+  <select id="findVipsAdmin" parameterType="map" resultMap="vipsResultMap" >
+    select
+    <include refid="vips_Column_List" />,v.NAME as belong
+    from tb_vip d
+    LEFT JOIN tb_dealer v
+    ON v.INVITE_NUM = d.INVITAION_CODE
+    <include refid="vips_where_all"/>
+    <include refid="vips_order_all"/>
+    LIMIT #{start},#{pageSize}
+  </select>
+
+  <select id="findVipsAdminCount" parameterType="map" resultType="int">
+    SELECT count(d.id) from tb_vip d
+    LEFT JOIN tb_dealer v
+    ON v.INVITE_NUM = d.INVITAION_CODE
+    <include refid="vips_where_all"/>
   </select>
 </mapper>

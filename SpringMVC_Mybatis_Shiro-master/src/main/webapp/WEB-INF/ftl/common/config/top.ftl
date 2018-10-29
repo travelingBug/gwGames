@@ -174,6 +174,7 @@
                       </li>
 				  </@shiro.hasAnyRoles>
 			  </ul>
+
 	           <ul class="nav navbar-nav  pull-right" >
 				<li class="dropdown ${(index==10)?string('active','')}" style="color:#fff;">
 					<a aria-expanded="false" aria-haspopup="true"  role="button" data-toggle="dropdown"  
@@ -187,13 +188,114 @@
 							</ul>
 						</@shiro.user>  
 						<@shiro.guest>   
-							 href="javascript:void(0);" onclick="location.href='${basePath}/u/login.shtml'" class="dropdown-toggle qqlogin" >
+							 <a href="javascript:void(0);" onclick="location.href='${basePath}/u/login.shtml'" class="dropdown-toggle qqlogin" >
 							<img src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_1.png">&nbsp;登录</a>
 						</@shiro.guest>  					
 				</li>	
 	          </ul>
+                <@shiro.hasAnyRoles name='200001,200002'>
+                 <a href="javacript:;" style="color:#fff; font-size: 16px;float:right;" id="mainInviteCode" class="navbar-brand hidden-sm"></a>
+                 <a href="javacript:;" style="color:#fff; font-size: 16px;float:right;" class="navbar-brand hidden-sm">
+                     <i class="fas fa-link" onclick="_queryMainLink('${userId}');"></i>
+                 </a>
+                </@shiro.hasAnyRoles>
+
 	          <style>#topMenu>li>a{padding:10px 13px}</style>
 	    </div>
   	</div>
 </div>
+
+<div class="modal fade" id="mainLinkModal" tabindex="-1" role="dialog" aria-labelledby="mainLinkModalLabel">
+    <div class="modal-dialog" role="document" style="width:30%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="mainLinkModalLabel">开户二维码/链接</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="text-align: center;">
+                    <div>
+                        <img src="${qrCodeUrl}${userId}.jpg"/>
+                    </div>
+                    <input type="text" readonly="readonly" value="www.baidu.com" id="mainLink">
+                    <button class="btn btn-blue" id="mainCopyBtn">复制链接</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(function(){
+    <@shiro.hasAnyRoles name='200001,200002'>
+        _queryInviteNum();
+    </@shiro.hasAnyRoles>
+
+        const btn = document.querySelector('#mainCopyBtn');
+        btn.addEventListener('click',function() {
+            const input = document.getElementById("mainLink");
+            input.select();
+            try{
+                if(document.execCommand('copy', false, null)){
+                    //success info
+                    console.log('复制成功');
+                } else{
+                    //fail info
+                }
+            } catch(err){
+                //fail info
+            }
+        });
+
+    });
+
+    function _queryMainLink(userId){
+        $.ajax({
+            type: "POST",
+            url: "${basePath}/dealer/queryLink.shtml",
+            data: {userId: userId},
+            dataType: "json",
+            success: function (data) {
+                if (data != null && data.level == 1) {
+                    $("#mainLink").val(data.data[0]);
+                    $("#mainLinkModal").modal();
+                } else {
+                    layer.alert(data.messageText, {
+                        icon: 0,
+                        skin: 'layui-layer-lan'
+                    });
+                }
+            }
+        });
+    }
+    <@shiro.hasAnyRoles name='200001,200002'>
+        function _queryInviteNum(userId){
+            $.ajax({
+                type: "POST",
+                url: "${basePath}/dealer/queryLink.shtml",
+                data: {userId: userId},
+                dataType: "json",
+                success: function (data) {
+                    if (data != null && data.level == 1) {
+                        $("#mainInviteCode").text("开户推荐码："+getUrlParam("inviteNum",data.data[0]));
+                    } else {
+                        layer.alert(data.messageText, {
+                            icon: 0,
+                            skin: 'layui-layer-lan'
+                        });
+                    }
+                }
+            });
+        }
+    </@shiro.hasAnyRoles>
+
+    //获取url中的参数
+    function getUrlParam(name, url) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = url.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+
+</script> 
 </#macro>
+

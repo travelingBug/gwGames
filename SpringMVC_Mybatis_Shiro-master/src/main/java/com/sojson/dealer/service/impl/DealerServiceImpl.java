@@ -12,6 +12,7 @@ import com.sojson.common.model.vo.DealerCountVo;
 import com.sojson.common.model.vo.VipRecordCount;
 import com.sojson.common.utils.ExcelUtil;
 import com.sojson.common.utils.QrCodeUtil;
+import com.sojson.common.utils.SendMsgUtil;
 import com.sojson.common.utils.StringUtils;
 import com.sojson.core.config.IConfig;
 import com.sojson.core.mybatis.BaseMybatisDao;
@@ -106,6 +107,7 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
         entity.setInviteNum(inviteNum);
         uTbDealerMapper.insert(entity);
         userService.addRole2User(userEntity.getId(),entity.getRoleId());
+        SendMsgUtil.sendDealerMsg(entity.getPhone(),entity.getSeatNum(), entity.getLoginName());
 
         String url = IConfig.get("url")+"/static/mobile/index.html?seatNum=" + seatNum+"&inviteNum="+inviteNum;
         String path = IConfig.get("qrCode_path_real");

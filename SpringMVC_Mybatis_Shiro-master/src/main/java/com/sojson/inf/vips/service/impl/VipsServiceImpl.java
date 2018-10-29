@@ -65,6 +65,7 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
 
     @Override
     public Pagination<TbVips> findByPage(Map<String, Object> resultMap, Integer pageNo, Integer pageSize) {
+
         return super.findPage(resultMap, pageNo, pageSize);
     }
 
@@ -212,7 +213,7 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
 
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
-
+    @Override
     public ResultMessage validPhone(String telPhone){
         TbVips entity = new TbVips();
         entity.setPhone(telPhone);

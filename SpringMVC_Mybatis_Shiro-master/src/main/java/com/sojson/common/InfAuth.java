@@ -20,5 +20,6 @@ public class InfAuth {
         NEED_LOGIN.add("interface/gainsInfo/addfollow.shtml");
         NEED_LOGIN.add("interface/gainsInfo/cancelFollow.shtml");
         NEED_LOGIN.add("interface/gainsInfo/getNickName.shtml");
+
     }
 }

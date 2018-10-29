@@ -186,7 +186,17 @@ public class DealerController extends BaseController {
 
         map.put("findContent", findContent);
         map.put("parentId", parentId);
-        Pagination<TbVips> page = vipsListService.findByPage(map, pageNo, pageSize);
+        Pagination<TbVips> page = null;
+
+        TbDealer dealer = dealerService.queryByUserId(parentId);
+        if(null!=dealer){
+            page = vipsListService.findByPage(map, pageNo, pageSize);
+        }else{
+            String type = dealerService.queryUserType(parentId);
+            if("888888".equals(type) || "100004".equals(type) || "100005".equals(type) || "100006".equals(type)){
+                page = vipsListService.findByPageAdmin(map,pageNo,pageSize);
+            }
+        }
         map.put("page", page);
         return new ModelAndView("dealer/vipsList");
     }

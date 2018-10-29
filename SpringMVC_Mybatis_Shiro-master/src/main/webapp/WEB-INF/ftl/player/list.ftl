@@ -36,6 +36,8 @@
 				<@shiro.hasPermission name="/player/auditById.shtml">
                 $("#player_audit_submit").click(function(){
                     var data = $("#play_audit_form").serialize();
+					var auditer = $("#auditer").val();
+					data += "&auditer="+auditer;
                     $.post('${basePath}/player/auditById.shtml',data,function(result){
                         if(result && result.level != 1){
                             return layer.msg(result.messageText,so.default),!0;
@@ -132,18 +134,18 @@
 					<table class="table table-bordered">
 						<tr>
 							<th><input type="checkbox" id="checkAll"/></th>
-							<th width="100">昵称</th>
-							<th width="100">姓名</th>
-							<th width="100">资金账号</th>
-							<th width="100">身份证</th>
-							<th width="100">手机号</th>
-							<th width="150">报名时间</th>
-							<th width="100">备注</th>
-							<th width="170">审核状态</th>
-							<th width="100">审核人</th>
-							<th width="150">审核时间</th>
-							<th width="130">微信号码</th>
-							<th width="100">操作</th>
+							<th class="col-sm-1">昵称</th>
+							<th class="col-sm-1">姓名</th>
+							<th class="col-sm-2">资金账号</th>
+							<th class="col-sm-2">身份证</th>
+							<th class="col-sm-2">手机号</th>
+							<th class="col-sm-2">报名时间</th>
+							<th class="col-sm-1">备注</th>
+							<th class="col-sm-1">审核状态</th>
+							<th class="col-sm-1">审核人</th>
+							<th class="col-sm-2">审核时间</th>
+							<th class="col-sm-2">微信号码</th>
+							<th class="col-sm-2">操作</th>
 						</tr>
 						<#if page?exists && page.list?size gt 0 >
 							<#list page.list as it>
@@ -243,7 +245,7 @@
 											<label for="player_account">资金账号</label>
 											<input type="text" name="account" class="form-control" placeholder="资金账号">
                                             <label for="player_account">审核人</label>
-                                            <input type="text" name="auditer" disabled class="form-control" placeholder="审核人" value="${token.email}">
+                                            <input type="text" id="auditer" name="auditer" disabled class="form-control" placeholder="审核人" value="${token.email}">
 											<label for="player_bz">备注</label>
 											<textarea name="bz" class="form-control" placeholder="备注"></textarea>
                                         </form>

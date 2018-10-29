@@ -120,6 +120,7 @@
 							<th>手机号码</th>
                             <th>联系地址</th>
 							<th>坐席号</th>
+							<th>推荐码</th>
 							<th>创建时间</th>
 							<th>操作</th>
 						</tr>
@@ -132,6 +133,7 @@
                                     <td>${it.phone}</td>
                                     <td>${it.address}</td>
                                     <td>${it.seatNum}</td>
+                                    <td>${it.inviteNum}</td>
                                     <td>${it.crtTime?string("yyyy-MM-dd HH:mm:ss")}</td>
 									<td>
 										<@shiro.hasPermission name="/dealer/editDealer.shtml">

@@ -1,7 +1,11 @@
 package com.sojson.common.dao;
 
 
+import com.sojson.common.model.TbVipRecord;
 import com.sojson.common.model.TbVips;
+
+import java.util.List;
+import java.util.Map;
 
 public interface UTbVipsMapper {
 
@@ -22,4 +26,8 @@ public interface UTbVipsMapper {
     String getSurplusMin(String phone);
 
     String getSurplusMin2(String phone);
+
+    List<TbVips> findVipsAdmin(Map<String, Object> map);
+
+    int findVipsAdminCount(Map<String, Object> map);
 }

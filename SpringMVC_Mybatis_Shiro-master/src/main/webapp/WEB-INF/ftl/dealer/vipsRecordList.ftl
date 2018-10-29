@@ -55,7 +55,17 @@
 								<tr>
 									<td><input value="${it.id}" check='box' type="checkbox" /></td>
 									<td>${it.nickname}</td>
-                                    <td>${it.level}</td>
+									<td>
+										<#if it.level==0>
+                                            未充值会员
+										<#elseif it.level==1>
+                                            A类会员
+										<#elseif it.level==2>
+                                            B类会员
+										<#elseif it.level==3>
+                                            C类会员
+										</#if>
+									</td>
                                     <td>${it.amount}</td>
 									<td>${it.crtTime?string("yyyy-MM-dd HH:mm:ss")}</td>
 								</tr>

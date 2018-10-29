@@ -85,6 +85,16 @@ public class TbVips implements Serializable {
 
     private String endTimeStr;
 
+    private String belong;
+
+    public String getBelong() {
+        return belong;
+    }
+
+    public void setBelong(String belong) {
+        this.belong = belong;
+    }
+
     public String getEndTimeStr() {
         return endTimeStr;
     }

@@ -192,7 +192,7 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
 
             Calendar calendar = new GregorianCalendar();
             calendar.setTime(newDate);
-            calendar.add(calendar.HOUR_OF_DAY, hours);
+            calendar.add(Calendar.HOUR_OF_DAY, hours);
 
             return sdf.format(calendar.getTime());
 

@@ -48,7 +48,8 @@
 							<th>昵称</th>
 							<th>会员级别</th>
                             <th>电话号码</th>
-							<th>邀请码</th>
+							<th>推荐码</th>
+							<th>归属</th>
 							<th>创建时间</th>
 						</tr>
 						<#if page?exists && page.list?size gt 0 >
@@ -59,12 +60,13 @@
                                     <td>${it.level}</td>
                                     <td>${it.phone}</td>
 									<td>${it.inviteCode}</td>
+									<td>${it.belong!""}</td>
 									<td>${it.crtTime?string("yyyy-MM-dd HH:mm:ss")}</td>
 								</tr>
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="6">没有找到会员</td>
+								<td class="text-center danger" colspan="7">没有找到会员</td>
 							</tr>
 						</#if>
 					</table>
