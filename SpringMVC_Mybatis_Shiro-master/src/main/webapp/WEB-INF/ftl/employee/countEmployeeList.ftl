@@ -94,7 +94,7 @@
 						<#if listData?exists && listData?size gt 0 >
 							<#list listData as it>
 								<tr>
-									<td>${it.name}</td>
+									<td>${it.name!''}</td>
                                     <td>${it.vipACount}</td>
                                     <td>${it.vipAMoneyCount}</td>
                                     <td>${it.vipBCount}</td>

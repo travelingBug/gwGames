@@ -254,10 +254,12 @@
 </html>
 <script>
 
+    var inviteNum = '${param.inviteNum}';
     $(function(){
         $('body,html').animate({
             scrollTop: 700
         }, 500);
+
     });
     var accountFlag = false;
     var nameFlag = false;
@@ -420,7 +422,9 @@
             $("#verfiCodeId").after('<span class="link tip-wrong"><i class="icon icon-wrong"></i>请输入6位验证码</span>');
             return;
         }
+        debugger
         var data =$('#addForm').serializeArray();
+        data.push({name:'inviteNum',value:inviteNum});
         $.ajax({
             type: "POST",
             url: "interface/player/save.shtml",

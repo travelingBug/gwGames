@@ -13,7 +13,7 @@
 </style>
 <div class="top-box">
     <div class="content">
-        <div class="logo1" id="topLogo1" style="cursor: pointer;"></div>
+        <%--<div class="logo1" id="topLogo1" style="cursor: pointer;"></div>--%>
         <div class="logo" id="topLogo" style="cursor: pointer;"></div>
         <div class="right-area" id="topHead">
             <%--<a class="link"><i class="icon icon-weibo"></i>官方微博</a>--%>
@@ -51,9 +51,9 @@
         $('#topLogo').click(function () {
             window.location.href="/static/home.jsp";
         });
-        $('#topLogo1').click(function () {
-            window.location.href="/static/home.jsp";
-        });
+//        $('#topLogo1').click(function () {
+//            window.location.href="/static/home.jsp";
+//        });
 
         $('#menu_list').find('a').each(function () {
             if ($(this).attr('href') == window.location.pathname) {

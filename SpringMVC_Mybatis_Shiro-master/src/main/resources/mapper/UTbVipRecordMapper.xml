@@ -120,12 +120,20 @@
             SELECT id FROM tb_vip WHERE INVITAION_CODE = #{inviteCode}) LIMIT #{start},#{pageSize}
     </select>
 
+    <sql id="where_dealerId">
+        <where>
+            <if test="dealerId != null and dealerId !='' " >
+                and x.ID = #{dealerId} or x.PARENT_ID = #{dealerId}
+            </if>
+        </where>
+    </sql>
+
     <select id="countByEmployee" resultMap="CountLevel" >
         select a1.NAME,a2.INVITAION_CODE,a2.level,a2.countNum,a2.countMoney from
     (select t.INVITAION_CODE,v.level,count(v.id) countNum,SUM(v.amount) countMoney from tb_vip t INNER JOIN tb_vip_record v on t.id = v.vip_id
         <include refid="where_count"/>
     GROUP BY t.INVITAION_CODE,v.level) a2
-        LEFT JOIN (select x.NAME,x.INVITE_NUM from tb_dealer x where x.ID = #{dealerId} or x.PARENT_ID = #{dealerId}) a1
+        LEFT JOIN (select x.NAME,x.INVITE_NUM from tb_dealer x <include refid="where_dealerId"/>) a1
         on a1.INVITE_NUM = a2.INVITAION_CODE
     </select>
 

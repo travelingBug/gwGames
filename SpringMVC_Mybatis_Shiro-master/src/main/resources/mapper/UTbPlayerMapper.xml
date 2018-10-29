@@ -78,13 +78,12 @@
     <include refid="Player_Column_List" />
     from tb_player
     <include refid="where_all"/>
-    <include refid="limit_sql"/>
   </select>
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbPlayer" >
-    insert into tb_player (ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,CRT_TIME)
+    insert into tb_player (ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,CRT_TIME,INVITE_NUM)
     values (#{id,jdbcType=VARCHAR}, #{accountName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR},
-      #{telPhone,jdbcType=VARCHAR}, #{delFlag,jdbcType=TINYINT}, #{auditFlag,jdbcType=TINYINT}, #{crtTime,jdbcType=TIMESTAMP}
+      #{telPhone,jdbcType=VARCHAR}, #{delFlag,jdbcType=TINYINT}, #{auditFlag,jdbcType=TINYINT}, #{crtTime,jdbcType=TIMESTAMP},#{inviteNum,jdbcType=VARCHAR}
       )
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.sojson.common.model.TbPlayer" >
