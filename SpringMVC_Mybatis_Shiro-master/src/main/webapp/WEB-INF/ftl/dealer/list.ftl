@@ -248,12 +248,11 @@
                                             </div>
 											<label for="dealer_add_address">联系地址</label>
 											<input type="text" name="address" class="form-control" id="dealer_add_address" placeholder="地址">
-											<label for="dealer_add_type">返点类型</label>
-											<select name="type" class="form-control">
-												<option value="1">5%</option>
-                                                <option value="2">10%</option>
-                                                <option value="3">15%</option>
-											</select>
+											<label for="dealer_add_type">返佣比例</label>
+                                            <div class="input-group">
+                                                <input type="text" name="type" id="dealer_add_type" class="form-control" placeholder="返佣比例" aria-describedby="basic-addon2">
+                                                <span class="input-group-addon" id="basic-addon2">%</span>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -286,12 +285,11 @@
 										</div>
                                         <label for="dealer_add_address">联系地址</label>
                                         <input type="text" name="address" class="form-control" id="dealer_edit_address" placeholder="地址">
-                                        <label for="dealer_add_type">返点类型</label>
-                                        <select name="type" class="form-control" id="dealer_edit_type">
-                                            <option value="1">5%</option>
-                                            <option value="2">10%</option>
-                                            <option value="3">15%</option>
-                                        </select>
+                                        <label for="dealer_edit_type">返佣比例</label>
+                                        <div class="input-group">
+                                            <input type="text" name="type"  id="dealer_edit_type" class="form-control" placeholder="返佣比例" aria-describedby="basic-addon2">
+                                            <span class="input-group-addon" id="basic-addon2">%</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">

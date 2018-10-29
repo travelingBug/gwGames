@@ -58,7 +58,7 @@ public class TbDealer implements Serializable {
     /**
      * 返点类型
      */
-    private Byte type;
+    private String type;
 
     /**
      * 角色编号
@@ -180,11 +180,11 @@ public class TbDealer implements Serializable {
         this.address = address;
     }
 
-    public Byte getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Byte type) {
+    public void setType(String type) {
         this.type = type;
     }
 

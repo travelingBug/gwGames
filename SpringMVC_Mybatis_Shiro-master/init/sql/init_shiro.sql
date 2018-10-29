@@ -367,3 +367,4 @@ CREATE TABLE `tb_vip_order` (
 
 /**2018/10/29**/
 ALTER TABLE tb_player ADD INVITE_NUM varchar(20);
+ALTER TABLE tb_dealer MODIFY COLUMN TYPE VARCHAR(10);

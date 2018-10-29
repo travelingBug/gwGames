@@ -338,6 +338,11 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
     }
 
     @Override
+    public String queryMoney(String userId) {
+        return uTbDealerMapper.queryMoney(userId);
+    }
+
+    @Override
     public ResultMessage validPhone(String telPhone){
         TbDealer dealer = uTbDealerMapper.findDealerByPhone(telPhone);
         if(null != dealer){

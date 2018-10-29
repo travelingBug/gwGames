@@ -27,4 +27,6 @@ public interface UTbDealerMapper {
     TbDealer findDealerBySeatNum(String seatNum);
 
     String queryUserType(String userId);
+
+    String queryMoney(String userId);
 }

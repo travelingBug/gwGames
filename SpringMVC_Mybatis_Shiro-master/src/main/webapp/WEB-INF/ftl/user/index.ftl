@@ -38,14 +38,20 @@
 							<th>最后登录时间</th>
 							<td>${token.lastLoginTime?string('yyyy-MM-dd HH:mm')}</td>
 						</tr>
+                        <@shiro.hasAnyRoles name='200001,200002'>
                         <tr>
                             <th>开户二维码/链接</th>
                             <td><i class="fas fa-link" onclick="_queryLink('${userId}');"></i></td>
                         </tr>
                         <tr>
                             <th>报名二维码/链接</th>
-                            <td><i class="fas fa-link" onclick="_queryPlayerSignup('${userId}');"></i></td>
+                            <td><i class="fas fa-link" _queryPlayerSignup('${userId}')></i></td>
                         </tr>
+                        <tr>
+                            <th>返佣金额</th>
+                            <td><i class="fas fa-yen-sign"></i><span id="dealerMoney"></span></td>
+                        </tr>
+                        </@shiro.hasAnyRoles>
 					</table>
 
                     <div class="modal fade" id="dealerLinkModal" tabindex="-1" role="dialog" aria-labelledby="dealerLinkModalLabel">
@@ -98,6 +104,9 @@
 <script>
 
     $(function(){
+        <@shiro.hasAnyRoles name='200001,200002'>
+        _queryMoney('${userId}');
+        </@shiro.hasAnyRoles>
 
         const btn = document.querySelector('#copyBtn');
         btn.addEventListener('click',function() {
@@ -168,6 +177,22 @@
                         icon: 0,
                         skin: 'layui-layer-lan'
                     });
+                }
+            }
+        });
+    }
+
+    function _queryMoney(userId){
+        $.ajax({
+            type: "POST",
+            url: "${basePath}/dealer/queryMoney.shtml",
+            data: {userId: userId},
+            dataType: "json",
+            success: function (data) {
+                if (data != null) {
+                    $("#dealerMoney").text(data);
+                } else {
+                    $("#dealerMoney").text(0);
                 }
             }
         });

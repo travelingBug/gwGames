@@ -188,6 +188,18 @@ public class DealerController extends BaseController {
     }
 
     /**
+     * 查询返佣金额
+     *
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "queryMoney", method = RequestMethod.POST)
+    @ResponseBody
+    public String queryMoney(String userId) {
+        return dealerService.queryMoney(userId);
+    }
+
+    /**
      * 客户主页
      *
      * @return

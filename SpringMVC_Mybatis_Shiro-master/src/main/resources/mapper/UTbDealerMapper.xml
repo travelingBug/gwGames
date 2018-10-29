@@ -9,7 +9,7 @@
     <result column="DEL_FLAG" property="delFlag" jdbcType="TINYINT" />
     <result column="PHONE" property="phone" jdbcType="VARCHAR" />
     <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
-    <result column="TYPE" property="type" jdbcType="TINYINT" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
     <result column="SEAT_NUM" property="seatNum" jdbcType="TINYINT" />
     <result column="INVITE_NUM" property="inviteNum" jdbcType="TINYINT" />
     <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
@@ -133,5 +133,11 @@
       SELECT rid FROM u_user_role WHERE uid=#{userId})
   </select>
 
-
+  <select id="queryMoney" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT ROUND((T1.total*T2.type) / 100, 2) FROM
+    (SELECT SUM(amount) AS total FROM tb_vip_record WHERE vip_id IN
+    (SELECT id FROM tb_vip WHERE INVITAION_CODE=(
+    SELECT invite_num FROM tb_dealer WHERE FK_USER_ID =#{userId}))) T1,
+    (SELECT TYPE FROM tb_dealer WHERE FK_USER_ID =#{userId}) T2
+  </select>
 </mapper>
