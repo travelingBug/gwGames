@@ -15,9 +15,10 @@
     <result column="AUDITER" property="auditer" jdbcType="VARCHAR" />
     <result column="AUDIT_TIME" property="auditTime" jdbcType="VARCHAR" />
     <result column="WECHAT" property="wechat" jdbcType="VARCHAR" />
+    <result column="INVITE_NUM" property="inviteNum" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Player_Column_List" >
-    ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,crt_time,ACCOUNT,BZ,ACCOUNT,AUDITER,DATE_FORMAT(AUDIT_TIME,'%Y-%m-%d %H:%i:%s') as AUDIT_TIME,WECHAT
+    ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,crt_time,ACCOUNT,BZ,ACCOUNT,AUDITER,DATE_FORMAT(AUDIT_TIME,'%Y-%m-%d %H:%i:%s') as AUDIT_TIME,WECHAT,INVITE_NUM
   </sql>
   <sql id="limit_sql">
   	   <if test="page_sql != null and page_sql != ''">

@@ -313,6 +313,20 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
     }
 
     @Override
+    public ResultMessage queryPlayerSignup(String userId) {
+        TbDealer dealer = uTbDealerMapper.findDealerByUserId(TokenManager.getUserId());
+        if(null == dealer){
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "未查询到经销商");
+        }
+        String url = IConfig.get("real_url")+"/static/signup/signup.jsp?inviteNum="+dealer.getInviteNum();
+        String mobileUrl = IConfig.get("real_url")+"/static/wx/index.html?t=5&inviteNum="+dealer.getInviteNum();
+        String[] strArray={url,"2"};
+
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "查询成功！", strArray);
+
+    }
+
+    @Override
     public ResultMessage validPhone(String telPhone){
         TbDealer dealer = uTbDealerMapper.findDealerByPhone(telPhone);
         if(null != dealer){

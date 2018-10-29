@@ -169,6 +169,18 @@ public class DealerController extends BaseController {
      * @param telPhone
      * @return
      */
+    @RequestMapping(value = "queryPlayerSignup", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage queryPlayerSignup(String telPhone) {
+        return dealerService.queryPlayerSignup(telPhone);
+    }
+
+    /**
+     * 查询连接
+     *
+     * @param telPhone
+     * @return
+     */
     @RequestMapping(value = "queryLink", method = RequestMethod.POST)
     @ResponseBody
     public ResultMessage queryLink(String telPhone) {

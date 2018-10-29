@@ -81,6 +81,16 @@ public class TbPlayer implements Serializable{
      */
     private String wechat;
 
+    private String inviteNum;
+
+    public String getInviteNum() {
+        return inviteNum;
+    }
+
+    public void setInviteNum(String inviteNum) {
+        this.inviteNum = inviteNum;
+    }
+
     public String getAuditer() {
         return auditer;
     }

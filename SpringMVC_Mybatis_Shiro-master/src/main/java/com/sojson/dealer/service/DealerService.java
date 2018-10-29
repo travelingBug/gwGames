@@ -37,6 +37,8 @@ public interface DealerService {
 
     ResultMessage queryLink(String userId);
 
+    ResultMessage queryPlayerSignup(String userId);
+
     public ResultMessage validPhone(String telPhone);
 
     ResultMessage valiSeatNum(String seatNum);
