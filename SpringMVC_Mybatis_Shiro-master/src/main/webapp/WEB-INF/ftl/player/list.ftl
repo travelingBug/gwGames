@@ -145,6 +145,7 @@
 							<th class="col-sm-1">审核人</th>
 							<th class="col-sm-2">审核时间</th>
 							<th class="col-sm-2">微信号码</th>
+							<th>归属</th>
 							<th class="col-sm-2">操作</th>
 						</tr>
 						<#if page?exists && page.list?size gt 0 >
@@ -172,6 +173,7 @@
 									<td>${it.auditer!""}</td>
 									<td>${it.auditTime!""}</td>
 									<td>${it.wechat!""}</td>
+									<td>${it.inviteNum!""}</td>
 									<td>
 										<@shiro.hasPermission name="/player/auditById.shtml">
 											<#if it.auditFlag==0>
@@ -192,7 +194,7 @@
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="10">没有找到参赛选手</td>
+								<td class="text-center danger" colspan="11">没有找到参赛选手</td>
 							</tr>
 						</#if>
 					</table>

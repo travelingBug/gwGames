@@ -42,6 +42,10 @@
                             <th>开户二维码/链接</th>
                             <td><i class="fas fa-link" onclick="_queryLink('${userId}');"></i></td>
                         </tr>
+                        <tr>
+                            <th>报名二维码/链接</th>
+                            <td><i class="fas fa-link" onclick="_queryPlayerSignup('${userId}');"></i></td>
+                        </tr>
 					</table>
 
                     <div class="modal fade" id="dealerLinkModal" tabindex="-1" role="dialog" aria-labelledby="dealerLinkModalLabel">
@@ -59,6 +63,26 @@
                                         <input type="text" readonly="readonly" value="www.baidu.com" id="link">
                                         <button class="btn btn-blue" id="copyBtn">复制链接</button>
 									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="playerLinkModal" tabindex="-1" role="dialog" aria-labelledby="playerLinkModalLabel">
+                        <div class="modal-dialog" role="document" style="width:30%;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title" id="playerLinkModalLabel">报名二维码/链接</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group" style="text-align: center;">
+                                        <div>
+                                            <img src="${qrCodeUrl}p${userId}.jpg"/>
+                                        </div>
+                                        <input type="text" readonly="readonly" value="www.baidu.com" id="link1">
+                                        <button class="btn btn-blue" id="copyBtn1">复制链接</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -91,6 +115,22 @@
             }
 		});
 
+        const btn1 = document.querySelector('#copyBtn1');
+        btn1.addEventListener('click',function() {
+            const input1 = document.getElementById("link1");
+            input1.select();
+            try{
+                if(document.execCommand('copy', false, null)){
+                    //success info
+                    console.log('复制成功');
+                } else{
+                    //fail info
+                }
+            } catch(err){
+                //fail info
+            }
+        });
+
 	});
 
 	function _queryLink(userId){
@@ -112,5 +152,25 @@
             }
         });
 	}
+
+    function _queryPlayerSignup(userId){
+        $.ajax({
+            type: "POST",
+            url: "${basePath}/dealer/queryPlayerSignup.shtml",
+            data: {userId: userId},
+            dataType: "json",
+            success: function (data) {
+                if (data != null && data.level == 1) {
+                    $("#link1").val(data.data[0]);
+                    $("#playerLinkModal").modal();
+                } else {
+                    layer.alert(data.messageText, {
+                        icon: 0,
+                        skin: 'layui-layer-lan'
+                    });
+                }
+            }
+        });
+    }
 
 </script> 
