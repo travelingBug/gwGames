@@ -133,7 +133,7 @@
 					<hr>
 					<table class="table table-bordered">
 						<tr>
-							<th><input type="checkbox" id="checkAll"/></th>
+							<#--<th><input type="checkbox" id="checkAll"/></th>-->
 							<th class="col-sm-1">昵称</th>
 							<th class="col-sm-1">姓名</th>
 							<th class="col-sm-1">资金账号</th>
@@ -146,12 +146,12 @@
 							<th class="col-sm-1">审核时间</th>
 							<th class="col-sm-1">微信号码</th>
 							<th class="col-sm-1">归属</th>
-							<th class="col-sm-2">操作</th>
+							<th class="col-sm-1">操作</th>
 						</tr>
 						<#if page?exists && page.list?size gt 0 >
 							<#list page.list as it>
 								<tr>
-									<td><input value="${it.id}" check='box' type="checkbox" /></td>
+									<#--<td><input value="${it.id}" check='box' type="checkbox" /></td>-->
 									<td>${it.accountName}</td>
 									<td>${it.name}</td>
 									<td>${it.account}</td>
@@ -173,7 +173,7 @@
 									<td>${it.auditer!""}</td>
 									<td>${it.auditTime!""}</td>
 									<td>${it.wechat!""}</td>
-									<td>${it.inviteNum!""}</td>
+									<td>${it.belong!""}</td>
 									<td>
 										<@shiro.hasPermission name="/player/auditById.shtml">
 											<#if it.auditFlag==0>

@@ -83,6 +83,16 @@ public class TbPlayer implements Serializable{
 
     private String inviteNum;
 
+    private String belong;
+
+    public String getBelong() {
+        return belong;
+    }
+
+    public void setBelong(String belong) {
+        this.belong = belong;
+    }
+
     public String getInviteNum() {
         return inviteNum;
     }

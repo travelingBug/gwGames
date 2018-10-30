@@ -16,9 +16,10 @@
     <result column="AUDIT_TIME" property="auditTime" jdbcType="VARCHAR" />
     <result column="WECHAT" property="wechat" jdbcType="VARCHAR" />
     <result column="INVITE_NUM" property="inviteNum" jdbcType="VARCHAR" />
+    <result column="belong" property="belong" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Player_Column_List" >
-    ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,crt_time,ACCOUNT,BZ,ACCOUNT,AUDITER,DATE_FORMAT(AUDIT_TIME,'%Y-%m-%d %H:%i:%s') as AUDIT_TIME,WECHAT,INVITE_NUM
+    p.ID,p.ACCOUNT_NAME,p.NAME,p.ID_CARD,p.TEL_PHONE,p.DEL_FLAG,p.AUDIT_FLAG,p.crt_time,p.ACCOUNT,p.BZ,p.ACCOUNT,p.AUDITER,DATE_FORMAT(p.AUDIT_TIME,'%Y-%m-%d %H:%i:%s') as AUDIT_TIME,p.WECHAT,p.INVITE_NUM
   </sql>
   <sql id="limit_sql">
   	   <if test="page_sql != null and page_sql != ''">
@@ -28,55 +29,57 @@
   
   <sql id="where_all">
   	<where>
-      DEL_FLAG = 0
+      p.DEL_FLAG = 0
   	  <if test="name != null and name !='' " >
-        and name like LOWER(CONCAT('%',#{name,jdbcType=VARCHAR},'%'))
+        and p.name like LOWER(CONCAT('%',#{name,jdbcType=VARCHAR},'%'))
       </if>
       <if test="accountName != null and accountName !=''">
-        and ACCOUNT_NAME = #{accountName}
+        and p.ACCOUNT_NAME = #{accountName}
       </if>
       <if test="telPhone != null and telPhone !=''">
-        and TEL_PHONE = #{telPhone}
+        and p.TEL_PHONE = #{telPhone}
       </if>
       <if test="idCard != null and idCard !=''">
-        and ID_CARD = #{idCard}
+        and p.ID_CARD = #{idCard}
       </if>
       <if test="account != null and account !=''">
-        and ACCOUNT = #{account}
+        and p.ACCOUNT = #{account}
       </if>
       <if test="findContent != null and findContent !=''">
-        and (name like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%'))
-        or ACCOUNT_NAME like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%')))
+        and (p.name like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%'))
+        or p.ACCOUNT_NAME like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%')))
       </if>
       <if test="idCard != null and idCard !=''">
-        and ID_CARD = #{idCard}
+        and p.ID_CARD = #{idCard}
       </if>
       <if test="auditFlag != null and auditFlag != ''">
-        and AUDIT_FLAG = #{auditFlag}
+        and p.AUDIT_FLAG = #{auditFlag}
       </if>
      </where>
   </sql>
 
   <sql id="order_all">
-    ORDER BY AUDIT_FLAG,crt_time DESC
+    ORDER BY p.AUDIT_FLAG,p.crt_time DESC
   </sql>
   <select id="findAll" resultMap="PlayerResultMap" >
   	select
-    <include refid="Player_Column_List" />
-    from tb_player
+    <include refid="Player_Column_List" />,d.NAME as belong
+    from tb_player p
+    LEFT JOIN tb_dealer d
+    ON d.INVITE_NUM = p.INVITE_NUM
     <include refid="where_all"/>
     <include refid="order_all"/>
     <include refid="limit_sql" />
   </select>
   <select id="findCount" resultMap="PlayerResultMap" >
- 	 select count(id) from  tb_player
+ 	 select count(p.id) from  tb_player p
   	<include refid="where_all" />
   </select>
 
   <select id="findAllNoPage" resultMap="PlayerResultMap" >
     select
     <include refid="Player_Column_List" />
-    from tb_player
+    from tb_player p
     <include refid="where_all"/>
   </select>
 
