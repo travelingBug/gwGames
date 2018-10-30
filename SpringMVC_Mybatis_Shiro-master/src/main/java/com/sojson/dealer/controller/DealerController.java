@@ -6,6 +6,7 @@ import com.sojson.common.model.TbDealer;
 import com.sojson.common.model.TbVipRecord;
 import com.sojson.common.model.TbVips;
 import com.sojson.common.model.vo.DealerCountVo;
+import com.sojson.common.model.vo.TbVipRecordVo;
 import com.sojson.common.utils.StringUtils;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.dealer.service.DealerService;
@@ -215,6 +216,15 @@ public class DealerController extends BaseController {
         TbDealer dealer = dealerService.queryByUserId(parentId);
         if(null!=dealer){
             page = vipsListService.findByPage(map, pageNo, pageSize);
+            if(page.getList().size()>0) {
+                List<TbVips> vips = page.getList();
+                for(TbVips vip: vips){
+                    if(vip.getBelong2()==null){
+                        vip.setBelong2(vip.getBelong());
+                        vip.setBelong("");
+                    }
+                }
+            }
         }else{
             String type = dealerService.queryUserType(parentId);
             if("888888".equals(type) || "100004".equals(type) || "100005".equals(type) || "100006".equals(type)){
@@ -247,6 +257,16 @@ public class DealerController extends BaseController {
             if("888888".equals(type) || "100004".equals(type) || "100005".equals(type) || "100006".equals(type)){
                 map.put("search","1");
                 page = vipsRecordListService.findByPageAdmin(map,pageNo,pageSize);
+            }
+        }
+
+        if(page.getList().size()>0){
+            List<TbVipRecord> records = page.getList();
+            for(TbVipRecord record: records){
+                if(record.getBelong2()==null){
+                    record.setBelong2(record.getBelong());
+                    record.setBelong("");
+                }
             }
         }
 

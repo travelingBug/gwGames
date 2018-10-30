@@ -49,6 +49,8 @@
 							<th>购买月票类型</th>
                             <th>金额</th>
                             <th>购买时间</th>
+                            <th>归属员工</th>
+                            <th>归属经销商</th>
 						</tr>
 						<#if page?exists && page.list?size gt 0 >
 							<#list page.list as it>
@@ -68,11 +70,13 @@
 									</td>
                                     <td>${it.amount}</td>
 									<td>${it.crtTime?string("yyyy-MM-dd HH:mm:ss")}</td>
+                                    <td>${it.belong!""}</td>
+                                    <td>${it.belong2!""}</td>
 								</tr>
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="5">没有找到购票明细</td>
+								<td class="text-center danger" colspan="6">没有找到购票明细</td>
 							</tr>
 						</#if>
 					</table>

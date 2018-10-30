@@ -48,6 +48,13 @@ public class VipsListServiceImpl extends BaseMybatisDao<UTbVipsMapper> implement
         List<TbVips> list = null;
         if (totalNum > 0) {
             list =uTbVipsMapper.findVipsAdmin(resultMap);
+
+            for(TbVips vip: list){
+                if(vip.getBelong2()==null){
+                    vip.setBelong2(vip.getBelong());
+                    vip.setBelong("");
+                }
+            }
         }
 
         page.setTotalCount(totalNum);

@@ -14,6 +14,7 @@
     <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
     <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
     <result column="belong" property="belong" jdbcType="VARCHAR" />
+    <result column="belong2" property="belong2" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="vips_Column_List" >
     d.ID,d.NICKNAME,d.INVITAION_CODE,d.LEVEL,d.PHONE,d.ADDRESS,d.END_TIME,d.crt_time,d.PASSWORD
@@ -42,10 +43,12 @@
   </sql>
   <select id="findAll" resultMap="vipsResultMap" >
   	select
-    <include refid="vips_Column_List" />,v.NAME as belong
+    <include refid="vips_Column_List" />,v.NAME as belong,v2.NAME AS belong2
     from tb_vip d
     LEFT JOIN tb_dealer v
     ON v.INVITE_NUM = d.INVITAION_CODE
+    LEFT JOIN tb_dealer v2
+    ON v.parent_id= v2.FK_USER_ID
     <include refid="vips_where_all"/>
     <if test="parentId != null and parentId !='' " >
       and v.fk_user_id = #{parentId}
@@ -55,6 +58,10 @@
   </select>
   <select id="findCount" resultMap="vipsResultMap" >
  	 select count(d.id) from  tb_vip d
+      LEFT JOIN tb_dealer v
+      ON v.INVITE_NUM = d.INVITAION_CODE
+      LEFT JOIN tb_dealer v2
+      ON v.parent_id= v2.FK_USER_ID
   	<include refid="vips_where_all" />
   </select>
 
@@ -138,10 +145,12 @@
 
   <select id="findVipsAdmin" parameterType="map" resultMap="vipsResultMap" >
     select
-    <include refid="vips_Column_List" />,v.NAME as belong
+    <include refid="vips_Column_List" />,v.NAME as belong,v2.NAME AS belong2
     from tb_vip d
     LEFT JOIN tb_dealer v
     ON v.INVITE_NUM = d.INVITAION_CODE
+    LEFT JOIN tb_dealer v2
+    ON v.parent_id= v2.FK_USER_ID
     <include refid="vips_where_all"/>
     <include refid="vips_order_all"/>
     LIMIT #{start},#{pageSize}
@@ -151,6 +160,8 @@
     SELECT count(d.id) from tb_vip d
     LEFT JOIN tb_dealer v
     ON v.INVITE_NUM = d.INVITAION_CODE
+    LEFT JOIN tb_dealer v2
+    ON v.parent_id= v2.FK_USER_ID
     <include refid="vips_where_all"/>
   </select>
 </mapper>

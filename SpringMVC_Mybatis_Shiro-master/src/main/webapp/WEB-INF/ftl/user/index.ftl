@@ -45,12 +45,12 @@
                         </tr>
                         <tr>
                             <th>报名二维码/链接</th>
-                            <td><i class="fas fa-link" _queryPlayerSignup('${userId}')></i></td>
+                            <td><i class="fas fa-link" onclick="_queryPlayerSignup('${userId}');"></i></td>
                         </tr>
-                        <tr>
-                            <th>返佣金额</th>
-                            <td><i class="fas fa-yen-sign"></i><span id="dealerMoney"></span></td>
-                        </tr>
+                        <#--<tr>-->
+                            <#--<th>返佣金额</th>-->
+                            <#--<td><i class="fas fa-yen-sign"></i><span id="dealerMoney"></span></td>-->
+                        <#--</tr>-->
                         </@shiro.hasAnyRoles>
 					</table>
 
@@ -104,8 +104,8 @@
 <script>
 
     $(function(){
-        <@shiro.hasAnyRoles name='200001,200002'>
-        _queryMoney('${userId}');
+        <@shiro.hasAnyRoles name='200001'>
+        <#--_queryMoney('${userId}');-->
         </@shiro.hasAnyRoles>
 
         const btn = document.querySelector('#copyBtn');

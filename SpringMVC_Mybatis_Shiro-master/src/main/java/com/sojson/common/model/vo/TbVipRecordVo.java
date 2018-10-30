@@ -34,6 +34,26 @@ public class TbVipRecordVo implements Serializable{
 
     private String nickname;
 
+    private String belong;
+
+    private String belong2;
+
+    public String getBelong() {
+        return belong;
+    }
+
+    public void setBelong(String belong) {
+        this.belong = belong;
+    }
+
+    public String getBelong2() {
+        return belong2;
+    }
+
+    public void setBelong2(String belong2) {
+        this.belong2 = belong2;
+    }
+
     public String getNickname() {
         return nickname;
     }

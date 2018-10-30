@@ -136,16 +136,16 @@
 							<th><input type="checkbox" id="checkAll"/></th>
 							<th class="col-sm-1">昵称</th>
 							<th class="col-sm-1">姓名</th>
-							<th class="col-sm-2">资金账号</th>
-							<th class="col-sm-2">身份证</th>
-							<th class="col-sm-2">手机号</th>
-							<th class="col-sm-2">报名时间</th>
+							<th class="col-sm-1">资金账号</th>
+							<th class="col-sm-1">身份证</th>
+							<th class="col-sm-1">手机号</th>
+							<th class="col-sm-1">报名时间</th>
 							<th class="col-sm-1">备注</th>
 							<th class="col-sm-1">审核状态</th>
 							<th class="col-sm-1">审核人</th>
-							<th class="col-sm-2">审核时间</th>
-							<th class="col-sm-2">微信号码</th>
-							<th>归属</th>
+							<th class="col-sm-1">审核时间</th>
+							<th class="col-sm-1">微信号码</th>
+							<th class="col-sm-1">归属</th>
 							<th class="col-sm-2">操作</th>
 						</tr>
 						<#if page?exists && page.list?size gt 0 >

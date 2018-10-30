@@ -87,6 +87,16 @@ public class TbVips implements Serializable {
 
     private String belong;
 
+    private String belong2;
+
+    public String getBelong2() {
+        return belong2;
+    }
+
+    public void setBelong2(String belong2) {
+        this.belong2 = belong2;
+    }
+
     public String getBelong() {
         return belong;
     }

@@ -16,6 +16,8 @@
         <result column="crt_time" property="crtTime" jdbcType="VARCHAR" />
         <result column="amount" property="amount" jdbcType="VARCHAR" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="belong" property="belong" jdbcType="VARCHAR" />
+        <result column="belong2" property="belong2" jdbcType="VARCHAR" />
     </resultMap>
 
     <resultMap id="recordVoMap" type="com.sojson.common.model.vo.TbVipRecordVo" >
@@ -26,6 +28,8 @@
         <result column="amount" property="amount" jdbcType="VARCHAR" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
         <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+        <result column="belong" property="belong" jdbcType="VARCHAR" />
+        <result column="belong2" property="belong2" jdbcType="VARCHAR" />
     </resultMap>
 
   <select id="countByCode" resultMap="CountLevel" >
@@ -87,35 +91,67 @@
     </select>
 
     <select id="findByPageAdminCount" parameterType="map" resultType="int">
-        SELECT count(id) from tb_vip_record;
+        SELECT count(r.id) from tb_vip_record r
+        LEFT JOIN tb_vip d
+       ON r.vip_id = d.id
+       LEFT JOIN tb_dealer v
+        ON v.INVITE_NUM = d.INVITAION_CODE
+        LEFT JOIN tb_dealer v2
+        ON v.parent_id= v2.FK_USER_ID;
     </select>
 
     <select id="findByPageDealerCount" parameterType="map" resultType="int">
-        SELECT count(id) FROM tb_vip_record WHERE vip_id IN(
+        SELECT count(r.id) FROM tb_vip_record r
+         LEFT JOIN tb_vip d
+       ON r.vip_id = d.id
+       LEFT JOIN tb_dealer v
+        ON v.INVITE_NUM = d.INVITAION_CODE
+        LEFT JOIN tb_dealer v2
+        ON v.parent_id= v2.FK_USER_ID
+         WHERE vip_id IN(
             SELECT id FROM tb_vip WHERE INVITAION_CODE IN(
             SELECT INVITE_NUM FROM tb_dealer WHERE SEAT_NUM=#{seatNum}));
     </select>
 
     <select id="findByPageEmployeeCount" parameterType="map" resultType="int">
-        SELECT count(id) FROM tb_vip_record WHERE vip_id IN(
+        SELECT count(r.id) FROM tb_vip_record r
+        LEFT JOIN tb_vip d
+       ON r.vip_id = d.id
+       LEFT JOIN tb_dealer v
+        ON v.INVITE_NUM = d.INVITAION_CODE
+        LEFT JOIN tb_dealer v2
+        ON v.parent_id= v2.FK_USER_ID
+        WHERE vip_id IN(
             SELECT id FROM tb_vip WHERE INVITAION_CODE = #{inviteCode})
     </select>
 
-    <select id="findByPageAdmin" parameterType="map" resultMap="recordVoMap" >
-        SELECT r.*,v.nickname as nickname FROM tb_vip_record r LEFT JOIN tb_vip v ON v.id=r.vip_id LIMIT #{start},#{pageSize}
+    <select id="findByPageAdmin" parameterType="map" resultMap="recordMap" >
+        SELECT r.*,d.nickname as nickname,v.NAME AS belong,v2.`NAME` AS belong2
+        FROM tb_vip_record r
+        LEFT JOIN tb_vip d
+        ON d.id=r.vip_id
+         LEFT JOIN tb_dealer v
+        ON v.INVITE_NUM = d.INVITAION_CODE
+        LEFT JOIN tb_dealer v2
+        ON v.parent_id= v2.FK_USER_ID
+         LIMIT #{start},#{pageSize}
     </select>
 
-    <select id="findByPageDealer" parameterType="map" resultMap="recordVoMap" >
-        SELECT r.*,v.nickname as nickname FROM tb_vip_record r
-        LEFT JOIN tb_vip v ON r.vip_id=v.id
+    <select id="findByPageDealer" parameterType="map" resultMap="recordMap" >
+        SELECT r.*,d.nickname as nickname,v.NAME AS belong,v2.NAME AS belong2 FROM tb_vip_record r
+        LEFT JOIN tb_vip d ON r.vip_id=d.id
+        LEFT JOIN tb_dealer v ON v.INVITE_NUM = d.INVITAION_CODE
+        LEFT JOIN tb_dealer v2 ON v.parent_id= v2.FK_USER_ID
          WHERE r.vip_id IN(
             SELECT id FROM tb_vip WHERE INVITAION_CODE IN(
             SELECT INVITE_NUM FROM tb_dealer WHERE SEAT_NUM=#{seatNum})) LIMIT #{start},#{pageSize}
     </select>
 
-    <select id="findByPageEmployee" parameterType="map" resultMap="recordVoMap">
-        SELECT r.*,v.nickname as nickname FROM tb_vip_record r
-        LEFT JOIN tb_vip v ON r.vip_id=v.id
+    <select id="findByPageEmployee" parameterType="map" resultMap="recordMap">
+        SELECT r.*,d.nickname as nickname,v.NAME AS belong,v2.NAME AS belong2 FROM tb_vip_record r
+        LEFT JOIN tb_vip d ON r.vip_id=d.id
+        LEFT JOIN tb_dealer v ON v.INVITE_NUM = d.INVITAION_CODE
+        LEFT JOIN tb_dealer v2 ON v.parent_id= v2.FK_USER_ID
          WHERE r.vip_id IN(
             SELECT id FROM tb_vip WHERE INVITAION_CODE = #{inviteCode}) LIMIT #{start},#{pageSize}
     </select>
