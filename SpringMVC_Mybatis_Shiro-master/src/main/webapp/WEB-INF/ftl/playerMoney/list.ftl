@@ -343,7 +343,7 @@
                                         </button>
                                         <input type="file" name="file"  style="width:0px;height:0px;display: none;" id="uploadEventFile" />
                                     </form>
-                                    <a href="${basePath}/file/参赛选手资金信息.xlsx">模板下载</a>
+                                    <a href="${basePath}/file/playerMoney.xlsx">模板下载</a>
                                 </span>
                             </div>
 						</div>

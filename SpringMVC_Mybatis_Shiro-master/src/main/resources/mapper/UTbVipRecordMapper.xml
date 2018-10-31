@@ -32,8 +32,14 @@
         <result column="belong2" property="belong2" jdbcType="VARCHAR" />
     </resultMap>
 
+    <select id="countVipNum" resultMap="CountLevel" >
+        select v.INVITAION_CODE,count(*) countNum from tb_vip v
+        <include refid="where_count"/>
+        GROUP BY v.INVITAION_CODE;
+    </select>
+
   <select id="countByCode" resultMap="CountLevel" >
-    select t.INVITAION_CODE,v.level,count(v.id) countNum,SUM(v.amount) countMoney from tb_vip t INNER JOIN tb_vip_record v on t.id = v.vip_id
+    select t.INVITAION_CODE,v.level,count(v.id) countNum,SUM(v.amount) countMoney from tb_vip t LEFT JOIN tb_vip_record v on t.id = v.vip_id
     <include refid="where_count"/>
     GROUP BY t.INVITAION_CODE,v.level
   </select>
@@ -159,7 +165,7 @@
     <sql id="where_dealerId">
         <where>
             <if test="dealerId != null and dealerId !='' " >
-                and x.ID = #{dealerId} or x.PARENT_ID = #{dealerId}
+                and x.ID = #{dealerId} or x.PARENT_ID = (select tt.FK_USER_ID from tb_dealer tt where tt.ID = #{dealerId})
             </if>
         </where>
     </sql>

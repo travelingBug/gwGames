@@ -82,22 +82,24 @@
 					<hr>
 					<table class="table table-bordered">
                         <tr>
-                            <td colspan="8"><button type="button" id="exportButton" <#if !listData?exists || listData?size lte 0 >disabled="disabled"</#if> class="btn btn-primary">导出</button></td>
+                            <td colspan="9"><button type="button" id="exportButton" <#if !listData?exists || listData?size lte 0 >disabled="disabled"</#if> class="btn btn-primary">导出</button></td>
                         </tr>
 						<tr>
                             <th>经销商名称</th>
-							<th>新增A类会员人数</th>
-							<th>新增A类会员金额</th>
-							<th>新增B类会员人数</th>
-                            <th>新增B类会员金额</th>
-                            <th>新增C类会员人数</th>
-                            <th>新增C类会员金额</th>
-                            <th>新增会员总金额</th>
+                            <th>新增会员总人数</th>
+							<th>开通A类会员次数</th>
+							<th>开通A类会员金额</th>
+							<th>开通B类会员次数</th>
+                            <th>开通B类会员金额</th>
+                            <th>开通C类会员次数</th>
+                            <th>开通C类会员金额</th>
+                            <th>开通会员总金额</th>
 						</tr>
 						<#if listData?exists && listData?size gt 0 >
 							<#list listData as it>
 								<tr>
 									<td>${it.name}</td>
+                                    <td>${it.vipCount}</td>
                                     <td>${it.vipACount}</td>
                                     <td>${it.vipAMoneyCount}</td>
                                     <td>${it.vipBCount}</td>
@@ -109,7 +111,7 @@
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="8">没有找到经销商数据</td>
+								<td class="text-center danger" colspan="9">没有找到经销商数据</td>
 							</tr>
 						</#if>
 					</table>

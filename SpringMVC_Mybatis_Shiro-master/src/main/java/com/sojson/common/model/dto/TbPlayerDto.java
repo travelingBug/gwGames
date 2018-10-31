@@ -13,6 +13,8 @@ public class TbPlayerDto extends TbPlayer implements Serializable{
     //模糊匹配Name
     private String findContent;
 
+    private String page_sql;
+
     public String getVerfiCode() {
         return verfiCode;
     }
@@ -27,5 +29,13 @@ public class TbPlayerDto extends TbPlayer implements Serializable{
 
     public void setFindContent(String findContent) {
         this.findContent = findContent;
+    }
+
+    public String getPage_sql() {
+        return page_sql;
+    }
+
+    public void setPage_sql(String page_sql) {
+        this.page_sql = page_sql;
     }
 }

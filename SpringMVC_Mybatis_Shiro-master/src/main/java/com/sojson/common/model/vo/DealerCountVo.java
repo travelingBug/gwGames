@@ -9,6 +9,8 @@ import java.util.Date;
  */
 public class DealerCountVo extends TbDealer implements Serializable {
 
+    private Integer vipCount = 0;
+
     private Integer vipACount = 0;
 
     private Double vipAMoneyCount = 0d;
@@ -77,5 +79,13 @@ public class DealerCountVo extends TbDealer implements Serializable {
 
     public void setVipMoneyCount(Double vipMoneyCount) {
         this.vipMoneyCount = vipMoneyCount;
+    }
+
+    public Integer getVipCount() {
+        return vipCount;
+    }
+
+    public void setVipCount(Integer vipCount) {
+        this.vipCount = vipCount;
     }
 }
