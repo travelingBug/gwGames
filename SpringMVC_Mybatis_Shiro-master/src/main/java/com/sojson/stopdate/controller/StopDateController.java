@@ -4,6 +4,7 @@ import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
 import com.sojson.common.model.TbPlayer;
 import com.sojson.common.model.TbStopDate;
+import com.sojson.common.model.TbVips;
 import com.sojson.common.model.vo.TbPlayerMoneyVo;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.stopdate.service.StopDateService;
@@ -32,36 +33,44 @@ public class StopDateController extends BaseController {
     @Autowired
     StopDateService stopDateService;
 
-    /**
-     * 审核参赛人员
-     * @param req
-     * @return
-     */
-    @RequestMapping(value="list",method=RequestMethod.POST)
-    @ResponseBody
-    public TbStopDate list(HttpServletRequest req){
-        return stopDateService.findStopDate();
-    }
+//    /**
+//     * 审核参赛人员
+//     * @param req
+//     * @return
+//     */
+//    @RequestMapping(value="list",method=RequestMethod.POST)
+//    @ResponseBody
+//    public TbStopDate list(HttpServletRequest req){
+//        return stopDateService.findStopDate();
+//    }
 
     @RequestMapping(value="/list")
-    public ModelAndView list(ModelMap modelMap){
+    public ModelAndView list(ModelMap modelMap,@RequestParam Map<String,Object> map){
 
-        modelMap.put("vo", stopDateService.findStopDate());
+        Pagination<TbVips> page = stopDateService.findByPage(map,pageNo,pageSize);
+        modelMap.put("page", page);
+        modelMap.putAll(map);
         return new ModelAndView("stopdate/list");
     }
 
     /**
-     * 编辑参赛人员
      * @param req
      * @return
      */
-    @RequestMapping(value="/update",method=RequestMethod.POST)
+    @RequestMapping(value="/insert",method=RequestMethod.POST)
     @ResponseBody
-    public ResultMessage editPlayer( HttpServletRequest req,Byte stopFlag){
-        TbStopDate vo = new TbStopDate();
-        vo.setStopFlag(stopFlag);
-        return stopDateService.update(vo);
+    public ResultMessage editPlayer( HttpServletRequest req,TbStopDate vo){
+        return stopDateService.insert(vo);
     }
 
+    /**
+     * @param req
+     * @return
+     */
+    @RequestMapping(value="/del",method=RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage editPlayer( HttpServletRequest req,Long id){
+        return stopDateService.deleteById(id);
+    }
 
 }

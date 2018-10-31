@@ -21,7 +21,7 @@ public interface UTbVipsMapper {
 
     int updateEndTimeByStop();
 
-    int updateLevelByEndTIme(Object param);
+    int updateLevelByDay();
 
     String getSurplusMin(String phone);
 
@@ -30,4 +30,6 @@ public interface UTbVipsMapper {
     List<TbVips> findVipsAdmin(Map<String, Object> map);
 
     int findVipsAdminCount(Map<String, Object> map);
+
+    int updateSurplusDay();
 }

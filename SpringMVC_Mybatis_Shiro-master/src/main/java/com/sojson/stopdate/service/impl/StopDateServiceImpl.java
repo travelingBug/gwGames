@@ -8,6 +8,7 @@ import com.sojson.common.dao.UTbVipsMapper;
 import com.sojson.common.model.TbPlayer;
 import com.sojson.common.model.TbStopDate;
 import com.sojson.common.model.TbStopDateHis;
+import com.sojson.common.model.TbVips;
 import com.sojson.common.model.dto.TbPlayerDto;
 import com.sojson.common.utils.StringUtils;
 import com.sojson.core.mybatis.BaseMybatisDao;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,39 +39,29 @@ public class StopDateServiceImpl extends BaseMybatisDao<UTbStopDateMapper> imple
 
 
     @Override
-    public TbStopDate findStopDate() {
-        List<TbStopDate> vos = uTbStopDateMapper.findAll();
-        return vos.get(0);
+    public List<TbStopDate> findStopDate() {
+        List<TbStopDate> vos = uTbStopDateMapper.findAll(new HashMap<String,Object>());
+        return vos;
     }
 
     @Override
-    public ResultMessage update(TbStopDate tbStopDate) {
-        TbStopDate oldVo = uTbStopDateMapper.findAll().get(0);
-        if (oldVo.getStopFlag() == tbStopDate.getStopFlag()) {
-            return new ResultMessage(ResultMessage.MSG_LEVEL.HINT.v,"停止标识已经更新，请刷新后重试");
-        }
-        if (tbStopDate.getStopFlag() == IConstant.YES_OR_NO.YES.v) { //开始停止
-            tbStopDate.setBgnTime(new Date());
-            tbStopDate.setUserId(TokenManager.getUserId());
-            uTbStopDateMapper.update(tbStopDate);
-        } else if (tbStopDate.getStopFlag() == IConstant.YES_OR_NO.NO.v) { //结束停止
-            TbStopDateHis his = new TbStopDateHis();
-            his.setBgnTime(oldVo.getBgnTime());
-            his.setEndTime(new Date());
-            his.setBgnUserId(oldVo.getUserId());
-            his.setEndUserId(TokenManager.getUserId());
-            //停止结束后加上时间
-            uTbVipsMapper.updateEndTimeByStop();
-            oldVo.setBgnTime(null);
-            oldVo.setEndTime(null);
-            oldVo.setUserId(null);
-            oldVo.setStopFlag(tbStopDate.getStopFlag());
-            uTbStopDateMapper.update(oldVo);
-            uTbStopDateMapper.insertHis(his);
+    public ResultMessage insert(TbStopDate tbStopDate){
+        tbStopDate.setUserId(TokenManager.getUserId());
+        tbStopDate.setUserName(TokenManager.getNickname());
+        tbStopDate.setCrtTime(new Date());
+        uTbStopDateMapper.insert(tbStopDate);
 
-        } else {
-            return new ResultMessage(ResultMessage.MSG_LEVEL.HINT.v,"停止标识错误!");
-        }
-        return  new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"操作成功!");
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"添加成功!");
+    }
+
+    @Override
+    public ResultMessage deleteById(Long id){
+        uTbStopDateMapper.deleteById(id);
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"删除成功!");
+    }
+
+    @Override
+    public Pagination<TbVips> findByPage(Map<String, Object> resultMap, Integer pageNo, Integer pageSize) {
+        return super.findPage(resultMap, pageNo, pageSize);
     }
 }

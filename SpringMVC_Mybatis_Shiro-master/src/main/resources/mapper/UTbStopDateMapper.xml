@@ -3,43 +3,55 @@
 <mapper namespace="com.sojson.common.dao.UTbStopDateMapper" >
   <resultMap id="BaseResultMap" type="com.sojson.common.model.TbStopDate" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="stop_flag" property="stopFlag" jdbcType="TINYINT" />
     <result column="bgn_Time" property="bgnTime" jdbcType="TIMESTAMP" />
     <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="crt_Time" property="crtTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, stop_flag, bgn_Time, end_time,user_id
+    id, stop_flag, bgn_Time, end_time,user_id,user_name,crt_Time
   </sql>
 
   <select id="findAll" resultMap="BaseResultMap" >
   	 select 
     <include refid="Base_Column_List" />
-    from tb_stop_date where id = 1
+    from tb_stop_date
+    <include refid="where_all"/>
+    <include refid="order_all"/>
+    <include refid="limit_sql" />
   </select>
-  
 
-  <update id="update" parameterType="com.sojson.common.model.TbStopDate" >
-    update tb_stop_date
-    <set >
-      <!--<if test="stopFlag != null" >-->
-        stop_flag = #{stopFlag},
-      <!--</if>-->
-      <!--<if test="bgnTime != null" >-->
-        bgn_Time = #{bgnTime},
-      <!--</if>-->
-      <!--<if test="endTime != null" >-->
-        end_time = #{endTime},
-      <!--</if>-->
-      <!--<if test="userId != null" >-->
-        user_id = #{userId}
-      <!--</if>-->
-    </set>
-    where id = 1
-  </update>
+  <select id="findCount" resultMap="BaseResultMap" >
+    select count(id) from  tb_stop_date
+    <include refid="where_all" />
+  </select>
+  <sql id="limit_sql">
+    <if test="page_sql != null and page_sql != ''">
+      ${page_sql}
+    </if>
+  </sql>
 
-  <insert id="insertHis" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbStopDateHis" >
-    insert into tb_stop_date_his (BGN_TIME, END_TIME, BGN_USER_ID, END_USER_ID)
-    values (#{bgnTime}, #{endTime}, #{bgnUserId}, #{endUserId})
+  <sql id="where_all">
+    <where>
+      <if test="userName != null and userName !='' " >
+        and  USER_NAME = #{userName,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+
+
+  <sql id="order_all">
+    ORDER BY crt_time DESC
+  </sql>
+
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbStopDate" >
+    insert into tb_stop_date (BGN_TIME, END_TIME, USER_ID,USER_NAME,CRT_TIME)
+    values (#{bgnTime}, #{endTime}, #{userId}, #{userName}, #{crtTime})
   </insert>
+
+  <delete id="deleteById">
+    delete from tb_stop_date where id =  #{id,jdbcType=BIGINT}
+  </delete>
 </mapper>

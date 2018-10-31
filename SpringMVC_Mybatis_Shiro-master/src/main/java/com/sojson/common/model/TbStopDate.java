@@ -31,6 +31,16 @@ public class TbStopDate implements Serializable {
      */
     private Long userId;
 
+    /**
+     * '操作人员姓名'
+     */
+    private String userName;
+
+    /**
+     * '创建时间'
+     */
+    private Date crtTime;
+
     public Long getId() {
         return id;
     }
@@ -69,5 +79,21 @@ public class TbStopDate implements Serializable {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Date getCrtTime() {
+        return crtTime;
+    }
+
+    public void setCrtTime(Date crtTime) {
+        this.crtTime = crtTime;
     }
 }

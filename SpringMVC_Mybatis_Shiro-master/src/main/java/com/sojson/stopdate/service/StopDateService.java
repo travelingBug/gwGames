@@ -3,6 +3,7 @@ package com.sojson.stopdate.service;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.model.TbPlayer;
 import com.sojson.common.model.TbStopDate;
+import com.sojson.common.model.TbVips;
 import com.sojson.common.model.dto.TbPlayerDto;
 import com.sojson.core.mybatis.page.Pagination;
 
@@ -13,8 +14,13 @@ import java.util.Map;
  */
 public interface StopDateService {
 
-    TbStopDate findStopDate();
+    List<TbStopDate> findStopDate();
 
 
-    ResultMessage update(TbStopDate tbStopDate);
+
+    public ResultMessage insert(TbStopDate tbStopDate);
+
+    public ResultMessage deleteById(Long id);
+
+    public Pagination<TbVips> findByPage(Map<String, Object> resultMap, Integer pageNo, Integer pageSize);
 }

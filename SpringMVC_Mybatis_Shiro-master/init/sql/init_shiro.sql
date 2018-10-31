@@ -268,14 +268,14 @@ drop table if exists tb_stop_date;
 create table tb_stop_date
 (
    ID                   bigint not null auto_increment comment '主键',
-   STOP_FLAG               tinyint(4) NOT NULL comment '停止标示（0：未停止，1：已停止）',
    BGN_TIME           datetime comment '开始时间',
    END_TIME              datetime comment '结束时间',
    USER_ID           bigint(20)  comment '操作人员',
+   USER_NAME           varchar(50)  comment '操作人员姓名',
+   CRT_TIME              datetime comment '创建时间',
    primary key (ID)
 );
 
-INSERT INTO tb_stop_date (ID,STOP_FLAG) VALUES(1,0);
 
 
 drop table if exists tb_stop_date_his;
@@ -368,3 +368,4 @@ CREATE TABLE `tb_vip_order` (
 /**2018/10/29**/
 ALTER TABLE tb_player ADD INVITE_NUM varchar(20);
 ALTER TABLE tb_dealer MODIFY COLUMN TYPE VARCHAR(10);
+ALTER TABLE tb_vip ADD SURPLUS_DAY int(10);

@@ -47,12 +47,35 @@
 <div class="pageWrapper2 bg-gray me style1">
     <%@include file="../top.jsp" %>
     <%@include file="../banner_chlid.jsp" %>
-        <div class="main-box mt-30  bg-white">
-            <div class="content">
-                <div class="tab1">
-                    <a class="on">主办方介绍</a>
+    <div class="main-box mt-30  bg-white">
+        <div class="content">
+            <div class="tab1">
+                <a class="on">主办方介绍</a>
+            </div>
+            <div class="main-box  bg-white">
+                <div class="content" style="margin: 0px auto 0 auto;">
+                    <div class="zt1 mt-30" style="text-align: center">富甲文化简介</div>
+                    <div class="tab1">
+                    </div>
+                    <div>
+                        <img src="images/pic-3.png" alt=""/>
+                    </div>
+                    <div style="margin-top: 20px;margin-bottom: 50px;">
+                        <h3 class="zt2">四川富甲文化有限公司（简称富甲文化），成立于2018年6月，是一家依托互联网，延伸线下产业链的生态型企业，业务范围涉及教育、品牌、营销、策划等。</h3>
+                        <h3 class="zt2">自创立以来，富甲文化致力于品牌营销、市场策划、教育咨询等领域的业务发展，本着严谨、创新的态度和社会责任感，坚持为国内外众多知名企业提供创意策划、品牌营销、业务咨询及优质设计作品。公司坚持为客户打造流水线式服务标准，为客户提供最大便利。为满足客户需求，富甲文化汇聚了一批有志向、有激情、有创意的市场精英，拥有一支顶尖高素质团队，在设计、策划、咨询、教育等领域具备丰富经验及前沿发展理念，为客户提供具备超高水准的相关服务。</h3>
+                        <h3 class="zt2">未来富甲文化将依托集团强大实力背景，以市场为导向，以创新为理念，与主流发展同步，注重每一个工作环节和步骤，以优质资源、权威团队、优质作品为优势制定行业规则，争做文化市场中品质超群、创意独特的高端品牌。</h3>
+                    </div>
                 </div>
-                <div class="tab_con" style="margin-top: 100px;">
+            </div>
+        <div style="height:50px;"></div>
+    </div>
+        <div class="banner">
+            <img src="images/pic-2.png" style="height: 200px;width: 100%;">
+        </div>
+
+        <div class="main-box  bg-white">
+            <div class="content">
+                <div class="tab_con">
                     <div style="float: left;width: 280px;height: 80px;"></div>
                     <div style="float: left;width: 650px;height: 80px;margin-left: 50px;"><img src="images/xhhb.png" alt=""></div>
                     <div style="float: left;width: 280px;margin-top: 20px;"><img src="images/pic-1.png" alt=""></div>
@@ -103,24 +126,7 @@
             </div>
             <div style="height:50px;"></div>
         </div>
-        <div class="banner">
-            <img src="images/pic-2.png" style="height: 200px;width: 100%;">
-        </div>
-        <div class="main-box  bg-white">
-            <div class="content">
-                <div class="zt1 mt-30" style="text-align: center">富甲文化简介</div>
-                <div class="tab1">
-                </div>
-                <div>
-                    <img src="images/pic-3.png" alt=""/>
-                </div>
-                <div style="margin-top: 20px;margin-bottom: 50px;">
-                    <h3 class="zt2">四川富甲文化有限公司（简称富甲文化），成立于2018年6月，是一家依托互联网，延伸线下产业链的生态型企业，业务范围涉及教育、品牌、营销、策划等。</h3>
-                    <h3 class="zt2">自创立以来，富甲文化致力于品牌营销、市场策划、教育咨询等领域的业务发展，本着严谨、创新的态度和社会责任感，坚持为国内外众多知名企业提供创意策划、品牌营销、业务咨询及优质设计作品。公司坚持为客户打造流水线式服务标准，为客户提供最大便利。为满足客户需求，富甲文化汇聚了一批有志向、有激情、有创意的市场精英，拥有一支顶尖高素质团队，在设计、策划、咨询、教育等领域具备丰富经验及前沿发展理念，为客户提供具备超高水准的相关服务。</h3>
-                    <h3 class="zt2">未来富甲文化将依托集团强大实力背景，以市场为导向，以创新为理念，与主流发展同步，注重每一个工作环节和步骤，以优质资源、权威团队、优质作品为优势制定行业规则，争做文化市场中品质超群、创意独特的高端品牌。</h3>
-                </div>
-            </div>
-        </div>
+
 
     <%@include file="../bottom.jsp" %>
     <%@include file="../footer.jsp" %>

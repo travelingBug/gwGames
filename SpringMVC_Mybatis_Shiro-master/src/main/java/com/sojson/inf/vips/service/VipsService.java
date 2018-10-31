@@ -30,7 +30,7 @@ public interface VipsService {
 
     TbVips queryVipsInfo(String phone);
 
-    void updateLevelByEndTIme(Map<String,Object> param);
+    void updateLevelByDay();
 
     String getSurplusTime(String phone);
 
@@ -39,4 +39,6 @@ public interface VipsService {
     ResultMessage validInviteCode(String inviteCode);
 
     ResultMessage updatePwd(TbVips entity, HttpServletRequest req) throws Exception;
+
+    public int updateSurplusDay();
 }

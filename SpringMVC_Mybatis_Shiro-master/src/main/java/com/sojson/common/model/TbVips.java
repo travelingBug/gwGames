@@ -89,6 +89,11 @@ public class TbVips implements Serializable {
 
     private String belong2;
 
+    /**
+     * 剩余天数
+     */
+    private Integer surplusDay;
+
     public String getBelong2() {
         return belong2;
     }
@@ -231,5 +236,13 @@ public class TbVips implements Serializable {
 
     public void setModTime(Date modTime) {
         this.modTime = modTime;
+    }
+
+    public Integer getSurplusDay() {
+        return surplusDay;
+    }
+
+    public void setSurplusDay(Integer surplusDay) {
+        this.surplusDay = surplusDay;
     }
 }

@@ -15,44 +15,66 @@
 
         <script >
 			so.init(function(){
-                var stopFlag = '${vo.stopFlag}';
-                if (stopFlag == 1) {
-                    $('#stopFlag').attr("checked","checked");
-                }
-			    $('#save').click(function (){
-                    var stopFlag = 0;
-                    if($('#stopFlag').is(':checked')) {
-                        stopFlag = 1;
-                    }
-                    if (stopFlag == 1) {
-                        layer.confirm("停止计时后，会员将不会扣除观赛时间，确认是否继续？",function(){
-                            submitFlag(stopFlag);
-                        });
-                    } else {
-                        layer.confirm("结束停止计时后，会员将会扣除观赛时间，确认是否继续？",function(){
-                            submitFlag(stopFlag);
-                        });
-                    }
+                laydate({
+                    elem: '#bgnTime',
+                    istime:true,
+                    format:'YYYY-MM-DD'
+                });
+                laydate({
+                    elem: '#endTime',
+                    istime:true,
+                    format:'YYYY-MM-DD'
                 });
 
+
+                $('#stopdate_add_submit').click(function(){
+                    var flag = validAddForm();
+                    if (!flag) {
+                        return;
+                    }
+                    var data = {};
+                    data.push({name:'bgnTime',value:$('#bgnTime').val() + " 00:00:00"});
+                    data.push({name:'endTime',value:$('#endTime').val() + " 23:59:59"});
+                    $.ajax({
+                        type: "POST",
+                        url: "/stopdate/insert.shtml",
+                        data: data,
+                        dataType: "json",
+                        success: function(result) {
+                            if (result && result.level != 1) {
+                                msg(result.messageText);
+                            } else {
+                                layer.msg('添加成功！');
+                                $('#stopdate_add-remove').click();
+                                $('#formId').submit();
+                            }
+                        },
+                        error: function(data) {
+                            layer.alert('系统错误，请联系管理员！', {
+                                icon: 2,
+                                skin: 'layui-layer-lan'
+                            });
+                        }
+                    });
+                });
 			});
 
-			function submitFlag(stopFlag) {
+            function validAddForm(){
+                if ($("#bgnTime").val() == null || $("#bgnTime").val() == '') {
+                    msg('开始时间不能为空！');
+                    return false;
+                }
+                if ($("#endTime").val() == null || $("#endTime").val() == '') {
+                    msg('结束时间不能为空！');
+                    return false;
+                }
+                return true;
+            }
 
-                $.ajax({
-                    url : '${basePath}/stopdate/update.shtml',
-                    type : 'post',
-                    data : {stopFlag:stopFlag},
-                    dataType : "json",
-                    success : function(result) {
-                        layer.msg(result.messageText);
-                    },
-                    error : function(result) {
-                        layer.alert('系统错误，请联系管理员！', {
-                            icon: 0,
-                            skin: 'layui-layer-lan'
-                        });
-                    }
+            function msg(messageText){
+                layer.alert(messageText, {
+                    icon: 0,
+                    skin: 'layui-layer-lan'
                 });
             }
 
@@ -61,34 +83,109 @@
 	<body data-target="#one" data-spy="scroll" id="contentDiv">
 		
 		<@_top.top 9/>
-		<div class="container" style="padding-bottom: 15px;min-height: 300px; margin-top: 40px;" >
-			<div class="row">
-				<@_left.stopdate 1/>
-				<div class="col-md-10">
-					<h2>系统配置</h2>
-					<hr>
-                    <div class="col-sm-12">
-                        <div class="form-group col-sm-4" form-inline>
-                            <label for="stopFlag">停止会员记时</label>
-					        <input type="checkbox"   name="stopFlag" id="stopFlag" value="1" />
-						</div>
-                        <div class="form-group col-sm-4" form-inline>
-                            <label style="color: red">注意：一旦启用后，所有购买观赛券的会员将不会扣除剩余时间!</label>
+        <div class="container" style="padding-bottom: 15px;min-height: 300px; margin-top: 40px;" >
+            <div class="row">
+            <@_left.stopdate 1/>
+                <div class="col-md-10">
+                    <h2>停止计时时间段</h2>
+                    <hr>
+                    <form method="post" action="${basePath}/stopdate/list.shtml" id="formId" class="form-inline">
+                        <div class="col-sm-12">
+                            <div class="form-group col-sm-4">
+                                <label for="userName">操作人姓名</label>
+                                <input type="text" class="form-control"  value="${userName?default('')}"
+                                       name="userName" id="userName" placeholder="请输入操作人姓名" />
+                            </div>
+
+                            <div class="form-group  col-sm-4">
+                                <span class=""> <#--pull-right -->
+                                    <button type="submit" class="btn btn-primary">查询</button>
+                                    <a class="btn btn-success" onclick="$('#stopdateAddModal').modal();">添加</a>
+                                </span>
+                            </div>
                         </div>
-					</div>
-                    <div class="col-sm-12" >
-                        <div class="form-group col-sm-4" form-inline>
+
+                        <table class="table table-bordered">
+                            <tr>
+                                <th width="120">序号</th>
+                                <th width="120">操作人姓名</th>
+                                <th width="100">创建时间</th>
+                                <th width="180">开始时间</th>
+                                <th width="100">结束时间</th>
+                                <th width="80">操作</th>
+                            </tr>
+                        <#if page?exists && page.list?size gt 0 >
+                            <#list page.list as it>
+                                <tr>
+
+                                    <td> ${it_index+1}</td>
+                                    <td>${it.userName}</td>
+                                    <td>${it.crtTime?string("yyyy-MM-dd HH:mm:ss")}</td>
+                                    <td>${it.bgnTime?string("yyyy-MM-dd")}</td>
+                                    <td>${it.endTime?string("yyyy-MM-dd")}</td>
+                                    <td>
+                                        <a href="javascript:_del('${it.id}');"><i class="glyphicon glyphicon-remove" title="删除"></i></a>
+                                    </td>
+                                </tr>
+                            </#list>
+                        <#else>
+                            <tr>
+                                <td class="text-center danger" colspan="6">暂未发现数据</td>
+                            </tr>
+                        </#if>
+                        </table>
+                    <#if page?exists>
+                        <div class="pagination pull-right">
+                        ${page.pageHtml}
                         </div>
-                        <div class="form-group  col-sm-4">
-                            <span class=""> <#--pull-right -->
-                                <button type="button" id="save" class="btn btn-primary">保存</button>
-                            </span>
+                    </#if>
+                    </form>
+
+                    <!--添加 -->
+                    <div class="modal fade" id="stopdateAddModal" tabindex="-1" role="dialog" aria-labelledby="stopdateAddModalLabel">
+                        <div class="modal-dialog" role="document" style="width: 1000px;height: 800px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title" id="stopdateAddModalLabel">添加</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" action="${basePath}/stopdate/insert.shtml" id="addForm" class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="player_accountName_add" class="col-md-2 control-label">开始时间</label>
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" id="bgnTime"  name="bgnTime" />
+                                            </div>
+
+                                            <label for="player_name_add" class="col-md-2 control-label">结束时间</label>
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" id="endTime"  name="endTime" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="col-md-12">
+                                                <span style="color: red;">
+                                                     注意：添加时间范围后，如果到达时间后，会员的观赛日期将不会被减少。
+                                                </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" id="stopdate_add-remove"  class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                                    <button type="button" id="stopdate_add_submit" class="btn btn-primary" disabled="disabled"><i class="fas fa-save normal"></i>&nbsp;保存</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-				</div>
 
-			</div><#--/row-->
-		</div>
+                </div>
+            </div><#--/row-->
+        </div>
 			
 	</body>
 </html>

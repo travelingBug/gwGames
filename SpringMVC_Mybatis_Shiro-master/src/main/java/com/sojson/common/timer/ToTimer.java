@@ -1,10 +1,7 @@
 package com.sojson.common.timer;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Resource;
 
@@ -54,27 +51,39 @@ public class ToTimer{
 		logger.info("月度比赛排名排名完毕");
 	}
 
-	@Scheduled(cron = "0 0/5 * * * ?")
+	@Scheduled(cron = "00 01 00 * * ?")
 	public void changeVip() {
-		LoggerUtils.fmtError(getClass(),"开始清理会员信息！");
-		//获取当前信息系统暂停信息
-		TbStopDate tbStopDate = stopDateService.findStopDate();
-		//只有在未暂停才会执行
-		if (tbStopDate.getStopFlag() == IConstant.YES_OR_NO.NO.v) {
-			Map<String,Object> param = new HashMap<String,Object>();
-			param.put("nowDate",new Date());
-			vipsService.updateLevelByEndTIme(param);
-			LoggerUtils.fmtError(getClass(),"清理会员信息结束！");
-		} else {
-			LoggerUtils.fmtError(getClass(),"暂停记时开启中！");
-		}
 
+		//判断是周末不进行日期的减少
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		if(!(cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)){
+			//获取当前信息系统暂停信息
+			List<TbStopDate> tbStopDates = stopDateService.findStopDate();
+
+			//判断当前时间在不在日期类
+			long currTime = new Date().getTime();
+			boolean flag = true;
+			for (TbStopDate tbStopDate : tbStopDates) {
+				//若果在时间范围内，则不需要做清理
+				if (currTime >= tbStopDate.getBgnTime().getTime() && currTime <= tbStopDate.getEndTime().getTime() ) {
+					flag = false;
+					break;
+				}
+			}
+			if (flag) {
+				//扣除会员天数
+				vipsService.updateSurplusDay();
+
+				//清理天数为0的用户会员级别
+				LoggerUtils.fmtDebug(getClass(),"开始清理会员信息！");
+				vipsService.updateLevelByDay();
+				LoggerUtils.fmtDebug(getClass(),"清理会员信息结束！");
+			} else {
+				LoggerUtils.fmtDebug(getClass(),"当日不扣除会员天数");
+			}
+		}
 	}
 
-	
-	
-	
-	
-	
-	
+
 }

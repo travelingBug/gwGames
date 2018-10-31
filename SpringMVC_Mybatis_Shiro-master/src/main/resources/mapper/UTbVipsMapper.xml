@@ -15,9 +15,10 @@
     <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
     <result column="belong" property="belong" jdbcType="VARCHAR" />
     <result column="belong2" property="belong2" jdbcType="VARCHAR" />
+    <result column="SURPLUS_DAY" property="surplusDay" jdbcType="INTEGER" />
   </resultMap>
   <sql id="vips_Column_List" >
-    d.ID,d.NICKNAME,d.INVITAION_CODE,d.LEVEL,d.PHONE,d.ADDRESS,d.END_TIME,d.crt_time,d.PASSWORD
+    d.ID,d.NICKNAME,d.INVITAION_CODE,d.LEVEL,d.PHONE,d.ADDRESS,d.END_TIME,d.crt_time,d.PASSWORD,d.SURPLUS_DAY
   </sql>
   <sql id="vips_limit_sql">
   	   <if test="page_sql != null and page_sql != ''">
@@ -125,11 +126,11 @@
 
   </update>
 
-  <update id="updateLevelByEndTIme">
+  <update id="updateLevelByDay">
     update tb_vip t
     set
     t.Level = 0
-    where t.level != 0 AND DEL_FLAG = 0 AND t.END_TIME &lt;= #{nowDate,jdbcType=TIMESTAMP} ;
+    where t.level != 0 AND DEL_FLAG = 0 AND t.SURPLUS_DAY = 0 ;
 
   </update>
 
@@ -164,4 +165,14 @@
     ON v.parent_id= v2.FK_USER_ID
     <include refid="vips_where_all"/>
   </select>
+
+
+  <update id="updateSurplusDay">
+    update tb_vip t
+    set
+    SURPLUS_DAY = SURPLUS_DAY - 1
+    where LEVEL != 0 and SURPLUS_DAY > 0;
+
+  </update>
+
 </mapper>
