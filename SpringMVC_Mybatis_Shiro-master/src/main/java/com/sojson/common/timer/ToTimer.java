@@ -51,7 +51,8 @@ public class ToTimer{
 		logger.info("月度比赛排名排名完毕");
 	}
 
-	@Scheduled(cron = "00 01 00 * * ?")
+//	@Scheduled(cron = "00 01 00 * * ?")
+	@Scheduled(cron = "00 00 21 * * ?")
 	public void changeVip() {
 
 		//判断是周末不进行日期的减少
@@ -72,8 +73,18 @@ public class ToTimer{
 				}
 			}
 			if (flag) {
+
 				//扣除会员天数
-				vipsService.updateSurplusDay();
+				//会员当天开通的时间不做扣除操作。如果当前时间是周一，那么周五开通的不做扣除
+				if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
+					cal.add(Calendar.DATE,-3);
+				} else {
+					cal.add(Calendar.DATE,-1);
+				}
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				Map<String,Object> param = new HashMap<String,Object>();
+				param.put("noDay",sdf.format(cal.getTime()));
+				vipsService.updateSurplusDay(param);
 
 				//清理天数为0的用户会员级别
 				LoggerUtils.fmtDebug(getClass(),"开始清理会员信息！");

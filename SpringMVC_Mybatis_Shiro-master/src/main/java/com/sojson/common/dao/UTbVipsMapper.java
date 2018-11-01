@@ -31,5 +31,5 @@ public interface UTbVipsMapper {
 
     int findVipsAdminCount(Map<String, Object> map);
 
-    int updateSurplusDay();
+    int updateSurplusDay(Map<String,Object> param);
 }

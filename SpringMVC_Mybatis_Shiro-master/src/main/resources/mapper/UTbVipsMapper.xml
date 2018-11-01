@@ -171,7 +171,7 @@
     update tb_vip t
     set
     SURPLUS_DAY = SURPLUS_DAY - 1
-    where LEVEL != 0 and SURPLUS_DAY > 0;
+    where LEVEL != 0 and SURPLUS_DAY > 0 and date_format(t.CRT_TIME, '%Y-%m-%d') != #{noDay}
 
   </update>
 

@@ -10,7 +10,7 @@
     <result column="crt_Time" property="crtTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, stop_flag, bgn_Time, end_time,user_id,user_name,crt_Time
+    id, bgn_Time, end_time,user_id,user_name,crt_Time
   </sql>
 
   <select id="findAll" resultMap="BaseResultMap" >

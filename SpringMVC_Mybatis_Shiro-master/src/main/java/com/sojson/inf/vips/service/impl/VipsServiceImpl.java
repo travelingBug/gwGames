@@ -304,8 +304,8 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
 
 
     @Override
-    public int updateSurplusDay(){
-        return uTbVipsMapper.updateSurplusDay();
+    public int updateSurplusDay(Map<String,Object> param){
+        return uTbVipsMapper.updateSurplusDay(param);
     }
 
 }
