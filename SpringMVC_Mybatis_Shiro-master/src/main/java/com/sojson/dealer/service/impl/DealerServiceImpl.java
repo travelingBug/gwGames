@@ -201,35 +201,10 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
      */
     @Override
     public List<DealerCountVo> countDealerVip(Map<String,Object> param){
-//        //查询出所有的经销商
-//        Map<String,Object> dealerParam = new HashMap<String,Object>();
-//        List<TbDealer> dealers = uTbDealerMapper.findAll(dealerParam);
-//        //将经销商进行分组
-//        //key是员工邀请码，value是父类
-//        Map<String,String> dealerReal = new HashMap<String,String>();
-//        //将员工和经销商分类
-//        for(TbDealer tbDealer : dealers){
-//            if (StringUtils.isBlank(tbDealer.getParentId()) || IConstant.parentId.equals(tbDealer.getParentId())) {
-//                dealerReal.put(tbDealer.getInviteNum(),tbDealer.getUserId() + "");
-//            } else {
-//                dealerReal.put(tbDealer.getInviteNum(),tbDealer.getParentId());
-//            }
-//        }
-//        //查询出所有的VIP
-//        List<TbVips> vips = uTbVipsMapper.findAll(new HashMap<String,Object>());
-//
-//        //查询出所有的购票记录
-//        TbVipRecord entity = new TbVipRecord();
-//        entity.ser
-//        List<TbVips> vips = uTbVipRecordMapper.findAll(new HashMap<String,Object>());
-
-
-        List<VipRecordCount> vipRecordCounts = uTbVipRecordMapper.countByCode(param);
-        //统计会员数
-        List<VipRecordCount> vipCount = uTbVipRecordMapper.countVipNum(param);
-
+        //查询出所有的经销商
         Map<String,Object> dealerParam = new HashMap<String,Object>();
         List<TbDealer> dealers = uTbDealerMapper.findAll(dealerParam);
+        //将经销商进行分组
         //key是员工邀请码，value是父类
         Map<String,String> dealerReal = new HashMap<String,String>();
         //将员工和经销商分类
@@ -240,46 +215,131 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
                 dealerReal.put(tbDealer.getInviteNum(),tbDealer.getParentId());
             }
         }
-        List<DealerCountVo> dealerCounts = new ArrayList<DealerCountVo>();
-        //获取统计信息
-        for(TbDealer tbDealer : dealers){
-            //统计经销商下的总额
-            if (StringUtils.isBlank(tbDealer.getParentId()) || IConstant.parentId.equals(tbDealer.getParentId())) {
-                DealerCountVo vo = new DealerCountVo();
-                vo.setName(tbDealer.getName()); //名称
-                //统计开通会员总额
-                for (VipRecordCount vipRecordCount : vipRecordCounts){
-                    if (dealerReal.get(vipRecordCount.getInvitaionCode()) != null
-                            && dealerReal.get(vipRecordCount.getInvitaionCode()).equals(tbDealer.getUserId() + "")) { //判断是否要归到经销商下
-                        if (vipRecordCount.getLevel() != null && vipRecordCount.getCountMoney() != null) {
-                            Integer money = vipRecordCount.getCountMoney();
-                            if (vipRecordCount.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_A.v) {
-                                vo.setVipACount(vo.getVipACount() + vipRecordCount.getCountNum());
-                                vo.setVipAMoneyCount(new BigDecimal(vo.getVipAMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-                            } else if (vipRecordCount.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_B.v) {
-                                vo.setVipBCount(vo.getVipBCount() + vipRecordCount.getCountNum());
-                                vo.setVipBMoneyCount(new BigDecimal(vo.getVipBMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-                            } else if (vipRecordCount.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_C.v) {
-                                vo.setVipCCount(vo.getVipCCount() + vipRecordCount.getCountNum());
-                                vo.setVipCMoneyCount(new BigDecimal(vo.getVipCMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-                            }
+        //查询出所有的VIP
+        List<TbVips> vips = uTbVipsMapper.findAll(new HashMap<String,Object>());
 
-                            vo.setVipMoneyCount(new BigDecimal(vo.getVipMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        //查询出所有的购票记录
+        List<TbVipRecord> vipRecords = uTbVipRecordMapper.findRecordByParam(new HashMap<String,Object>());
+
+        //统计经销商的数据 key是userId,value是数据
+        Map<String,DealerCountVo> result = new HashMap<String,DealerCountVo>();
+
+        //总计数据
+        DealerCountVo total = new DealerCountVo();
+        total.setName("总计");
+
+        for (TbDealer tbDealer : dealers) {
+            //获取对应的经销商ID
+            String userId = dealerReal.get(tbDealer.getInviteNum());
+            if (StringUtils.isNotBlank(userId)) {
+                if (result.get(userId) == null) {
+                    DealerCountVo vo = new DealerCountVo();
+                    result.put(userId, new DealerCountVo());
+                }
+                DealerCountVo dealerCountVo = result.get(userId);
+                //如果是父类。就设置名称
+                if (StringUtils.isBlank(tbDealer.getParentId()) || IConstant.parentId.equals(tbDealer.getParentId())) {
+                    dealerCountVo.setName(tbDealer.getName());
+                }
+                //统计会员个数
+                for (TbVips vip : vips) {
+                    if (vip.getInviteCode().equals(tbDealer.getInviteNum())) {
+                        if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_A.v) {
+                            dealerCountVo.setVipACount(dealerCountVo.getVipACount() + 1);
+                        } else if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_B.v) {
+                            dealerCountVo.setVipBCount(dealerCountVo.getVipBCount() + 1);
+                        } else if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_C.v) {
+                            dealerCountVo.setVipCCount(dealerCountVo.getVipCCount() + 1);
+                        }
+
+                        dealerCountVo.setVipCount(dealerCountVo.getVipCount() + 1);
+                        total.setVipCount(total.getVipCount() + 1);
+
+
+
+                        //统计会员充值金额
+                        for (TbVipRecord vipRecord : vipRecords) {
+                            if (vipRecord.getVipId().intValue() == vip.getId().intValue()) {
+                                Double money = Double.parseDouble(vipRecord.getAmount());
+                                if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_A.v) {
+                                    dealerCountVo.setVipAMoneyCount(new BigDecimal(dealerCountVo.getVipAMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
+                                    total.setVipAMoneyCount(new BigDecimal(total.getVipAMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
+                                } else if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_B.v) {
+                                    dealerCountVo.setVipBMoneyCount(new BigDecimal(dealerCountVo.getVipBMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
+                                    total.setVipBMoneyCount(new BigDecimal(total.getVipBMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
+                                } else if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_C.v) {
+                                    dealerCountVo.setVipCMoneyCount(new BigDecimal(dealerCountVo.getVipCMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
+                                    total.setVipCMoneyCount(new BigDecimal(total.getVipCMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
+                                }
+                                dealerCountVo.setVipMoneyCount(new BigDecimal(dealerCountVo.getVipMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+                                total.setVipMoneyCount(new BigDecimal(total.getVipMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+
+                            }
                         }
                     }
                 }
-
-                //统计开通会员总数
-                for (VipRecordCount vipRecordCount : vipCount){
-                    if (dealerReal.get(vipRecordCount.getInvitaionCode()) != null
-                            && dealerReal.get(vipRecordCount.getInvitaionCode()).equals(tbDealer.getUserId() + "")) { //判断是否要归到经销商下
-                        vo.setVipCount(vo.getVipCount()+vipRecordCount.getCountNum());
-                    }
-                }
-                dealerCounts.add(vo);
             }
+
         }
 
+//        List<VipRecordCount> vipRecordCounts = uTbVipRecordMapper.countByCode(param);
+//        //统计会员数
+//        List<VipRecordCount> vipCount = uTbVipRecordMapper.countVipNum(param);
+//
+//        Map<String,Object> dealerParam = new HashMap<String,Object>();
+//        List<TbDealer> dealers = uTbDealerMapper.findAll(dealerParam);
+//        //key是员工邀请码，value是父类
+//        Map<String,String> dealerReal = new HashMap<String,String>();
+//        //将员工和经销商分类
+//        for(TbDealer tbDealer : dealers){
+//            if (StringUtils.isBlank(tbDealer.getParentId()) || IConstant.parentId.equals(tbDealer.getParentId())) {
+//                dealerReal.put(tbDealer.getInviteNum(),tbDealer.getUserId() + "");
+//            } else {
+//                dealerReal.put(tbDealer.getInviteNum(),tbDealer.getParentId());
+//            }
+//        }
+//        List<DealerCountVo> dealerCounts = new ArrayList<DealerCountVo>();
+//        //获取统计信息
+//        for(TbDealer tbDealer : dealers){
+//            //统计经销商下的总额
+//            if (StringUtils.isBlank(tbDealer.getParentId()) || IConstant.parentId.equals(tbDealer.getParentId())) {
+//                DealerCountVo vo = new DealerCountVo();
+//                vo.setName(tbDealer.getName()); //名称
+//                //统计开通会员总额
+//                for (VipRecordCount vipRecordCount : vipRecordCounts){
+//                    if (dealerReal.get(vipRecordCount.getInvitaionCode()) != null
+//                            && dealerReal.get(vipRecordCount.getInvitaionCode()).equals(tbDealer.getUserId() + "")) { //判断是否要归到经销商下
+//                        if (vipRecordCount.getLevel() != null && vipRecordCount.getCountMoney() != null) {
+//                            Integer money = vipRecordCount.getCountMoney();
+//                            if (vipRecordCount.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_A.v) {
+//                                vo.setVipACount(vo.getVipACount() + vipRecordCount.getCountNum());
+//                                vo.setVipAMoneyCount(new BigDecimal(vo.getVipAMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+//                            } else if (vipRecordCount.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_B.v) {
+//                                vo.setVipBCount(vo.getVipBCount() + vipRecordCount.getCountNum());
+//                                vo.setVipBMoneyCount(new BigDecimal(vo.getVipBMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+//                            } else if (vipRecordCount.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_C.v) {
+//                                vo.setVipCCount(vo.getVipCCount() + vipRecordCount.getCountNum());
+//                                vo.setVipCMoneyCount(new BigDecimal(vo.getVipCMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+//                            }
+//
+//                            vo.setVipMoneyCount(new BigDecimal(vo.getVipMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+//                        }
+//                    }
+//                }
+//
+//                //统计开通会员总数
+//                for (VipRecordCount vipRecordCount : vipCount){
+//                    if (dealerReal.get(vipRecordCount.getInvitaionCode()) != null
+//                            && dealerReal.get(vipRecordCount.getInvitaionCode()).equals(tbDealer.getUserId() + "")) { //判断是否要归到经销商下
+//                        vo.setVipCount(vo.getVipCount()+vipRecordCount.getCountNum());
+//                    }
+//                }
+//                dealerCounts.add(vo);
+//            }
+//        }
+        List<DealerCountVo> dealerCounts = new ArrayList<DealerCountVo>();
+        dealerCounts.addAll(result.values());
+        dealerCounts.add(total);
         return dealerCounts;
     }
 

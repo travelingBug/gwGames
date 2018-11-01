@@ -101,12 +101,12 @@
 									<td>${it.name}</td>
                                     <td>${it.vipCount}</td>
                                     <td>${it.vipACount}</td>
-                                    <td>${it.vipAMoneyCount}</td>
+                                    <td>${it.vipAMoneyCount?string.currency}</td>
                                     <td>${it.vipBCount}</td>
-                                    <td>${it.vipBMoneyCount}</td>
+                                    <td>${it.vipBMoneyCount?string.currency}</td>
                                     <td>${it.vipCCount}</td>
-                                    <td>${it.vipCMoneyCount}</td>
-									<td>${it.vipMoneyCount}</td>
+                                    <td>${it.vipCMoneyCount?string.currency}</td>
+									<td>${it.vipMoneyCount?string.currency}</td>
 								</tr>
 							</#list>
 						<#else>

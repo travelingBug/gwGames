@@ -51,8 +51,8 @@ public class ToTimer{
 		logger.info("月度比赛排名排名完毕");
 	}
 
-//	@Scheduled(cron = "00 01 00 * * ?")
-	@Scheduled(cron = "00 00 21 * * ?")
+	@Scheduled(cron = "00 01 00 * * ?")
+//	@Scheduled(cron = "00 00 21 * * ?")
 	public void changeVip() {
 
 		//判断是周末不进行日期的减少
