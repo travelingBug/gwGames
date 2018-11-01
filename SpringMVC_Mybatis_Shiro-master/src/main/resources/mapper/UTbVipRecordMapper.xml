@@ -189,4 +189,7 @@
     </select>
 
 
+    <select id="findRecordByParam" parameterType="map" resultMap="recordMap" >
+        SELECT r.* FROM tb_vip_record r
+    </select>
 </mapper>

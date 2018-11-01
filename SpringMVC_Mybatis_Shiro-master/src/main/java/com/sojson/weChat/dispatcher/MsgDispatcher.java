@@ -43,7 +43,7 @@ public class MsgDispatcher {
         if (map.get("MsgType").equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) { // 图片消息
             System.out.println("==============这是图片消息！");
             Article article=new Article();
-            article.setDescription("天下股神实盘大赛是由天府新区对冲基金学会和富甲资讯联合主办的实盘炒股比赛。天下股神实盘大赛旨在挖掘民间炒股高手，为其提供一个展现自我风采、相互学习的大舞台。"); //图文消息的描述
+            article.setDescription("天下股神实盘大赛是由天府新区对冲基金学会和富甲文化联合主办的实盘炒股比赛。天下股神实盘大赛旨在挖掘民间炒股高手，为其提供一个展现自我风采、相互学习的大舞台。"); //图文消息的描述
             article.setPicUrl(IConfig.get("httpUrl_path")+"/images/bm_bg.png"); //图文消息图片地址
             article.setTitle("股神大赛");  //图文消息标题
             article.setUrl(IConfig.get("httpUrl_path")+"/static/wx/index.html");  //图文 url 链接

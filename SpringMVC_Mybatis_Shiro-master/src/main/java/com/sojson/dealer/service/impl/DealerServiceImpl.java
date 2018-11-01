@@ -5,7 +5,9 @@ import com.sojson.common.IConstant;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.dao.UTbDealerMapper;
 import com.sojson.common.dao.UTbVipRecordMapper;
+import com.sojson.common.dao.UTbVipsMapper;
 import com.sojson.common.model.TbDealer;
+import com.sojson.common.model.TbVipRecord;
 import com.sojson.common.model.TbVips;
 import com.sojson.common.model.UUser;
 import com.sojson.common.model.vo.DealerCountVo;
@@ -46,6 +48,9 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
 
     @Resource
     UUserService userService;
+
+    @Resource
+    UTbVipsMapper uTbVipsMapper;
 
     protected Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 
@@ -196,6 +201,29 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
      */
     @Override
     public List<DealerCountVo> countDealerVip(Map<String,Object> param){
+//        //查询出所有的经销商
+//        Map<String,Object> dealerParam = new HashMap<String,Object>();
+//        List<TbDealer> dealers = uTbDealerMapper.findAll(dealerParam);
+//        //将经销商进行分组
+//        //key是员工邀请码，value是父类
+//        Map<String,String> dealerReal = new HashMap<String,String>();
+//        //将员工和经销商分类
+//        for(TbDealer tbDealer : dealers){
+//            if (StringUtils.isBlank(tbDealer.getParentId()) || IConstant.parentId.equals(tbDealer.getParentId())) {
+//                dealerReal.put(tbDealer.getInviteNum(),tbDealer.getUserId() + "");
+//            } else {
+//                dealerReal.put(tbDealer.getInviteNum(),tbDealer.getParentId());
+//            }
+//        }
+//        //查询出所有的VIP
+//        List<TbVips> vips = uTbVipsMapper.findAll(new HashMap<String,Object>());
+//
+//        //查询出所有的购票记录
+//        TbVipRecord entity = new TbVipRecord();
+//        entity.ser
+//        List<TbVips> vips = uTbVipRecordMapper.findAll(new HashMap<String,Object>());
+
+
         List<VipRecordCount> vipRecordCounts = uTbVipRecordMapper.countByCode(param);
         //统计会员数
         List<VipRecordCount> vipCount = uTbVipRecordMapper.countVipNum(param);

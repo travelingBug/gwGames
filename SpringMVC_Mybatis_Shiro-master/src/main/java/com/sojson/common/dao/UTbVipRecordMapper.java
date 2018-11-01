@@ -33,4 +33,6 @@ public interface UTbVipRecordMapper {
     int findByPageEmployeeCount(Map<String, Object> map);
 
     List<VipRecordCount> countVipNum(Object map);
+
+    List<TbVipRecord> findRecordByParam(Map<String, Object> map);
 }

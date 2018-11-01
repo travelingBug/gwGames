@@ -132,6 +132,17 @@ public class HomeConfigServiceImpl extends BaseMybatisDao<UTbHomeConfigMapper> i
                 tbHomeConfig.setImgPath(path+tbHomeConfig.getImgPath());
             }
         }
+
+        //查询前三条移动端banner数据
+        param.put("pathFlag", IConstant.PATH_FLAG.BANNER_PHONE.v);
+        param.put( "page_sql"," limit  0 , 3 ");
+        List<TbHomeConfig>  bannerPhoneList = uTbHomeConfigMapper.findAll(param);
+        if (bannerPhoneList != null && bannerPhoneList.size() > 0) {
+            for (TbHomeConfig tbHomeConfig : bannerPhoneList) {
+                tbHomeConfig.setImgPath(path+tbHomeConfig.getImgPath());
+            }
+        }
+
         param.put("pathFlag", IConstant.PATH_FLAG.ADVERT_BOTTOM.v);
         param.put( "page_sql"," limit  0 , 1 ");
         List<TbHomeConfig>  advertList = uTbHomeConfigMapper.findAll(param);
@@ -146,6 +157,7 @@ public class HomeConfigServiceImpl extends BaseMybatisDao<UTbHomeConfigMapper> i
         Map<String,List<TbHomeConfig>> data = new HashMap<String,List<TbHomeConfig>>();
         data.put("banner",bannerList);
         data.put("advert",advertList);
+        data.put("bannerPhone",bannerPhoneList);
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"",data);
     }
 
