@@ -124,20 +124,23 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
                     if ("3".equals(fee)) {
                         vip.setEndTime(DateUtil.getDate(22));
                         vip.setLevel(IConstant.VIP_LEVEL.VIP_C.v);
+                        vip.setSurplusDay(22);
                     } else if ("2".equals(fee)) {
                         if (curVip.getLevel().toString().equals("0")) {
                             vip.setEndTime(DateUtil.getDate(22));
+                            vip.setSurplusDay(22);
                         } else if (curVip.getLevel().toString().equals("3")) {
-                            vip.setEndTime(upgrade(curVip.getEndTime(), "3", "2"));
+                            vip.setSurplusDay(upgrade(curVip.getSurplusDay(),"3", "2"));
                         }
                         vip.setLevel(IConstant.VIP_LEVEL.VIP_B.v);
                     } else if ("1".equals(fee)) {
                         if (curVip.getLevel().toString().equals("0")) {
                             vip.setEndTime(DateUtil.getDate(22));
+                            vip.setSurplusDay(22);
                         } else if (curVip.getLevel().toString().equals("3")) {
-                            vip.setEndTime(upgrade(curVip.getEndTime(), "3", "1"));
+                            vip.setSurplusDay(upgrade(curVip.getSurplusDay(), "3", "1"));
                         } else if (curVip.getLevel().toString().equals("2")) {
-                            vip.setEndTime(upgrade(curVip.getEndTime(), "2", "1"));
+                            vip.setSurplusDay(upgrade(curVip.getSurplusDay(), "2", "1"));
                         }
                         vip.setLevel(IConstant.VIP_LEVEL.VIP_A.v);
                     }
@@ -161,46 +164,67 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "请输入验证码", entity.getOrderNo());
     }
 
-    private String upgrade(String endTime, String oldLevel, String newLevel){
+    private int upgrade(int surplusDay, String oldLevel, String newLevel){
         try {
-            long nd = 1000 * 60 * 60 * 24;
-            long nh = 1000 * 60 * 60;
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            long oldEndTime = sdf.parse(endTime).getTime();
-            long nowTime = new Date().getTime();
-            Date newDate = sdf.parse(DateUtil.getDate(22));
+//            long nd = 1000 * 60 * 60 * 24;
+//            long nh = 1000 * 60 * 60;
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            long oldEndTime = sdf.parse(endTime).getTime();
+//            long nowTime = new Date().getTime();
+//            Date newDate = sdf.parse(DateUtil.getDate(22));
+//
+//            long diff = oldEndTime-nowTime;
+//            long day = diff / nd;
+//            long hour = diff % nd / nh;
+//            int hours = 0;
+//
+//            //C类升级
+//            if(oldLevel.equals("3")){
+//                if(newLevel.equals("2")){
+//                    hours = Math.round((day*24+hour)/4);
+//                }else if(newLevel.equals("1")){
+//                    hours = Math.round((day*24+hour)/10);
+//                }
+//            }
+//            //B类升级
+//            if(oldLevel.equals("2")){
+//                if(newLevel.equals("1")){
+//                    hours = (int) Math.round((day*24+hour)/2.5);
+//                }
+//            }
+//
+//            Calendar calendar = new GregorianCalendar();
+//            calendar.setTime(newDate);
+//            calendar.add(Calendar.HOUR_OF_DAY, hours);
+//
+//            return sdf.format(calendar.getTime());
 
-            long diff = oldEndTime-nowTime;
-            long day = diff / nd;
-            long hour = diff % nd / nh;
-            int hours = 0;
-
+            int days = 0;
+            int c = 500;
+            int b = 2000;
+            int a = 5000;
+            int weekday = 22;
             //C类升级
             if(oldLevel.equals("3")){
                 if(newLevel.equals("2")){
-                    hours = Math.round((day*24+hour)/4);
+                    days = Math.round((c/weekday*surplusDay)/(b/weekday));
                 }else if(newLevel.equals("1")){
-                    hours = Math.round((day*24+hour)/10);
+                    days = Math.round((c/weekday*surplusDay)/(a/weekday));
                 }
             }
             //B类升级
             if(oldLevel.equals("2")){
                 if(newLevel.equals("1")){
-                    hours = (int) Math.round((day*24+hour)/2.5);
+                    days = Math.round((b/weekday*surplusDay)/(a/weekday));
                 }
             }
 
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTime(newDate);
-            calendar.add(Calendar.HOUR_OF_DAY, hours);
-
-            return sdf.format(calendar.getTime());
-
-        }catch (ParseException e){
+            return days;
+        }catch (Exception e){
             e.printStackTrace();
         }
 
-        return null;
+        return 0;
 
     }
 
