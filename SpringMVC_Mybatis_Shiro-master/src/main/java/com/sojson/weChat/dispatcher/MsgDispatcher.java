@@ -1,5 +1,6 @@
 package com.sojson.weChat.dispatcher;
 
+import com.sojson.core.config.IConfig;
 import com.sojson.weChat.message.resp.Article;
 import com.sojson.weChat.message.resp.NewsMessage;
 import com.sojson.weChat.message.resp.TextMessage;
@@ -29,7 +30,7 @@ public class MsgDispatcher {
         if (map.get("MsgType").equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) { // 文本消息
             System.out.println("==============这是文本消息！");
 
-            txtmsg.setContent("您好，这里是股神大赛直播室！");
+            txtmsg.setContent("您好，这里是股神大赛直播室！\n客服联系方式\n客服电话：<a href=\"tel:028-87689938\">028-87689938</a>\n客服QQ：<a href=\"https://wpa.qq.com/msgrd?v=3&uin=1930621578&site=qq&menu=yes\">1930621578</a>");
             return MessageUtil.textMessageToXml(txtmsg);
         }
 
@@ -43,9 +44,9 @@ public class MsgDispatcher {
             System.out.println("==============这是图片消息！");
             Article article=new Article();
             article.setDescription("天下股神实盘大赛是由天府新区对冲基金学会和富甲资讯联合主办的实盘炒股比赛。天下股神实盘大赛旨在挖掘民间炒股高手，为其提供一个展现自我风采、相互学习的大舞台。"); //图文消息的描述
-            article.setPicUrl("http://mywx.wonderscd.com/images/bm_bg.png"); //图文消息图片地址
+            article.setPicUrl(IConfig.get("httpUrl_path")+"/images/bm_bg.png"); //图文消息图片地址
             article.setTitle("股神大赛");  //图文消息标题
-            article.setUrl("http://mywx.wonderscd.com/static/signup/index.jsp");  //图文 url 链接
+            article.setUrl(IConfig.get("httpUrl_path")+"/static/wx/index.html");  //图文 url 链接
             List<Article> list=new ArrayList<Article>();
             list.add(article);     //这里发送的是单图文，如果需要发送多图文则在这里 list 中加入多个 Article 即可！
 
