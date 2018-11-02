@@ -5,7 +5,6 @@ import com.sojson.weChat.utils.MessageUtil;
 import com.sojson.weChat.utils.WxseverUtils;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -47,7 +46,7 @@ public class EventDispatcher {
         if (map.get("Event").equals(MessageUtil.EVENT_TYPE_CLICK)) { //自定义菜单点击事件
             System.out.println("==============这是自定义菜单点击事件！");
 
-            txtmsg.setContent("您好，这里是股神大赛直播室！");
+            txtmsg.setContent("您好，这里是股神大赛直播室！\n客服联系方式\n客服电话：<a href=\"tel:028-87689938\">028-87689938</a>\n客服QQ：<a href=\"https://wpa.qq.com/msgrd?v=3&uin=1930621578&site=qq&menu=yes\">1930621578</a>");
             return MessageUtil.textMessageToXml(txtmsg);
         }
 

@@ -93,19 +93,19 @@ public class WechatSecurity  {
         JSONObject node = new JSONObject();
         node.put("name","首页");
         node.put("type","view");
-        node.put("url", IConfig.get("httpUrl_path")+"/static/wx/index.html?t=0");
+        node.put("url", IConfig.get("httpUrl_path")+"/static/wx/index.html?t=0&p=1");
         gResBut1.add(node);
         node.put("name","报名");
         node.put("type","view");
-        node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=5");
+        node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=5&p=1");
         gResBut1.add(node);
         node.put("name","赛事");
         node.put("type","view");
-        node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=4");
+        node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=4&p=1");
         gResBut1.add(node);
         node.put("name","排行榜");
         node.put("type","view");
-        node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=2");
+        node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=2&p=1");
         gResBut1.add(node);
 
         JSONObject node1 = new JSONObject();
@@ -116,15 +116,19 @@ public class WechatSecurity  {
         JSONArray gResBut2 = new JSONArray();
         node.put("name","个人中心");
         node.put("type","view");
-        node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=3");
+        node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=3&p=1");
         gResBut2.add(node);
         node.put("name","观赛");
         node.put("type","view");
-        node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=6");
+        node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=6&p=1");
         gResBut2.add(node);
         node.put("name","会员权益");
         node.put("type","view");
-        node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=1");
+        node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=1&p=1");
+        gResBut2.add(node);
+        node.put("key","text");
+        node.put("name","联系我们");
+        node.put("type","click");
         gResBut2.add(node);
 
         JSONObject node2 = new JSONObject();
