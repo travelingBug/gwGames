@@ -291,7 +291,7 @@
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="8">没有找到代理商</td>
+								<td class="text-center danger" colspan="9">没有找到代理商</td>
 							</tr>
 						</#if>
 					</table>
