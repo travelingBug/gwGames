@@ -40,5 +40,5 @@ public interface VipsService {
 
     ResultMessage updatePwd(TbVips entity, HttpServletRequest req) throws Exception;
 
-    public int updateSurplusDay();
+    public int updateSurplusDay(Map<String,Object> param);
 }

@@ -53,7 +53,7 @@ public class TbPlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> impleme
 		//验证用户名
 		if (StringUtils.isEmpty(dto.getName())
 				|| dto.getName().length() > 20) {
-			return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"会员名称必填且不能超过20个字符！");
+			return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"观众名称必填且不能超过20个字符！");
 		}
 
 		//验证身份证

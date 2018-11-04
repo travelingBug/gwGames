@@ -208,7 +208,7 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
     private ResultMessage beforeUpdateVaild(TbVips entity){
         //修改ID验证
         if (StringUtils.isBlank(entity.getPhone())) {
-            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"会员信息错误！");
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"观众信息错误！");
         }
 
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
@@ -234,7 +234,7 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
         //验证用户名
         if (StringUtils.isEmpty(dto.getNickName())
                 || dto.getNickName().length() > 20) {
-            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"会员昵称必填且不能超过20个字符！");
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"观众昵称必填且不能超过20个字符！");
         }
 
         //验证电话号码
@@ -304,8 +304,8 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
 
 
     @Override
-    public int updateSurplusDay(){
-        return uTbVipsMapper.updateSurplusDay();
+    public int updateSurplusDay(Map<String,Object> param){
+        return uTbVipsMapper.updateSurplusDay(param);
     }
 
 }

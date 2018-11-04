@@ -80,7 +80,7 @@
                             <th>金额</th>
                             <th>购买时间</th>
                             <th>归属员工</th>
-                            <th>归属经销商</th>
+                            <th>归属代理商</th>
 						</tr>
 						<#if page?exists && page.list?size gt 0 >
 							<#list page.list as it>
@@ -89,13 +89,13 @@
 									<td>${it.nickname}</td>
 									<td>
 										<#if it.level==0>
-                                            未充值会员
+                                            未购票观众
 										<#elseif it.level==1>
-                                            A类会员
+                                            A类观众
 										<#elseif it.level==2>
-                                            B类会员
+                                            B类观众
 										<#elseif it.level==3>
-                                            C类会员
+                                            C类观众
 										</#if>
 									</td>
                                     <td>${it.amount}</td>

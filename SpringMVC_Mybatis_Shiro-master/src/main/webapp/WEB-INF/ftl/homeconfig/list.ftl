@@ -265,6 +265,7 @@
                             <option value="0">首页横幅</option>
                             <option value="1">首页广告位</option>
                             <option value="2">底部广告位</option>
+                            <option value="3">移动端横幅</option>
                         </select>
                     </div>
 
@@ -297,6 +298,8 @@
                                     首页广告位
                                 <#elseif it.pathFlag==2>
                                     底部广告位
+                                <#elseif it.pathFlag==3>
+                                    移动端横幅
                                 </#if>
                             </td>
                             <td>${it.url}</td>
@@ -375,6 +378,7 @@
                                                     <option value="0">首页横幅</option>
                                                     <option value="1">首页广告位</option>
                                                     <option value="2">底部广告位</option>
+                                                    <option value="3">移动端横幅</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -394,6 +398,7 @@
                                                      注意：<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、首页横幅页面只会展示前3张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：1440*300)。
                                                         <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、首页广告位只会展示1张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：1000*190)。
                                                         <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、底部广告位只会展示1张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：1440*280)。
+                                                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4、移动端横幅页面只会展示前3张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：1125*540)。
 
                                                 </span>
                                             </div>
@@ -460,6 +465,7 @@
                                                     <option value="0">首页横幅</option>
                                                     <option value="1">首页广告位</option>
                                                     <option value="2">底部广告位</option>
+                                                    <option value="3">移动端横幅</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -479,7 +485,7 @@
                                                     注意：<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、首页横幅页面只会展示前3张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：1440*380)。
                                                         <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、首页广告位只会展示1张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：1000*190)。
                                                         <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3、底部广告位只会展示1张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：1440*280)。
-
+                                                        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4、移动端横幅页面只会展示前3张，展示顺序为：序列从小到大，创建时间从大到小取值(图片建议大小：1125*540)。
                                                 </span>
                                             </div>
                                         </div>

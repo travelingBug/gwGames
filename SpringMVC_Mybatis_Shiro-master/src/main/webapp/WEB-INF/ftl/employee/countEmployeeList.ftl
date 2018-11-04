@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 	<head>
 		<meta charset="utf-8" />
-		<title>员工会员统计</title>
+		<title>员工观众统计</title>
 		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 		<link   rel="icon" href="https://open.sojson.com/favicon.ico" type="image/x-icon" />
 		<link   rel="shortcut icon" href="https://open.sojson.com/favicon.ico" />
@@ -60,9 +60,26 @@
 			<div class="row">
 				<@_left.employee 2/>
 				<div class="col-md-10">
-					<h2>员工会员统计</h2>
+					<h2>员工观众统计</h2>
 					<hr>
 					<form method="post" action="${basePath}/dealer/countEmployeeList.shtml" id="countForm" class="form-inline">
+                        <div class="col-sm-12" style="margin-top: 10px;margin-bottom: 20px;">
+                            <div class="form-group  col-sm-4">
+                                <span class=""> <#--pull-right -->
+                                    <label for="bgnTime">员工名称</label>
+                                    <input type="text"  class="form-control" name="name" id="name" placeholder="员工名称" value="${name?default('')}" />
+                                </span>
+                            </div>
+
+                            <div class="form-group col-sm-4" form-inline>
+                               <span class=""> <#--pull-right -->
+                                   <label for="bgnTime">员工组名</label>
+                                    <input type="text"  class="form-control" name="groupName" id="groupName" placeholder="员工组名" value="${groupName?default('')}" />
+                                </span>
+                            </div>
+
+
+                        </div>
                         <div class="col-sm-12"  style="margin-top: 10px;margin-bottom: 20px;">
                             <div class="form-group col-sm-8" form-inline>
                                 <label for="bgnTime">购买时间</label>
@@ -79,36 +96,38 @@
 					<hr>
 					<table class="table table-bordered">
                         <tr>
-                            <td colspan="8"><button type="button" id="exportButton" <#if !listData?exists || listData?size lte 0 >disabled="disabled"</#if> class="btn btn-primary">导出</button></td>
+                            <td colspan="10"><button type="button" id="exportButton" <#if !listData?exists || listData?size lte 0 >disabled="disabled"</#if> class="btn btn-primary">导出</button></td>
                         </tr>
 						<tr>
+                            <th>序号</th>
                             <th>员工名称</th>
-                            <#--<th>新增会员总人数</th>-->
-							<th>开通A类会员次数</th>
-							<th>开通A类会员金额</th>
-							<th>开通B类会员次数</th>
-                            <th>开通B类会员金额</th>
-                            <th>开通C类会员次数</th>
-                            <th>开通C类会员金额</th>
-                            <th>开通会员总金额</th>
+                            <th>新增观众总人数</th>
+							<th>开通A类观众次数</th>
+							<th>开通A类观众金额</th>
+							<th>开通B类观众次数</th>
+                            <th>开通B类观众金额</th>
+                            <th>开通C类观众次数</th>
+                            <th>开通C类观众金额</th>
+                            <th>开通观众总金额</th>
 						</tr>
 						<#if listData?exists && listData?size gt 0 >
 							<#list listData as it>
 								<tr>
+                                    <td> ${it_index+1}</td>
 									<td>${it.name!''}</td>
-                                    <#--<td>${it.vipCount}</td>-->
+                                    <td>${it.vipCount}</td>
                                     <td>${it.vipACount}</td>
-                                    <td>${it.vipAMoneyCount}</td>
+                                    <td>${it.vipAMoneyCount?string.currency}</td>
                                     <td>${it.vipBCount}</td>
-                                    <td>${it.vipBMoneyCount}</td>
+                                    <td>${it.vipBMoneyCount?string.currency}</td>
                                     <td>${it.vipCCount}</td>
-                                    <td>${it.vipCMoneyCount}</td>
-									<td>${it.vipMoneyCount}</td>
+                                    <td>${it.vipCMoneyCount?string.currency}</td>
+									<td>${it.vipMoneyCount?string.currency}</td>
 								</tr>
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="8">没有找到员工数据</td>
+								<td class="text-center danger" colspan="10">没有找到员工数据</td>
 							</tr>
 						</#if>
 					</table>

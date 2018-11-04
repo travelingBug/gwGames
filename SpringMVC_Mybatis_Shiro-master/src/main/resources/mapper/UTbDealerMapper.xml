@@ -143,6 +143,13 @@
       SELECT rid FROM u_user_role WHERE uid=#{userId})
   </select>
 
+
+  <select id="queryUserRoles" parameterType="java.lang.String" resultType="java.lang.String">
+  SELECT CONCAT(',',group_concat(u.TYPE),',') FROM u_role u WHERE u.id in(
+   select t.rid from u_user_role t where t.uid =#{userId})
+  </select>
+
+
   <select id="queryMoney" parameterType="java.lang.String" resultType="java.lang.String">
     SELECT ROUND((T1.total*T2.type) / 100, 2) FROM
     (SELECT SUM(amount) AS total FROM tb_vip_record WHERE vip_id IN
@@ -150,6 +157,30 @@
     SELECT invite_num FROM tb_dealer WHERE FK_USER_ID =#{userId}))) T1,
     (SELECT TYPE FROM tb_dealer WHERE FK_USER_ID =#{userId}) T2
   </select>
+
+  <select id="findDealerIds" resultMap="dealerResultMap" >
+    select
+    <include refid="dealer_Column_List" />
+    from tb_dealer d
+    <include refid="dealerId_where"/>
+  </select>
+
+
+  <sql id="dealerId_where">
+    <where>
+      d.DEL_FLAG = 0
+      <if test="dealerId != null " >
+        and (PARENT_ID = #{dealerId} OR FK_USER_ID = #{dealerId})
+      </if>
+      <if test="name != null and name != '' " >
+        and d.name like LOWER(CONCAT('%',#{name,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test="groupName != null and groupName != '' " >
+        and d.D_GROUP like LOWER(CONCAT('%',#{groupName,jdbcType=VARCHAR},'%'))
+      </if>
+    </where>
+  </sql>
+
 
   <select id="queryEmployeeList" resultMap="dealerResultMap" >
     SELECT

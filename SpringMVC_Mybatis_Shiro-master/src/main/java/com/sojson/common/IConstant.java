@@ -77,7 +77,9 @@ public interface IConstant {
         /** 首页广告 */
         ADVERT_HOME((byte)1),
         /** 底部广告 */
-        ADVERT_BOTTOM((byte)2);
+        ADVERT_BOTTOM((byte)2),
+        /** 移横幅动端 */
+        BANNER_PHONE((byte)3);
 
         public byte v;
         private PATH_FLAG(byte v) {

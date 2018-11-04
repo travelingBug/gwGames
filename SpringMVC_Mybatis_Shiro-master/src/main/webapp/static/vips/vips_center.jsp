@@ -33,7 +33,7 @@
 
         <div class="content bg-white">
             <div class="tab1">
-                <a class="on">充值记录</a>
+                <a class="on">购票记录</a>
             </div>
             <div class="table-area1" id="depositRecordDiv">
                 <table class="table1" id="depositRecordTable">
@@ -210,7 +210,7 @@
                 var recordData = result.list;
                 $('#tb'+id).html('');
                 $('#pager'+id).remove();
-                $('#tb'+id).append('<tr><th></th><th>充值等级</th><th>充值金额</th><th>充值时间</th></tr>');
+                $('#tb'+id).append('<tr><th></th><th>购票等级</th><th>购票金额</th><th>购票时间</th></tr>');
                 if (recordData != null && recordData.length > 0) {
                     for (var i = 0 ; i < recordData.length ; i++) {
                         var showTop= '<td>'+recordData[i].rank+'</td>';

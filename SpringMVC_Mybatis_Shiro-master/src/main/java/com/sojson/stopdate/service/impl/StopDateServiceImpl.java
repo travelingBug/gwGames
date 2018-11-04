@@ -46,6 +46,9 @@ public class StopDateServiceImpl extends BaseMybatisDao<UTbStopDateMapper> imple
 
     @Override
     public ResultMessage insert(TbStopDate tbStopDate){
+        if (tbStopDate.getEndTime().getTime() < tbStopDate.getBgnTime().getTime()) {
+            return  new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"结束时间必须大于开始时间！");
+        }
         tbStopDate.setUserId(TokenManager.getUserId());
         tbStopDate.setUserName(TokenManager.getNickname());
         tbStopDate.setCrtTime(new Date());

@@ -94,14 +94,14 @@
 				  <@shiro.hasAnyRoles name='888888,100004,100005'>
                       <li class="dropdown ${(index==5)?string('active','')}">
                           <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="${basePath}/dealer/list.shtml?parentId=0">
-                              经销商管理<span class="caret"></span>
+                              代理商管理<span class="caret"></span>
                           </a>
                           <ul class="dropdown-menu">
 							  <@shiro.hasPermission name="/dealer/list.shtml">
-                                  <li><a href="${basePath}/dealer/list.shtml?parentId=0">经销商列表</a></li>
+                                  <li><a href="${basePath}/dealer/list.shtml?parentId=0">代理商列表</a></li>
 							  </@shiro.hasPermission>
 							  <@shiro.hasPermission name="/dealer/countDealerList.shtml">
-                                  <li><a href="${basePath}/dealer/countDealerList.shtml">经销商会员统计</a></li>
+                                  <li><a href="${basePath}/dealer/countDealerList.shtml">代理商观众统计</a></li>
 							  </@shiro.hasPermission>
                           </ul>
 
@@ -119,7 +119,7 @@
                                   <li><a href="${basePath}/dealer/employeeList.shtml?parentId=${userId}">员工列表</a></li>
 							  </@shiro.hasPermission>
 							  <@shiro.hasPermission name="/dealer/countEmployeeList.shtml">
-                                  <li><a href="${basePath}/dealer/countEmployeeList.shtml">员工会员统计</a></li>
+                                  <li><a href="${basePath}/dealer/countEmployeeList.shtml">员工观众统计</a></li>
 							  </@shiro.hasPermission>
 
                           </ul>
@@ -129,11 +129,11 @@
 				  <@shiro.hasAnyRoles name='888888,200001,200002,100004,100005,100006'>
                       <li class="dropdown ${(index==7)?string('active','')}">
                           <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="${basePath}/dealer/vipsList.shtml?parentId=${userId}">
-                              会员管理<span class="caret"></span>
+                              观众管理<span class="caret"></span>
                           </a>
                           <ul class="dropdown-menu">
 							  <@shiro.hasPermission name="/dealer/vipsList.shtml">
-                                  <li><a href="${basePath}/dealer/vipsList.shtml?parentId=${userId}">会员列表</a></li>
+                                  <li><a href="${basePath}/dealer/vipsList.shtml?parentId=${userId}">观众列表</a></li>
 							  </@shiro.hasPermission>
 							  <@shiro.hasPermission name="/dealer/vipsRecordList.shtml">
                                   <li><a href="${basePath}/dealer/vipsRecordList.shtml?userId=${userId}">购票明细</a></li>

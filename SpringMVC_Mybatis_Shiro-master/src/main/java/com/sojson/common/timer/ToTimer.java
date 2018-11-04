@@ -52,17 +52,20 @@ public class ToTimer{
 	}
 
 	@Scheduled(cron = "00 01 00 * * ?")
+//	@Scheduled(cron = "00 28 23 * * ?")
 	public void changeVip() {
 
 		//判断是周末不进行日期的减少
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
+		//因为当前时间是第二天，所以必须减1表示扣除头天的
+		cal.add(Calendar.DATE,-1);
 		if(!(cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)){
 			//获取当前信息系统暂停信息
 			List<TbStopDate> tbStopDates = stopDateService.findStopDate();
 
 			//判断当前时间在不在日期类
-			long currTime = new Date().getTime();
+			long currTime = cal.getTime().getTime();
 			boolean flag = true;
 			for (TbStopDate tbStopDate : tbStopDates) {
 				//若果在时间范围内，则不需要做清理
@@ -72,8 +75,16 @@ public class ToTimer{
 				}
 			}
 			if (flag) {
-				//扣除会员天数
-				vipsService.updateSurplusDay();
+
+//				//扣除会员天数
+//				//会员当天开通的时间不做扣除操作。如果当前时间是周一，那么周五开通的不做扣除
+//				if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
+//					cal.add(Calendar.DATE,-3);
+//				}
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				Map<String,Object> param = new HashMap<String,Object>();
+				param.put("noDay",sdf.format(cal.getTime()));
+				vipsService.updateSurplusDay(param);
 
 				//清理天数为0的用户会员级别
 				LoggerUtils.fmtDebug(getClass(),"开始清理会员信息！");

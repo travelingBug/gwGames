@@ -14,7 +14,7 @@
     <ul class="page-nav">
         <li><a>我的账户</a></li>
         <li>></li>
-        <li><span>充值中心</span></li>
+        <li><span>购票中心</span></li>
     </ul>
     <div class="main-box">
         <div class="content bg-white">

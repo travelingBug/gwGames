@@ -32,9 +32,9 @@
                     if (!flag) {
                         return;
                     }
-                    var data = {};
-                    data.push({name:'bgnTime',value:$('#bgnTime').val() + " 00:00:00"});
-                    data.push({name:'endTime',value:$('#endTime').val() + " 23:59:59"});
+                    var data = [];
+                    data.push({name:'bgnTime',value:new Date(($('#bgnTime').val() + " 00:00:00").replace("-", "/").replace("-", "/"))});
+                    data.push({name:'endTime',value:new Date(($('#endTime').val() + " 23:59:59").replace("-", "/").replace("-", "/"))});
                     $.ajax({
                         type: "POST",
                         url: "/stopdate/insert.shtml",
@@ -78,6 +78,35 @@
                 });
             }
 
+            function _del(id){
+                var index =  layer.confirm("确定删除此条数据？",function(){
+                    var load = layer.load();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/stopdate/del.shtml",
+                        data: {id:id},
+                        dataType: "json",
+                        success: function(result) {
+                            if (result && result.level != 1) {
+                                return layer.msg(result.messageText, so.default), !0;
+                            } else {
+                                layer.msg('删除成功！');
+                                $('#formId').submit();
+                            }
+                        },
+                        error: function(data) {
+                            layer.alert('系统错误，请联系管理员！', {
+                                icon: 2,
+                                skin: 'layui-layer-lan'
+                            });
+                        }
+                    });
+
+                    layer.close(index);
+                });
+            }
+
 		</script>
 	</head>
 	<body data-target="#one" data-spy="scroll" id="contentDiv">
@@ -105,12 +134,12 @@
                             </div>
                         </div>
 
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" style="margin-top: 20px;">
                             <tr>
-                                <th width="120">序号</th>
+                                <th width="50">序号</th>
                                 <th width="120">操作人姓名</th>
-                                <th width="100">创建时间</th>
-                                <th width="180">开始时间</th>
+                                <th width="180">创建时间</th>
+                                <th width="100">开始时间</th>
                                 <th width="100">结束时间</th>
                                 <th width="80">操作</th>
                             </tr>
@@ -167,7 +196,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-12">
                                                 <span style="color: red;">
-                                                     注意：添加时间范围后，如果到达时间后，会员的观赛日期将不会被减少。
+                                                     注意：添加时间范围后，如果到达时间后，观众的观赛日期将不会被减少。
                                                 </span>
                                                 </div>
                                             </div>
@@ -177,7 +206,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" id="stopdate_add-remove"  class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
-                                    <button type="button" id="stopdate_add_submit" class="btn btn-primary" disabled="disabled"><i class="fas fa-save normal"></i>&nbsp;保存</button>
+                                    <button type="button" id="stopdate_add_submit" class="btn btn-primary" ><i class="fas fa-save normal"></i>&nbsp;保存</button>
                                 </div>
                             </div>
                         </div>

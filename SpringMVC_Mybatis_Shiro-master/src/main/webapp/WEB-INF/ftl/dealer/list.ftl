@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 	<head>
 		<meta charset="utf-8" />
-		<title>经销商列表</title>
+		<title>代理商列表</title>
 		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 		<link   rel="icon" href="https://open.sojson.com/favicon.ico" type="image/x-icon" />
 		<link   rel="shortcut icon" href="https://open.sojson.com/favicon.ico" />
@@ -234,7 +234,7 @@
 			<div class="row">
 				<@_left.dealer 1/>
 				<div class="col-md-10">
-					<h2>经销商列表</h2>
+					<h2>代理商列表</h2>
 					<hr>
 					<form method="post" action="${basePath}/dealer/list.shtml?parentId=0" id="dealerForm" class="form-inline">
 						<div clss="well">
@@ -291,7 +291,7 @@
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="8">没有找到经销商</td>
+								<td class="text-center danger" colspan="8">没有找到代理商</td>
 							</tr>
 						</#if>
 					</table>

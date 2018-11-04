@@ -148,11 +148,11 @@ public class DealerController extends BaseController {
     @RequestMapping(value = "countDealerList")
     public ModelAndView countDealerList(ModelMap modelMap,@RequestParam Map<String,Object> map) {
 
-        if (map.get("bgnTime") == null && map.get("endTime") == null) {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            map.put("bgnTime", formatter.format(new Date()) + " 00:00:00");
-            map.put("endTime", formatter.format(new Date()) + " 23:59:59");
-        }
+//        if (map.get("bgnTime") == null && map.get("endTime") == null) {
+//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//            map.put("bgnTime", formatter.format(new Date()) + " 00:00:00");
+//            map.put("endTime", formatter.format(new Date()) + " 23:59:59");
+//        }
         modelMap.put("listData", dealerService.countDealerVip(map));
         modelMap.putAll(map);
         return new ModelAndView("dealer/countDealerList");
@@ -162,11 +162,11 @@ public class DealerController extends BaseController {
     @RequestMapping(value = "countEmployeeList")
     public ModelAndView countEmployeeList(ModelMap modelMap,@RequestParam Map<String,Object> map) {
 
-        if (map.get("bgnTime") == null && map.get("endTime") == null) {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            map.put("bgnTime", formatter.format(new Date()) + " 00:00:00");
-            map.put("endTime", formatter.format(new Date()) + " 23:59:59");
-        }
+//        if (map.get("bgnTime") == null && map.get("endTime") == null) {
+//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//            map.put("bgnTime", formatter.format(new Date()) + " 00:00:00");
+//            map.put("endTime", formatter.format(new Date()) + " 23:59:59");
+//        }
         modelMap.put("listData", dealerService.countDealerVipById(map));
         modelMap.putAll(map);
         return new ModelAndView("employee/countEmployeeList");

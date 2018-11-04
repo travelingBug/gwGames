@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 	<head>
 		<meta charset="utf-8" />
-		<title>会员列表</title>
+		<title>观众列表</title>
 		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 		<link   rel="icon" href="https://open.sojson.com/favicon.ico" type="image/x-icon" />
 		<link   rel="shortcut icon" href="https://open.sojson.com/favicon.ico" />
@@ -71,7 +71,7 @@
 			<div class="row">
 				<@_left.vips 1/>
 				<div class="col-md-10">
-					<h2>会员列表</h2>
+					<h2>观众列表</h2>
 					<hr>
 					<form method="post" action="${basePath}/dealer/vipsList.shtml?parentId=${userId}" id="vipsForm" class="form-inline">
 						<div clss="well">
@@ -88,11 +88,11 @@
 						<tr>
 							<th><input type="checkbox" id="checkAll"/></th>
 							<th>昵称</th>
-							<th>会员级别</th>
+							<th>观众级别</th>
                             <th>电话号码</th>
 							<th>推荐码</th>
 							<th>归属员工</th>
-                            <th>归属经销商</th>
+                            <th>归属代理商</th>
 							<th>创建时间</th>
 							<th>操作</th>
 						</tr>
@@ -114,7 +114,7 @@
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="9">没有找到会员</td>
+								<td class="text-center danger" colspan="9">没有找到观众</td>
 							</tr>
 						</#if>
 					</table>
