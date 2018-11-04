@@ -175,4 +175,15 @@
 
   </update>
 
+  <update id="updateVipBelong" parameterType="com.sojson.common.model.TbVips" >
+    update tb_vip
+    <set>
+      MOD_TIME = #{modTime,jdbcType=TIMESTAMP}
+      <if test="inviteCode != null and inviteCode != ''">
+        ,INVITAION_CODE = #{inviteCode}
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+
 </mapper>

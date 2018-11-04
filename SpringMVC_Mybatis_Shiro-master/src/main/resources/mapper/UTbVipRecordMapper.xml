@@ -18,6 +18,7 @@
         <result column="remark" property="remark" jdbcType="VARCHAR" />
         <result column="belong" property="belong" jdbcType="VARCHAR" />
         <result column="belong2" property="belong2" jdbcType="VARCHAR" />
+        <result column="totalAmount" property="totalAmount" jdbcType="VARCHAR" />
     </resultMap>
 
     <resultMap id="recordVoMap" type="com.sojson.common.model.vo.TbVipRecordVo" >
@@ -62,39 +63,14 @@
      </where>
   </sql>
 
-    <select id="findAll" parameterType="map" resultMap="recordVoMap" >
-        <if test="search == '1'">
-            SELECT * from tb_vip_record;
+    <sql id="where_record">
+        <if test="startDate != null and startDate !=''">
+            and r.CRT_TIME &gt;= #{startDate}
         </if>
-
-        <if test="search == '2'">
-            SELECT * FROM tb_vip_record WHERE vip_id IN(
-            SELECT id FROM tb_vip WHERE INVITAION_CODE IN(
-            SELECT INVITE_NUM FROM tb_dealer WHERE SEAT_NUM=#{seatNum}));
+        <if test="endDate != null and endDate !=''">
+            and r.CRT_TIME &lt;= #{endDate}
         </if>
-
-        <if test="search == '3'">
-            SELECT * FROM tb_vip_record WHERE vip_id IN(
-            SELECT id FROM tb_vip WHERE INVITAION_CODE = #{inviteCode});
-        </if>
-    </select>
-
-    <select id="findCount" parameterType="map" resultType="int" >
-        <if test="search == '1'">
-            SELECT count(id) from tb_vip_record;
-        </if>
-
-        <if test="search == '2'">
-            SELECT count(id) FROM tb_vip_record WHERE vip_id IN(
-            SELECT id FROM tb_vip WHERE INVITAION_CODE IN(
-            SELECT INVITE_NUM FROM tb_dealer WHERE SEAT_NUM=#{seatNum}));
-        </if>
-
-        <if test="search == '3'">
-            SELECT count(id) FROM tb_vip_record WHERE vip_id IN(
-            SELECT id FROM tb_vip WHERE INVITAION_CODE = #{inviteCode})
-        </if>
-    </select>
+    </sql>
 
     <select id="findByPageAdminCount" parameterType="map" resultType="int">
         SELECT count(r.id) from tb_vip_record r
@@ -103,7 +79,9 @@
        LEFT JOIN tb_dealer v
         ON v.INVITE_NUM = d.INVITAION_CODE
         LEFT JOIN tb_dealer v2
-        ON v.parent_id= v2.FK_USER_ID;
+        ON v.parent_id= v2.FK_USER_ID
+        where 1=1
+        <include refid="where_record"/>
     </select>
 
     <select id="findByPageDealerCount" parameterType="map" resultType="int">
@@ -116,7 +94,8 @@
         ON v.parent_id= v2.FK_USER_ID
          WHERE vip_id IN(
             SELECT id FROM tb_vip WHERE INVITAION_CODE IN(
-            SELECT INVITE_NUM FROM tb_dealer WHERE SEAT_NUM=#{seatNum}));
+            SELECT INVITE_NUM FROM tb_dealer WHERE SEAT_NUM=#{seatNum}))
+        <include refid="where_record"/>
     </select>
 
     <select id="findByPageEmployeeCount" parameterType="map" resultType="int">
@@ -140,6 +119,8 @@
         ON v.INVITE_NUM = d.INVITAION_CODE
         LEFT JOIN tb_dealer v2
         ON v.parent_id= v2.FK_USER_ID
+        where 1=1
+        <include refid="where_record"/>
          LIMIT #{start},#{pageSize}
     </select>
 
@@ -150,7 +131,9 @@
         LEFT JOIN tb_dealer v2 ON v.parent_id= v2.FK_USER_ID
          WHERE r.vip_id IN(
             SELECT id FROM tb_vip WHERE INVITAION_CODE IN(
-            SELECT INVITE_NUM FROM tb_dealer WHERE SEAT_NUM=#{seatNum})) LIMIT #{start},#{pageSize}
+            SELECT INVITE_NUM FROM tb_dealer WHERE SEAT_NUM=#{seatNum}))
+        <include refid="where_record"/>
+             LIMIT #{start},#{pageSize}
     </select>
 
     <select id="findByPageEmployee" parameterType="map" resultMap="recordMap">
@@ -160,6 +143,44 @@
         LEFT JOIN tb_dealer v2 ON v.parent_id= v2.FK_USER_ID
          WHERE r.vip_id IN(
             SELECT id FROM tb_vip WHERE INVITAION_CODE = #{inviteCode}) LIMIT #{start},#{pageSize}
+    </select>
+
+    <select id="findByPageAdminSum" parameterType="map" resultType="java.lang.String">
+        SELECT sum(r.amount) from tb_vip_record r
+        LEFT JOIN tb_vip d
+        ON r.vip_id = d.id
+        LEFT JOIN tb_dealer v
+        ON v.INVITE_NUM = d.INVITAION_CODE
+        LEFT JOIN tb_dealer v2
+        ON v.parent_id= v2.FK_USER_ID
+        where 1=1
+        <include refid="where_record"/>
+    </select>
+
+    <select id="findByPageDealerSum" parameterType="map" resultType="java.lang.String">
+        SELECT sum(r.amount) FROM tb_vip_record r
+        LEFT JOIN tb_vip d
+        ON r.vip_id = d.id
+        LEFT JOIN tb_dealer v
+        ON v.INVITE_NUM = d.INVITAION_CODE
+        LEFT JOIN tb_dealer v2
+        ON v.parent_id= v2.FK_USER_ID
+        WHERE vip_id IN(
+        SELECT id FROM tb_vip WHERE INVITAION_CODE IN(
+        SELECT INVITE_NUM FROM tb_dealer WHERE SEAT_NUM=#{seatNum}))
+        <include refid="where_record"/>
+    </select>
+
+    <select id="findByPageEmployeeSum" parameterType="map" resultType="java.lang.String">
+        SELECT sum(r.amount) FROM tb_vip_record r
+        LEFT JOIN tb_vip d
+        ON r.vip_id = d.id
+        LEFT JOIN tb_dealer v
+        ON v.INVITE_NUM = d.INVITAION_CODE
+        LEFT JOIN tb_dealer v2
+        ON v.parent_id= v2.FK_USER_ID
+        WHERE vip_id IN(
+        SELECT id FROM tb_vip WHERE INVITAION_CODE = #{inviteCode})
     </select>
 
     <sql id="where_dealerId">

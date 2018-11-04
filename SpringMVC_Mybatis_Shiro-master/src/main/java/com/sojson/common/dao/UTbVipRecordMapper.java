@@ -32,5 +32,11 @@ public interface UTbVipRecordMapper {
 
     int findByPageEmployeeCount(Map<String, Object> map);
 
+    String findByPageAdminSum(Map<String, Object> map);
+
+    String findByPageDealerSum(Map<String, Object> map);
+
+    String findByPageEmployeeSum(Map<String, Object> map);
+
     List<VipRecordCount> countVipNum(Object map);
 }

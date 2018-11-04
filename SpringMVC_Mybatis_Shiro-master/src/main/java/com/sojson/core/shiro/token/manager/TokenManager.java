@@ -2,6 +2,7 @@ package com.sojson.core.shiro.token.manager;
 
 import java.util.List;
 
+import com.sojson.common.model.URole;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.SimplePrincipalCollection;
@@ -35,6 +36,7 @@ public class TokenManager {
 	public static final SampleRealm realm = SpringContextUtil.getBean("sampleRealm",SampleRealm.class);
 	//用户session管理
 	public static final CustomSessionManager customSessionManager = SpringContextUtil.getBean("customSessionManager",CustomSessionManager.class);
+
 	/**
 	 * 获取当前登录的用户User对象
 	 * @return
@@ -43,8 +45,14 @@ public class TokenManager {
 		UUser token = (UUser)SecurityUtils.getSubject().getPrincipal();
 		return token ;
 	}
-	
-	
+
+	public static URole getRoleByUserId(String userId){
+		return customSessionManager.queryRoleByUserId(userId);
+	}
+
+	public static String getDealerStatus(String userId){
+		return customSessionManager.queryDealerStatus(userId);
+	}
 	
 	/**
 	 * 获取当前用户的Session

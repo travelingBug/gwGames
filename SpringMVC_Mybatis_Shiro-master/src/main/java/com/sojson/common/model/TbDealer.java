@@ -84,6 +84,16 @@ public class TbDealer implements Serializable {
 
     private String inviteNum;
 
+    private String dGroup;
+
+    public String getdGroup() {
+        return dGroup;
+    }
+
+    public void setdGroup(String dGroup) {
+        this.dGroup = dGroup;
+    }
+
     public String getSeatNum() {
         return seatNum;
     }

@@ -9,7 +9,7 @@
 		<link href="${basePath}/js/common/bootstrap/3.3.5/css/bootstrap.min.css?${_v}" rel="stylesheet"/>
 		<link href="${basePath}/css/common/base.css?${_v}" rel="stylesheet"/>
         <link href="${basePath}/css/gwGame.css?${_v}" rel="stylesheet"/>
-        <link rel="stylesheet" href="${basePath}/css/page.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 		<script  src="http://open.sojson.com/common/jquery/jquery1.8.3.min.js"></script>
 		<script  src="${basePath}/js/common/layer/layer.js"></script>
 		<script  src="${basePath}/js/common/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -48,18 +48,25 @@
                         }
                     },'json');
                 });
+
+				<@shiro.hasAnyRoles name='888888,100004,100005,100006'>
+                    queryDealer(1);
+				</@shiro.hasAnyRoles>
+
 			});
 
-			function _edit(id, name, phone, address, type){
+			function _edit(id, name, phone, address, dGroup){
 				$("#employee_edit_id").val(id);
                 $("#employee_edit_name").val(name);
                 $("#employee_edit_phone").val(phone);
                 $("#employee_edit_address").val(address);
-                $("#employee_edit_type").val(type);
+                $("#employee_edit_group").val(dGroup);
+
 			}
 
 			function _add(){
 				$('#employeeAddModal .form-control').val("");
+                queryDealer(2);
                 $('#employeeAddModal').modal();
 			}
 
@@ -87,6 +94,27 @@
             }
 			</@shiro.hasPermission>
 
+			function queryDealer(a){
+                $.post('${basePath}/dealer/queryDealerList.shtml',null,function(result){
+                    if(result && result.level != 1){
+
+                    }else{
+                        var dealerList = result.data;
+                        var selectHtml = "<option value=''>全部</option>";
+                        for (var i = 0; i < dealerList.length; i++) {
+                            selectHtml += "<option value='" + dealerList[i].userId + "'>" + dealerList[i].name + "</option>";
+                        }
+						if(a==1) {
+                            $("#dealerList").empty();
+                            $("#dealerList").append(selectHtml);
+                        }else if(a==2){
+                            $("#dealerAddList").empty();
+                            $("#dealerAddList").append(selectHtml);
+						}
+                    }
+                },'json');
+			}
+
 		</script>
 	</head>
 	<body data-target="#one" data-spy="scroll">
@@ -104,6 +132,16 @@
 					        <input type="text" class="form-control" style="width: 300px;" value="${findContent?default('')}" 
 					        			name="findContent" id="findContent" placeholder="输入名称">
 					      </div>
+							<div class="form-group">
+								<input type="text" class="form-control" style="width: 100px;"
+									   name="dGroup" id="dGroup" placeholder="分组名称">
+							</div>
+							<@shiro.hasAnyRoles name='888888,100004,100005,100006'>
+							<div class="form-group">
+                                <select name="dealerId" id="dealerList" class="form-control">
+                                </select>
+							</div>
+							</@shiro.hasAnyRoles>
 					     <span class=""> <#--pull-right -->
 				         	<button type="submit" class="btn btn-primary">查询</button>
 							 <@shiro.hasPermission name="/dealer/addDealer.shtml">
@@ -115,12 +153,12 @@
 					<table class="table table-bordered">
 						<tr>
 							<th><input type="checkbox" id="checkAll"/></th>
-                            <th>账号</th>
+                            <th>登录账号</th>
 							<th>名称</th>
 							<th>手机号码</th>
                             <th>联系地址</th>
-							<th>坐席号</th>
 							<th>推荐码</th>
+                            <th>分组名称</th>
 							<th>创建时间</th>
 							<th>操作</th>
 						</tr>
@@ -132,12 +170,12 @@
                                     <td>${it.name}</td>
                                     <td>${it.phone}</td>
                                     <td>${it.address}</td>
-                                    <td>${it.seatNum}</td>
                                     <td>${it.inviteNum}</td>
+                                    <td>${it.dGroup!""}</td>
                                     <td>${it.crtTime?string("yyyy-MM-dd HH:mm:ss")}</td>
 									<td>
 										<@shiro.hasPermission name="/dealer/editDealer.shtml">
-											<a href="javascript:_edit('${it.id}','${it.name}','${it.phone}','${it.address}','${it.type}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#employeeEditModal"></i></a>
+											<a href="javascript:;" onclick="_edit('${it.id}','${it.name}','${it.phone}','${it.address!""}','${it.dGroup!""}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#employeeEditModal"></i></a>
 										</@shiro.hasPermission>
 										<@shiro.hasPermission name="/dealer/forbidUserById.shtml">
 											${(it.status=='1')?string('<i class="glyphicon glyphicon-eye-close"></i>&nbsp;','<i class="glyphicon glyphicon-eye-open"></i>&nbsp;')}
@@ -150,7 +188,7 @@
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="8">没有找到员工</td>
+								<td class="text-center danger" colspan="9">没有找到员工</td>
 							</tr>
 						</#if>
 					</table>
@@ -171,9 +209,11 @@
                                 <div class="modal-body">
                                     <div class="form-group">
 										<form id="form1" action="${basePath}/dealer/addDealer.shtml" method="post">
+											<@shiro.hasAnyRoles name='200001'>
 											<input type="hidden" name="parentId" value="${userId}"/>
+											</@shiro.hasAnyRoles>
 											<input type="hidden" name="roleId" value="6"/>
-											<label for="employee_add_loginName">账号</label>
+											<label for="employee_add_loginName">登录账号</label>
 											<input type="text" name="loginName" class="form-control" id="employee_add_loginName" placeholder="账号">
 											<label for="employee_add_name">名称</label>
 											<input type="text" name="name" class="form-control" id="employee_add_name" placeholder="名称">
@@ -181,12 +221,13 @@
 											<input type="text" name="phone" class="form-control" id="employee_add_phone" placeholder="手机号码">
 											<label for="employee_add_address">联系地址</label>
 											<input type="text" name="address" class="form-control" id="employee_add_address" placeholder="地址">
-											<label for="employee_add_type">返点类型</label>
-											<select name="type" class="form-control">
-												<option value="1">5%</option>
-                                                <option value="2">10%</option>
-                                                <option value="3">15%</option>
+                                            <label for="employee_add_group">分组名称</label>
+                                            <input type="text" name="dGroup" class="form-control" maxlength="20" id="employee_add_group" placeholder="分组名称">
+											<@shiro.hasAnyRoles name='888888,100004,100005,100006'>
+											<label for="dealerAddList">经销商</label>
+											<select name="parentId" id="dealerAddList" class="form-control">
 											</select>
+											</@shiro.hasAnyRoles>
                                         </form>
                                     </div>
                                 </div>
@@ -216,12 +257,8 @@
                                         <input type="text" name="phone" class="form-control" id="employee_edit_phone" placeholder="手机号码">
                                         <label for="employee_add_address">联系地址</label>
                                         <input type="text" name="address" class="form-control" id="employee_edit_address" placeholder="地址">
-                                        <label for="employee_add_type">返点类型</label>
-                                        <select name="type" class="form-control" id="employee_edit_type">
-                                            <option value="1">5%</option>
-                                            <option value="2">10%</option>
-                                            <option value="3">15%</option>
-                                        </select>
+										<label for="employee_edit_group">分组名称</label>
+										<input type="text" name="dGroup" class="form-control" maxlength="20" id="employee_edit_group" placeholder="分组名称">
                                     </div>
                                 </div>
                                 <div class="modal-footer">

@@ -18,7 +18,7 @@
 #div_refresh{
     cursor: pointer;
     width: 5rem;
-    height: 3.5rem;
+    height: 3rem;
     text-align: center;
     padding: 0.75rem;
     float: right;
@@ -169,6 +169,14 @@
 
 #registerForm .fail{
     color:#f06595;
+}
+
+#div_total{
+    width: 10rem;
+    height: 3.5rem;
+    text-align: center;
+    padding: 0.75rem;
+    float: right;
 }
 
 

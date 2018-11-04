@@ -1,10 +1,12 @@
 package com.sojson.core.freemarker.extend;
 
+import com.sojson.common.model.URole;
 import com.sojson.common.model.UUser;
 import com.sojson.common.utils.LoggerUtils;
 import com.sojson.core.config.IConfig;
 import com.sojson.core.shiro.token.manager.TokenManager;
 import com.sojson.core.statics.Constant;
+import org.apache.shiro.session.Session;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +24,14 @@ public class FreeMarkerViewExtend extends FreeMarkerView {
 		model.put(Constant.CONTEXT_PATH, request.getContextPath());
 		model.putAll(Ferrmarker.initMap);
 		UUser token = TokenManager.getToken();
+		if(token != null) {
+			URole role = TokenManager.getRoleByUserId(token.getId().toString());
+			model.put("role", role.getName());
+			if (role.getType().equals("200001")) {
+				String status = TokenManager.getDealerStatus(token.getId().toString());
+				model.put("status", status);
+			}
+		}
 		//String ip = IPUtils.getIP(request);
 		model.put("token", token);//登录的token
 		model.put("_time", new Date().getTime());
@@ -32,6 +42,7 @@ public class FreeMarkerViewExtend extends FreeMarkerView {
 		model.put("basePath", request.getContextPath());//base目录。
 		model.put("userId", TokenManager.getUserId());
 		model.put("qrCodeUrl", IConfig.get("qrCode_path"));
+
 		
 	}
 }

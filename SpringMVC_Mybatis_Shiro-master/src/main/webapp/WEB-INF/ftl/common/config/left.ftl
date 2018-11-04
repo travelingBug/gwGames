@@ -131,7 +131,7 @@
 	</@shiro.hasAnyRoles>
 </#macro>
 <#macro employee index>
-	<@shiro.hasAnyRoles name='200001,100004,100005'>
+	<@shiro.hasAnyRoles name='200001,100004,100005,888888'>
     <div id="one" class="col-md-2">
         <ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
 			<@shiro.hasPermission name="/dealer/employeeList.shtml">

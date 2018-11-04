@@ -40,6 +40,16 @@ public class TbVipRecord implements Serializable{
 
     private String belong2;
 
+    private String totalAmount;
+
+    public String getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(String totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
     public String getBelong() {
         return belong;
     }

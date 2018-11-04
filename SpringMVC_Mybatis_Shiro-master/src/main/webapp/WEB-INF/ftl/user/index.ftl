@@ -27,9 +27,13 @@
 							<td>${token.nickname?default('未设置')}</td>
 						</tr>
 						<tr>
-							<th>Email/帐号</th>
+							<th>登录帐号</th>
 							<td>${token.email?default('未设置')}</td>
 						</tr>
+                        <tr>
+                            <th>权限名称</th>
+                            <td>${role?default('')}</td>
+                        </tr>
 						<tr>
 							<th>创建时间</th>
 							<td>${token.createTime?string('yyyy-MM-dd HH:mm')}</td>
@@ -38,15 +42,17 @@
 							<th>最后登录时间</th>
 							<td>${token.lastLoginTime?string('yyyy-MM-dd HH:mm')}</td>
 						</tr>
-                        <@shiro.hasAnyRoles name='200001,200002'>
                         <tr>
                             <th>开户二维码/链接</th>
                             <td><i class="fas fa-link" onclick="_queryLink('${userId}');"></i></td>
                         </tr>
+                        <@shiro.hasAnyRoles name='200001'>
+                        <#if status?exists && status=='1'>
                         <tr>
                             <th>报名二维码/链接</th>
                             <td><i class="fas fa-link" onclick="_queryPlayerSignup('${userId}');"></i></td>
                         </tr>
+                        </#if>
                         <#--<tr>-->
                             <#--<th>返佣金额</th>-->
                             <#--<td><i class="fas fa-yen-sign"></i><span id="dealerMoney"></span></td>-->

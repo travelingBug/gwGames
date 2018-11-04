@@ -3,8 +3,11 @@ package com.sojson.dealer.service.impl;
 import com.sojson.common.ExportHeader;
 import com.sojson.common.IConstant;
 import com.sojson.common.ResultMessage;
+import com.sojson.common.dao.UTbDealerCardMapper;
 import com.sojson.common.dao.UTbDealerMapper;
 import com.sojson.common.dao.UTbVipRecordMapper;
+import com.sojson.common.dao.UTbVipsMapper;
+import com.sojson.common.model.TbDealCard;
 import com.sojson.common.model.TbDealer;
 import com.sojson.common.model.TbVips;
 import com.sojson.common.model.UUser;
@@ -46,6 +49,12 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
 
     @Resource
     UUserService userService;
+
+    @Autowired
+    UTbVipsMapper uTbVipsMapper;
+
+    @Autowired
+    UTbDealerCardMapper uTbDealerCardMapper;
 
     protected Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 
@@ -395,4 +404,63 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
     public String queryUserType(String userId) {
         return uTbDealerMapper.queryUserType(userId);
     }
+
+    @Override
+    public ResultMessage queryEmployeeList(String inviteCode) {
+        ResultMessage msg = new ResultMessage();
+        List<TbDealer> list = uTbDealerMapper.queryEmployeeList(inviteCode);
+        if(list !=null && list.size()>0){
+            msg.setData(list);
+            msg.setLevel(ResultMessage.MSG_LEVEL.SUCC.v);
+        }
+
+        return msg;
+    }
+
+    @Override
+    public ResultMessage updateVipBelong(TbVips entity) {
+        ResultMessage msg = new ResultMessage();
+        entity.setModTime(new Date()); //设置修改时间
+        uTbVipsMapper.updateVipBelong(entity);
+
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
+    }
+
+    @Override
+    public ResultMessage queryBankCard(String dealerId) {
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("dealerId", dealerId);
+        TbDealCard entity = uTbDealerCardMapper.findCard(map);
+        if(entity != null){
+            return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"查询成功" , entity);
+        }
+        return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"查询失败");
+    }
+
+    @Override
+    public ResultMessage addDealerBankCard(TbDealCard entity) {
+        uTbDealerCardMapper.insert(entity);
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"绑定银行卡成功");
+    }
+
+    @Transactional(readOnly = false)
+    @Override
+    public ResultMessage updateDealerBankCard(TbDealCard entity) {
+        uTbDealerCardMapper.updateDealerCard(entity);
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"绑定银行卡成功");
+    }
+
+    @Override
+    public ResultMessage queryDealerList() {
+        ResultMessage msg = new ResultMessage();
+        List<TbDealer> list = uTbDealerMapper.queryDealerList();
+        if(list !=null && list.size()>0){
+            msg.setData(list);
+            msg.setLevel(ResultMessage.MSG_LEVEL.SUCC.v);
+        }
+
+        return msg;
+    }
+
+
 }

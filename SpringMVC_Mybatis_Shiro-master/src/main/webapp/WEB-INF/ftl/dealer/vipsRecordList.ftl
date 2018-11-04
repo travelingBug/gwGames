@@ -14,11 +14,34 @@
 		<script  src="${basePath}/js/common/layer/layer.js"></script>
 		<script  src="${basePath}/js/common/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script  src="${basePath}/js/shiro.demo.js"></script>
+
+        <script src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
+        <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+        <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 		<script>
 			so.init(function(){
 				//初始化全选。
 				so.checkBoxInit('#checkAll','[check=box]');
-			});
+
+                $("#startDate").datetimepicker({
+                    format: 'YYYY-MM-DD',
+                    locale: moment.locale('zh-cn')
+                });
+
+                $("#endDate").datetimepicker({
+                    format: 'YYYY-MM-DD',
+                    locale: moment.locale('zh-cn')
+                });
+
+				$("#resetRecord").click(function(){
+                    $("#startDate").reset();
+                    $("#endDate").reset();
+				});
+
+                $("#submitRecord").click(function(){
+                });
+
+            });
 
 		</script>
 	</head>
@@ -34,13 +57,20 @@
 					<form method="post" action="${basePath}/dealer/vipsRecordList.shtml?userId=${userId}" id="formId" class="form-inline">
 						<div clss="well">
 					      <div class="form-group">
-					        <#--<input type="text" class="form-control" style="width: 300px;" value="${findContent?default('')}"-->
-					        			<#--name="findContent" id="findContent" placeholder="输入昵称">-->
+                              <input type='text' class="form-control" id='startDate' name="startDate"/>
+                              <input type='text' class="form-control" id='endDate' name="endDate"/>
 					      </div>
 					     <span class=""> <#--pull-right -->
-				         	<button type="submit" class="btn btn-primary">查询</button>
+				         	<button type="submit" id="submitRecord" class="btn btn-primary">查询</button>
+							<button type="reset" id="resetRecord" class="btn btn-primary">重置</button>
 				         </span>
 				        </div>
+                        <div id="div_total">
+							<#if page.totalAmount?exists>
+                            <i class="fas fa-yen-sign" title="金额合计"></i>&nbsp;<span id="total_money">${page.totalAmount}</span>
+							</#if>
+                        </div>
+					</form>
 					<hr>
 					<table class="table table-bordered">
 						<tr>
@@ -76,7 +106,7 @@
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="6">没有找到购票明细</td>
+								<td class="text-center danger" colspan="7">没有找到购票明细</td>
 							</tr>
 						</#if>
 					</table>

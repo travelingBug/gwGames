@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.sojson.common.dao.UTbDealerMapper;
+import com.sojson.common.model.URole;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
@@ -33,6 +35,9 @@ public class CustomSessionManager {
 	
 	@Autowired
 	CustomShiroSessionDAO customShiroSessionDAO;
+
+	@Autowired
+	UTbDealerMapper uTbDealerMapper;
 	
 	/**
 	 * 获取所有的有效Session用户
@@ -51,6 +56,16 @@ public class CustomSessionManager {
 		}
 		return list;
 	}
+
+	public URole queryRoleByUserId(String userId){
+		return uTbDealerMapper.queryRoleByUserId(userId);
+	}
+
+	public String queryDealerStatus(String userId){
+		return uTbDealerMapper.queryDealerStatus(userId);
+	}
+
+
 	/**
 	 * 根据ID查询 SimplePrincipalCollection
 	 * @param userIds	用户ID

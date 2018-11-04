@@ -2,6 +2,7 @@ package com.sojson.dealer.controller;
 
 import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
+import com.sojson.common.model.TbDealCard;
 import com.sojson.common.model.TbDealer;
 import com.sojson.common.model.TbVipRecord;
 import com.sojson.common.model.TbVips;
@@ -25,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -110,11 +112,29 @@ public class DealerController extends BaseController {
      */
     @RequestMapping(value = "employeeList")
     public ModelAndView employeeList(ModelMap map, Integer pageNo, String findContent,
-                             String parentId) {
+                             String parentId, String dGroup, String dealerId) {
 
-        map.put("findContent", findContent);
-        map.put("parentId", parentId);
-        Pagination<TbDealer> page = dealerService.findByPage(map, pageNo, pageSize);
+        Pagination<TbDealer> page = null;
+
+        TbDealer dealer = dealerService.queryByUserId(parentId);
+        if(null!=dealer){
+            if("0".equals(dealer.getParentId())){
+                map.put("findContent", findContent);
+                map.put("parentId", parentId);
+                map.put("dGroup",dGroup);
+                page = dealerService.findByPage(map, pageNo, pageSize);
+            }
+        }else{
+            String type = dealerService.queryUserType(parentId);
+            if("888888".equals(type) || "100004".equals(type) || "100005".equals(type) || "100006".equals(type)){
+                map.put("findContent", findContent);
+                map.put("all","all");
+                map.put("dGroup",dGroup);
+                map.put("parentId", dealerId);
+                page = dealerService.findByPage(map,pageNo,pageSize);
+            }
+        }
+
         map.put("page", page);
         return new ModelAndView("employee/list");
     }
@@ -237,7 +257,7 @@ public class DealerController extends BaseController {
 
     @RequestMapping(value = "vipsRecordList")
     public ModelAndView vipsRecordList(ModelMap map, Integer pageNo, Integer pageSize,
-                                 String userId) {
+                                 String userId, String startDate, String endDate) {
 
         Pagination<TbVipRecord> page = null;
 
@@ -246,6 +266,8 @@ public class DealerController extends BaseController {
             if("0".equals(dealer.getParentId())){
                 map.put("search","2");
                 map.put("seatNum", dealer.getSeatNum());
+                map.put("startDate",startDate);
+                map.put("endDate", endDate);
                 page = vipsRecordListService.findByPageDealer(map,pageNo,pageSize);
             }else{
                 map.put("search","3");
@@ -256,18 +278,25 @@ public class DealerController extends BaseController {
             String type = dealerService.queryUserType(userId);
             if("888888".equals(type) || "100004".equals(type) || "100005".equals(type) || "100006".equals(type)){
                 map.put("search","1");
+                map.put("startDate",startDate);
+                map.put("endDate", endDate);
                 page = vipsRecordListService.findByPageAdmin(map,pageNo,pageSize);
             }
         }
 
-        if(page.getList().size()>0){
-            List<TbVipRecord> records = page.getList();
-            for(TbVipRecord record: records){
-                if(record.getBelong2()==null){
-                    record.setBelong2(record.getBelong());
-                    record.setBelong("");
+        List<TbVipRecord> records = new ArrayList<TbVipRecord>();
+        if(page.getList()!=null){
+            records = page.getList();
+            if(records.size()>0 ) {
+                for (TbVipRecord record : records) {
+                    if (record.getBelong2() == null) {
+                        record.setBelong2(record.getBelong());
+                        record.setBelong("");
+                    }
                 }
             }
+        }else{
+            page.setList(records);
         }
 
         map.put("page", page);
@@ -297,6 +326,60 @@ public class DealerController extends BaseController {
     @ResponseBody
     public ResultMessage querySeatNum(HttpServletRequest req) {
         return dealerService.querySeatNum();
+    }
+
+    @RequestMapping(value = "queryEmployeeList", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage queryEmployeeList(String inviteCode, HttpServletRequest req) {
+        return dealerService.queryEmployeeList(inviteCode);
+    }
+
+    /**
+     * 编辑归属员工
+     *
+     * @param req
+     * @return
+     */
+    @RequestMapping(value = "editVipBelong", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage editVipBelong(TbVips vip, HttpServletRequest req) {
+        return dealerService.updateVipBelong(vip);
+    }
+
+    @RequestMapping(value = "queryBankCard", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage queryBankCard(String id, HttpServletRequest req) {
+        return dealerService.queryBankCard(id);
+    }
+
+    /**
+     * 新增银行卡
+     *
+     * @param req
+     * @return
+     */
+    @RequestMapping(value = "addDealerBankCard", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage addDealerBankCard(TbDealCard entity, HttpServletRequest req) {
+        return dealerService.addDealerBankCard(entity);
+    }
+
+    /**
+     * 编辑银行卡
+     *
+     * @param req
+     * @return
+     */
+    @RequestMapping(value = "editDealerBankCard", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage editDealerBankCard(TbDealCard entity, HttpServletRequest req) {
+        return dealerService.updateDealerBankCard(entity);
+    }
+
+    @RequestMapping(value = "queryDealerList", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage queryDealerList(HttpServletRequest req) {
+        return dealerService.queryDealerList();
     }
 
 }

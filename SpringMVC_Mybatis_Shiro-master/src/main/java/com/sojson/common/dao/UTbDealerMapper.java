@@ -1,6 +1,7 @@
 package com.sojson.common.dao;
 
 import com.sojson.common.model.TbDealer;
+import com.sojson.common.model.URole;
 
 import java.util.List;
 
@@ -29,4 +30,12 @@ public interface UTbDealerMapper {
     String queryUserType(String userId);
 
     String queryMoney(String userId);
+
+    List<TbDealer> queryEmployeeList(String inviteCode);
+
+    List<TbDealer> queryDealerList();
+
+    String queryDealerStatus(String userId);
+
+    URole queryRoleByUserId(String userId);
 }

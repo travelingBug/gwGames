@@ -32,6 +32,16 @@ public class Pagination<T> extends SimplePage implements java.io.Serializable,
 	 */
 	private List<T> list;
 
+	private String totalAmount;
+
+	public String getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(String totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
 	public List<T> getList() {
 		return list;
 	}

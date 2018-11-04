@@ -47,12 +47,15 @@ public class VipsRecordListServiceImpl extends BaseMybatisDao<UTbVipRecordMapper
         int totalNum = uTbVipRecordMapper.findByPageAdminCount(resultMap);
 
         List<TbVipRecord> list = null;
+        String totalAmount = "";
         if (totalNum > 0) {
+            totalAmount = uTbVipRecordMapper.findByPageAdminSum(resultMap);
             list =uTbVipRecordMapper.findByPageAdmin(resultMap);
         }
 
         page.setTotalCount(totalNum);
         page.setList(list);
+        page.setTotalAmount(totalAmount);
 
         return page;
     }
@@ -72,12 +75,15 @@ public class VipsRecordListServiceImpl extends BaseMybatisDao<UTbVipRecordMapper
         int totalNum = uTbVipRecordMapper.findByPageDealerCount(resultMap);
 
         List<TbVipRecord> list = null;
+        String totalAmount = "";
         if (totalNum > 0) {
+            totalAmount = uTbVipRecordMapper.findByPageDealerSum(resultMap);
             list =uTbVipRecordMapper.findByPageDealer(resultMap);
         }
 
         page.setTotalCount(totalNum);
         page.setList(list);
+        page.setTotalAmount(totalAmount);
 
         return page;
     }
@@ -97,12 +103,15 @@ public class VipsRecordListServiceImpl extends BaseMybatisDao<UTbVipRecordMapper
         int totalNum = uTbVipRecordMapper.findByPageEmployeeCount(resultMap);
 
         List<TbVipRecord> list = null;
+        String totalAmount = "";
         if (totalNum > 0) {
+            totalAmount = uTbVipRecordMapper.findByPageEmployeeSum(resultMap);
             list =uTbVipRecordMapper.findByPageEmployee(resultMap);
         }
 
         page.setTotalCount(totalNum);
         page.setList(list);
+        page.setTotalAmount(totalAmount);
 
         return page;
     }

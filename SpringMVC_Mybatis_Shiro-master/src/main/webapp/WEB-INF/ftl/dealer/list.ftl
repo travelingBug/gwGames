@@ -56,6 +56,64 @@
                         }
                     },'json');
                 });
+
+                $("#dealer_card_add_btn").click(function(){
+                    var userId = $("#dealer_card_add_userId").val();
+                    var cardNo = $("#dealer_card_add_cardNo").val();
+                    var bankName = $("#dealer_card_add_bankName").val();
+                    var cardName = $("#dealer_card_add_name").val();
+                    var phone = $("#dealer_card_add_phone").val();
+                    var dealerId = $("#dealer_add_id").val();
+                    var data = {
+                        "modUser":userId,
+                        "cardNo":cardNo,
+                        "cardName":cardName,
+                        "bankName":bankName,
+                        "phone":phone,
+                        "dealerId":dealerId
+                    }
+                    $.post('${basePath}/dealer/addDealerBankCard.shtml',
+                            data,
+                            function(result){
+                                if(result && result.level != 1){
+                                    return layer.msg(result.messageText,so.default),!0;
+                                }else{
+                                    layer.msg('绑定银行卡成功！');
+                                    setTimeout(function(){
+                                        $('#dealerForm').submit();
+                                    },1000);
+                                }
+                            },'json');
+                });
+
+                $("#dealer_card_edit_btn").click(function(){
+                    var userId = $("#dealer_card_edit_userId").val();
+                    var cardNo = $("#dealer_card_edit_cardNo").val();
+                    var bankName = $("#dealer_card_edit_bankName").val();
+                    var cardName = $("#dealer_card_edit_name").val();
+                    var phone = $("#dealer_card_edit_phone").val();
+                    var dealerId = $("#dealer_edit_id").val();
+                    var data = {
+                        "modUser":userId,
+                        "cardNo":cardNo,
+                        "cardName":cardName,
+                        "bankName":bankName,
+                        "phone":phone,
+                        "dealerId":dealerId
+                    }
+                    $.post('${basePath}/dealer/editDealerBankCard.shtml',
+                            data,
+                            function(result){
+                                if(result && result.level != 1){
+                                    return layer.msg(result.messageText,so.default),!0;
+                                }else{
+                                    layer.msg('编辑银行卡成功！');
+                                    setTimeout(function(){
+                                        $('#dealerForm').submit();
+                                    },1000);
+                                }
+                            },'json');
+                });
 			});
 
 			function valiPhone(obj){
@@ -102,12 +160,13 @@
                 },'json');
             }
 
-			function _edit(id, name, phone, address, type){
+			function _edit(id, name, phone, address, type, dGroup){
 				$("#dealer_edit_id").val(id);
                 $("#dealer_edit_name").val(name);
                 $("#dealer_edit_phone").val(phone);
                 $("#dealer_edit_address").val(address);
                 $("#dealer_edit_type").val(type);
+                $("#dealer_edit_group").val(dGroup);
 			}
 
 			function _add(){
@@ -145,6 +204,27 @@
             }
 			</@shiro.hasPermission>
 
+            function _bankCard(id, userId){
+                var data = {
+                    "id":id
+                }
+                $.post('${basePath}/dealer/queryBankCard.shtml',data,function(result){
+                    if(result && result.level == 1){
+                        $("#dealer_card_edit_userId").val(userId);
+                        $("#dealer_edit_id").val(id);
+                        $("#dealer_card_edit_cardNo").val(result.data.cardNo);
+                        $("#dealer_card_edit_bankName").val(result.data.bankName);
+                        $("#dealer_card_edit_name").val(result.data.cardName);
+                        $("#dealer_card_edit_phone").val(result.data.phone);
+                        $('#dealerEditCardModal').modal();
+                    }else{
+                        $("#dealer_card_add_userId").val(userId);
+                        $("#dealer_add_id").val(id);
+                        $('#dealerCardModal').modal();
+                    }
+                },'json');
+            }
+
 		</script>
 	</head>
 	<body data-target="#one" data-spy="scroll">
@@ -173,12 +253,12 @@
 					<table class="table table-bordered">
 						<tr>
 							<th><input type="checkbox" id="checkAll"/></th>
-                            <th>账号</th>
+                            <th>登录账号</th>
 							<th>名称</th>
 							<th>手机号码</th>
                             <th>联系地址</th>
-							<th>坐席号</th>
                             <th>邀请码</th>
+                            <th>分组名称</th>
 							<th>创建时间</th>
 							<th>操作</th>
 						</tr>
@@ -190,13 +270,16 @@
                                     <td>${it.name}</td>
                                     <td>${it.phone}</td>
                                     <td>${it.address}</td>
-									<td>${it.seatNum}</td>
                                     <td>${it.inviteNum}</td>
+                                    <td>${it.dGroup!""}</td>
 									<td>${it.crtTime?string("yyyy-MM-dd HH:mm:ss")}</td>
 									<td>
 										<@shiro.hasPermission name="/dealer/editDealer.shtml">
-											<a href="javascript:_edit('${it.id}','${it.name}','${it.phone}','${it.address}','${it.type}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#dealerEditModal"></i></a>
+											<a href="javascript:_edit('${it.id}','${it.name}','${it.phone}','${it.address}','${it.type}','${it.dGroup!""}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#dealerEditModal"></i></a>
 										</@shiro.hasPermission>
+                                        <@shiro.hasPermission name="/dealer/addDealerBankCard.shtml">
+                                        <a href="javascript:_bankCard('${it.id}','${userId}');"><i class="far fa-credit-card" title="绑定银行卡" data-toggle="modal"></i></a>
+                                        </@shiro.hasPermission>
 										<@shiro.hasPermission name="/dealer/forbidUserById.shtml">
 											${(it.status=='1')?string('<i class="glyphicon glyphicon-eye-close"></i>&nbsp;','<i class="glyphicon glyphicon-eye-open"></i>&nbsp;')}
                                             <a href="javascript:forbidUserById(${(it.status=='1')?string(0,1)},${it.userId})">
@@ -231,7 +314,7 @@
 										<form id="form1" action="${basePath}/dealer/addDealer.shtml" method="post">
 											<input type="hidden" name="parentId" value="0"/>
 											<input type="hidden" name="roleId" value="5"/>
-											<label for="dealer_add_loginName">账号</label>
+											<label for="dealer_add_loginName">登录账号</label>
 											<input type="text" name="loginName" class="form-control" id="dealer_add_loginName" placeholder="账号">
 											<label for="dealer_add_name">名称</label>
 											<input type="text" name="name" class="form-control" id="dealer_add_name" placeholder="名称">
@@ -253,6 +336,8 @@
                                                 <input type="text" name="type" id="dealer_add_type" class="form-control" placeholder="返佣比例" aria-describedby="basic-addon2">
                                                 <span class="input-group-addon" id="basic-addon2">%</span>
                                             </div>
+                                            <label for="dealer_add_group">分组名称</label>
+                                            <input type="text" name="dGroup" class="form-control" maxlength="20" id="dealer_add_group" placeholder="分组名称">
                                         </form>
                                     </div>
                                 </div>
@@ -290,6 +375,8 @@
                                             <input type="text" name="type"  id="dealer_edit_type" class="form-control" placeholder="返佣比例" aria-describedby="basic-addon2">
                                             <span class="input-group-addon" id="basic-addon2">%</span>
                                         </div>
+                                        <label for="dealer_edit_group">分组名称</label>
+                                        <input type="text" name="dGroup" class="form-control" maxlength="20" id="dealer_edit_group" placeholder="分组名称">
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -299,6 +386,69 @@
                             </div>
                         </div>
                     </div>
+
+                    <!--绑定银行卡modal-->
+                    <div class="modal fade" id="dealerCardModal" tabindex="-1" role="dialog" aria-labelledby="dealerCardModalLabel">
+                        <div class="modal-dialog" role="document" style="width:30%;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title" id="dealerCardModalLabel">绑定银行卡</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <form id="dealer_card_add_form" action="${basePath}/dealer/addDealerBankCard.shtml" method="post">
+                                            <input type="hidden" name="modUser" id="dealer_card_add_userId">
+                                            <input type="hidden" id="dealer_add_id">
+                                            <label for="dealer_card_add_cardNo">银行卡号</label>
+                                            <input type="text" name="cardNo" class="form-control" id="dealer_card_add_cardNo" placeholder="银行卡号">
+                                            <label for="dealer_card_add_bankName">开户行名称</label>
+                                            <input type="text" name="bankName" class="form-control" id="dealer_card_add_bankName" placeholder="开户行名称">
+                                            <label for="dealer_card_add_name">开户人名称</label>
+                                            <input type="text" name="cardName" class="form-control" maxlength="20" id="dealer_card_add_name" placeholder="开户人名称">
+                                            <label for="dealer_card_add_phone">开户电话</label>
+                                            <input type="text" name="phone" class="form-control" maxlength="20" id="dealer_card_add_phone" placeholder="开户电话">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                                    <button type="button" id="dealer_card_add_btn" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-save normal"></i>&nbsp;保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--编辑银行卡modal-->
+                    <div class="modal fade" id="dealerEditCardModal" tabindex="-1" role="dialog" aria-labelledby="dealerEditCardModalLabel">
+                        <div class="modal-dialog" role="document" style="width:30%;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title" id="dealerEditCardModalLabel">绑定银行卡</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <form id="dealer_card_edit_form" action="${basePath}/dealer/editDealerBankCard.shtml" method="post">
+                                            <input type="hidden" id="dealer_edit_id">
+                                            <input type="hidden" name="modUser" id="dealer_card_edit_userId">
+                                            <label for="dealer_card_edit_cardNo">银行卡号</label>
+                                            <input type="text" name="cardNo" class="form-control" id="dealer_card_edit_cardNo" placeholder="银行卡号">
+                                            <label for="dealer_card_edit_bankName">开户行名称</label>
+                                            <input type="text" name="bankName" class="form-control" id="dealer_card_edit_bankName" placeholder="开户行名称">
+                                            <label for="dealer_card_edit_name">开户人名称</label>
+                                            <input type="text" name="cardName" class="form-control" maxlength="20" id="dealer_card_edit_name" placeholder="开户人名称">
+                                            <label for="dealer_card_edit_phone">开户电话</label>
+                                            <input type="text" name="phone" class="form-control" maxlength="20" id="dealer_card_edit_phone" placeholder="开户电话">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                                    <button type="button" id="dealer_card_edit_btn" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-save normal"></i>&nbsp;保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 				</div>
 			</div><#--/row-->
 		</div>

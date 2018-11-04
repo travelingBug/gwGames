@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sojson.common.dao.UTbDealerCardMapper" >
+  <resultMap id="dealerCardResultMap" type="com.sojson.common.model.TbDealCard" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="CARD_PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="CARD_NO" property="cardNo" jdbcType="VARCHAR" />
+    <result column="CARD_NAME" property="cardName" jdbcType="VARCHAR" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="MOD_USER" property="modUser" jdbcType="VARCHAR" />
+    <result column="MOD_TIME" property="modTime" jdbcType="VARCHAR" />
+    <result column="FK_DEALER_ID" property="dealerId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="card_Column_List" >
+    ID,CARD_PHONE,CARD_NO,CARD_NAME,BANK_NAME,MOD_USER,MOD_TIME,FK_DEALER_ID
+  </sql>
+
+
+  <select id="findCard" parameterType="map" resultMap="dealerCardResultMap" >
+  	select
+    <include refid="card_Column_List" />
+    from tb_dealer_bank_card
+    where FK_DEALER_ID = #{dealerId,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbDealCard" >
+    insert into tb_dealer_bank_card (CARD_PHONE,CARD_NO,CARD_NAME,BANK_NAME,MOD_USER,MOD_TIME,FK_DEALER_ID)
+    values (#{phone},#{cardNo},#{cardName},#{bankName},#{modUser},#{modTime},#{dealerId})
+  </insert>
+
+  <update id="updateDealerCard" parameterType="com.sojson.common.model.TbDealCard" >
+    update tb_dealer_bank_card
+    <set>
+      MOD_USER = #{modUser}
+      ,MOD_TIME = #{modTime}
+      <if test="phone != null and phone != ''">
+        ,CARD_PHONE = #{phone}
+      </if>
+      <if test="cardNo != null and cardNo != ''">
+        ,CARD_NO = #{cardNo}
+      </if>
+      <if test="cardName != null and cardName != ''">
+        ,CARD_NAME = #{cardName}
+      </if>
+      <if test="bankName != null and bankName != ''">
+        ,BANK_NAME = #{bankName}
+      </if>
+    </set>
+    where FK_DEALER_ID = #{dealerId}
+  </update>
+
+
+</mapper>

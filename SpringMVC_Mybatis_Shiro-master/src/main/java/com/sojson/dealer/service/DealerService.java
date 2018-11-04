@@ -1,6 +1,7 @@
 package com.sojson.dealer.service;
 
 import com.sojson.common.ResultMessage;
+import com.sojson.common.model.TbDealCard;
 import com.sojson.common.model.TbDealer;
 import com.sojson.common.model.TbVips;
 import com.sojson.common.model.vo.DealerCountVo;
@@ -50,4 +51,16 @@ public interface DealerService {
     TbDealer queryByUserId(String userId);
 
     String queryUserType(String userId);
+
+    ResultMessage queryEmployeeList(String inviteCode);
+
+    ResultMessage updateVipBelong(TbVips entity);
+
+    ResultMessage queryBankCard(String dealerId);
+
+    ResultMessage addDealerBankCard(TbDealCard entity);
+
+    ResultMessage updateDealerBankCard(TbDealCard entity);
+
+    ResultMessage queryDealerList();
 }

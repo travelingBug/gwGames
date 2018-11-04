@@ -12,11 +12,12 @@
     <result column="TYPE" property="type" jdbcType="VARCHAR" />
     <result column="SEAT_NUM" property="seatNum" jdbcType="TINYINT" />
     <result column="INVITE_NUM" property="inviteNum" jdbcType="TINYINT" />
+    <result column="D_GROUP" property="dGroup" jdbcType="VARCHAR" />
     <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
     <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="dealer_Column_List" >
-    d.ID,d.NAME,d.PHONE,d.ADDRESS,d.TYPE,d.crt_time,d.SEAT_NUM,d.INVITE_NUM,d.PARENT_ID,d.FK_USER_ID
+    d.ID,d.NAME,d.PHONE,d.ADDRESS,d.TYPE,d.crt_time,d.SEAT_NUM,d.INVITE_NUM,d.PARENT_ID,d.FK_USER_ID,d.D_GROUP
   </sql>
   <sql id="dealer_limit_sql">
   	   <if test="page_sql != null and page_sql != ''">
@@ -33,6 +34,12 @@
       </if>
       <if test="parentId != null and parentId !='' " >
         and PARENT_ID = #{parentId}
+      </if>
+      <if test="all != null and all !='' " >
+        and PARENT_ID != 0
+      </if>
+      <if test="dGroup != null and dGroup !='' " >
+        and D_GROUP = #{dGroup}
       </if>
      </where>
   </sql>
@@ -67,8 +74,8 @@
   </select>
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbDealer" >
-    insert into tb_dealer (ID,FK_USER_ID,NAME,PARENT_ID,PHONE,ADDRESS,DEL_FLAG,TYPE,CRT_TIME,SEAT_NUM,INVITE_NUM)
-    values (#{id},#{userId},#{name},#{parentId},#{phone},#{address},#{delFlag},#{type},#{crtTime},#{seatNum},#{inviteNum})
+    insert into tb_dealer (ID,FK_USER_ID,NAME,PARENT_ID,PHONE,ADDRESS,DEL_FLAG,TYPE,CRT_TIME,SEAT_NUM,INVITE_NUM, D_GROUP)
+    values (#{id},#{userId},#{name},#{parentId},#{phone},#{address},#{delFlag},#{type},#{crtTime},#{seatNum},#{inviteNum},#{dGroup})
   </insert>
   <update id="update" parameterType="com.sojson.common.model.TbDealer" >
     update tb_dealer
@@ -85,6 +92,9 @@
       </if>
       <if test="address != null and address != ''">
         ,ADDRESS = #{address}
+      </if>
+      <if test="dGroup != null and dGroup != ''">
+        ,D_GROUP = #{dGroup}
       </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
@@ -139,5 +149,31 @@
     (SELECT id FROM tb_vip WHERE INVITAION_CODE=(
     SELECT invite_num FROM tb_dealer WHERE FK_USER_ID =#{userId}))) T1,
     (SELECT TYPE FROM tb_dealer WHERE FK_USER_ID =#{userId}) T2
+  </select>
+
+  <select id="queryEmployeeList" resultMap="dealerResultMap" >
+    SELECT
+    <include refid="dealer_Column_List" />
+    FROM tb_dealer d
+    WHERE d.SEAT_NUM =(SELECT SEAT_NUM FROM tb_dealer WHERE INVITE_NUM=#{inviteCode})
+    AND d.DEL_FLAG = 0
+    AND d.PARENT_ID!=0
+  </select>
+
+  <select id="queryDealerList" resultMap="dealerResultMap" >
+    SELECT
+    <include refid="dealer_Column_List" />
+    FROM tb_dealer d
+    WHERE d.DEL_FLAG = 0
+    AND d.PARENT_ID = 0
+  </select>
+
+  <select id="queryDealerStatus" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT STATUS FROM tb_dealer WHERE FK_USER_ID=#{userId}
+  </select>
+
+  <select id="queryRoleByUserId" parameterType="java.lang.String" resultType="com.sojson.common.model.URole">
+    SELECT * FROM u_role WHERE id =
+    (SELECT rid FROM u_user_role WHERE uid=#{userId})
   </select>
 </mapper>
