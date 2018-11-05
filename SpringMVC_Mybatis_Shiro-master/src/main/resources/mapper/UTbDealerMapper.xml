@@ -74,8 +74,8 @@
   </select>
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbDealer" >
-    insert into tb_dealer (ID,FK_USER_ID,NAME,PARENT_ID,PHONE,ADDRESS,DEL_FLAG,TYPE,CRT_TIME,SEAT_NUM,INVITE_NUM, D_GROUP)
-    values (#{id},#{userId},#{name},#{parentId},#{phone},#{address},#{delFlag},#{type},#{crtTime},#{seatNum},#{inviteNum},#{dGroup})
+    insert into tb_dealer (ID,FK_USER_ID,NAME,PARENT_ID,PHONE,ADDRESS,DEL_FLAG,TYPE,CRT_TIME,SEAT_NUM,INVITE_NUM, D_GROUP, STATUS)
+    values (#{id},#{userId},#{name},#{parentId},#{phone},#{address},#{delFlag},#{type},#{crtTime},#{seatNum},#{inviteNum},#{dGroup}, #{state})
   </insert>
   <update id="update" parameterType="com.sojson.common.model.TbDealer" >
     update tb_dealer

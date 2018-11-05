@@ -31,6 +31,14 @@ public interface UTbVipsMapper {
 
     int findVipsAdminCount(Map<String, Object> map);
 
+    List<TbVips> findVipsDealer(Map<String, Object> map);
+
+    int findVipsDealerCount(Map<String, Object> map);
+
+    List<TbVips> findByPageEmployee(Map<String, Object> map);
+
+    int findByPageEmployeeCount(Map<String, Object> map);
+
     int updateSurplusDay(Map<String,Object> param);
 
     List<TbVips> findAll(Map<String,Object> param);

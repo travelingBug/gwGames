@@ -16,4 +16,10 @@ public interface VipsListService {
     Pagination<TbVips> findByPageAdmin(Map<String, Object> resultMap, Integer pageNo,
                                             Integer pageSize);
 
+    Pagination<TbVips> findByPageDealer(Map<String, Object> resultMap, Integer pageNo,
+                                       Integer pageSize);
+
+    Pagination<TbVips> findByPageEmployee(Map<String, Object> resultMap, Integer pageNo,
+                                  Integer pageSize);
+
 }

@@ -204,18 +204,26 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
             int b = 2000;
             int a = 5000;
             int weekday = 22;
+            double aa = 0;
+            double bb = 0;
             //C类升级
             if(oldLevel.equals("3")){
                 if(newLevel.equals("2")){
-                    days = Math.round((c/weekday*surplusDay)/(b/weekday));
+                    aa = c/weekday*surplusDay;
+                    bb = b/weekday;
+                    days = (int) Math.round(aa/bb);
                 }else if(newLevel.equals("1")){
-                    days = Math.round((c/weekday*surplusDay)/(a/weekday));
+                    aa = c/weekday*surplusDay;
+                    bb = a/weekday;
+                    days = (int) Math.round(aa/bb);
                 }
             }
             //B类升级
             if(oldLevel.equals("2")){
                 if(newLevel.equals("1")){
-                    days = Math.round((b/weekday*surplusDay)/(a/weekday));
+                    aa = b/weekday*surplusDay;
+                    bb = a/weekday;
+                    days = (int) Math.round(aa/bb);
                 }
             }
 

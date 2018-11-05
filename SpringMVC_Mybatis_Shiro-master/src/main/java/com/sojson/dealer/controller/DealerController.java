@@ -226,22 +226,27 @@ public class DealerController extends BaseController {
      * @return
      */
     @RequestMapping(value = "vipsList")
-    public ModelAndView vipsList(ModelMap map, Integer pageNo, String findContent,
+    public ModelAndView vipsList(ModelMap map, Integer pageNo,Integer pageSize, String findContent,
                              String parentId) {
 
         map.put("findContent", findContent);
-        map.put("parentId", parentId);
         Pagination<TbVips> page = null;
 
         TbDealer dealer = dealerService.queryByUserId(parentId);
         if(null!=dealer){
-            page = vipsListService.findByPage(map, pageNo, pageSize);
-            if(page.getList().size()>0) {
-                List<TbVips> vips = page.getList();
-                for(TbVips vip: vips){
-                    if(vip.getBelong2()==null){
-                        vip.setBelong2(vip.getBelong());
-                        vip.setBelong("");
+            if("0".equals(dealer.getParentId())){
+                map.put("userId", parentId);
+                page = vipsListService.findByPageDealer(map,pageNo,pageSize);
+            }else {
+                map.put("parentId", parentId);
+                page = vipsListService.findByPageEmployee(map, pageNo, pageSize);
+                if (page.getList().size() > 0) {
+                    List<TbVips> vips = page.getList();
+                    for (TbVips vip : vips) {
+                        if (vip.getBelong2() == null) {
+                            vip.setBelong2(vip.getBelong());
+                            vip.setBelong("");
+                        }
                     }
                 }
             }

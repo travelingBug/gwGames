@@ -169,6 +169,57 @@
     <include refid="vips_where_all"/>
   </select>
 
+  <select id="findVipsDealer" parameterType="map" resultMap="vipsResultMap" >
+    select
+    <include refid="vips_Column_List" />,v.NAME as belong,v2.NAME AS belong2
+    from tb_vip d
+    LEFT JOIN tb_dealer v
+    ON v.INVITE_NUM = d.INVITAION_CODE
+    LEFT JOIN tb_dealer v2
+    ON v.parent_id= v2.FK_USER_ID
+    <include refid="vips_where_all"/>
+    AND v.INVITE_NUM IN
+    (SELECT INVITE_NUM FROM tb_dealer WHERE SEAT_NUM = (SELECT SEAT_NUM FROM tb_dealer WHERE FK_USER_ID=#{userId}))
+    <include refid="vips_order_all"/>
+    LIMIT #{start},#{pageSize}
+  </select>
+
+  <select id="findVipsDealerCount" parameterType="map" resultType="int">
+    SELECT count(d.id) from tb_vip d
+    LEFT JOIN tb_dealer v
+    ON v.INVITE_NUM = d.INVITAION_CODE
+    LEFT JOIN tb_dealer v2
+    ON v.parent_id= v2.FK_USER_ID
+    <include refid="vips_where_all"/>
+    AND v.INVITE_NUM IN
+    (SELECT INVITE_NUM FROM tb_dealer WHERE SEAT_NUM = (SELECT SEAT_NUM FROM tb_dealer WHERE FK_USER_ID=#{userId}))
+  </select>
+
+  <select id="findByPageEmployee" resultMap="vipsResultMap" >
+    select
+    <include refid="vips_Column_List" />,v.NAME as belong,v2.NAME AS belong2
+    from tb_vip d
+    LEFT JOIN tb_dealer v
+    ON v.INVITE_NUM = d.INVITAION_CODE
+    LEFT JOIN tb_dealer v2
+    ON v.parent_id= v2.FK_USER_ID
+    <include refid="vips_where_all"/>
+    <if test="parentId != null and parentId !='' " >
+      and v.fk_user_id = #{parentId}
+    </if>
+    <include refid="vips_order_all"/>
+    <include refid="vips_limit_sql" />
+  </select>
+
+  <select id="findByPageEmployeeCount" resultMap="vipsResultMap" >
+    select count(d.id) from  tb_vip d
+    LEFT JOIN tb_dealer v
+    ON v.INVITE_NUM = d.INVITAION_CODE
+    LEFT JOIN tb_dealer v2
+    ON v.parent_id= v2.FK_USER_ID
+    <include refid="vips_where_all" />
+  </select>
+
 
   <update id="updateSurplusDay">
     update tb_vip t

@@ -63,5 +63,69 @@ public class VipsListServiceImpl extends BaseMybatisDao<UTbVipsMapper> implement
         return page;
     }
 
+    @Override
+    public Pagination<TbVips> findByPageDealer(Map<String, Object> resultMap, Integer pageNo, Integer pageSize) {
+        pageNo = null == pageNo ? 1 : pageNo;
+        pageSize = null == pageSize ? 10 : pageSize;
+
+        Pagination page = new Pagination();
+        page.setPageNo(pageNo);
+        page.setPageSize(pageSize);
+
+        int start = (pageNo - 1) * pageSize;
+        resultMap.put("start", start);
+        resultMap.put("pageSize", pageSize);
+        int totalNum = uTbVipsMapper.findVipsDealerCount(resultMap);
+
+        List<TbVips> list = null;
+        if (totalNum > 0) {
+            list =uTbVipsMapper.findVipsDealer(resultMap);
+
+            for(TbVips vip: list){
+                if(vip.getBelong2()==null){
+                    vip.setBelong2(vip.getBelong());
+                    vip.setBelong("");
+                }
+            }
+        }
+
+        page.setTotalCount(totalNum);
+        page.setList(list);
+
+        return page;
+    }
+
+    @Override
+    public Pagination<TbVips> findByPageEmployee(Map<String, Object> resultMap, Integer pageNo, Integer pageSize) {
+        pageNo = null == pageNo ? 1 : pageNo;
+        pageSize = null == pageSize ? 10 : pageSize;
+
+        Pagination page = new Pagination();
+        page.setPageNo(pageNo);
+        page.setPageSize(pageSize);
+
+        int start = (pageNo - 1) * pageSize;
+        resultMap.put("start", start);
+        resultMap.put("pageSize", pageSize);
+        int totalNum = uTbVipsMapper.findByPageEmployeeCount(resultMap);
+
+        List<TbVips> list = null;
+        if (totalNum > 0) {
+            list =uTbVipsMapper.findByPageEmployee(resultMap);
+
+            for(TbVips vip: list){
+                if(vip.getBelong2()==null){
+                    vip.setBelong2(vip.getBelong());
+                    vip.setBelong("");
+                }
+            }
+        }
+
+        page.setTotalCount(totalNum);
+        page.setList(list);
+
+        return page;
+    }
+
 
 }

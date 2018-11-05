@@ -33,7 +33,7 @@
                         }else{
                             layer.msg('编辑成功！');
                             setTimeout(function(){
-                                $('#vipsForm').submit();
+                                $('#formId').submit();
                             },1000);
                         }
                     },'json');
@@ -73,7 +73,7 @@
 				<div class="col-md-10">
 					<h2>观众列表</h2>
 					<hr>
-					<form method="post" action="${basePath}/dealer/vipsList.shtml?parentId=${userId}" id="vipsForm" class="form-inline">
+					<form method="post" action="${basePath}/dealer/vipsList.shtml?parentId=${userId}" id="formId" class="form-inline">
 						<div clss="well">
 					      <div class="form-group">
 					        <input type="text" class="form-control" style="width: 300px;" value="${findContent?default('')}"
