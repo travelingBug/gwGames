@@ -23,4 +23,5 @@ public interface StopDateService {
     public ResultMessage deleteById(Long id);
 
     public Pagination<TbVips> findByPage(Map<String, Object> resultMap, Integer pageNo, Integer pageSize);
+    public ResultMessage updateAudit(TbStopDate tbStopDate);
 }

@@ -8,9 +8,13 @@
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="user_NAME" property="userName" jdbcType="VARCHAR" />
     <result column="crt_Time" property="crtTime" jdbcType="TIMESTAMP" />
+    <result column="audit_flag" property="auditFlag" jdbcType="TINYINT" />
+    <result column="audit_user_name" property="auditUserName" jdbcType="VARCHAR" />
+    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, bgn_Time, end_time,user_id,user_name,crt_Time
+    id, bgn_Time, end_time,user_id,user_name,crt_Time,audit_flag,audit_user_name,audit_time,REMARK
   </sql>
 
   <select id="findAll" resultMap="BaseResultMap" >
@@ -37,6 +41,9 @@
       <if test="userName != null and userName !='' " >
         and  USER_NAME = #{userName,jdbcType=VARCHAR}
       </if>
+      <if test="auditFlag != null and auditFlag != ''" >
+        and  AUDIT_FLAG = #{auditFlag,jdbcType=TINYINT}
+      </if>
     </where>
   </sql>
 
@@ -47,11 +54,30 @@
 
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbStopDate" >
-    insert into tb_stop_date (BGN_TIME, END_TIME, USER_ID,USER_NAME,CRT_TIME)
-    values (#{bgnTime}, #{endTime}, #{userId}, #{userName}, #{crtTime})
+    insert into tb_stop_date (BGN_TIME, END_TIME, USER_ID,USER_NAME,CRT_TIME,AUDIT_FLAG)
+    values (#{bgnTime}, #{endTime}, #{userId}, #{userName}, #{crtTime}, #{auditFlag})
   </insert>
 
   <delete id="deleteById">
     delete from tb_stop_date where id =  #{id,jdbcType=BIGINT}
   </delete>
+
+  <update id="audit" parameterType="com.sojson.common.model.TbStopDate" >
+    update tb_stop_date
+    <set >
+      <if test="auditFlag != null" >
+        AUDIT_FLAG = #{auditFlag},
+      </if>
+      <if test="auditUserName != null  and auditUserName !=''" >
+        AUDIT_USER_NAME = #{auditUserName},
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME = #{auditTime},
+      </if>
+      <if test=" remark != null" >
+        REMARK = #{remark}
+      </if>
+    </set>
+    where ID = #{id}
+  </update>
 </mapper>

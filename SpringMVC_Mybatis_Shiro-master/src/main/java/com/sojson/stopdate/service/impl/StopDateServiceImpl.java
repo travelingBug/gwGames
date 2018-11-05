@@ -40,7 +40,9 @@ public class StopDateServiceImpl extends BaseMybatisDao<UTbStopDateMapper> imple
 
     @Override
     public List<TbStopDate> findStopDate() {
-        List<TbStopDate> vos = uTbStopDateMapper.findAll(new HashMap<String,Object>());
+        Map<String,Object> param = new HashMap<String,Object>();
+        param.put("auditFlag",IConstant.AUDIT_STATUS.AUDIT_SUCC.v);
+        List<TbStopDate> vos = uTbStopDateMapper.findAll(param);
         return vos;
     }
 
@@ -52,6 +54,7 @@ public class StopDateServiceImpl extends BaseMybatisDao<UTbStopDateMapper> imple
         tbStopDate.setUserId(TokenManager.getUserId());
         tbStopDate.setUserName(TokenManager.getNickname());
         tbStopDate.setCrtTime(new Date());
+        tbStopDate.setAuditFlag(IConstant.AUDIT_STATUS.WAIT_AUDIT.v);
         uTbStopDateMapper.insert(tbStopDate);
 
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"添加成功!");
@@ -66,5 +69,20 @@ public class StopDateServiceImpl extends BaseMybatisDao<UTbStopDateMapper> imple
     @Override
     public Pagination<TbVips> findByPage(Map<String, Object> resultMap, Integer pageNo, Integer pageSize) {
         return super.findPage(resultMap, pageNo, pageSize);
+    }
+
+    @Override
+    public ResultMessage updateAudit(TbStopDate tbStopDate){
+        if (tbStopDate.getAuditFlag() == null) {
+            return  new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"请填写审核意见！");
+        }
+        if (tbStopDate.getId() == null) {
+            return  new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"审核信息错误！");
+        }
+        tbStopDate.setAuditUserName(TokenManager.getNickname());
+        tbStopDate.setAuditTime(new Date());
+        uTbStopDateMapper.audit(tbStopDate);
+
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"添加成功!");
     }
 }

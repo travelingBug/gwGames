@@ -297,6 +297,9 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
 //        if (surplusDay > 22) {
 //            surplusDay = 22;
 //        }
+        if (surplusDay == null || vip.getLevel().byteValue() == IConstant.VIP_LEVEL.VIP_0.v) {
+            surplusDay = 0;
+        }
         //剩余时间
         String surplusTime = "剩余观赛时间："+surplusDay+"天 ";
         return surplusTime;

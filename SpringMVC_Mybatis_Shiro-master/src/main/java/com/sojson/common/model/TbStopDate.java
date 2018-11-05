@@ -41,6 +41,28 @@ public class TbStopDate implements Serializable {
      */
     private Date crtTime;
 
+
+    /**
+     * 审核标致（0：待审核，1：审核通过，2：审核不通过）
+     */
+    private Byte auditFlag;
+
+
+    /**
+     * '审核员姓名'
+     */
+    private String auditUserName;
+
+    /**
+     * '审核时间'
+     */
+    private Date auditTime;
+
+    /**
+     * 备注
+     */
+    private String remark;
+
     public Long getId() {
         return id;
     }
@@ -95,5 +117,37 @@ public class TbStopDate implements Serializable {
 
     public void setCrtTime(Date crtTime) {
         this.crtTime = crtTime;
+    }
+
+    public Byte getAuditFlag() {
+        return auditFlag;
+    }
+
+    public void setAuditFlag(Byte auditFlag) {
+        this.auditFlag = auditFlag;
+    }
+
+    public String getAuditUserName() {
+        return auditUserName;
+    }
+
+    public void setAuditUserName(String auditUserName) {
+        this.auditUserName = auditUserName;
+    }
+
+    public Date getAuditTime() {
+        return auditTime;
+    }
+
+    public void setAuditTime(Date auditTime) {
+        this.auditTime = auditTime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }
