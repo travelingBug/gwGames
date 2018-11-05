@@ -219,7 +219,7 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
                 }
             }
 
-            return days;
+            return days+weekday;
         }catch (Exception e){
             e.printStackTrace();
         }

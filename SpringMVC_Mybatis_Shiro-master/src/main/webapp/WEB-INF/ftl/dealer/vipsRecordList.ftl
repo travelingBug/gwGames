@@ -66,7 +66,7 @@
 				         </span>
 				        </div>
                         <div id="div_total">
-							<#if page.totalAmount?exists>
+							<#if page.totalAmount?exists && page.totalAmount!="">
                             <i class="fas fa-yen-sign" title="金额合计"></i>&nbsp;<span id="total_money">${page.totalAmount}</span>
 							</#if>
                         </div>
@@ -86,7 +86,7 @@
 							<#list page.list as it>
 								<tr>
 									<td><input value="${it.id}" check='box' type="checkbox" /></td>
-									<td>${it.nickname}</td>
+									<td>${it.nickname!""}</td>
 									<td>
 										<#if it.level==0>
                                             未购票观众

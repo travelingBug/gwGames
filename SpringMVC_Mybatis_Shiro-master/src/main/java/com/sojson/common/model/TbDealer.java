@@ -86,6 +86,16 @@ public class TbDealer implements Serializable {
 
     private String dGroup;
 
+    private String state;
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
     public String getdGroup() {
         return dGroup;
     }

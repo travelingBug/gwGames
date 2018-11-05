@@ -44,13 +44,13 @@
 						</tr>
                         <tr>
                             <th>开户二维码/链接</th>
-                            <td><i class="fas fa-link" onclick="_queryLink('${userId}');"></i></td>
+                            <td><i class="fas fa-link" style="cursor: pointer;" onclick="_queryLink('${userId}');"></i></td>
                         </tr>
                         <@shiro.hasAnyRoles name='200001'>
                         <#if status?exists && status=='1'>
                         <tr>
                             <th>报名二维码/链接</th>
-                            <td><i class="fas fa-link" onclick="_queryPlayerSignup('${userId}');"></i></td>
+                            <td><i class="fas fa-link" style="cursor: pointer;" onclick="_queryPlayerSignup('${userId}');"></i></td>
                         </tr>
                         </#if>
                         <#--<tr>-->

@@ -224,7 +224,7 @@
                                             <label for="employee_add_group">分组名称</label>
                                             <input type="text" name="dGroup" class="form-control" maxlength="20" id="employee_add_group" placeholder="分组名称">
 											<@shiro.hasAnyRoles name='888888,100004,100005,100006'>
-											<label for="dealerAddList">经销商</label>
+											<label for="dealerAddList">代理商</label>
 											<select name="parentId" id="dealerAddList" class="form-control">
 											</select>
 											</@shiro.hasAnyRoles>

@@ -89,6 +89,9 @@
       <if test="endTime != null and endTime != ''">
         ,END_TIME = #{endTime}
       </if>
+      <if test="surplusDay != null and surplusDay != ''">
+        ,SURPLUS_DAY = #{surplusDay}
+      </if>
     </set>
     where PHONE = #{phone,jdbcType=VARCHAR}
   </update>
