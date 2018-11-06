@@ -18,6 +18,10 @@
 			so.init(function(){
 				//初始化全选。
 				so.checkBoxInit('#checkAll','[check=box]');
+                $("#uploadPlayerBtn").unbind("click").bind("click", function() {
+                    $("#uploadPlayerFile").click();
+                });
+                bindFile();
 
 				$("#player_btn_submit").click(function(){
 					var data = $("#play_edit_form").serialize();
@@ -99,9 +103,68 @@
 				$("#player_bz").val(bz);
 			}
 
+            function replaceFile(){
+                $('#uploadPlayerFile').remove();
+                $("#uploadPlayerBtn").after('<input type="file" name="file" style="width:0px;height:0px;display: none;" id="uploadPlayerFile" />');
+                bindFile();
+            }
+
+            function bindFile(){
+                $("#uploadPlayerFile").bind("change", function() {
+
+                    var uploadEventFile = $("#uploadPlayerFile").val();
+                    if (uploadEventFile == '') {
+                        msg("请择excel,再上传");
+                        return;
+                    } else if (uploadEventFile.lastIndexOf(".xls") < 0 || uploadEventFile.lastIndexOf(".xlsx") < 0) {//可判断以.xls和.xlsx结尾的excel
+                        msg("只能上传Excel文件");
+                        return;
+                    } else {
+                        $("#contentDiv").mask("文件上传中，请稍后...");
+                        var formData = new FormData();
+                        formData.append('file', $('#uploadPlayerFile')[0].files[0]);
+                        $.ajax({
+                            url : '${basePath}/player/import.shtml',
+                            type : 'post',
+                            data : formData,
+                            dataType : "json",
+                            success : function(result) {
+                                $("#contentDiv").unmask();
+
+                                var msg = result.messageText;
+                                if (result.data && result.data.length == 2) {
+                                    msg = msg + "<a href='${basePath}/download.shtml?fileOutName="+encodeURI(encodeURI(result.data[0]))+"&filePath="+result.data[1]+"'>点击下载错误信息</a>";
+                                }
+                                layer.alert(msg, {
+                                    icon: 0,
+                                    skin: 'layui-layer-lan',
+                                    end:function(){
+                                        $('#formId').submit();
+                                    }
+
+                                });
+                                replaceFile();
+
+                            },
+                            error : function(result) {
+                                $("#contentDiv").unmask();
+                                layer.alert(result.messageText, {
+                                    icon: 0,
+                                    skin: 'layui-layer-lan'
+                                });
+                                replaceFile();
+                            },
+                            cache : false,
+                            contentType : false,
+                            processData : false
+                        });
+                    }
+                });
+            }
+
 		</script>
 	</head>
-	<body data-target="#one" data-spy="scroll">
+	<body data-target="#one" data-spy="scroll" id="contentDiv">
 		
 		<@_top.top 4/>
 		<div class="container" style="padding-bottom: 15px;min-height: 300px; margin-top: 40px;">
@@ -125,6 +188,13 @@
 					      </div>
 					     <span> <#--pull-right -->
 				         	<button type="submit" class="btn btn-primary">查询</button>
+							 <form enctype="multipart/form-data" id="excelForm"   method="post" >
+								<button class="btn btn-success" id="uploadPlayerBtn"  type="button" >
+									导入
+								</button>
+								<input type="file" name="file" style="width:0px;height:0px;display: none;" id="uploadPlayerFile" />
+                    		</form>
+                             <a href="${basePath}/file/player.xlsx">模板下载</a>
 				         </span>
 						  <div id="div_refresh">
                               <i class="fas fa-redo-alt" id="i_refresh" title="刷新"></i>

@@ -15,4 +15,6 @@ public interface UTbPlayerMapper {
     List<TbPlayer> findAllNoPage(TbPlayerDto dto);
 
     List<TbPlayer> findAll(TbPlayerDto dto);
+
+    int insertBatch(List<TbPlayerDto> list);
 }

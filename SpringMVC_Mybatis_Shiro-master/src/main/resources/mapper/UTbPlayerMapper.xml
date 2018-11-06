@@ -128,4 +128,13 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into tb_player (ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,CRT_TIME,INVITE_NUM,ACCOUNT) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.id}, #{item.accountName,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR}, #{item.idCard,jdbcType=VARCHAR},
+      #{item.telPhone,jdbcType=VARCHAR}, 0, 1, #{item.crtTime,jdbcType=TIMESTAMP},#{item.inviteNum,jdbcType=VARCHAR},#{item.account}
+      )
+    </foreach>
+  </insert>
 </mapper>
