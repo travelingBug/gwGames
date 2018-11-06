@@ -143,7 +143,7 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
     private ResultMessage beforeUpdateVaild(TbDealer entity){
         //修改ID验证
         if (StringUtils.isBlank(entity.getId())) {
-            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"经销商信息错误！");
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"代理商信息错误！");
         }
 
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
@@ -166,7 +166,7 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
         try {
             ExcelUtil.writeCommonExcel(dataList,path+fileName,"sheet1");
             List<String> fileInfo = new ArrayList<String>();
-            fileInfo.add("经销商会员统计.xlsx");//下载文件名
+            fileInfo.add("代理商观众统计.xlsx");//下载文件名
             fileInfo.add(path+fileName);//错误文件路径
             msg.setData(fileInfo);
         } catch (IOException e) {
@@ -179,17 +179,21 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
 
     private List<Object[]> changeDealerVip2Array(List<DealerCountVo> DealerCountVos){
         List<Object[]> dataList = new ArrayList<Object[]>();
+        int i = 1;
         for (DealerCountVo dealerCountVo : DealerCountVos) {
             Object[] dataline = new Object[ExportHeader.DEALER_COUNT_HEAD.length];
-            dataline[0] = dealerCountVo.getName();
-            dataline[1] = String.valueOf(dealerCountVo.getVipACount());
-            dataline[2] = String.valueOf(dealerCountVo.getVipAMoneyCount());
-            dataline[3] = String.valueOf(dealerCountVo.getVipBCount());
-            dataline[4] = String.valueOf(dealerCountVo.getVipBMoneyCount());
-            dataline[5] = String.valueOf(dealerCountVo.getVipCCount());
-            dataline[6] = String.valueOf(dealerCountVo.getVipCMoneyCount());
-            dataline[7] = String.valueOf(dealerCountVo.getVipMoneyCount());
+            dataline[0] = i;
+            dataline[1] = dealerCountVo.getName();
+            dataline[2] =  String.valueOf(dealerCountVo.getVipCount());
+            dataline[3] = String.valueOf(dealerCountVo.getVipACount());
+            dataline[4] = String.valueOf(dealerCountVo.getVipAMoneyCount());
+            dataline[5] = String.valueOf(dealerCountVo.getVipBCount());
+            dataline[6] = String.valueOf(dealerCountVo.getVipBMoneyCount());
+            dataline[7] = String.valueOf(dealerCountVo.getVipCCount());
+            dataline[8] = String.valueOf(dealerCountVo.getVipCMoneyCount());
+            dataline[9] = String.valueOf(dealerCountVo.getVipMoneyCount());
             dataList.add(dataline);
+            i ++ ;
         }
         return dataList;
     }
@@ -201,9 +205,36 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
      */
     @Override
     public List<DealerCountVo> countDealerVip(Map<String,Object> param){
+
+        //时间查询条件
+        Map<String,Object> paramDate = new HashMap<String,Object>();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //判断时间条件
+        long bgnTimeVal = 0;
+        long endTimeVal = 0;
+        try {
+            if (StringUtils.isNotBlank(param.get("bgnTime"))) {
+                Date bgnTime = formatter.parse(param.get("bgnTime").toString());
+                bgnTimeVal = bgnTime.getTime();
+                paramDate.put("bgnTime",bgnTime);
+            }
+            if (StringUtils.isNotBlank(param.get("endTime"))) {
+                Date endTime = formatter.parse(param.get("endTime").toString());
+                endTimeVal = endTime.getTime();
+                paramDate.put("endTimeVal",endTime);
+            } else {
+                endTimeVal = new Date().getTime();
+            }
+
+        }catch (Exception e){
+            logger.error(e);
+            return null;
+        }
         //查询出所有的经销商
         Map<String,Object> dealerParam = new HashMap<String,Object>();
-        List<TbDealer> dealers = uTbDealerMapper.findAll(dealerParam);
+        dealerParam.put("name",param.get("name"));
+        dealerParam.put("groupName",param.get("groupName"));
+        List<TbDealer> dealers = uTbDealerMapper.findDealerIds(dealerParam);
         //将经销商进行分组
         //key是员工邀请码，value是父类
         Map<String,String> dealerReal = new HashMap<String,String>();
@@ -216,10 +247,10 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
             }
         }
         //查询出所有的VIP
-        List<TbVips> vips = uTbVipsMapper.findAll(new HashMap<String,Object>());
+        List<TbVips> vips = uTbVipsMapper.findVipByDealerId(new HashMap<String,Object>());
 
-        //查询出所有的购票记录
-        List<TbVipRecord> vipRecords = uTbVipRecordMapper.findRecordByParam(new HashMap<String,Object>());
+        //查询出时间范围内所有的购票记录
+        List<TbVipRecord> vipRecords = uTbVipRecordMapper.findRecordByParam(paramDate);
 
         //统计经销商的数据 key是userId,value是数据
         Map<String,DealerCountVo> result = new HashMap<String,DealerCountVo>();
@@ -244,16 +275,23 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
                 //统计会员个数
                 for (TbVips vip : vips) {
                     if (vip.getInviteCode().equals(tbDealer.getInviteNum())) {
-                        if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_A.v) {
-                            dealerCountVo.setVipACount(dealerCountVo.getVipACount() + 1);
-                        } else if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_B.v) {
-                            dealerCountVo.setVipBCount(dealerCountVo.getVipBCount() + 1);
-                        } else if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_C.v) {
-                            dealerCountVo.setVipCCount(dealerCountVo.getVipCCount() + 1);
-                        }
 
-                        dealerCountVo.setVipCount(dealerCountVo.getVipCount() + 1);
-                        total.setVipCount(total.getVipCount() + 1);
+                        //只统计时间范围内新增的VIP个数
+                        if (vip.getCrtTime().getTime() >= bgnTimeVal
+                                && vip.getCrtTime().getTime() <= endTimeVal) {
+
+                                if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_A.v) {
+                                    dealerCountVo.setVipACount(dealerCountVo.getVipACount() + 1);
+                                } else if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_B.v) {
+                                    dealerCountVo.setVipBCount(dealerCountVo.getVipBCount() + 1);
+                                } else if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_C.v) {
+                                    dealerCountVo.setVipCCount(dealerCountVo.getVipCCount() + 1);
+                                }
+
+                                dealerCountVo.setVipCount(dealerCountVo.getVipCount() + 1);
+                                total.setVipCount(total.getVipCount() + 1);
+
+                        }
 
 
 
@@ -282,61 +320,6 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
 
         }
 
-//        List<VipRecordCount> vipRecordCounts = uTbVipRecordMapper.countByCode(param);
-//        //统计会员数
-//        List<VipRecordCount> vipCount = uTbVipRecordMapper.countVipNum(param);
-//
-//        Map<String,Object> dealerParam = new HashMap<String,Object>();
-//        List<TbDealer> dealers = uTbDealerMapper.findAll(dealerParam);
-//        //key是员工邀请码，value是父类
-//        Map<String,String> dealerReal = new HashMap<String,String>();
-//        //将员工和经销商分类
-//        for(TbDealer tbDealer : dealers){
-//            if (StringUtils.isBlank(tbDealer.getParentId()) || IConstant.parentId.equals(tbDealer.getParentId())) {
-//                dealerReal.put(tbDealer.getInviteNum(),tbDealer.getUserId() + "");
-//            } else {
-//                dealerReal.put(tbDealer.getInviteNum(),tbDealer.getParentId());
-//            }
-//        }
-//        List<DealerCountVo> dealerCounts = new ArrayList<DealerCountVo>();
-//        //获取统计信息
-//        for(TbDealer tbDealer : dealers){
-//            //统计经销商下的总额
-//            if (StringUtils.isBlank(tbDealer.getParentId()) || IConstant.parentId.equals(tbDealer.getParentId())) {
-//                DealerCountVo vo = new DealerCountVo();
-//                vo.setName(tbDealer.getName()); //名称
-//                //统计开通会员总额
-//                for (VipRecordCount vipRecordCount : vipRecordCounts){
-//                    if (dealerReal.get(vipRecordCount.getInvitaionCode()) != null
-//                            && dealerReal.get(vipRecordCount.getInvitaionCode()).equals(tbDealer.getUserId() + "")) { //判断是否要归到经销商下
-//                        if (vipRecordCount.getLevel() != null && vipRecordCount.getCountMoney() != null) {
-//                            Integer money = vipRecordCount.getCountMoney();
-//                            if (vipRecordCount.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_A.v) {
-//                                vo.setVipACount(vo.getVipACount() + vipRecordCount.getCountNum());
-//                                vo.setVipAMoneyCount(new BigDecimal(vo.getVipAMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-//                            } else if (vipRecordCount.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_B.v) {
-//                                vo.setVipBCount(vo.getVipBCount() + vipRecordCount.getCountNum());
-//                                vo.setVipBMoneyCount(new BigDecimal(vo.getVipBMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-//                            } else if (vipRecordCount.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_C.v) {
-//                                vo.setVipCCount(vo.getVipCCount() + vipRecordCount.getCountNum());
-//                                vo.setVipCMoneyCount(new BigDecimal(vo.getVipCMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-//                            }
-//
-//                            vo.setVipMoneyCount(new BigDecimal(vo.getVipMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-//                        }
-//                    }
-//                }
-//
-//                //统计开通会员总数
-//                for (VipRecordCount vipRecordCount : vipCount){
-//                    if (dealerReal.get(vipRecordCount.getInvitaionCode()) != null
-//                            && dealerReal.get(vipRecordCount.getInvitaionCode()).equals(tbDealer.getUserId() + "")) { //判断是否要归到经销商下
-//                        vo.setVipCount(vo.getVipCount()+vipRecordCount.getCountNum());
-//                    }
-//                }
-//                dealerCounts.add(vo);
-//            }
-//        }
         List<DealerCountVo> dealerCounts = new ArrayList<DealerCountVo>();
         dealerCounts.addAll(result.values());
         dealerCounts.add(total);
@@ -351,38 +334,121 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
      */
     @Override
     public List<DealerCountVo> countDealerVipById(Map<String,Object> param){
-       TbDealer  tbDealer = uTbDealerMapper.findDealerByUserId(TokenManager.getUserId());
-       //没有经销商。就证明是管理员，可以查看所有
-       if (tbDealer != null) {
-           param.put("dealerId", tbDealer.getId());
-       }
-       List<VipRecordCount> vipRecordCounts = uTbVipRecordMapper.countByEmployee(param);
+        //时间查询条件
+        Map<String,Object> paramDate = new HashMap<String,Object>();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //判断时间条件
+        long bgnTimeVal = 0;
+        long endTimeVal = 0;
+        try {
+            if (StringUtils.isNotBlank(param.get("bgnTime"))) {
+                Date bgnTime = formatter.parse(param.get("bgnTime").toString());
+                bgnTimeVal = bgnTime.getTime();
+                paramDate.put("bgnTime",bgnTime);
+            }
+            if (StringUtils.isNotBlank(param.get("endTime"))) {
+                Date endTime = formatter.parse(param.get("endTime").toString());
+                endTimeVal = endTime.getTime();
+                paramDate.put("endTimeVal",endTime);
+            } else {
+                endTimeVal = new Date().getTime();
+            }
 
-        //key是邀请码，value是具体的值
-        Map<String, DealerCountVo> map = new HashMap<String, DealerCountVo>();
-        List<DealerCountVo> list = new ArrayList<DealerCountVo>();
-        for (VipRecordCount vipRecordCount : vipRecordCounts){
-            Integer money = vipRecordCount.getCountMoney();
-            if (map.get(vipRecordCount.getInvitaionCode()) == null) {
-                map.put(vipRecordCount.getInvitaionCode(),new DealerCountVo());
-            }
-            DealerCountVo vo = map.get(vipRecordCount.getInvitaionCode());
-            vo.setName(vipRecordCount.getName());
-            if (vipRecordCount.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_A.v) {
-                vo.setVipACount(vo.getVipACount() + vipRecordCount.getCountNum());
-                vo.setVipAMoneyCount(new BigDecimal(vo.getVipAMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
-            } else if (vipRecordCount.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_B.v) {
-                vo.setVipBCount(vo.getVipBCount() + vipRecordCount.getCountNum());
-                vo.setVipBMoneyCount(new BigDecimal(vo.getVipBMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
-            } else if (vipRecordCount.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_C.v) {
-                vo.setVipCCount(vo.getVipCCount() + vipRecordCount.getCountNum());
-                vo.setVipCMoneyCount(new BigDecimal(vo.getVipCMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
-            }
-//            vo.setVipCount(vo.getVipCount() + 1);
-            vo.setVipMoneyCount(new BigDecimal(vo.getVipMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        }catch (Exception e){
+            logger.error(e);
+            return null;
         }
-        list.addAll(map.values());
-        return list;
+        //查询出所有的经销商
+        Map<String,Object> dealerParam = new HashMap<String,Object>();
+        dealerParam.put("name",param.get("name"));
+        dealerParam.put("groupName",param.get("groupName"));
+        String type = uTbDealerMapper.queryUserRoles(TokenManager.getUserId().toString());
+        if(type.indexOf(",888888,") >= 0 || type.indexOf(",100004,") >= 0  || type.indexOf(",100005,") >= 0  || type.indexOf(",100006,") >= 0  || type.indexOf(",999999,") >= 0){
+            //管理员权限查询所有
+        } else {
+            dealerParam.put("dealerId",TokenManager.getUserId());
+            paramDate.put("dealerId",TokenManager.getUserId());
+        }
+        List<TbDealer> dealers = uTbDealerMapper.findDealerIds(dealerParam);
+
+
+
+        //查询出所有的VIP inviteCode
+        List<TbVips> vips = uTbVipsMapper.findVipByDealerId(dealerParam);
+
+        //查询出时间范围内所有的购票记录
+        List<TbVipRecord> vipRecords = uTbVipRecordMapper.findRecordByParam(paramDate);
+
+        //统计经销商的数据 key是userId,value是数据
+        Map<String,DealerCountVo> result = new HashMap<String,DealerCountVo>();
+
+        //总计数据
+        DealerCountVo total = new DealerCountVo();
+        total.setName("总计");
+
+        for (TbDealer tbDealer : dealers) {
+            //获取对应的经销商ID
+            String userId = tbDealer.getUserId().toString();
+            if (StringUtils.isNotBlank(userId)) {
+                if (result.get(userId) == null) {
+                    DealerCountVo vo = new DealerCountVo();
+                    result.put(userId, new DealerCountVo());
+                }
+                DealerCountVo dealerCountVo = result.get(userId);
+                dealerCountVo.setName(tbDealer.getName());
+                //统计会员个数
+                for (TbVips vip : vips) {
+                    if (vip.getInviteCode().equals(tbDealer.getInviteNum())) {
+
+                        //只统计时间范围内新增的VIP个数
+                        if (vip.getCrtTime().getTime() >= bgnTimeVal
+                                && vip.getCrtTime().getTime() <= endTimeVal) {
+
+                            if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_A.v) {
+                                dealerCountVo.setVipACount(dealerCountVo.getVipACount() + 1);
+                            } else if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_B.v) {
+                                dealerCountVo.setVipBCount(dealerCountVo.getVipBCount() + 1);
+                            } else if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_C.v) {
+                                dealerCountVo.setVipCCount(dealerCountVo.getVipCCount() + 1);
+                            }
+
+                            dealerCountVo.setVipCount(dealerCountVo.getVipCount() + 1);
+                            total.setVipCount(total.getVipCount() + 1);
+
+                        }
+
+
+
+                        //统计会员充值金额
+                        for (TbVipRecord vipRecord : vipRecords) {
+                            if (vipRecord.getVipId().intValue() == vip.getId().intValue()) {
+                                Double money = Double.parseDouble(vipRecord.getAmount());
+                                if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_A.v) {
+                                    dealerCountVo.setVipAMoneyCount(new BigDecimal(dealerCountVo.getVipAMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
+                                    total.setVipAMoneyCount(new BigDecimal(total.getVipAMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
+                                } else if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_B.v) {
+                                    dealerCountVo.setVipBMoneyCount(new BigDecimal(dealerCountVo.getVipBMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
+                                    total.setVipBMoneyCount(new BigDecimal(total.getVipBMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
+                                } else if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_C.v) {
+                                    dealerCountVo.setVipCMoneyCount(new BigDecimal(dealerCountVo.getVipCMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
+                                    total.setVipCMoneyCount(new BigDecimal(total.getVipCMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
+                                }
+                                dealerCountVo.setVipMoneyCount(new BigDecimal(dealerCountVo.getVipMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+                                total.setVipMoneyCount(new BigDecimal(total.getVipMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        List<DealerCountVo> dealerCounts = new ArrayList<DealerCountVo>();
+        dealerCounts.addAll(result.values());
+        dealerCounts.add(total);
+        return dealerCounts;
+
     }
 
 
@@ -402,7 +468,7 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
         try {
             ExcelUtil.writeCommonExcel(dataList,path+fileName,"sheet1");
             List<String> fileInfo = new ArrayList<String>();
-            fileInfo.add("员工会员统计.xlsx");//下载文件名
+            fileInfo.add("员工观众统计.xlsx");//下载文件名
             fileInfo.add(path+fileName);//错误文件路径
             msg.setData(fileInfo);
         } catch (IOException e) {
@@ -418,7 +484,7 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
     public ResultMessage queryLink(String userId) {
         TbDealer dealer = uTbDealerMapper.findDealerByUserId(TokenManager.getUserId());
         if(null == dealer){
-            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "未查询到经销商");
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "未查询到代理商");
         }
         String url = IConfig.get("url")+"/static/vips/register.jsp?seatNum=" + dealer.getSeatNum()+"&inviteNum="+dealer.getInviteNum();
         String mobileUrl = IConfig.get("url")+"/static/mobile/index.html?seatNum=" + dealer.getSeatNum()+"&inviteNum="+dealer.getInviteNum();
@@ -432,7 +498,7 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
     public ResultMessage queryPlayerSignup(String userId) {
         TbDealer dealer = uTbDealerMapper.findDealerByUserId(TokenManager.getUserId());
         if(null == dealer){
-            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "未查询到经销商");
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "未查询到代理商");
         }
         String url = IConfig.get("real_url")+"/static/signup/signup.jsp?inviteNum="+dealer.getInviteNum();
         String mobileUrl = IConfig.get("real_url")+"/static/wx/index.html?t=5&inviteNum="+dealer.getInviteNum();

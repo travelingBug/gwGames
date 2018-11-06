@@ -196,7 +196,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-12">
                                                 <span style="color: red;">
-                                                     注意：添加时间范围后，如果到达时间后，会员的观赛日期将不会被减少。
+                                                     注意：添加时间范围后，如果到达时间后，观众的观赛日期将不会被减少。
                                                 </span>
                                                 </div>
                                             </div>

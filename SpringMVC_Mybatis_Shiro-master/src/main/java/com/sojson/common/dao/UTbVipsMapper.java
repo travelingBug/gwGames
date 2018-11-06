@@ -34,4 +34,6 @@ public interface UTbVipsMapper {
     int updateSurplusDay(Map<String,Object> param);
 
     List<TbVips> findAll(Map<String,Object> param);
+
+    List<TbVips>  findVipByDealerId(Map<String, Object> map);
 }

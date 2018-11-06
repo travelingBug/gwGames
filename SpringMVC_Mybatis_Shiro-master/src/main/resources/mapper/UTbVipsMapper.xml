@@ -175,4 +175,19 @@
 
   </update>
 
+
+  <select id="findVipByDealerId" resultMap="vipsResultMap" >
+  select
+  <include refid="vips_Column_List" />
+  from tb_vip d
+    <include refid="vip_dealer_where"/>
+  </select>
+
+  <sql id="vip_dealer_where">
+    <where>
+      <if test="dealerId != null and dealerId !=''">
+        and d.INVITAION_CODE in (select INVITE_NUM from tb_dealer t where t.FK_USER_ID = #{dealerId} or t.PARENT_ID = #{dealerId})
+      </if>
+    </where>
+  </sql>
 </mapper>

@@ -29,4 +29,8 @@ public interface UTbDealerMapper {
     String queryUserType(String userId);
 
     String queryMoney(String userId);
+
+    String queryUserRoles(String userId);
+
+    List<TbDealer> findDealerIds(Object param);
 }

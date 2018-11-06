@@ -191,5 +191,20 @@
 
     <select id="findRecordByParam" parameterType="map" resultMap="recordMap" >
         SELECT r.* FROM tb_vip_record r
+        <include refid="where_Record_Param"/>
     </select>
+
+    <sql id="where_Record_Param">
+        <where>
+            <if test="bgnTime != null" >
+                and r.CRT_TIME &gt;= #{bgnTime}
+            </if>
+            <if test="endTime != null" >
+                and r.CRT_TIME &lt;= #{endTime}
+            </if>
+            <if test="dealerId != null and dealerId !=''">
+                and r.vip_id in (select id from tb_vip v where v.INVITAION_CODE in ( select INVITE_NUM from tb_dealer t where t.FK_USER_ID = #{dealerId} or t.PARENT_ID = #{dealerId}))
+            </if>
+        </where>
+    </sql>
 </mapper>

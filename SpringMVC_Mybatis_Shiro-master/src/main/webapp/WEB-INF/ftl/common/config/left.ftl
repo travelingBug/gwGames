@@ -115,14 +115,14 @@
 			<@shiro.hasPermission name="/dealer/list.shtml">
                 <li class="${(index==1)?string('active',' ')}">
                     <a href="${basePath}/dealer/list.shtml?parentId=0">
-                        <i class="glyphicon glyphicon-chevron-right"></i>经销商列表
+                        <i class="glyphicon glyphicon-chevron-right"></i>代理商列表
                     </a>
                 </li>
 			</@shiro.hasPermission>
 			<@shiro.hasPermission name="/dealer/countDealerList.shtml">
                 <li class="${(index==2)?string('active',' ')}">
                     <a href="${basePath}/dealer/countDealerList.shtml">
-                        <i class="glyphicon glyphicon-chevron-right"></i>经销商会员统计
+                        <i class="glyphicon glyphicon-chevron-right"></i>代理商观众统计
                     </a>
                 </li>
 			</@shiro.hasPermission>
@@ -145,7 +145,7 @@
 			<@shiro.hasPermission name="/dealer/countEmployeeList.shtml">
                 <li class="${(index==2)?string('active',' ')}">
                     <a href="${basePath}/dealer/countEmployeeList.shtml">
-                        <i class="glyphicon glyphicon-chevron-right"></i>员工会员统计
+                        <i class="glyphicon glyphicon-chevron-right"></i>员工观众统计
                     </a>
                 </li>
 			</@shiro.hasPermission>
@@ -162,7 +162,7 @@
 			<@shiro.hasPermission name="/dealer/vipsList.shtml">
                 <li class="${(index==1)?string('active',' ')}">
                     <a href="${basePath}/dealer/vipsList.shtml?parentId=${userId}">
-                        <i class="glyphicon glyphicon-chevron-right"></i>会员列表
+                        <i class="glyphicon glyphicon-chevron-right"></i>观众列表
                     </a>
                 </li>
 			</@shiro.hasPermission>

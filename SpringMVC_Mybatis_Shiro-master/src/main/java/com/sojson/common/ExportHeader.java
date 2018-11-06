@@ -14,9 +14,9 @@ import java.util.LinkedHashMap;
  */
 public class ExportHeader {
 
-    public final static String[] DEALER_COUNT_HEAD =  {"经销商名称","新增A类会员人数","新增A类会员金额","新增B类会员人数","新增B类会员金额","新增C类会员人数","新增C类会员金额","新增会员总金额"};
+    public final static String[] DEALER_COUNT_HEAD =  {"序号","代理商名称","新增观众总人数","开通A类观众次数","开通A类观众金额","开通B类观众次数","开通B类观众金额","开通C类观众次数","开通C类观众金额","开通观众总金额"};
 
-    public final static String[] EMPLOYEE_COUNT_HEAD =  {"员工名称","新增A类会员人数","新增A类会员金额","新增B类会员人数","新增B类会员金额","新增C类会员人数","新增C类会员金额","新增会员总金额"};
+    public final static String[] EMPLOYEE_COUNT_HEAD =  {"序号","员工名称","新增观众总人数","开通A类观众次数","开通A类观众金额","开通B类观众次数","开通B类观众金额","开通C类观众次数","开通C类观众金额","开通观众总金额"};
 
 
 }
