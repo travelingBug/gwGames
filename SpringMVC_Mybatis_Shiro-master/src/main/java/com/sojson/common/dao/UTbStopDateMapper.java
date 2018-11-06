@@ -21,5 +21,7 @@ public interface UTbStopDateMapper {
      * @return
      */
     int deleteById(Long id);
+
+    int audit(TbStopDate tbStopDate);
 	
 }

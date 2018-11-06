@@ -73,4 +73,11 @@ public class StopDateController extends BaseController {
         return stopDateService.deleteById(id);
     }
 
+
+    @RequestMapping(value="/audit",method=RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage audit( HttpServletRequest req,TbStopDate vo){
+        return stopDateService.updateAudit(vo);
+    }
+
 }

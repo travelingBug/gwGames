@@ -57,6 +57,25 @@
                         }
                     });
                 });
+
+
+
+                <@shiro.hasPermission name="/stopdate/audit.shtml">
+                    $("#audit_submit").click(function(){
+                        var data = $("#audit_form").serialize();
+                        $.post('${basePath}/stopdate/audit.shtml',data,function(result){
+                            if(result && result.level != 1){
+                                return layer.msg(result.messageText,so.default),!0;
+                            }else{
+                                layer.msg('审核成功！');
+                                setTimeout(function(){
+                                    $('#formId').submit();
+                                },1000);
+                            }
+                        },'json');
+                    });
+                </@shiro.hasPermission>
+
 			});
 
             function validAddForm(){
@@ -107,6 +126,12 @@
                 });
             }
 
+            function _audit(id){
+                $("#audit_id").val(id);
+
+                $("#auditModal").modal();
+            }
+
 		</script>
 	</head>
 	<body data-target="#one" data-spy="scroll" id="contentDiv">
@@ -125,7 +150,15 @@
                                 <input type="text" class="form-control"  value="${userName?default('')}"
                                        name="userName" id="userName" placeholder="请输入操作人姓名" />
                             </div>
-
+                            <div class="form-group col-sm-4">
+                                <label for="userName">审核状态</label>
+                                <select name="auditFlag" class="form-control">
+                                    <option value="">全部</option>
+                                    <option value="0">待审核</option>
+                                    <option value="1">审核通过</option>
+                                    <option value="2">审核不通过</option>
+                                </select>
+                            </div>
                             <div class="form-group  col-sm-4">
                                 <span class=""> <#--pull-right -->
                                     <button type="submit" class="btn btn-primary">查询</button>
@@ -136,11 +169,15 @@
 
                         <table class="table table-bordered" style="margin-top: 20px;">
                             <tr>
-                                <th width="50">序号</th>
-                                <th width="120">操作人姓名</th>
-                                <th width="180">创建时间</th>
+                                <th width="30">序号</th>
+                                <th width="80">操作人姓名</th>
+                                <th width="150">创建时间</th>
                                 <th width="100">开始时间</th>
                                 <th width="100">结束时间</th>
+                                <th width="90">审核结果</th>
+                                <th width="80">审核人</th>
+                                <th width="150">审核时间</th>
+                                <th width="200">备注</th>
                                 <th width="80">操作</th>
                             </tr>
                         <#if page?exists && page.list?size gt 0 >
@@ -153,13 +190,35 @@
                                     <td>${it.bgnTime?string("yyyy-MM-dd")}</td>
                                     <td>${it.endTime?string("yyyy-MM-dd")}</td>
                                     <td>
+                                        <#if it.auditFlag==0>
+                                            待审核
+                                        <#elseif it.auditFlag==1>
+                                            审核通过
+                                        <#elseif it.auditFlag==2>
+                                            审核不通过
+                                        </#if>
+                                    </td>
+                                    <td>${it.auditUserName!''}</td>
+                                    <td>${(it.auditTime?string("yyyy-MM-dd HH:mm:ss"))!''}</td>
+                                    <#if it.remark?default("")?length gt 20>
+                                        <td  title="${it.remark}">${it.remark?substring(0,20)}...</td>
+                                    <#else>
+                                        <td   title="${it.remark!''}">${it.remark!''}</td>
+                                    </#if>
+
+                                    <td>
+                                        <#if it.auditFlag==0>
+                                            <@shiro.hasPermission name="/stopdate/audit.shtml">
+                                                <a href="javascript:_audit('${it.id}');"><i class="fas fa-check-circle pass" title="审核"></i></a>
+                                            </@shiro.hasPermission>
+                                        </#if>
                                         <a href="javascript:_del('${it.id}');"><i class="glyphicon glyphicon-remove" title="删除"></i></a>
                                     </td>
                                 </tr>
                             </#list>
                         <#else>
                             <tr>
-                                <td class="text-center danger" colspan="6">暂未发现数据</td>
+                                <td class="text-center danger" colspan="10">暂未发现数据</td>
                             </tr>
                         </#if>
                         </table>
@@ -212,6 +271,35 @@
                         </div>
                     </div>
 
+                    <!--审核 -->
+                    <div class="modal fade" id="auditModal" tabindex="-1" role="dialog" aria-labelledby="auditModalLabel">
+                        <div class="modal-dialog" role="document" style="width:30%;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title" id="playerAModalLabel">审核</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <form id="audit_form" action="#" method="post">
+                                            <input type="hidden" name="id" id="audit_id">
+                                            <label for="player_account">审核结果</label>
+                                            <select name="auditFlag" class="form-control">
+                                                <option value="1">审核通过</option>
+                                                <option value="2">审核不通过</option>
+                                            </select>
+                                            <label for="player_bz">备注</label>
+                                            <textarea name="remark" class="form-control" maxlength="200" placeholder="备注"></textarea>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                                    <button type="button" id="audit_submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-save normal"></i>&nbsp;保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div><#--/row-->
         </div>

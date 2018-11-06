@@ -273,6 +273,10 @@ create table tb_stop_date
    USER_ID           bigint(20)  comment '操作人员',
    USER_NAME           varchar(50)  comment '操作人员姓名',
    CRT_TIME              datetime comment '创建时间',
+   AUDIT_FLAG tinyint(4) NOT NULL comment '审核标致（0：待审核，1：审核通过，2：审核不通过）',
+   AUDIT_USER_NAME           varchar(50)  comment '审核人员姓名',
+   AUDIT_TIME              datetime comment '审核时间',
+   REMARK              varchar(500) comment '备注',
    primary key (ID)
 );
 
