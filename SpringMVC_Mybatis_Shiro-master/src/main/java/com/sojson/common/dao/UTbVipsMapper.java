@@ -29,15 +29,15 @@ public interface UTbVipsMapper {
 
     List<TbVips> findVipsAdmin(Map<String, Object> map);
 
-    int findVipsAdminCount(Map<String, Object> map);
+    Integer findVipsAdminCount(Map<String, Object> map);
 
     List<TbVips> findVipsDealer(Map<String, Object> map);
 
-    int findVipsDealerCount(Map<String, Object> map);
+    Integer findVipsDealerCount(Map<String, Object> map);
 
     List<TbVips> findByPageEmployee(Map<String, Object> map);
 
-    int findByPageEmployeeCount(Map<String, Object> map);
+    Integer findByPageEmployeeCount(Map<String, Object> map);
 
     int updateSurplusDay(Map<String,Object> param);
 

@@ -107,7 +107,11 @@ public class VipsListServiceImpl extends BaseMybatisDao<UTbVipsMapper> implement
         int start = (pageNo - 1) * pageSize;
         resultMap.put("start", start);
         resultMap.put("pageSize", pageSize);
-        int totalNum = uTbVipsMapper.findByPageEmployeeCount(resultMap);
+        Integer totalNum = uTbVipsMapper.findByPageEmployeeCount(resultMap);
+
+        if(totalNum == null){
+            totalNum = 0;
+        }
 
         List<TbVips> list = null;
         if (totalNum > 0) {

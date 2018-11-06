@@ -31,7 +31,8 @@
       d.DEL_FLAG = 0
       <if test="findContent != null and findContent !=''">
         and (d.NICKNAME like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%'))
-        or d.PHONE like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%')))
+        or d.PHONE like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%'))
+        or d.INVITAION_CODE like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%')))
       </if>
       <if test="inviteCode != null and inviteCode !='' " >
         and d.INVITAION_CODE = #{inviteCode}
@@ -211,13 +212,16 @@
     <include refid="vips_limit_sql" />
   </select>
 
-  <select id="findByPageEmployeeCount" resultMap="vipsResultMap" >
+  <select id="findByPageEmployeeCount" parameterType="map" resultType="int">
     select count(d.id) from  tb_vip d
     LEFT JOIN tb_dealer v
     ON v.INVITE_NUM = d.INVITAION_CODE
     LEFT JOIN tb_dealer v2
     ON v.parent_id= v2.FK_USER_ID
     <include refid="vips_where_all" />
+    <if test="parentId != null and parentId !='' " >
+      and v.fk_user_id = #{parentId}
+    </if>
   </select>
 
 

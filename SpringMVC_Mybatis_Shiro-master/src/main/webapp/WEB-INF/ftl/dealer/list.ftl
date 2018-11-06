@@ -7,21 +7,17 @@
 		<link   rel="icon" href="https://open.sojson.com/favicon.ico" type="image/x-icon" />
 		<link   rel="shortcut icon" href="https://open.sojson.com/favicon.ico" />
 		<link href="${basePath}/js/common/bootstrap/3.3.5/css/bootstrap.min.css?${_v}" rel="stylesheet"/>
-        <link href="${basePath}/js/common/bootstrap/3.3.5/css/bootstrap-switch.min.css" rel="stylesheet"/>
 		<link href="${basePath}/css/common/base.css?${_v}" rel="stylesheet"/>
         <link href="${basePath}/css/gwGame.css?${_v}" rel="stylesheet"/>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 		<script  src="http://open.sojson.com/common/jquery/jquery1.8.3.min.js"></script>
 		<script  src="${basePath}/js/common/layer/layer.js"></script>
 		<script  src="${basePath}/js/common/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <script  src="${basePath}/js/common/bootstrap/3.3.5/js/bootstrap-switch.min.js"></script>
 		<script  src="${basePath}/js/shiro.demo.js"></script>
 		<script>
 			so.init(function(){
 				//初始化全选。
 				so.checkBoxInit('#checkAll','[check=box]');
-
-                $('#notification1').wrap('<div class="switch" />').parent().bootstrapSwitch();
 
 				$("#dealer_edit_btn_submit").click(function(){
 					var data = $("#dealer_edit_form").serialize();
