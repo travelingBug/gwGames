@@ -560,41 +560,19 @@ public class DateUtil {
     }
     public static void main(String[] args)
 	{
-//    	String timeDir=DateUtil.dateToString(new Date(),DateUtil.ISO_EXPANDED_DATE_FORMAT);
-//		System.out.println(timeDir);
-//        getDate(22);
-        try {
-            long nd = 1000 * 24 * 60 * 60;
-            long nh = 1000 * 60 * 60;
-            Date now = getCurrentDateTime();
-            Date date1 = null;
-            SimpleDateFormat simdate1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String str1 = getDate(22);
-            date1 = simdate1.parse(str1);
-            long diff = date1.getTime()-now.getTime();
-
-            long day = diff / nd;
-            long hour = diff % nd / nh;
-
-            int b = Math.round((day*24+hour)/4);
-
-            int c = Math.round((day*24+hour)/10);
-
-            int d = (int) Math.round((day*24+hour)/2.5);
-            System.out.println(day+"天"+hour+"小时");
-            System.out.println(b);
-            System.out.println(c);
-            System.out.println(d);
-
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTime(date1);
-            calendar.add(calendar.HOUR_OF_DAY, d);
-            System.out.println(simdate1.format(calendar.getTime()));
-
-
-        }catch (ParseException e) {
-            e.printStackTrace();
-        }
+//        int days = 0;
+        int c = 500;
+        int b = 2000;
+        int a = 5000;
+        int weekday = 22;
+        double aa = Math.round(b/weekday*27);
+        System.out.println(aa);
+        double bb = Math.round(a/weekday);
+        System.out.println(bb);
+        double aaa = Math.round(aa/bb);
+        System.out.println(aaa);
+        int days = (int) Math.round(aaa);
+        System.out.println(days);
 
 	}
 

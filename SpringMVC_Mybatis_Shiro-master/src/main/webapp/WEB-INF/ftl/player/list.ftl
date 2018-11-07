@@ -106,6 +106,21 @@
 				$("#player_bz").val(bz);
 			}
 
+            function _details(accountName, account, name, idCard, phone, crtTime, auditer, auditTime, wechat, belong, bz){
+                $("#player_details_accountName").val(accountName);
+                $("#player_details_name").val(name);
+                $("#player_details_account").val(account);
+                $("#player_details_idNo").val(idCard);
+                $("#player_details_phone").val(phone);
+                $("#player_details_date").val(crtTime);
+                $("#player_details_auditer").val(auditer);
+                $("#player_details_auditDate").val(auditTime);
+
+                $("#player_details_wechat").val(wechat);
+                $("#player_details_belong").val(belong);
+                $("#player_details_bz").val(bz);
+            }
+
             <@shiro.hasAnyRoles name='888888,100004'>
             function replaceFile(){
                 $('#uploadPlayerFile').remove();
@@ -211,17 +226,18 @@
 					<table class="table table-bordered">
 						<tr>
 							<#--<th><input type="checkbox" id="checkAll"/></th>-->
+                            <th class="col-sm-1">序号</th>
 							<th class="col-sm-1">昵称</th>
 							<th class="col-sm-1">姓名</th>
 							<th class="col-sm-1">资金账号</th>
-							<th class="col-sm-1">身份证</th>
+							<#--<th class="col-sm-1">身份证</th>-->
 							<th class="col-sm-1">手机号</th>
 							<th class="col-sm-1">报名时间</th>
-							<th class="col-sm-1">备注</th>
+							<#--<th class="col-sm-1">备注</th>-->
 							<th class="col-sm-1">审核状态</th>
-							<th class="col-sm-1">审核人</th>
-							<th class="col-sm-1">审核时间</th>
-							<th class="col-sm-1">微信号码</th>
+							<#--<th class="col-sm-1">审核人</th>-->
+							<#--<th class="col-sm-1">审核时间</th>-->
+							<#--<th class="col-sm-1">微信号码</th>-->
 							<th class="col-sm-1">归属</th>
 							<th class="col-sm-1">操作</th>
 						</tr>
@@ -229,13 +245,14 @@
 							<#list page.list as it>
 								<tr>
 									<#--<td><input value="${it.id}" check='box' type="checkbox" /></td>-->
+                                    <td>${it_index+1}</td>
 									<td>${it.accountName}</td>
 									<td>${it.name}</td>
 									<td>${it.account}</td>
-									<td>${it.idCard}</td>
+									<#--<td>${it.idCard}</td>-->
 									<td>${it.telPhone}</td>
 									<td>${it.crtTime?string("yyyy-MM-dd HH:mm:ss")}</td>
-									<td>${it.bz}</td>
+									<#--<td>${it.bz}</td>-->
 									<td>
 										<#if it.auditFlag==0>
 											待审核
@@ -247,9 +264,9 @@
 											未通过
 										</#if>
 									</td>
-									<td>${it.auditer!""}</td>
-									<td>${it.auditTime!""}</td>
-									<td>${it.wechat!""}</td>
+									<#--<td>${it.auditer!""}</td>-->
+									<#--<td>${it.auditTime!""}</td>-->
+									<#--<td>${it.wechat!""}</td>-->
 									<td>${it.belong!""}</td>
 									<td>
 										<@shiro.hasPermission name="/player/auditById.shtml">
@@ -263,6 +280,7 @@
 											</#if>
 										</@shiro.hasPermission>
                                         <a href="javascript:_edit('${it.id}', '${it.accountName}','${it.account}','${it.bz}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#playerEditModal"></i></a>
+                                        <a href="javascript:_details('${it.accountName}','${it.account}','${it.name}','${it.idCard}','${it.telPhone}','${it.crtTime?string("yyyy-MM-dd HH:mm:ss")}','${it.auditer!""}','${it.auditTime!""}','${it.wechat!""}','${it.belong!""}','${it.bz}');"><i class="far fa-file-alt normal" title="详情" data-toggle="modal" data-target="#playerDetailsModal"></i></a>
 										<#if it.auditFlag==1>
                                             <a href="javascript:_addwechat('${it.id}','3');"><i class="fab fa-weixin pass" title="微信"></i></a>
 										</#if>
@@ -277,7 +295,7 @@
 					</table>
 					<#if page?exists>
                         <div class="pagination pull-left">
-                            ${page.totalCount}
+                            共${page.totalCount!"0"}条数据
                         </div>
 
 						<div class="pagination pull-right">
@@ -362,6 +380,49 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
                                     <button type="button" id="player_wechat_submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-save normal"></i>&nbsp;保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="playerDetailsModal" tabindex="-1" role="dialog" aria-labelledby="playerDetailsModalLabel">
+                        <div class="modal-dialog" role="document" style="width:30%;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title" id="playerDetailsModalLabel">详情</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <form id="play_edit_form" action="#" method="post">
+                                            <input type="hidden" name="id" id="player_details_id">
+                                            <label for="player_details_accountName">昵称</label>
+                                            <input type="text" class="form-control" id="player_details_accountName" disabled>
+                                            <label for="player_details_name">姓名</label>
+                                            <input type="text" class="form-control" id="player_details_name" disabled>
+                                            <label for="player_details_account">资金账号</label>
+                                            <input type="text" class="form-control" id="player_details_account" disabled >
+                                            <label for="player_details_idNo">身份证</label>
+                                            <input type="text" class="form-control" id="player_details_idNo" disabled>
+                                            <label for="player_details_phone">手机号码</label>
+                                            <input type="text" class="form-control" id="player_details_phone" disabled >
+                                            <label for="player_details_date">报名时间</label>
+                                            <input type="text" class="form-control" id="player_details_date" disabled>
+                                            <label for="player_details_auditer">审核人</label>
+                                            <input type="text" class="form-control" id="player_details_auditer" disabled >
+                                            <label for="player_details_auditDate">审核时间</label>
+                                            <input type="text" class="form-control" id="player_details_auditDate" disabled >
+                                            <label for="player_details_wechat">微信号码</label>
+                                            <input type="text" class="form-control" id="player_details_wechat" disabled >
+                                            <label for="player_details_belong">归属</label>
+                                            <input type="text" class="form-control" id="player_details_belong" disabled >
+                                            <label for="player_details_bz">备注</label>
+                                            <textarea class="form-control" id="player_details_bz" disabled ></textarea>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
                                 </div>
                             </div>
                         </div>

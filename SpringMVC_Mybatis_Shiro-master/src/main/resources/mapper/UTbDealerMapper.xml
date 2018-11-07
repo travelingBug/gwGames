@@ -17,7 +17,7 @@
     <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="dealer_Column_List" >
-    d.ID,d.NAME,d.PHONE,d.ADDRESS,d.TYPE,d.crt_time,d.SEAT_NUM,d.INVITE_NUM,d.PARENT_ID,d.FK_USER_ID,d.D_GROUP
+    d.ID,d.NAME,d.PHONE,d.ADDRESS,d.TYPE,d.crt_time,d.SEAT_NUM,d.INVITE_NUM,d.PARENT_ID,d.FK_USER_ID,d.D_GROUP,d.STATUS AS state
   </sql>
   <sql id="dealer_limit_sql">
   	   <if test="page_sql != null and page_sql != ''">
@@ -95,6 +95,9 @@
       </if>
       <if test="dGroup != null and dGroup != ''">
         ,D_GROUP = #{dGroup}
+      </if>
+      <if test="state != null and state != ''">
+        ,STATUS = #{state}
       </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}

@@ -75,6 +75,7 @@
 					<table class="table table-bordered">
 						<tr>
 							<th><input type="checkbox" id="checkAll"/></th>
+                            <th>序号</th>
 							<th>昵称</th>
 							<th>购买月票类型</th>
                             <th>金额</th>
@@ -86,6 +87,7 @@
 							<#list page.list as it>
 								<tr>
 									<td><input value="${it.id}" check='box' type="checkbox" /></td>
+                                    <td>${it_index+1}</td>
 									<td>${it.nickname!""}</td>
 									<td>
 										<#if it.level==0>
@@ -106,11 +108,14 @@
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="7">没有找到购票明细</td>
+								<td class="text-center danger" colspan="8">没有找到购票明细</td>
 							</tr>
 						</#if>
 					</table>
 					<#if page?exists>
+                        <div class="pagination pull-left">
+                            共${page.totalCount!"0"}条数据
+                        </div>
 						<div class="pagination pull-right">
 							${page.pageHtml}
 						</div>

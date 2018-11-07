@@ -153,6 +153,7 @@
 					<table class="table table-bordered">
 						<tr>
 							<th><input type="checkbox" id="checkAll"/></th>
+                            <th>序号</th>
                             <th>登录账号</th>
 							<th>名称</th>
 							<th>手机号码</th>
@@ -166,6 +167,7 @@
 							<#list page.list as it>
 								<tr>
 									<td><input value="${it.id}" check='box' type="checkbox" /></td>
+                                    <td>${it_index+1}</td>
 									<td>${it.loginName}</td>
                                     <td>${it.name}</td>
                                     <td>${it.phone}</td>
@@ -188,11 +190,15 @@
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="9">没有找到员工</td>
+								<td class="text-center danger" colspan="10">没有找到员工</td>
 							</tr>
 						</#if>
 					</table>
 					<#if page?exists>
+                        <div class="pagination pull-left">
+                            共${page.totalCount!"0"}条数据
+                        </div>
+
 						<div class="pagination pull-right">
 							${page.pageHtml}
 						</div>

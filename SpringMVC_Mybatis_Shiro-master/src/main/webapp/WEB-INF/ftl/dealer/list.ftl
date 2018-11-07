@@ -160,13 +160,15 @@
                 },'json');
             }
 
-			function _edit(id, name, phone, address, type, dGroup){
+			function _edit(id, name, phone, address, type, dGroup, state){
 				$("#dealer_edit_id").val(id);
                 $("#dealer_edit_name").val(name);
                 $("#dealer_edit_phone").val(phone);
                 $("#dealer_edit_address").val(address);
                 $("#dealer_edit_type").val(type);
                 $("#dealer_edit_group").val(dGroup);
+                $("#dealer_edit_group").val(dGroup);
+                $("#dealer_edit_state").val(state);
 			}
 
 			function _add(){
@@ -253,6 +255,7 @@
 					<table class="table table-bordered">
 						<tr>
 							<th><input type="checkbox" id="checkAll"/></th>
+                            <th>序号</th>
                             <th>登录账号</th>
 							<th>名称</th>
 							<th>手机号码</th>
@@ -267,6 +270,7 @@
 							<#list page.list as it>
 								<tr>
 									<td><input value="${it.id}" check='box' type="checkbox" /></td>
+                                    <td>${it_index+1}</td>
 									<td>${it.loginName!""}</td>
                                     <td>${it.name!""}</td>
                                     <td>${it.phone}</td>
@@ -277,7 +281,7 @@
 									<td>${it.crtTime?string("yyyy-MM-dd HH:mm:ss")}</td>
 									<td>
 										<@shiro.hasPermission name="/dealer/editDealer.shtml">
-											<a href="javascript:_edit('${it.id}','${it.name}','${it.phone}','${it.address}','${it.type}','${it.dGroup!""}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#dealerEditModal"></i></a>
+											<a href="javascript:_edit('${it.id}','${it.name}','${it.phone}','${it.address}','${it.type}','${it.dGroup!""}','${it.state!""}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#dealerEditModal"></i></a>
 										</@shiro.hasPermission>
                                         <@shiro.hasPermission name="/dealer/addDealerBankCard.shtml">
                                         <a href="javascript:_bankCard('${it.id}','${userId}');"><i class="far fa-credit-card" title="绑定银行卡" data-toggle="modal"></i></a>
@@ -293,11 +297,14 @@
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="9">没有找到代理商</td>
+								<td class="text-center danger" colspan="10">没有找到代理商</td>
 							</tr>
 						</#if>
 					</table>
 					<#if page?exists>
+                        <div class="pagination pull-left">
+                            共${page.totalCount!"0"}条数据
+                        </div>
 						<div class="pagination pull-right">
 							${page.pageHtml}
 						</div>
@@ -341,7 +348,7 @@
                                             <label for="dealer_add_group">分组名称</label>
                                             <input type="text" name="dGroup" class="form-control" maxlength="20" id="dealer_add_group" placeholder="分组名称">
                                             <label for="state">是否显示报名链接</label>
-                                            <select name="state" id="state" class="form-control">
+                                            <select name="state" id="dealer_add_state" class="form-control">
                                                 <option value="0" selected="selected">否</option>
                                                 <option value="1">是</option>
                                             </select>
@@ -377,18 +384,21 @@
 										</div>
                                         <label for="dealer_add_address">联系地址</label>
                                         <input type="text" name="address" class="form-control" id="dealer_edit_address" placeholder="地址">
+                                        <@shiro.hasAnyRoles name='888888,900001'>
                                         <label for="dealer_edit_type">返佣比例</label>
                                         <div class="input-group">
                                             <input type="text" name="type"  id="dealer_edit_type" class="form-control" placeholder="返佣比例" aria-describedby="basic-addon2">
                                             <span class="input-group-addon" id="basic-addon2">%</span>
                                         </div>
+                                        </@shiro.hasAnyRoles>
                                         <label for="dealer_edit_group">分组名称</label>
                                         <input type="text" name="dGroup" class="form-control" maxlength="20" id="dealer_edit_group" placeholder="分组名称">
-                                        <label for="states">是否显示报名链接</label>
-                                        <select name="states" id="states" class="form-control">
+                                        <label for="state">是否显示报名链接</label>
+                                        <select name="state" id="dealer_edit_state" class="form-control">
                                             <option value="0">否</option>
                                             <option value="1">是</option>
                                         </select>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -420,6 +430,7 @@
                                             <input type="text" name="cardName" class="form-control" maxlength="20" id="dealer_card_add_name" placeholder="开户人名称">
                                             <label for="dealer_card_add_phone">开户电话</label>
                                             <input type="text" name="phone" class="form-control" maxlength="20" id="dealer_card_add_phone" placeholder="开户电话">
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -451,6 +462,7 @@
                                             <input type="text" name="cardName" class="form-control" maxlength="20" id="dealer_card_edit_name" placeholder="开户人名称">
                                             <label for="dealer_card_edit_phone">开户电话</label>
                                             <input type="text" name="phone" class="form-control" maxlength="20" id="dealer_card_edit_phone" placeholder="开户电话">
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="modal-footer">

@@ -59,7 +59,7 @@
   </sql>
 
   <sql id="order_all">
-    ORDER BY p.AUDIT_FLAG,p.crt_time DESC
+    ORDER BY if(p.AUDIT_FLAG=0,0,1),p.crt_time DESC
   </sql>
   <select id="findAll" resultMap="PlayerResultMap" >
   	select

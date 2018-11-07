@@ -87,6 +87,7 @@
 					<table class="table table-bordered">
 						<tr>
 							<th><input type="checkbox" id="checkAll"/></th>
+                            <th>序号</th>
 							<th>昵称</th>
 							<th>观众级别</th>
                             <th>电话号码</th>
@@ -94,12 +95,15 @@
 							<th>归属员工</th>
                             <th>归属代理商</th>
 							<th>创建时间</th>
+							<@shiro.hasAnyRoles name='888888,100004,100005,100006,200001,900001'>
 							<th>操作</th>
+							</@shiro.hasAnyRoles>
 						</tr>
 						<#if page?exists && page.list?size gt 0 >
 							<#list page.list as it>
 								<tr>
 									<td><input value="${it.id}" check='box' type="checkbox" /></td>
+                                    <td>${it_index+1}</td>
 									<td>${it.nickName}</td>
                                     <td>${it.level}</td>
                                     <td>${it.phone}</td>
@@ -107,18 +111,23 @@
 									<td>${it.belong!""}</td>
 									<td>${it.belong2!""}</td>
 									<td>${it.crtTime?string("yyyy-MM-dd HH:mm:ss")}</td>
+									<@shiro.hasAnyRoles name='888888,100004,100005,100006,200001,900001'>
 									<td>
                                     	<a href="javascript:_editEmplyee('${it.id}','${it.inviteCode}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#dealerEditModal"></i></a>
                                     </td>
+									</@shiro.hasAnyRoles>
 								</tr>
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="9">没有找到观众</td>
+								<td class="text-center danger" colspan="10">没有找到观众</td>
 							</tr>
 						</#if>
 					</table>
 					<#if page?exists>
+                        <div class="pagination pull-left">
+                            共${page.totalCount!"0"}条数据
+                        </div>
 						<div class="pagination pull-right">
 							${page.pageHtml}
 						</div>

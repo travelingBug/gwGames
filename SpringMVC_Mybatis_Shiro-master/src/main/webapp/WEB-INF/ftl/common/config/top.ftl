@@ -91,7 +91,7 @@
 				  </@shiro.hasAnyRoles>
 
 			      <#--拥有 角色888888（管理员）-->
-				  <@shiro.hasAnyRoles name='888888,100004,100005'>
+				  <@shiro.hasAnyRoles name='888888,100004,100005,900001'>
                       <li class="dropdown ${(index==5)?string('active','')}">
                           <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="${basePath}/dealer/list.shtml?parentId=0">
                               代理商管理<span class="caret"></span>
