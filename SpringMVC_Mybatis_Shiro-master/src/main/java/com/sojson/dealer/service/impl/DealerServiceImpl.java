@@ -123,7 +123,7 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
         /**
          * 用户注册链接
          */
-        String url = IConfig.get("url")+"/static/wx/index.html?t=7&inviteNum="+inviteNum;
+        String url = IConfig.get("real_url")+"/static/wx/index.html?t=7&inviteNum="+inviteNum;
         String path = IConfig.get("qrCode_path_real");
         String fileName = userEntity.getId() + ".jpg";
         QrCodeUtil.createQrCode(url, path, fileName);

@@ -18,10 +18,13 @@
 			so.init(function(){
 				//初始化全选。
 				so.checkBoxInit('#checkAll','[check=box]');
+
+                <@shiro.hasAnyRoles name='888888,100004'>
                 $("#uploadPlayerBtn").unbind("click").bind("click", function() {
                     $("#uploadPlayerFile").click();
                 });
                 bindFile();
+                </@shiro.hasAnyRoles>
 
 				$("#player_btn_submit").click(function(){
 					var data = $("#play_edit_form").serialize();
@@ -103,6 +106,7 @@
 				$("#player_bz").val(bz);
 			}
 
+            <@shiro.hasAnyRoles name='888888,100004'>
             function replaceFile(){
                 $('#uploadPlayerFile').remove();
                 $("#uploadPlayerBtn").after('<input type="file" name="file" style="width:0px;height:0px;display: none;" id="uploadPlayerFile" />');
@@ -161,6 +165,7 @@
                     }
                 });
             }
+            </@shiro.hasAnyRoles>
 
 		</script>
 	</head>
@@ -188,6 +193,7 @@
 					      </div>
 					     <span> <#--pull-right -->
 				         	<button type="submit" class="btn btn-primary">查询</button>
+                            <@shiro.hasAnyRoles name='888888,100004'>
 							 <form enctype="multipart/form-data" id="excelForm"   method="post" >
 								<button class="btn btn-success" id="uploadPlayerBtn"  type="button" >
 									导入
@@ -195,6 +201,7 @@
 								<input type="file" name="file" style="width:0px;height:0px;display: none;" id="uploadPlayerFile" />
                     		</form>
                              <a href="${basePath}/file/player.xlsx">模板下载</a>
+                            </@shiro.hasAnyRoles>
 				         </span>
 						  <div id="div_refresh">
                               <i class="fas fa-redo-alt" id="i_refresh" title="刷新"></i>
@@ -269,6 +276,10 @@
 						</#if>
 					</table>
 					<#if page?exists>
+                        <div class="pagination pull-left">
+                            ${page.totalCount}
+                        </div>
+
 						<div class="pagination pull-right">
 							${page.pageHtml}
 						</div>

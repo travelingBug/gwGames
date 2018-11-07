@@ -267,8 +267,8 @@
 							<#list page.list as it>
 								<tr>
 									<td><input value="${it.id}" check='box' type="checkbox" /></td>
-									<td>${it.loginName}</td>
-                                    <td>${it.name}</td>
+									<td>${it.loginName!""}</td>
+                                    <td>${it.name!""}</td>
                                     <td>${it.phone}</td>
                                     <td>${it.address}</td>
                                     <td>${it.seatNum}</td>
@@ -342,7 +342,7 @@
                                             <input type="text" name="dGroup" class="form-control" maxlength="20" id="dealer_add_group" placeholder="分组名称">
                                             <label for="state">是否显示报名链接</label>
                                             <select name="state" id="state" class="form-control">
-                                                <option value="0" checked>否</option>
+                                                <option value="0" selected="selected">否</option>
                                                 <option value="1">是</option>
                                             </select>
                                         </form>
@@ -386,7 +386,7 @@
                                         <input type="text" name="dGroup" class="form-control" maxlength="20" id="dealer_edit_group" placeholder="分组名称">
                                         <label for="states">是否显示报名链接</label>
                                         <select name="states" id="states" class="form-control">
-                                            <option value="0" checked>否</option>
+                                            <option value="0">否</option>
                                             <option value="1">是</option>
                                         </select>
                                     </div>

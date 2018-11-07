@@ -231,6 +231,7 @@ public class DealerController extends BaseController {
 
         map.put("findContent", findContent);
         Pagination<TbVips> page = null;
+        List<TbVips> vipList = new ArrayList<TbVips>();
 
         TbDealer dealer = dealerService.queryByUserId(parentId);
         if(null!=dealer){
@@ -240,12 +241,14 @@ public class DealerController extends BaseController {
             }else {
                 map.put("parentId", parentId);
                 page = vipsListService.findByPageEmployee(map, pageNo, pageSize);
-                if (page.getList().size() > 0) {
-                    List<TbVips> vips = page.getList();
-                    for (TbVips vip : vips) {
-                        if (vip.getBelong2() == null) {
-                            vip.setBelong2(vip.getBelong());
-                            vip.setBelong("");
+                if(page.getList()!=null) {
+                    if (page.getList().size() > 0) {
+                        List<TbVips> vips = page.getList();
+                        for (TbVips vip : vips) {
+                            if (vip.getBelong2() == null) {
+                                vip.setBelong2(vip.getBelong());
+                                vip.setBelong("");
+                            }
                         }
                     }
                 }
@@ -256,6 +259,10 @@ public class DealerController extends BaseController {
                 page = vipsListService.findByPageAdmin(map,pageNo,pageSize);
             }
         }
+        if(page.getList()==null) {
+            page.setList(vipList);
+        }
+
         map.put("page", page);
         return new ModelAndView("dealer/vipsList");
     }
