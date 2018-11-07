@@ -446,6 +446,7 @@
 
 					<table class="table table-bordered">
 						<tr>
+                            <th width="50">序号</th>
 							<th width="120">昵称</th>
 							<th width="120">姓名</th>
 							<th width="100">资金账号</th>
@@ -461,6 +462,7 @@
 						<#if page?exists && page.list?size gt 0 >
 							<#list page.list as it>
 								<tr>
+                                    <td>${it_index+1}</td>
 									<td>${it.accountName}</td>
 									<td>${it.name}</td>
 									<td>${it.account}</td>
@@ -493,7 +495,7 @@
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="10">暂未发现数据</td>
+								<td class="text-center danger" colspan="13">暂未发现数据</td>
 							</tr>
 						</#if>
 					</table>
