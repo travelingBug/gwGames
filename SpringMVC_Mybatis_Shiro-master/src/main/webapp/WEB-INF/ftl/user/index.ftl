@@ -15,7 +15,7 @@
 	</head>
 	<body data-target="#one" data-spy="scroll">
 		<@_top.top 1/>
-		<div class="container" style="padding-bottom: 15px;min-height: 300px; margin-top: 40px;">
+		<div class="container" >
 			<div class="row">
 				<@_left.user 1/>
 				<div class="col-md-10">

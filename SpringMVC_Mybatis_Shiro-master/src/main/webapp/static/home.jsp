@@ -64,7 +64,7 @@
                     <tr>
                         <th>排名</th>
                         <th>昵称</th>
-                        <th>总资产</th>
+                        <th>持仓比</th>
                         <th>总收益</th>
                         <th>操作</th>
                     </tr>
@@ -289,7 +289,7 @@
                         html += showTop;
                         html += '<td>'+data[i].accountName+'</td>';
 
-                        html += '<td>'+data[i].totalMoney+'</td>';
+                        html += '<td>'+data[i].buyForALLRate+'%</td>';
                         html += '<td>'+data[i].yield+'</td>';
                         html += '<td><a class="red" href="/static/gains/strategy.jsp?account='+$.trim(data[i].account)+'">观赛</a></td>';
                         html += '</tr>';
