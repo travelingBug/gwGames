@@ -126,7 +126,7 @@ public class DealerController extends BaseController {
             }
         }else{
             String type = dealerService.queryUserType(parentId);
-            if("888888".equals(type) || "100004".equals(type) || "100005".equals(type) || "100006".equals(type)){
+            if("888888".equals(type) || "100004".equals(type) || "100005".equals(type) || "100006".equals(type) || "900001".equals(type)){
                 map.put("findContent", findContent);
                 map.put("all","all");
                 map.put("dGroup",dGroup);
@@ -255,7 +255,7 @@ public class DealerController extends BaseController {
             }
         }else{
             String type = dealerService.queryUserType(parentId);
-            if("888888".equals(type) || "100004".equals(type) || "100005".equals(type) || "100006".equals(type)){
+            if("888888".equals(type) || "100004".equals(type) || "100005".equals(type) || "100006".equals(type) || "900001".equals(type)){
                 page = vipsListService.findByPageAdmin(map,pageNo,pageSize);
             }
         }
@@ -288,7 +288,7 @@ public class DealerController extends BaseController {
             }
         }else{
             String type = dealerService.queryUserType(userId);
-            if("888888".equals(type) || "100004".equals(type) || "100005".equals(type) || "100006".equals(type)){
+            if("888888".equals(type) || "100004".equals(type) || "100005".equals(type) || "100006".equals(type) || "900001".equals(type)){
                 map.put("search","1");
                 map.put("startDate",startDate);
                 map.put("endDate", endDate);
