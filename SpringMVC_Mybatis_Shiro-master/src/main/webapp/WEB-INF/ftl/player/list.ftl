@@ -99,14 +99,15 @@
                     $("#playerWechatModal").modal();
             }
 
-			function _edit(id, name, account, bz){
+			function _edit(id, name, account, bz ,capital){
 				$("#player_edit_id").val(id);
                 $("#player_accountName").val(name);
 				$("#player_account").val(account);
 				$("#player_bz").val(bz);
+                $("#player_capital").val(capital);
 			}
 
-            function _details(accountName, account, name, idCard, phone, crtTime, auditer, auditTime, wechat, belong, bz){
+            function _details(accountName, account, name, idCard, phone, crtTime, auditer, auditTime, wechat, belong, bz, capital){
                 $("#player_details_accountName").val(accountName);
                 $("#player_details_name").val(name);
                 $("#player_details_account").val(account);
@@ -119,6 +120,8 @@
                 $("#player_details_wechat").val(wechat);
                 $("#player_details_belong").val(belong);
                 $("#player_details_bz").val(bz);
+
+                $("#player_details_capital").val(capital);
             }
 
             <@shiro.hasAnyRoles name='888888,100004'>
@@ -279,8 +282,8 @@
                                             	<a href="javascript:_audit('${it.id}','2');"><i class="fas fa-times-circle fail" title="不通过"></i></a>
 											</#if>
 										</@shiro.hasPermission>
-                                        <a href="javascript:_edit('${it.id}', '${it.accountName}','${it.account}','${it.bz}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#playerEditModal"></i></a>
-                                        <a href="javascript:_details('${it.accountName}','${it.account}','${it.name}','${it.idCard}','${it.telPhone}','${it.crtTime?string("yyyy-MM-dd HH:mm:ss")}','${it.auditer!""}','${it.auditTime!""}','${it.wechat!""}','${it.belong!""}','${it.bz}');"><i class="far fa-file-alt normal" title="详情" data-toggle="modal" data-target="#playerDetailsModal"></i></a>
+                                        <a href="javascript:_edit('${it.id}', '${it.accountName}','${it.account}','${it.bz}','${it.capital!"0"}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#playerEditModal"></i></a>
+                                        <a href="javascript:_details('${it.accountName}','${it.account}','${it.name}','${it.idCard}','${it.telPhone}','${it.crtTime?string("yyyy-MM-dd HH:mm:ss")}','${it.auditer!""}','${it.auditTime!""}','${it.wechat!""}','${it.belong!""}','${it.bz}','${it.capital!"0"}');"><i class="far fa-file-alt normal" title="详情" data-toggle="modal" data-target="#playerDetailsModal"></i></a>
 										<#if it.auditFlag==1>
                                             <a href="javascript:_addwechat('${it.id}','3');"><i class="fab fa-weixin pass" title="微信"></i></a>
 										</#if>
@@ -318,6 +321,8 @@
 											<input type="text" name="accountName" class="form-control" id="player_accountName" placeholder="昵称">
 											<label for="player_account">资金账号</label>
 											<input type="text" name="account" class="form-control" id="player_account" placeholder="资金账号">
+                                            <label for="player_capital">本金</label>
+                                            <input type="text" name="capital" class="form-control" id="player_capital" oninput="this.value=this.value.replace(/[^\d.]/g,'')" placeholder="本金">
 											<label for="player_bz">备注</label>
 											<textarea name="bz" class="form-control" id="player_bz" placeholder="备注"></textarea>
 										</form>
@@ -394,7 +399,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <form id="play_edit_form" action="#" method="post">
+                                        <form id="play_details_form" action="#" method="post">
                                             <input type="hidden" name="id" id="player_details_id">
                                             <label for="player_details_accountName">昵称</label>
                                             <input type="text" class="form-control" id="player_details_accountName" disabled>
@@ -402,6 +407,8 @@
                                             <input type="text" class="form-control" id="player_details_name" disabled>
                                             <label for="player_details_account">资金账号</label>
                                             <input type="text" class="form-control" id="player_details_account" disabled >
+                                            <label for="player_details_capital">本金</label>
+                                            <input type="text" class="form-control" id="player_details_capital" disabled >
                                             <label for="player_details_idNo">身份证</label>
                                             <input type="text" class="form-control" id="player_details_idNo" disabled>
                                             <label for="player_details_phone">手机号码</label>

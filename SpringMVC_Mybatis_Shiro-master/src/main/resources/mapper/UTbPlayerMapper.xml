@@ -17,9 +17,10 @@
     <result column="WECHAT" property="wechat" jdbcType="VARCHAR" />
     <result column="INVITE_NUM" property="inviteNum" jdbcType="VARCHAR" />
     <result column="belong" property="belong" jdbcType="VARCHAR" />
+    <result column="CAPITAL" property="capital" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Player_Column_List" >
-    p.ID,p.ACCOUNT_NAME,p.NAME,p.ID_CARD,p.TEL_PHONE,p.DEL_FLAG,p.AUDIT_FLAG,p.crt_time,p.ACCOUNT,p.BZ,p.ACCOUNT,p.AUDITER,DATE_FORMAT(p.AUDIT_TIME,'%Y-%m-%d %H:%i:%s') as AUDIT_TIME,p.WECHAT,p.INVITE_NUM
+    p.ID,p.ACCOUNT_NAME,p.NAME,p.ID_CARD,p.TEL_PHONE,p.DEL_FLAG,p.AUDIT_FLAG,p.crt_time,p.ACCOUNT,p.BZ,p.ACCOUNT,p.AUDITER,DATE_FORMAT(p.AUDIT_TIME,'%Y-%m-%d %H:%i:%s') as AUDIT_TIME,p.WECHAT,p.INVITE_NUM,p.CAPITAL
   </sql>
   <sql id="limit_sql">
   	   <if test="page_sql != null and page_sql != ''">
@@ -125,15 +126,18 @@
       <if test="wechat != null and wechat != ''" >
         WECHAT = #{wechat,jdbcType=TINYINT}
       </if>
+      <if test="capital != null and capital != ''" >
+        CAPITAL = #{capital,jdbcType=VARCHAR}
+      </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 
   <insert id="insertBatch" parameterType="java.util.List">
-    insert into tb_player (ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,CRT_TIME,INVITE_NUM,ACCOUNT) values
+    insert into tb_player (ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,CRT_TIME,INVITE_NUM,ACCOUNT,CAPITAL) values
     <foreach collection="list" item="item" index="index" separator=",">
       (#{item.id}, #{item.accountName,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR}, #{item.idCard,jdbcType=VARCHAR},
-      #{item.telPhone,jdbcType=VARCHAR}, 0, 1, #{item.crtTime,jdbcType=TIMESTAMP},#{item.inviteNum,jdbcType=VARCHAR},#{item.account}
+      #{item.telPhone,jdbcType=VARCHAR}, 0, 1, #{item.crtTime,jdbcType=TIMESTAMP},#{item.inviteNum,jdbcType=VARCHAR},#{item.account},#{item.capital}
       )
     </foreach>
   </insert>

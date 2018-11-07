@@ -85,6 +85,16 @@ public class TbPlayer implements Serializable{
 
     private String belong;
 
+    private String capital;
+
+    public String getCapital() {
+        return capital;
+    }
+
+    public void setCapital(String capital) {
+        this.capital = capital;
+    }
+
     public String getBelong() {
         return belong;
     }
