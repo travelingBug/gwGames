@@ -264,7 +264,7 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
         //总计数据
         DealerCountVo total = new DealerCountVo();
         total.setName("总计");
-
+        total.setdGroup("");
         for (TbDealer tbDealer : dealers) {
             //获取对应的经销商ID
             String userId = dealerReal.get(tbDealer.getInviteNum());
@@ -277,6 +277,7 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
                 //如果是父类。就设置名称
                 if (StringUtils.isBlank(tbDealer.getParentId()) || IConstant.parentId.equals(tbDealer.getParentId())) {
                     dealerCountVo.setName(tbDealer.getName());
+                    dealerCountVo.setdGroup(tbDealer.getdGroup());
                 }
                 //统计会员个数
                 for (TbVips vip : vips) {
@@ -391,6 +392,7 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
         //总计数据
         DealerCountVo total = new DealerCountVo();
         total.setName("总计");
+        total.setdGroup("");
 
         for (TbDealer tbDealer : dealers) {
             //获取对应的经销商ID
@@ -402,6 +404,7 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
                 }
                 DealerCountVo dealerCountVo = result.get(userId);
                 dealerCountVo.setName(tbDealer.getName());
+                dealerCountVo.setdGroup(tbDealer.getdGroup());
                 //统计会员个数
                 for (TbVips vip : vips) {
                     if (vip.getInviteCode().equals(tbDealer.getInviteNum())) {
