@@ -230,7 +230,7 @@
 	<body data-target="#one" data-spy="scroll">
 		
 		<@_top.top 5/>
-		<div class="container" style="padding-bottom: 15px;min-height: 300px; margin-top: 40px;">
+		<div class="container" >
 			<div class="row">
 				<@_left.dealer 1/>
 				<div class="col-md-10">

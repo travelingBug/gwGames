@@ -17,7 +17,7 @@
 	<body data-target="#one" data-spy="scroll">
 		
 		<@_top.top 0/>
-		<div class="container" style="padding-bottom: 15px;min-height: 300px; margin-top: 40px;">
+		<div class="container" >
 			<div class="row">
 				<div class="col-md-12">
 					<h2>系统提示</h2>

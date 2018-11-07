@@ -87,7 +87,7 @@
 	<body data-target="#one" data-spy="scroll">
 		<#--引入头部-->
 		<@_top.top 3/>
-		<div class="container" style="padding-bottom: 15px;min-height: 300px; margin-top: 40px;">
+		<div class="container" >
 			<div class="row">
 				<#--引入左侧菜单-->
 				<@_left.role 1/>

@@ -56,7 +56,7 @@
 	<body data-target="#one" data-spy="scroll">
 		
 		<@_top.top 6/>
-		<div class="container" style="padding-bottom: 15px;min-height: 300px; margin-top: 40px;">
+		<div class="container" >
 			<div class="row">
 				<@_left.employee 2/>
 				<div class="col-md-10">
@@ -96,25 +96,27 @@
 					<hr>
 					<table class="table table-bordered">
                         <tr>
-                            <td colspan="10"><button type="button" id="exportButton" <#if !listData?exists || listData?size lte 0 >disabled="disabled"</#if> class="btn btn-primary">导出</button></td>
+                            <td colspan="11"><button type="button" id="exportButton" <#if !listData?exists || listData?size lte 0 >disabled="disabled"</#if> class="btn btn-primary">导出</button></td>
                         </tr>
 						<tr>
-                            <th>序号</th>
-                            <th>员工名称</th>
-                            <th>新增观众总人数</th>
-							<th>开通A类观众次数</th>
-							<th>开通A类观众金额</th>
-							<th>开通B类观众次数</th>
-                            <th>开通B类观众金额</th>
-                            <th>开通C类观众次数</th>
-                            <th>开通C类观众金额</th>
-                            <th>开通观众总金额</th>
+                            <th width="40">序号</th>
+                            <th width="80">员工名称</th>
+                            <th width="80">分组名称</th>
+                            <th width="80">新增观众总人数</th>
+							<th width="80">开通A类观众次数</th>
+							<th width="80">开通A类观众金额</th>
+							<th width="80">开通B类观众次数</th>
+                            <th width="80">开通B类观众金额</th>
+                            <th width="80">开通C类观众次数</th>
+                            <th width="80">开通C类观众金额</th>
+                            <th width="80">开通观众总金额</th>
 						</tr>
 						<#if listData?exists && listData?size gt 0 >
 							<#list listData as it>
 								<tr>
                                     <td> ${it_index+1}</td>
 									<td>${it.name!''}</td>
+                                    <td>${it.dGroup!''}</td>
                                     <td>${it.vipCount}</td>
                                     <td>${it.vipACount}</td>
                                     <td>${it.vipAMoneyCount?string.currency}</td>
@@ -127,7 +129,7 @@
 							</#list>
 						<#else>
 							<tr>
-								<td class="text-center danger" colspan="10">没有找到员工数据</td>
+								<td class="text-center danger" colspan="11">没有找到员工数据</td>
 							</tr>
 						</#if>
 					</table>
