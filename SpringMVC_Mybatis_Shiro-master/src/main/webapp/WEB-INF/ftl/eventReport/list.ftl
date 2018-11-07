@@ -288,6 +288,7 @@
 
                 <table class="table table-bordered">
                     <tr>
+                        <th width="40">序列</th>
                         <th width="120">标题</th>
                         <th width="120">序号</th>
                         <th width="100">发布时间</th>
@@ -296,6 +297,7 @@
 				<#if page?exists && page.list?size gt 0 >
 					<#list page.list as it>
                         <tr>
+                            <td>${it_index+1}</td>
                             <td>${it.title}</td>
                             <td>${it.volume}</td>
                             <td>${it.crtTime?string("yyyy-MM-dd HH:mm:ss")}</td>
