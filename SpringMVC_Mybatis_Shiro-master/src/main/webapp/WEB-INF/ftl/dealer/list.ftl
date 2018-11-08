@@ -255,7 +255,7 @@
 					<table class="table table-bordered">
 						<tr>
 							<th><input type="checkbox" id="checkAll"/></th>
-                            <th>序号</th>
+                            <th class="list_index">序号</th>
                             <th>登录账号</th>
 							<th>名称</th>
 							<th>手机号码</th>

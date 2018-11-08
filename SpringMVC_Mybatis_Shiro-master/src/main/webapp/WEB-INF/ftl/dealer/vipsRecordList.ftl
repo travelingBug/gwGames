@@ -75,7 +75,7 @@
 					<table class="table table-bordered">
 						<tr>
 							<th><input type="checkbox" id="checkAll"/></th>
-                            <th>序号</th>
+                            <th class="list_index">序号</th>
 							<th>昵称</th>
 							<th>购买月票类型</th>
                             <th>金额</th>

@@ -27,7 +27,7 @@
                         }else{
                             layer.msg('编辑成功！');
                             setTimeout(function(){
-                                $('#employeeForm').submit();
+                                $('#formId').submit();
                             },1000);
                         }
                     },'json');
@@ -43,7 +43,7 @@
                         }else{
                             layer.msg('新增成功！');
                             setTimeout(function(){
-                                $('#employeeForm').submit();
+                                $('#formId').submit();
                             },1000);
                         }
                     },'json');
@@ -126,7 +126,7 @@
 				<div class="col-md-10">
 					<h2>员工列表</h2>
 					<hr>
-					<form method="post" action="${basePath}/dealer/employeeList.shtml?parentId=${userId}" id="employeeForm" class="form-inline">
+					<form method="post" action="${basePath}/dealer/employeeList.shtml?parentId=${userId}" id="formId" class="form-inline">
 						<div clss="well">
 					      <div class="form-group">
 					        <input type="text" class="form-control" style="width: 300px;" value="${findContent?default('')}" 
@@ -153,7 +153,7 @@
 					<table class="table table-bordered">
 						<tr>
 							<th><input type="checkbox" id="checkAll"/></th>
-                            <th>序号</th>
+                            <th class="list_index">序号</th>
                             <th>登录账号</th>
 							<th>名称</th>
 							<th>手机号码</th>

@@ -87,7 +87,7 @@
 					<table class="table table-bordered">
 						<tr>
 							<th><input type="checkbox" id="checkAll"/></th>
-                            <th>序号</th>
+                            <th class="list_index">序号</th>
 							<th>昵称</th>
 							<th>观众级别</th>
                             <th>电话号码</th>

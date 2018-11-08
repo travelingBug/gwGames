@@ -229,17 +229,17 @@
 					<table class="table table-bordered">
 						<tr>
 							<#--<th><input type="checkbox" id="checkAll"/></th>-->
-                            <th class="col-sm-1">序号</th>
+                            <th class="col-sm-1 list_index">序号</th>
 							<th class="col-sm-1">昵称</th>
-							<th class="col-sm-1">姓名</th>
+							<th class="col-sm-1 list_phone">姓名</th>
 							<th class="col-sm-1">资金账号</th>
 							<#--<th class="col-sm-1">身份证</th>-->
-							<th class="col-sm-1">手机号</th>
+							<th class="col-sm-1 list_phone">手机号</th>
 							<th class="col-sm-1">报名时间</th>
-							<#--<th class="col-sm-1">备注</th>-->
+							<th class="col-sm-1">备注</th>
 							<th class="col-sm-1">审核状态</th>
-							<#--<th class="col-sm-1">审核人</th>-->
-							<#--<th class="col-sm-1">审核时间</th>-->
+							<th class="col-sm-1">审核人</th>
+							<th class="col-sm-1">审核时间</th>
 							<#--<th class="col-sm-1">微信号码</th>-->
 							<th class="col-sm-1">归属</th>
 							<th class="col-sm-1">操作</th>
@@ -255,7 +255,7 @@
 									<#--<td>${it.idCard}</td>-->
 									<td>${it.telPhone}</td>
 									<td>${it.crtTime?string("yyyy-MM-dd HH:mm:ss")}</td>
-									<#--<td>${it.bz}</td>-->
+									<td>${it.bz}</td>
 									<td>
 										<#if it.auditFlag==0>
 											待审核
@@ -267,8 +267,8 @@
 											未通过
 										</#if>
 									</td>
-									<#--<td>${it.auditer!""}</td>-->
-									<#--<td>${it.auditTime!""}</td>-->
+									<td>${it.auditer!""}</td>
+									<td>${it.auditTime!""}</td>
 									<#--<td>${it.wechat!""}</td>-->
 									<td>${it.belong!""}</td>
 									<td>

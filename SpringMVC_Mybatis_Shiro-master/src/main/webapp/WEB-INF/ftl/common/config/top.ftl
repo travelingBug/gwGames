@@ -71,7 +71,7 @@
 				</@shiro.hasAnyRoles>
 
 			  <#--拥有 角色888888（管理员） ||  100002（用户中心）-->
-				  <@shiro.hasAnyRoles name='888888,100002,100004,100005,900001'>
+				  <@shiro.hasAnyRoles name='888888,100002,100004,100005,100006,900001'>
                       <li class="dropdown ${(index==4)?string('active','')}">
                           <a aria-expanded="false" aria-haspopup="true"  role="button" data-toggle="dropdown" class="dropdown-toggle" href="${basePath}/player/list.shtml">
                               选手管理<span class="caret"></span>
@@ -91,7 +91,7 @@
 				  </@shiro.hasAnyRoles>
 
 			      <#--拥有 角色888888（管理员）-->
-				  <@shiro.hasAnyRoles name='888888,100004,100005,900001'>
+				  <@shiro.hasAnyRoles name='888888,100004,100005,100006,900001'>
                       <li class="dropdown ${(index==5)?string('active','')}">
                           <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="${basePath}/dealer/list.shtml?parentId=0">
                               代理商管理<span class="caret"></span>
@@ -109,7 +109,7 @@
 				  </@shiro.hasAnyRoles>
 
 			  		<#--拥有 角色200001（经销商）-->
-				  <@shiro.hasAnyRoles name='200001,100004,100005,888888,900001'>
+				  <@shiro.hasAnyRoles name='200001,100004,100005,100006,888888,900001'>
                       <li class="dropdown ${(index==6)?string('active','')}">
                           <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="${basePath}/dealer/employeeList.shtml?parentId=${userId}">
                               员工管理<span class="caret"></span>
@@ -143,7 +143,7 @@
 				  </@shiro.hasAnyRoles>
 
 			  		<#--拥有 角色888888（管理员）-->
-				  <@shiro.hasAnyRoles name='888888,100006'>
+				  <@shiro.hasAnyRoles name='888888,100004,100006'>
                       <li class="dropdown ${(index==8)?string('active','')}">
                           <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="${basePath}/eventReport/list.shtml">
                               赛事报道管理<span class="caret"></span>
@@ -160,7 +160,7 @@
 				  </@shiro.hasAnyRoles>
 
 			  <#--拥有 角色888888（管理员）-->
-				  <@shiro.hasAnyRoles name='888888,100006'>
+				  <@shiro.hasAnyRoles name='888888,100004,100006'>
                       <li class="dropdown ${(index==9)?string('active','')}">
                           <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="${basePath}/stopdate/list.shtml">
                               系统配置<span class="caret"></span>
