@@ -89,7 +89,6 @@ public class ImportHeader {
         playerHeadReal.put("昵称","accountName");
         playerHeadReal.put("姓名","name");
         playerHeadReal.put("资金账号","account");
-        playerHeadReal.put("本金","capital");
         playerHeadReal.put("身份证","idCard");
         playerHeadReal.put("手机号码","telPhone");
 

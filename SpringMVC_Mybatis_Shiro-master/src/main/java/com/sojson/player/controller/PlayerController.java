@@ -56,6 +56,17 @@ public class PlayerController extends BaseController {
     }
 
     /**
+     * 新增参赛人员
+     * @param req
+     * @return
+     */
+    @RequestMapping(value="addPlayer",method=RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage addPlayer(TbPlayerDto entity, HttpServletRequest req){
+        return playerService.insertPlayer(entity);
+    }
+
+    /**
      * 参赛人员主页
      * @return
      */

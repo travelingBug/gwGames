@@ -22,4 +22,6 @@ public interface PlayerService {
     public List<TbPlayer> findAll(TbPlayerDto player);
 
     ResultMessage importPlayerExcel(MultipartFile file);
+
+    ResultMessage insertPlayer(TbPlayerDto entity);
 }

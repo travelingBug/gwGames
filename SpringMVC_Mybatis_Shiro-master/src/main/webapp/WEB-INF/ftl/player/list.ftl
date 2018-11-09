@@ -24,6 +24,20 @@
                     $("#uploadPlayerFile").click();
                 });
                 bindFile();
+
+                $("#player_add_submit").click(function(){
+                    var data = $("#play_add_form").serialize();
+                    $.post('${basePath}/player/addPlayer.shtml',data,function(result){
+                        if(result && result.level != 1){
+                            return layer.msg(result.messageText,so.default),!0;
+                        }else{
+                            layer.msg('新增成功！');
+                            setTimeout(function(){
+                                $('#formId').submit();
+                            },1000);
+                        }
+                    },'json');
+                });
                 </@shiro.hasAnyRoles>
 
 				$("#player_btn_submit").click(function(){
@@ -183,6 +197,28 @@
                     }
                 });
             }
+
+            function _add(){
+                $("#play_add_form")[0].reset();
+                $("#playerAddModal").modal();
+            }
+
+            function _delete(id){
+                var data = {
+                    "id":id,
+                    "delFlag":1
+                }
+                $.post('${basePath}/player/editPlayer.shtml',data,function(result){
+                    if(result && result.level != 1){
+                        return layer.msg(result.messageText,so.default),!0;
+                    }else{
+                        layer.msg('删除成功！');
+                        setTimeout(function(){
+                            $('#formId').submit();
+                        },1000);
+                    }
+                },'json');
+            }
             </@shiro.hasAnyRoles>
 
 		</script>
@@ -212,6 +248,7 @@
 					     <span> <#--pull-right -->
 				         	<button type="submit" class="btn btn-primary">查询</button>
                             <@shiro.hasAnyRoles name='888888,100004'>
+                             <button type="button" id="addPlayerBtn" onclick="_add();" class="btn btn-primary">新增</button>
 							 <form enctype="multipart/form-data" id="excelForm"   method="post" >
 								<button class="btn btn-success" id="uploadPlayerBtn"  type="button" >
 									导入
@@ -284,6 +321,9 @@
 										</@shiro.hasPermission>
                                         <a href="javascript:_edit('${it.id}', '${it.accountName}','${it.account}','${it.bz}','${it.capital!"0"}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#playerEditModal"></i></a>
                                         <a href="javascript:_details('${it.accountName}','${it.account}','${it.name}','${it.idCard}','${it.telPhone}','${it.crtTime?string("yyyy-MM-dd HH:mm:ss")}','${it.auditer!""}','${it.auditTime!""}','${it.wechat!""}','${it.belong!""}','${it.bz}','${it.capital!"0"}');"><i class="far fa-file-alt normal" title="详情" data-toggle="modal" data-target="#playerDetailsModal"></i></a>
+                                        <@shiro.hasAnyRoles name='888888,100004'>
+                                            <a href="javascript:_delete('${it.id}');"><i class="fas fa-user-times normal" title="删除"></i></a>
+                                        </@shiro.hasAnyRoles>
 										<#if it.auditFlag==1>
                                             <a href="javascript:_addwechat('${it.id}','3');"><i class="fab fa-weixin pass" title="微信"></i></a>
 										</#if>
@@ -306,6 +346,39 @@
 						</div>
 					</#if>
 					</form>
+                    <div class="modal fade" id="playerAddModal" tabindex="-1" role="dialog" aria-labelledby="playerAddModalLabel">
+                        <div class="modal-dialog" role="document" style="width:30%;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title" id="playerAddModal">新增</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <form id="play_add_form" action="#" method="post">
+                                            <label for="player_add_accountName">昵称</label>
+                                            <input type="text" name="accountName" required class="form-control" id="player_add_accountName" placeholder="昵称">
+                                            <label for="player_add_name">姓名</label>
+                                            <input type="text" name="name" class="form-control" required id="player_add_name" placeholder="姓名">
+                                            <label for="player_add_account">资金账号</label>
+                                            <input type="text" name="account" class="form-control" required id="player_add_account" placeholder="资金账号">
+                                            <#--<label for="player_add_capital">本金</label>-->
+                                            <#--<input type="text" name="capital" class="form-control" required id="player_add_capital" oninput="this.value=this.value.replace(/[^\d.]/g,'')" placeholder="本金">-->
+                                            <label for="player_add_idNo">身份证</label>
+                                            <input type="text" name="idCard" class="form-control" required id="player_add_idNo" placeholder="身份证">
+                                            <label for="player_add_phone">手机号码</label>
+                                            <input type="text" name="telPhone" class="form-control" required id="player_add_phone" placeholder="手机号码">
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                                    <button type="button" id="player_add_submit" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-save normal"></i>&nbsp;保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="modal fade" id="playerEditModal" tabindex="-1" role="dialog" aria-labelledby="playerEditModalLabel">
                         <div class="modal-dialog" role="document" style="width:30%;">
                             <div class="modal-content">

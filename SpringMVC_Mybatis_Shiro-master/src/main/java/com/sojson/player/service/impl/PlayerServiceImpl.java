@@ -20,10 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by lx on 2018/8/27.
@@ -119,7 +116,7 @@ public class PlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> implement
                             errorFile.mkdirs();
                         }
                         //设置头消息
-                        Object[] head =  ImportHeader.gainsInfoHeadReal.keySet().toArray();
+                        Object[] head =  ImportHeader.playerHeadReal.keySet().toArray();
                         Object[] errorHead = new Object[head.length + 1];
                         System.arraycopy(head, 0, errorHead, 0, head.length );
                         errorHead[head.length] = "错误原因";
@@ -156,6 +153,28 @@ public class PlayerServiceImpl extends BaseMybatisDao<UTbPlayerMapper> implement
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"EXCEL文件大小错误!");
         }
         return  new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
+    }
+
+    /**
+     * 根据会员ID修改会员信息
+     * @param entity 会员信息
+     * @return
+     */
+    @Override
+    public ResultMessage insertPlayer(TbPlayerDto entity) {
+        try {
+            Date currentTime = new Date();
+            entity.setCrtTime(currentTime); //设置创建时间
+            entity.setId(StringUtils.getUUID32());
+
+            List<TbPlayerDto> playerList = new ArrayList<TbPlayerDto>();
+            playerList.add(entity);
+            uTbPlayerMapper.insertBatch(playerList);
+        }catch(Exception e){
+            e.getStackTrace();
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"新增失败");
+        }
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
 
 
