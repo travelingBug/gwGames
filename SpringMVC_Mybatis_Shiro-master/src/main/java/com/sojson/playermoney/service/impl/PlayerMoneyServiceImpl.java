@@ -255,7 +255,7 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
             playerTopInfo.setCapital(topInfo.getCapital());
             //计算收益率
             double totleDou = Double.parseDouble(topInfo.getTotalMoney());
-            double capital = Double.parseDouble(String.valueOf(IConstant.capital));
+            double capital = Double.parseDouble(topInfo.getCapital());
 
 
             BigDecimal bg = new BigDecimal((totleDou - capital) * 100/capital);

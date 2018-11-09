@@ -12,6 +12,7 @@
     <result column="BUSINESS_TIME_STR" property="businessTimeStr" jdbcType="VARCHAR" />
     <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
     <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
+    <result column="CAPITAL" property="capital" jdbcType="VARCHAR" />
 
   </resultMap>
   <sql id="PlayerMoney_Column_List" >

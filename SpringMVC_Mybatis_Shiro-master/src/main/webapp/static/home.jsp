@@ -58,14 +58,14 @@
         <div class="title"><div class="title-1"></div></div>
         <div class="content">
             <div class="floatL table-area">
-                <h3>收益排行</h3>
+                <h3>收益率排行</h3>
                 <table class="table1">
                     <tbody id="topAllByMoney">
                     <tr>
                         <th>排名</th>
                         <th>昵称</th>
                         <th>持仓比</th>
-                        <th>总收益</th>
+                        <%--<th>总收益</th>--%>
                         <th>操作</th>
                     </tr>
 
@@ -91,7 +91,7 @@
                 <a class="link" href="/static/rank/ranking.jsp">查看更多</a>
             </div>
             <div class="table-area1" id="allShow">
-                <h3><i class="icon icon-ranking"></i>首届股神大赛总收益排行</h3>
+                <h3><i class="icon icon-ranking"></i>首届股神大赛总收益率排行</h3>
                 <table class="table1">
                     <tbody  id="topAll">
                     <tr>
@@ -99,7 +99,7 @@
                         <th>选手</th>
                         <th>总收益</th>
                         <th>持仓比</th>
-                        <th>总资产</th>
+                        <%--<th>总资产</th>--%>
                         <th>操作</th>
                     </tr>
 
@@ -115,7 +115,7 @@
                         <th>选手</th>
                         <th>总收益</th>
                         <th>持仓比</th>
-                        <th>总资产</th>
+                        <%--<th>总资产</th>--%>
                         <th>操作</th>
                     </tr>
 
@@ -262,7 +262,7 @@
 
         $.ajax({
             type: "POST",
-            url: "interface/gainsInfo/getTopAllByMoney.shtml",
+            url: "interface/gainsInfo/getTopAll.shtml",
             data: {size: 5},
             dataType: "json",
             beforeSend: function (request) {
@@ -290,7 +290,7 @@
                         html += '<td>'+data[i].accountName+'</td>';
 
                         html += '<td>'+data[i].buyForALLRate+'%</td>';
-                        html += '<td>'+data[i].yield+'</td>';
+//                        html += '<td>'+data[i].yield+'</td>';
                         html += '<td><a class="red" href="/static/gains/strategy.jsp?account='+$.trim(data[i].account)+'">观赛</a></td>';
                         html += '</tr>';
                         $('#topAllByMoney').append(html);
@@ -333,7 +333,7 @@
                         html += '<td>'+data[i].accountName+'</td>';
                         html += '<td class="red">'+data[i].yieldRate+'%</td>';
                         html += '<td>'+data[i].buyForALLRate+'%</td>';
-                        html += '<td>'+data[i].totalMoney+'</td>';
+//                        html += '<td>'+data[i].totalMoney+'</td>';
                         html += '<td><a class="red" href="/static/gains/strategy.jsp?account='+$.trim(data[i].account)+'">观赛</a></td>';
                         html += '</tr>';
                         $('#topAll').append(html);
@@ -376,7 +376,7 @@
                         html += '<td>'+data[i].accountName+'</td>';
                         html += '<td class="red">'+data[i].yieldRate+'%</td>';
                         html += '<td>'+data[i].buyForALLRate+'%</td>';
-                        html += '<td>'+data[i].totalMoney+'</td>';
+//                        html += '<td>'+data[i].totalMoney+'</td>';
                         html += '<td><a class="red"  href="/static/gains/strategy.jsp?account='+$.trim(data[i].account)+'">观赛</a></td>';
                         html += '</tr>';
                         $('#topMonth').append(html);
