@@ -17,4 +17,6 @@ public interface UTbPlayerMapper {
     List<TbPlayer> findAll(TbPlayerDto dto);
 
     int insertBatch(List<TbPlayerDto> list);
+
+    int updateCapitalBatch(List<TbPlayer> list);
 }

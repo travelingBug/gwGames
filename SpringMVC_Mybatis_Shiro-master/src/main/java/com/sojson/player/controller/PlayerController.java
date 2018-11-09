@@ -96,4 +96,15 @@ public class PlayerController extends BaseController {
         ResultMessage msg = playerService.importPlayerExcel(file);
         return msg;
     }
+
+
+    //导入excel
+    @RequestMapping(value = "/updateCapitalBatch", method=RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage updateCapitalBatch(@RequestParam(value="file",required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response){
+        ResultMessage msg = playerService.updateCapitalBatch(file);
+        return msg;
+    }
+
+
 }

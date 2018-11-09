@@ -100,4 +100,19 @@ public class ImportHeader {
 
         return playerHeadFormat;
     }
+
+
+    public static LinkedHashMap<String,String> playerCapitalReal = new LinkedHashMap<String,String>();
+    static{
+        playerCapitalReal.put("资金账号","account");
+        playerCapitalReal.put("本金","capital");
+
+    }
+
+    private static LinkedHashMap<String,IFormatExcel> playerCapitalFormat = new LinkedHashMap<String,IFormatExcel>();
+
+    public static LinkedHashMap<String,IFormatExcel> getPlayerCapitalFormat(){
+
+        return playerCapitalFormat;
+    }
 }
