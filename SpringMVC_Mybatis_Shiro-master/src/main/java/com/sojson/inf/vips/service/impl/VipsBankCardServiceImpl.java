@@ -118,14 +118,14 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
                 }else if(obj.getString("PayStatus") != null && obj.getString("PayStatus").equals("PAY_VALIDATE")){
                     return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "请输入支付验证码", entity.getOrderNo());
                 }else{
-                    return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "快捷支付验证失败", "bind");
+                    return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, obj.getString("msg"), "bind");
                 }
             }
 
             if ((!"".equals(entity.getSmsCode())) && "p2".equals(entity.getStep())) {
 
                 if(!obj.get("PayStatus").equals("PAY_SUCCESS")){
-                    return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "支付失败");
+                    return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, obj.getString("msg"));
                 }else {
 
                     String phone = commonService.getUserPhone(req);

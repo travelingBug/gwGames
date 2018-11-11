@@ -231,6 +231,12 @@
 
         canSendCardSmsCode();
 
+        $("#pay_list").delegate(".one", "click", function(){
+            $(this).siblings().removeClass("on");
+            $(this).addClass("on");
+            $(this).siblings().find("input[type='radio']").removeAttr("checked");
+            $(this).find("input[type='radio']").attr("checked","checked");
+        });
     });
 
     var smsCodeFlag = false;
@@ -515,6 +521,7 @@
         canSendSmsCode();
 
         canPay();
+
     }
 
     function switchTicket(){
@@ -547,6 +554,15 @@
 
             canSendSmsCode();
         });
+    }
+
+    function switchCard(){
+//        $("#pay_list").each(function(){
+            $(this).delegate(".one", "click", function(){
+                $(this).sibling("one").removeClass("on");
+                $(this).addClass("on");
+            });
+//        });
     }
 
     function focusNextInput(){
