@@ -103,27 +103,28 @@ public class HttpClientUtils {
     public static Map<String,String> createData(){
         Map<String,String> map = new HashMap<String,String>();
         map.put("merchant_id", "151010005");
-        map.put("pr_id", "1005");
-        map.put("pr_ver", "agreementPay0.2");
+        map.put("pr_id", "1022");
+        map.put("pr_ver", "Quickpay0.2");
 
         map.put("http","http");
         map.put("domain","dgw.xadtsc.cn");
         map.put("merchantid","151010005");
         map.put("step","p1");
-        map.put("out_trade_no","201810222331260503");
+        map.put("out_trade_no","201811101615260512");
         map.put("orderBody", "充值");
-        map.put("out_trade_date", "20181022");
+        map.put("out_trade_date", "20181110");
         map.put("mercUserNo", "37");
         map.put("total_fee","0.5");
-        map.put("bank_code", "CCB");
+        map.put("bank_code", "SPDB");
         map.put("bank_no","1001");
         map.put("notify_url","http://192.168.9.189/zftd/return_url.php");
-        map.put("cardNo","6227003818190225057");
+        map.put("cardNo","6217921874244216");
         map.put("cardNm","李旭");
         map.put("idTyp","00");
         map.put("idNo","511302198712030715");
         map.put("mblNo","15882094486");
         map.put("smsCode","");
+        map.put("curType", "CNY");
 
         return map;
     }
@@ -152,10 +153,11 @@ public class HttpClientUtils {
 //        String url = "http://d-test.xadtsc.cn/gateway/method.do";
         String url = "https://dgw.xadtsc.cn/gateway/method.do";
         Map<String,String> map = new HashMap<String,String>();
-        map.put("method", "agreementPay");
+//        map.put("method", "agreementPay");
+        map.put("method", "QuickPay");
         map.put("merchant_id", "151010005");
-        map.put("pr_id","1005");
-        map.put("pr_ver","agreementPay0.2");
+        map.put("pr_id","1022");
+        map.put("pr_ver","Quickpay0.2");
 
         map.put("sign",createSign(params));
         map.put("tranData", createTranData(params));
@@ -244,6 +246,9 @@ public class HttpClientUtils {
     }
 
     public static void main(String[] args){
+
+        String msg = HttpClientUtils.sendReq(createData());
+        JSONObject obj = JSONObject.fromObject(msg);
 //        sendReq(createData());
 //        sendQueryReq(createQueryData());
 //        String json = "{\"merchantId\":\"80010001\",\"sys_trade_no\":\"d18082416484710228001000175854\",\"out_trade_no\":\"201808240050222702\",\"total_fee\":\"200.00\",\"curType\":\"CNY\",\"tradeDate\":\"20180824\",\"PayStatus\":\"PAY_SUCCESS\",\"OrderStatus\":\"1\",\"pr_ver\":\"b2c0.21\",\"signType\":\"MD5\"}";

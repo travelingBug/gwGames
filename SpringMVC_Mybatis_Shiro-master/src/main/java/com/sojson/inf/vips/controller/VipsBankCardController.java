@@ -68,6 +68,31 @@ public class VipsBankCardController extends BaseController {
     }
 
     /**
+     * 绑定银行卡发送验证码
+     *
+     * @param entity
+     * @return
+     */
+    @RequestMapping(value = "sendBankSmsCode", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage sendBankSmsCode(TbVipsCard entity,HttpServletRequest req){
+        ResultMessage msg = null;
+        try {
+            String phone = commonService.getUserPhone(req);
+            if(phone!=null && !phone.equals("")) {
+                entity.setPhone(phone);
+                msg = vipsBankCardService.sendBankSmsCode(entity);
+            }else{
+                return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "手机号码为空");
+            }
+        }catch (Exception e){
+            e.getStackTrace();
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "获取验证码失败");
+        }
+        return msg;
+    }
+
+    /**
      * 删除
      *
      * @param req
@@ -130,7 +155,7 @@ public class VipsBankCardController extends BaseController {
                 order.setIdNo(card.getIdNo());
                 order.setBankCode(card.getCardCode());
                 order.setVipId(card.getId()+"");
-                order.setOrderTitle("充值");
+                order.setOrderTitle("购票");
                 msg = vipsBankCardService.addOrder(order,req);
             }else{
                 return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "登录异常");

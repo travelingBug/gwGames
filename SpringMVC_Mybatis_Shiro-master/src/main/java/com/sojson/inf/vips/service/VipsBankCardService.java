@@ -23,4 +23,6 @@ public interface VipsBankCardService {
     ResultMessage addOrder(TbVipsOrder entity, HttpServletRequest req);
 
     List<TbVipRecord> findRecord(Map<String,Object> map);
+
+    ResultMessage sendBankSmsCode(TbVipsCard entity);
 }

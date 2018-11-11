@@ -47,6 +47,7 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
         params.put("cardNo", entity.getCardNo());
         List<TbVipsCard> cards = uTbVipsBankCardMapper.findList(params);
         if(cards.size()<=0) {
+
             int id = uTbVipsBankCardMapper.insert(entity);
             if (id <= 0) {
                 return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "绑定失败");
@@ -84,7 +85,7 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
             }
             entity.setFee("0.5");
 
-            if("p1".equals(entity.getStep())){
+            if("p1".equals(entity.getStep()) && !entity.getSmsCode().equals("")){
                 entity.setStatus(0);
                 int id = uTbVipsOrderMapper.insert(entity);
             }
@@ -101,7 +102,7 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
             map.put("cardNm", entity.getCardName());
             map.put("idNo", entity.getIdNo());
             map.put("mblNo", entity.getPhone());
-            if("p3".equals(entity.getStep())){
+            if(entity.getSmsCode()!=null || !entity.getSmsCode().equals("")){
                 map.put("smsCode", entity.getSmsCode());
             }else{
                 map.put("smsCode", "");
@@ -111,7 +112,17 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
             String msg = HttpClientUtils.sendReq(map);
             JSONObject obj = JSONObject.fromObject(msg);
 
-            if ((!"".equals(entity.getSmsCode())) && "p3".equals(entity.getStep())) {
+            if("p1".equals(entity.getStep())) {
+                if (obj.getString("PayStatus") != null && obj.getString("PayStatus").equals("BIND_VALIDATE")) {
+                    return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "首次快捷支付验证", "bind");
+                }else if(obj.getString("PayStatus") != null && obj.getString("PayStatus").equals("PAY_VALIDATE")){
+                    return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "请输入支付验证码", entity.getOrderNo());
+                }else{
+                    return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "快捷支付验证失败", "bind");
+                }
+            }
+
+            if ((!"".equals(entity.getSmsCode())) && "p2".equals(entity.getStep())) {
 
                 if(!obj.get("PayStatus").equals("PAY_SUCCESS")){
                     return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "支付失败");
@@ -161,43 +172,11 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "创建订单失败");
         }
 
-        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "请输入验证码", entity.getOrderNo());
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "请输入支付验证码", entity.getOrderNo());
     }
 
     private int upgrade(int surplusDay, String oldLevel, String newLevel){
         try {
-//            long nd = 1000 * 60 * 60 * 24;
-//            long nh = 1000 * 60 * 60;
-//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//            long oldEndTime = sdf.parse(endTime).getTime();
-//            long nowTime = new Date().getTime();
-//            Date newDate = sdf.parse(DateUtil.getDate(22));
-//
-//            long diff = oldEndTime-nowTime;
-//            long day = diff / nd;
-//            long hour = diff % nd / nh;
-//            int hours = 0;
-//
-//            //C类升级
-//            if(oldLevel.equals("3")){
-//                if(newLevel.equals("2")){
-//                    hours = Math.round((day*24+hour)/4);
-//                }else if(newLevel.equals("1")){
-//                    hours = Math.round((day*24+hour)/10);
-//                }
-//            }
-//            //B类升级
-//            if(oldLevel.equals("2")){
-//                if(newLevel.equals("1")){
-//                    hours = (int) Math.round((day*24+hour)/2.5);
-//                }
-//            }
-//
-//            Calendar calendar = new GregorianCalendar();
-//            calendar.setTime(newDate);
-//            calendar.add(Calendar.HOUR_OF_DAY, hours);
-//
-//            return sdf.format(calendar.getTime());
 
             int days = 0;
             int c = 500;
@@ -239,5 +218,39 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
     @Override
     public List<TbVipRecord> findRecord(Map<String, Object> map) {
         return uTbVipRecordMapper.findAllRecord(map);
+    }
+
+    @Override
+    public ResultMessage sendBankSmsCode(TbVipsCard entity) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
+            Date date = new Date();
+            String orderNo = sdf.format(date);
+            String orderDate = sdf1.format(date);
+
+            Map<String, String> map = HttpClientUtils.createData();
+            map.put("out_trade_no", orderNo);
+            map.put("orderBody", "开通快捷支付");
+            map.put("out_trade_date", orderDate);
+            map.put("mercUserNo", (int)(Math.random() * 10000) + "");
+
+            map.put("total_fee", "0.5");
+            map.put("bank_code", entity.getCardCode());
+            map.put("cardNo", entity.getCardNo());
+            map.put("cardNm", entity.getCardName());
+            map.put("idNo", entity.getIdNo());
+            map.put("mblNo", entity.getBankPhone());
+            map.put("smsCode", "");
+            String msg = HttpClientUtils.sendReq(map);
+            JSONObject obj = JSONObject.fromObject(msg);
+            if(obj.getString("PayStatus")!=null && !obj.getString("PayStatus").equals("BIND_VALIDATE")){
+                return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "当前银行卡已开通快捷支付", 0);
+            }
+        }catch(Exception e){
+            e.getStackTrace();
+        }
+
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "请输入开通快捷支付验证码", 1);
     }
 }
