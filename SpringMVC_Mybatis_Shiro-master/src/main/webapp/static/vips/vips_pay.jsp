@@ -666,8 +666,14 @@
             data: data,
             beforeSend: function (request) {
                 request.setRequestHeader("Authorization", getAuthorization());
+                $('#pay_zf').attr('disabled', 'disabled');
+                $('#pay_zf').attr('class', 'btn-zf-disable');
+                $('#pay_zf').text('支付中');
             },
             success: function (result) {
+                $('#pay_zf').removeAttr('disabled');
+                $('#pay_zf').attr('class', 'btn-zf');
+                $('#pay_zf').text('确认支付');
                 if(result.level==1) {
                     layer.alert(result.messageText, {
                         icon: 0,
@@ -677,10 +683,17 @@
 //                    queryVipsInfo();
                         window.location.href = "/static/gains/strategy.jsp";
                     }
+                }else{
+                    layer.alert(result.messageText, {
+                        icon: 0,
+                        skin: 'layui-layer-lan'
+                    });
                 }
 
             }, error: function (result) {
-
+                $('#pay_zf').removeAttr('disabled');
+                $('#pay_zf').attr('class', 'btn-zf');
+                $('#pay_zf').text('确认支付');
             }
 
         });
@@ -1017,8 +1030,14 @@
                 data: data,
                 beforeSend: function (request) {
                     request.setRequestHeader("Authorization", getAuthorization());
+                    $('#pay_first_btn').attr('disabled', 'disabled');
+                    $('#pay_first_btn').attr('class', 'btn-register-disable');
+                    $('#pay_first_btn').text('验证中');
                 },
                 success: function (result) {
+                    $('#pay_first_btn').removeAttr('disabled');
+                    $('#pay_first_btn').attr('class', 'btn-register');
+                    $('#pay_first_btn').text('确定');
                     if (result.level == 1) {
                         if (result.data != "bind") {
                             sessionStorage.setItem("orderNo", result.data);
@@ -1028,13 +1047,16 @@
                             layer.alert("开通快捷支付验证码错误", {icon: 0,skin: 'layui-layer-lan'});
                         }
                     }else{
-                        debugger;
                         if (result.data == "bind") {
                             layer.alert("开通快捷支付验证码错误", {icon: 0,skin: 'layui-layer-lan'});
+                        }else{
+                            layer.alert(result.messageText, {icon: 0,skin: 'layui-layer-lan'});
                         }
                     }
                 }, error: function (result) {
-
+                    $('#pay_first_btn').removeAttr('disabled');
+                    $('#pay_first_btn').attr('class', 'btn-register');
+                    $('#pay_first_btn').text('确定');
                 }
             });
         }

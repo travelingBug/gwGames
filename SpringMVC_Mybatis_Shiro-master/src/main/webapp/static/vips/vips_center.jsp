@@ -38,6 +38,12 @@
             <div class="table-area1" id="depositRecordDiv">
                 <table class="table1" id="depositRecordTable">
                     <tbody id="depositRecord">
+                    <tr>
+                        <th></th>
+                        <th>购票等级</th>
+                        <th>购票金额</th>
+                        <th>购票时间</th>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -51,7 +57,7 @@
     $(function() {
         goPage();
 
-//        queryDepositRecordPage(1,"depositRecord");
+        queryDepositRecordPage(1,"depositRecord");
 
 //        goPageByAjax(1);
 
@@ -197,43 +203,63 @@
     }
 
     function queryDepositRecordPage(pageNo,id) {
-        //获取交易明细
         $.ajax({
             type: "POST",
-            url: "interface/gainsInfo/getTopMonthHisByPage.shtml",
-            data: {pageNo:pageNo},
+            url: "interface/vipsBankCard/findRecord.shtml",
+            data: {},
             dataType: "json",
             beforeSend: function (request) {
                 request.setRequestHeader("Authorization", getAuthorization());
             },
             success: function (result) {
-                var recordData = result.list;
-                $('#tb'+id).html('');
-                $('#pager'+id).remove();
-                $('#tb'+id).append('<tr><th></th><th>购票等级</th><th>购票金额</th><th>购票时间</th></tr>');
+                var recordData = result;
                 if (recordData != null && recordData.length > 0) {
                     for (var i = 0 ; i < recordData.length ; i++) {
-                        var showTop= '<td>'+recordData[i].rank+'</td>';
+                        var showTop= '<td>'+(i+1)+'</td>';
                         var bg = "";
                         if (i%2 == 1) {
                             bg = "class='bg'";
                         }
                         var recordHtml = '<tr ' + bg + '>';
-                        recordHtml += '<td>'+recordData[i].level +'</td>';
                         recordHtml += showTop;
+                        recordHtml += '<td>'+setVipLevel(recordData[i].level) +'</td>';
                         recordHtml += '<td>'+recordData[i].amount +'</td>';
-                        recordHtml += '<td>'+recordData[i].crt_time +'</td>';
+                        recordHtml += '<td>'+formatDateTime(recordData[i].crtTime) +'</td>';
 
 
-                        $('#tb'+id).append(recordHtml);
+                        $('#'+id).append(recordHtml);
 
                     }
-                    $('#table'+id+'').after(getPager(id,result));
                 } else {
-                    $('#tb'+id).append('<tr><td  colspan="3">暂无数据</td></tr>');
+                    $('#'+id).append('<tr><td  colspan="4">暂无数据</td></tr>');
                 }
             }
         });
+    }
+
+
+    function formatDateTime(inputTime) {
+        var date = new Date(inputTime);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? ('0' + m) : m;
+        var d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ('0' + h) : h;
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        minute = minute < 10 ? ('0' + minute) : minute;
+        second = second < 10 ? ('0' + second) : second;
+        return y + '-' + m + '-' + d;
+    }
+
+    function setVipLevel(s){
+        var level = "";
+        s==1?level="A类观众":
+                s==2?level="B类观众":
+                        s==3?level="C类观众":"";
+        return level;
     }
 
     function getPager(id,result){
