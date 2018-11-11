@@ -25,6 +25,11 @@
                 });
                 bindFile();
 
+                    $("#updateBatchBtn").unbind("click").bind("click", function() {
+                        $("#updateBatchFile").click();
+                    });
+                    bindUpdateBatchFile();
+
                 $("#player_add_submit").click(function(){
                     var data = $("#play_add_form").serialize();
                     $.post('${basePath}/player/addPlayer.shtml',data,function(result){
@@ -139,11 +144,73 @@
             }
 
             <@shiro.hasAnyRoles name='888888,100004'>
+
+            function replaceupdateBatchFile(){
+                $('#updateBatchFile').remove();
+                $("#updateBatchBtn").after('<input type="file" name="file" style="width:0px;height:0px;display: none;" id="updateBatchFile" />');
+                bindUpdateBatchFile();
+            }
+
+            function bindUpdateBatchFile(){
+                $("#updateBatchFile").bind("change", function() {
+
+                    var updateBatchFile = $("#updateBatchFile").val();
+                    if (updateBatchFile == '') {
+                        msg("请择excel,再上传");
+                        return;
+                    } else if (updateBatchFile.lastIndexOf(".xls") < 0 || updateBatchFile.lastIndexOf(".xlsx") < 0) {//可判断以.xls和.xlsx结尾的excel
+                        msg("只能上传Excel文件");
+                        return;
+                    } else {
+                        $("#contentDiv").mask("文件上传中，请稍后...");
+                        var formData = new FormData();
+                        formData.append('file', $('#updateBatchFile')[0].files[0]);
+                        $.ajax({
+                            url : '${basePath}/player/updateCapitalBatch.shtml',
+                            type : 'post',
+                            data : formData,
+                            dataType : "json",
+                            success : function(result) {
+                                $("#contentDiv").unmask();
+
+                                var msg = result.messageText;
+                                if (result.data && result.data.length == 2) {
+                                    msg = msg + "<a href='${basePath}/download.shtml?fileOutName="+encodeURI(encodeURI(result.data[0]))+"&filePath="+result.data[1]+"'>点击下载错误信息</a>";
+                                }
+                                layer.alert(msg, {
+                                    icon: 0,
+                                    skin: 'layui-layer-lan',
+                                    end:function(){
+                                        $('#formId').submit();
+                                    }
+
+                                });
+                                replaceupdateBatchFile();
+
+                            },
+                            error : function(result) {
+                                $("#contentDiv").unmask();
+                                layer.alert(result.messageText, {
+                                    icon: 0,
+                                    skin: 'layui-layer-lan'
+                                });
+                                replaceFile();
+                            },
+                            cache : false,
+                            contentType : false,
+                            processData : false
+                        });
+                    }
+                });
+            }
+
             function replaceFile(){
                 $('#uploadPlayerFile').remove();
                 $("#uploadPlayerBtn").after('<input type="file" name="file" style="width:0px;height:0px;display: none;" id="uploadPlayerFile" />');
                 bindFile();
             }
+
+
 
             function bindFile(){
                 $("#uploadPlayerFile").bind("change", function() {
@@ -256,6 +323,13 @@
 								<input type="file" name="file" style="width:0px;height:0px;display: none;" id="uploadPlayerFile" />
                     		</form>
                              <a href="${basePath}/file/player.xlsx">模板下载</a>
+
+
+								<button class="btn btn-success" id="updateBatchBtn"  type="button" >
+									导入本金
+								</button>
+								<input type="file" name="file" style="width:0px;height:0px;display: none;" id="updateBatchFile" />
+                             <a href="${basePath}/file/playerCapital.xlsx">模板下载</a>
                             </@shiro.hasAnyRoles>
 				         </span>
 						  <div id="div_refresh">

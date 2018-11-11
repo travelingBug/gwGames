@@ -99,7 +99,7 @@
                 var topMonthData = result.list;
                 $('#tb'+month).html('');
                 $('#pager'+month).remove();
-                $('#tb'+month).append('<tr><th>月份</th><th>排名</th><th>选手</th><th>本金</th><th>收益</th><th>收益率</th><th>操作</th></tr>');
+                $('#tb'+month).append('<tr><th>月份</th><th>排名</th><th>选手</th><!--<th>本金</th><th>收益</th>--><th>收益率</th><th>操作</th></tr>');
                 if (topMonthData != null && topMonthData.length > 0) {
                     for (var i = 0 ; i < topMonthData.length ; i++) {
                         var showTop= '<td>'+topMonthData[i].rank+'</td>';
@@ -120,8 +120,8 @@
                         topMonthHtml += '<td>'+topMonthData[i].month +'</td>';
                         topMonthHtml += showTop;
                         topMonthHtml += '<td>'+topMonthData[i].accountName +'</td>';
-                        topMonthHtml += '<td>'+topMonthData[i].capital +'</td>';
-                        topMonthHtml += '<td >'+topMonthData[i].yield +'</td>';
+//                        topMonthHtml += '<td>'+topMonthData[i].capital +'</td>';
+//                        topMonthHtml += '<td >'+topMonthData[i].yield +'</td>';
                         topMonthHtml += '<td >'+topMonthData[i].yieldRate +'%</td>';
                         topMonthHtml += '<td><a class="red" href="/static/gains/strategy.jsp?account='+$.trim(topMonthData[i].account)+'">观赛</a></td>';
 

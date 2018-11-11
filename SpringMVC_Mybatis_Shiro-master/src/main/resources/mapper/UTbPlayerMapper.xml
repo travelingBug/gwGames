@@ -141,4 +141,14 @@
       )
     </foreach>
   </insert>
+
+  <update id="updateCapitalBatch"  parameterType="java.util.List">
+    <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+      update tb_player
+      <set>
+        CAPITAL=#{item.capital,jdbcType=VARCHAR}
+      </set>
+      where ACCOUNT = #{item.account,jdbcType=VARCHAR}
+    </foreach>
+  </update>
 </mapper>

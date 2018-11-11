@@ -24,4 +24,6 @@ public interface PlayerService {
     ResultMessage importPlayerExcel(MultipartFile file);
 
     ResultMessage insertPlayer(TbPlayerDto entity);
+
+    ResultMessage updateCapitalBatch(MultipartFile file);
 }

@@ -40,7 +40,7 @@
             <div class="table-area1" id="topAllDiv">
                 <table class="table1" id="topAllTable">
                     <tbody id="topAll">
-                        <tr><th>排名</th><th>选手</th><th>总收益</th><th>持仓比</th><th>总资产</th><th>操作</th></tr>
+                        <tr><th>排名</th><th>选手</th><th>总收益</th><th>持仓比</th><!--<th>总资产</th>--><th>操作</th></tr>
                     </tbody>
                 </table>
                 <table class="table1">
@@ -57,7 +57,7 @@
 
                 <table class="table1" id="topMonthTable">
                     <tbody id="topMonth">
-                    <tr><th>排名</th><th>选手</th><th>总收益</th><th>持仓比</th><th>总资产</th><th>操作</th></tr>
+                    <tr><th>排名</th><th>选手</th><th>总收益</th><th>持仓比</th><!--<th>总资产</th>--><th>操作</th></tr>
                     </tbody>
                 </table>
                 <table class="table1" >
@@ -131,7 +131,7 @@
                             topAllHtml += '<td>'+topAllData[i].accountName +'</td>';
                             topAllHtml += '<td>'+topAllData[i].yieldRate +'%</td>';
                             topAllHtml += '<td >'+topAllData[i].buyForALLRate +'%</td>';
-                            topAllHtml += '<td >'+topAllData[i].totalMoney +'</td>';
+//                            topAllHtml += '<td >'+topAllData[i].totalMoney +'</td>';
                             topAllHtml += '<td><a class="red" href="/static/gains/strategy.jsp?account='+$.trim(topAllData[i].account)+'">观赛</a></td>';
 
                             $('#topAll').append(topAllHtml);
@@ -190,7 +190,7 @@
                         topMonthHtml += '<td>'+topMonthData[i].accountName +'</td>';
                         topMonthHtml += '<td>'+topMonthData[i].yieldRate +'%</td>';
                         topMonthHtml += '<td >'+topMonthData[i].buyForALLRate +'%</td>';
-                        topMonthHtml += '<td >'+topMonthData[i].totalMoney +'</td>';
+//                        topMonthHtml += '<td >'+topMonthData[i].totalMoney +'</td>';
                         topMonthHtml += '<td><a class="red" href="/static/gains/strategy.jsp?account='+$.trim(topMonthData[i].account)+'">观赛</a></td>';
 
                         $('#topMonth').append(topMonthHtml);
