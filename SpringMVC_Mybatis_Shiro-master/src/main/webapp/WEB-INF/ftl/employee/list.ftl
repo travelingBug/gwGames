@@ -110,7 +110,7 @@
             }
 			</@shiro.hasPermission>
 
-			var val3 = '${parentId}';
+			var val3 = '${parentId!""}';
 			function queryDealer(a){
                 $.post('${basePath}/dealer/queryDealerList.shtml',null,function(result){
                     if(result && result.level != 1){

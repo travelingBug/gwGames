@@ -19,7 +19,7 @@
 				//初始化全选。
 				so.checkBoxInit('#checkAll','[check=box]');
 
-                var val2 = '${auditFlag}';
+                var val2 = '${auditFlag!""}';
                 if(val2!=''){
                     $("#val2").val(val2);
                 }
