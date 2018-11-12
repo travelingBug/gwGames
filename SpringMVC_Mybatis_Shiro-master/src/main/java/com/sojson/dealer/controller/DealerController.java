@@ -102,6 +102,7 @@ public class DealerController extends BaseController {
         map.put("parentId", parentId);
         Pagination<TbDealer> page = dealerService.findByPage(map, pageNo, pageSize);
         map.put("page", page);
+
         return new ModelAndView("dealer/list");
     }
 

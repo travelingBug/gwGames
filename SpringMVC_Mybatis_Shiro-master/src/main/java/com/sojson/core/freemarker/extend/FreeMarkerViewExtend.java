@@ -30,6 +30,9 @@ public class FreeMarkerViewExtend extends FreeMarkerView {
 			if (role.getType().equals("200001")) {
 				String status = TokenManager.getDealerStatus(token.getId().toString());
 				model.put("status", status);
+			}else if(role.getType().equals("200002")){
+				String status = TokenManager.queryEmplyoeeStatus(token.getId().toString());
+				model.put("status", status);
 			}
 		}
 		//String ip = IPUtils.getIP(request);

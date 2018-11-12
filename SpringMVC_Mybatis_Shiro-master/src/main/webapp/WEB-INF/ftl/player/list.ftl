@@ -19,6 +19,11 @@
 				//初始化全选。
 				so.checkBoxInit('#checkAll','[check=box]');
 
+                var val2 = '${auditFlag}';
+                if(val2!=''){
+                    $("#val2").val(val2);
+                }
+
                 <@shiro.hasAnyRoles name='888888,100004'>
                 $("#uploadPlayerBtn").unbind("click").bind("click", function() {
                     $("#uploadPlayerFile").click();
@@ -304,7 +309,7 @@
 					      <div class="form-group">
 					        <input type="text" class="form-control" style="width: 300px;" value="${findContent?default('')}" 
 					        			name="findContent" id="findContent" placeholder="输入昵称 / 帐号">
-							<select name="auditFlag" class="form-control">
+							<select name="auditFlag" id="val2" class="form-control">
                                 <option value="">全部</option>
                                 <option value="0">待审核</option>
                                 <option value="1">通过未加微信</option>

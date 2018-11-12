@@ -41,5 +41,7 @@ public interface UTbDealerMapper {
 
     String queryDealerStatus(String userId);
 
+    String queryEmplyoeeStatus(String userId);
+
     URole queryRoleByUserId(String userId);
 }

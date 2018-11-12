@@ -46,7 +46,7 @@
                             <th>开户二维码/链接</th>
                             <td><i class="fas fa-link" style="cursor: pointer;" onclick="_queryLink('${userId}');"></i></td>
                         </tr>
-                        <@shiro.hasAnyRoles name='200001'>
+                        <@shiro.hasAnyRoles name='200001,200002'>
                         <#if status?exists && status=='1'>
                         <tr>
                             <th>报名二维码/链接</th>
@@ -110,7 +110,7 @@
 <script>
 
     $(function(){
-        <@shiro.hasAnyRoles name='200001'>
+        <@shiro.hasAnyRoles name='200001,200002'>
         <#--_queryMoney('${userId}');-->
         </@shiro.hasAnyRoles>
 

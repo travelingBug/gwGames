@@ -39,6 +39,21 @@
 
                 $("#dealer_add_btn_submit").click(function(){
 					var data = $("#form1").serialize();
+                    var loginName = $("#dealer_add_loginName").val();
+                    var name = $("#dealer_add_name").val();
+                    var phone = $("#dealer_add_phone").val();
+                    if(loginName==""){
+                        layer.msg("登录账号不能为空",so.default);
+                        return false;
+                    }
+                    if(name==""){
+                        layer.msg("姓名不能为空",so.default);
+                        return false;
+                    }
+                    if(phone==""){
+                        layer.msg("手机号码不能为空",so.default);
+                        return false;
+                    }
 					if($("#dealer_add_phone").hasClass("has-error")){
                         layer.msg('验证错误！');
 						return false;

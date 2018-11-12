@@ -65,6 +65,10 @@ public class CustomSessionManager {
 		return uTbDealerMapper.queryDealerStatus(userId);
 	}
 
+	public String queryEmplyoeeStatus(String userId){
+		return uTbDealerMapper.queryEmplyoeeStatus(userId);
+	}
+
 
 	/**
 	 * 根据ID查询 SimplePrincipalCollection

@@ -206,6 +206,10 @@
     SELECT STATUS FROM tb_dealer WHERE FK_USER_ID=#{userId}
   </select>
 
+  <select id="queryEmplyoeeStatus" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT STATUS FROM tb_dealer WHERE FK_USER_ID = (SELECT PARENT_ID FROM tb_dealer WHERE FK_USER_ID=#{userId})
+  </select>
+
   <select id="queryRoleByUserId" parameterType="java.lang.String" resultType="com.sojson.common.model.URole">
     SELECT * FROM u_role WHERE id =
     (SELECT rid FROM u_user_role WHERE uid=#{userId})

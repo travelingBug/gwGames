@@ -76,14 +76,13 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
         try {
             String fee = entity.getFee();
             if ("3".equals(fee)) {
-
-//                entity.setFee("500");
+                entity.setFee("500");
             } else if ("2".equals(fee)) {
-//                entity.setFee("2000");
+                entity.setFee("2000");
             } else if ("1".equals(fee)) {
-//                entity.setFee("5000");
+                entity.setFee("5000");
             }
-            entity.setFee("0.5");
+//            entity.setFee("0.5");
 
             if("p1".equals(entity.getStep()) && !entity.getSmsCode().equals("")){
                 entity.setStatus(0);

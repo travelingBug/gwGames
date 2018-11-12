@@ -57,8 +57,8 @@
 					<form method="post" action="${basePath}/dealer/vipsRecordList.shtml?userId=${userId}" id="formId" class="form-inline">
 						<div clss="well">
 					      <div class="form-group">
-                              <input type='text' class="form-control" id='startDate' name="startDate"/>
-                              <input type='text' class="form-control" id='endDate' name="endDate"/>
+                              <input type='text' class="form-control" id='startDate' value="${startDate?default('')}" name="startDate"/>
+                              <input type='text' class="form-control" id='endDate' value="${endDate?default('')}" name="endDate"/>
 					      </div>
 					     <span class=""> <#--pull-right -->
 				         	<button type="submit" id="submitRecord" class="btn btn-primary">查询</button>

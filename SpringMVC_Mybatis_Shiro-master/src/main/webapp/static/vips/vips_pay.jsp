@@ -600,7 +600,8 @@
     }
 
     function sendSmsCode(){
-        if(!smsCodeFlag){
+        valiParams();
+        if(!smsCodeFlag || $('#sendSmsCode').text()!="获取验证码"){
             return false;
         }
 
@@ -742,6 +743,7 @@
             return;
         } else {
             $('#sendSmsCode').html("获取验证码(" + countdown + "s)");
+            smsCodeFlag = false;
             countdown--;
         }
         setTimeout(function() {

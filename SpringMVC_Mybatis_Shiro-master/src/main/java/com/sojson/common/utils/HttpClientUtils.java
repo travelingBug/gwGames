@@ -110,7 +110,7 @@ public class HttpClientUtils {
         map.put("domain","dgw.xadtsc.cn");
         map.put("merchantid","151010005");
         map.put("step","p1");
-        map.put("out_trade_no","201811111615260519");
+        map.put("out_trade_no","201811111615260520");
         map.put("orderBody", "充值");
         map.put("out_trade_date", "20181111");
         map.put("mercUserNo", "38");
@@ -118,11 +118,11 @@ public class HttpClientUtils {
         map.put("bank_code", "CCB");
         map.put("bank_no","1001");
         map.put("notify_url","http://192.168.9.189/zftd/return_url.php");
-        map.put("cardNo","6227003818190225057");
-        map.put("cardNm","李旭");
+        map.put("cardNo","6221806510000322701");
+        map.put("cardNm","黄晔");
         map.put("idTyp","00");
-        map.put("idNo","511302198712030715");
-        map.put("mblNo","15882094486");
+        map.put("idNo","513902198901270392");
+        map.put("mblNo","15828029807");
         map.put("smsCode","");
         map.put("curType", "CNY");
 

@@ -53,6 +53,10 @@ public class TokenManager {
 	public static String getDealerStatus(String userId){
 		return customSessionManager.queryDealerStatus(userId);
 	}
+
+	public static String queryEmplyoeeStatus(String userId){
+		return customSessionManager.queryEmplyoeeStatus(userId);
+	}
 	
 	/**
 	 * 获取当前用户的Session

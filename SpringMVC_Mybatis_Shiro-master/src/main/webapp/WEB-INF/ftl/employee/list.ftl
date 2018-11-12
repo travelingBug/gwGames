@@ -35,6 +35,22 @@
 
                 $("#employee_add_btn_submit").click(function(){
 					var data = $("#form1").serialize();
+					var loginName = $("#employee_add_loginName").val();
+					var name = $("#employee_add_name").val();
+					var phone = $("#employee_add_phone").val();
+					if(loginName==""){
+                        layer.msg("登录账号不能为空",so.default);
+						return false;
+					}
+                    if(name==""){
+                        layer.msg("姓名不能为空",so.default);
+                        return false;
+                    }
+                    if(phone==""){
+                        layer.msg("手机号码不能为空",so.default);
+                        return false;
+                    }
+
                     $.post('${basePath}/dealer/addDealer.shtml',
 							data,
 							function(result){
@@ -94,6 +110,7 @@
             }
 			</@shiro.hasPermission>
 
+			var val3 = '${parentId}';
 			function queryDealer(a){
                 $.post('${basePath}/dealer/queryDealerList.shtml',null,function(result){
                     if(result && result.level != 1){
@@ -107,6 +124,7 @@
 						if(a==1) {
                             $("#dealerList").empty();
                             $("#dealerList").append(selectHtml);
+							$("#dealerList").val(val3);
                         }else if(a==2){
                             $("#dealerAddList").empty();
                             $("#dealerAddList").append(selectHtml);
@@ -133,7 +151,7 @@
 					        			name="findContent" id="findContent" placeholder="输入名称">
 					      </div>
 							<div class="form-group">
-								<input type="text" class="form-control" style="width: 100px;"
+								<input type="text" class="form-control" style="width: 100px;" value="${dGroup?default('')}"
 									   name="dGroup" id="dGroup" placeholder="分组名称">
 							</div>
 							<@shiro.hasAnyRoles name='888888,100004,100005,100006'>
@@ -220,15 +238,15 @@
 											</@shiro.hasAnyRoles>
 											<input type="hidden" name="roleId" value="6"/>
 											<label for="employee_add_loginName">登录账号</label>
-											<input type="text" name="loginName" class="form-control" id="employee_add_loginName" placeholder="账号">
+											<input type="text" name="loginName" class="form-control" required id="employee_add_loginName" placeholder="账号">
 											<label for="employee_add_name">名称</label>
-											<input type="text" name="name" class="form-control" id="employee_add_name" placeholder="名称">
+											<input type="text" name="name" class="form-control" required id="employee_add_name" placeholder="名称">
 											<label for="employee_add_phone">手机号码</label>
-											<input type="text" name="phone" class="form-control" id="employee_add_phone" placeholder="手机号码">
+											<input type="text" name="phone" class="form-control" required id="employee_add_phone" placeholder="手机号码">
 											<label for="employee_add_address">联系地址</label>
-											<input type="text" name="address" class="form-control" id="employee_add_address" placeholder="地址">
+											<input type="text" name="address" class="form-control" required id="employee_add_address" placeholder="地址">
                                             <label for="employee_add_group">分组名称</label>
-                                            <input type="text" name="dGroup" class="form-control" maxlength="20" id="employee_add_group" placeholder="分组名称">
+                                            <input type="text" name="dGroup" class="form-control" required maxlength="20" id="employee_add_group" placeholder="分组名称">
 											<@shiro.hasAnyRoles name='888888,100004,100005,100006'>
 											<label for="dealerAddList">代理商</label>
 											<select name="parentId" id="dealerAddList" class="form-control">
