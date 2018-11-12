@@ -238,7 +238,7 @@
 				<div class="col-md-10">
 					<h2>代理商列表</h2>
 					<hr>
-					<form method="post" action="${basePath}/dealer/list.shtml?parentId=0" id="dealerForm" class="form-inline">
+					<form method="post" id="formId" action="${basePath}/dealer/list.shtml?parentId=0" id="dealerForm" class="form-inline">
 						<div clss="well">
 					      <div class="form-group">
 					        <input type="text" class="form-control" style="width: 300px;" value="${findContent?default('')}" 

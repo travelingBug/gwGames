@@ -363,12 +363,12 @@
 							<#list page.list as it>
 								<tr>
                                     <td>${it_index+1}</td>
-									<td>${it.accountName}</td>
-									<td>${it.name}</td>
-									<td>${it.account}</td>
-									<td>${it.businessTimeStr}</td>
-                                    <td>${it.balanceMoney}</td>
-                                    <td>${it.totalMoney}</td>
+									<td>${it.accountName!''}</td>
+									<td>${it.name!''}</td>
+									<td>${it.account!''}</td>
+									<td>${it.businessTimeStr!''}</td>
+                                    <td>${it.balanceMoney!''}</td>
+                                    <td>${it.totalMoney!''}</td>
 									<td>
 										<#--<@shiro.hasPermission name="/playerMoney/updateById.shtml">-->
 											<a href="javascript:_update('${it.id}','${it.accountName}','${it.name}','${it.account}','${it.businessTimeStr}','${it.totalMoney}','${it.balanceMoney}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#playerMoneyEditModal"></i></a>

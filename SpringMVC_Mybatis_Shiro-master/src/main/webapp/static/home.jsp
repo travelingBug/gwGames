@@ -39,7 +39,7 @@
         </div>
         <div class="ch-box">
             <div class="btns">
-                <a class="btn btn-fzxzx" href="tencent://message/?uin=1930621578&Site=http://60.205.189.94&Menu=yes"></a>
+                <a class="btn btn-fzxzx" href="/static/signup/signup.jsp"></a>
                 <a class="btn btn-fcsrk" href="/static/gains/strategy.jsp"></a>
             </div>
         </div>

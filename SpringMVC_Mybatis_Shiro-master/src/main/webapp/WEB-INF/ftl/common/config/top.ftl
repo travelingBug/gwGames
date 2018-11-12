@@ -143,7 +143,7 @@
 				  </@shiro.hasAnyRoles>
 
 			  		<#--拥有 角色888888（管理员）-->
-				  <@shiro.hasAnyRoles name='888888,100004,100006'>
+				  <@shiro.hasAnyRoles name='888888,100004,100006,500001'>
                       <li class="dropdown ${(index==8)?string('active','')}">
                           <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="${basePath}/eventReport/list.shtml">
                               赛事报道管理<span class="caret"></span>
@@ -160,7 +160,7 @@
 				  </@shiro.hasAnyRoles>
 
 			  <#--拥有 角色888888（管理员）-->
-				  <@shiro.hasAnyRoles name='888888,100004,100006'>
+				  <@shiro.hasAnyRoles name='888888,100004,100006,500001'>
                       <li class="dropdown ${(index==9)?string('active','')}">
                           <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="${basePath}/stopdate/list.shtml">
                               系统配置<span class="caret"></span>
