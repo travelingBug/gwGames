@@ -31,7 +31,7 @@
                         }else{
                             layer.msg('编辑成功！');
                             setTimeout(function(){
-                                $('#dealerForm').submit();
+                                $('#formId').submit();
                             },1000);
                         }
                     },'json');
@@ -66,7 +66,7 @@
                         }else{
                             layer.msg('新增成功！');
                             setTimeout(function(){
-                                $('#dealerForm').submit();
+                                $('#formId').submit();
                             },1000);
                         }
                     },'json');
@@ -95,7 +95,7 @@
                                 }else{
                                     layer.msg('绑定银行卡成功！');
                                     setTimeout(function(){
-                                        $('#dealerForm').submit();
+                                        $('#formId').submit();
                                     },1000);
                                 }
                             },'json');
@@ -124,7 +124,7 @@
                                 }else{
                                     layer.msg('编辑银行卡成功！');
                                     setTimeout(function(){
-                                        $('#dealerForm').submit();
+                                        $('#formId').submit();
                                     },1000);
                                 }
                             },'json');
@@ -253,7 +253,7 @@
 				<div class="col-md-10">
 					<h2>代理商列表</h2>
 					<hr>
-					<form method="post" id="formId" action="${basePath}/dealer/list.shtml?parentId=0" id="dealerForm" class="form-inline">
+					<form method="post" id="formId" action="${basePath}/dealer/list.shtml?parentId=0" id="formId" class="form-inline">
 						<div clss="well">
 					      <div class="form-group">
 					        <input type="text" class="form-control" style="width: 300px;" value="${findContent?default('')}" 
