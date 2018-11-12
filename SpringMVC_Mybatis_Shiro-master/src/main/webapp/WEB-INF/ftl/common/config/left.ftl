@@ -179,7 +179,7 @@
 </#macro>
 
 <#macro eventReport index>
-	<@shiro.hasAnyRoles name='888888,100004,100006'>
+	<@shiro.hasAnyRoles name='888888,100004,100006,500001'>
     <div id="one" class="col-md-2">
         <ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
 			<@shiro.hasPermission name="/eventReport/list.shtml">
@@ -203,7 +203,7 @@
 </#macro>
 
 <#macro stopdate index>
-	<@shiro.hasAnyRoles name='888888,100004,100006'>
+	<@shiro.hasAnyRoles name='888888,100004,100006,500001'>
     <div id="one" class="col-md-2">
         <ul data-spy="affix" class="nav nav-list nav-tabs nav-stacked bs-docs-sidenav dropdown affix" style="top: 100px; z-index: 100;">
 			<@shiro.hasPermission name="/stopdate/list.shtml">

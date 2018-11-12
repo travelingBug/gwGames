@@ -243,8 +243,8 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
         //保存已经存在的重复数据
         List<String> hasAccount = new ArrayList<String>();
         for (TbPlayerMoneyVo topInfo : topInfos) {
-            //剔除重复数据
-            if (hasAccount.contains(topInfo.getAccount())) {
+            //剔除重复数据和没有本金的数据
+            if (hasAccount.contains(topInfo.getAccount()) || topInfo.getCapital() == null) {
                 continue;
             }
             hasAccount.add(topInfo.getAccount());
@@ -311,7 +311,7 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
 		List<String> hasAccount = new ArrayList<String>();
 		for (TbPlayerMoneyVo cuurTopInfo : cuurTopInfos) {
 			//剔除重复数据
-			if (hasAccount.contains(cuurTopInfo.getAccount())) {
+			if (hasAccount.contains(cuurTopInfo.getAccount())  || cuurTopInfo.getCapital() == null) {
 				continue;
 			}
 			hasAccount.add(cuurTopInfo.getAccount());

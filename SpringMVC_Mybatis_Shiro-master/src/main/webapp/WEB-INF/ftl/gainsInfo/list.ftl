@@ -463,12 +463,12 @@
 							<#list page.list as it>
 								<tr>
                                     <td>${it_index+1}</td>
-									<td>${it.accountName}</td>
-									<td>${it.name}</td>
-									<td>${it.account}</td>
-									<td>${it.businessTimeStr}</td>
-                                    <td>${it.sharesCode}</td>
-                                    <td>${it.sharesName}</td>
+									<td>${it.accountName!''}</td>
+									<td>${it.name!''}</td>
+									<td>${it.account!''}</td>
+									<td>${it.businessTimeStr!''}</td>
+                                    <td>${it.sharesCode!''}</td>
+                                    <td>${it.sharesName!''}</td>
 									<td>
 										<#if it.businessFlag==0>
 											证券买入
@@ -480,12 +480,12 @@
                                             基金赎回
 										</#if>
 									</td>
-                                    <td>${it.volume}</td>
-                                    <td>${it.price}</td>
-                                    <td>${it.amount}</td>
+                                    <td>${it.volume!''}</td>
+                                    <td>${it.price!''}</td>
+                                    <td>${it.amount!''}</td>
 									<td>
 										<#--<@shiro.hasPermission name="/gainsInfo/updateById.shtml">-->
-											<a href="javascript:_update('${it.id}','${it.accountName}','${it.name}','${it.account}','${it.businessTimeStr}','${it.sharesCode}','${it.sharesName}','${it.businessFlag}','${it.volume}','${it.price}','${it.amount}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#gainsInfoEditModal"></i></a>
+											<a href="javascript:_update('${it.id}','${it.accountName!''}','${it.name}','${it.account}','${it.businessTimeStr}','${it.sharesCode}','${it.sharesName}','${it.businessFlag}','${it.volume}','${it.price}','${it.amount}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#gainsInfoEditModal"></i></a>
 										<#--</@shiro.hasPermission>-->
 										<#--<@shiro.hasPermission name="/gainsInfo/delById.shtml">-->
                                             	<a href="javascript:_del('${it.id}');"><i class="glyphicon glyphicon-remove" title="删除"></i></a>

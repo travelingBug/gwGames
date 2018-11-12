@@ -77,9 +77,11 @@
 </div>
 </body>
 <script>
+    var continueLoad = true;
+    var continueLoadMonth = true;
     $(function() {
-        goPageByAjax(1);
-        goPageByAjax2(1);
+        goPageByAjax(1,20);
+        goPageByAjax2(1,20);
         $('#monthTab').click(function(){
             $('#topMonthDiv').css('display','');
             $('#topAllDiv').css('display','none');
@@ -95,12 +97,12 @@
             $('#allTab').attr('class','on');
         });
     });
-    function goPageByAjax(pageNo) {
+    function goPageByAjax(pageNo,pageSize) {
         //获取交易明细
         $.ajax({
             type: "POST",
             url: "interface/gainsInfo/getTopAllByPage.shtml",
-            data: {pageNo:pageNo},
+            data: {pageNo:pageNo,pageSize:pageSize},
             dataType: "json",
             beforeSend: function (request) {
                 request.setRequestHeader("Authorization", getAuthorization());
@@ -139,9 +141,17 @@
                         }
                         if(result.totalCount > (result.pageNo * result.pageSize)) {
                             $("#readAll").css('display','');
-                            $("#readAll").unbind('click').click(function () {
-                                goPageByAjax(result.pageNo + 1);
-                            });
+//                            $("#readAll").unbind('click').click(function () {
+//                                goPageByAjax(result.pageNo + 1,20);
+//                            });
+                            if (continueLoad) {
+                                continueLoad = false
+                                $("#readAll").unbind('click').click(function () {
+                                    goPageByAjax(3,10);
+                                });
+                            } else {
+                                $("#readAll").unbind('click');
+                            }
                         } else {
                             $("#readAll").css('display','none');
                         }
@@ -154,12 +164,12 @@
         });
     }
 
-    function goPageByAjax2(pageNo) {
+    function goPageByAjax2(pageNo,pageSize) {
         //获取交易明细
         $.ajax({
             type: "POST",
             url: "interface/gainsInfo/getTopMonthByPage.shtml",
-            data: {pageNo:pageNo},
+            data: {pageNo:pageNo,pageSize:pageSize},
             dataType: "json",
             beforeSend: function (request) {
                 request.setRequestHeader("Authorization", getAuthorization());
@@ -198,9 +208,17 @@
                     }
                     if(result.totalCount > (result.pageNo * result.pageSize)) {
                         $("#readMonth").css('display','');
-                        $("#readMonth").unbind('click').click(function () {
-                            goPageByAjax2(result.pageNo + 1);
-                        });
+//                        $("#readMonth").unbind('click').click(function () {
+//                            goPageByAjax2(result.pageNo + 1,20);
+//                        });
+                        if (continueLoadMonth) {
+                            continueLoadMonth = false
+                            $("#readMonth").unbind('click').click(function () {
+                                goPageByAjax2(3,10);
+                            });
+                        } else {
+                            $("#readMonth").unbind('click');
+                        }
                     } else {
                         $("#readMonth").css('display','none');
                     }

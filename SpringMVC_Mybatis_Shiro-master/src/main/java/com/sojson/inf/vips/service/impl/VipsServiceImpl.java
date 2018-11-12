@@ -301,7 +301,7 @@ public class VipsServiceImpl extends BaseMybatisDao<UTbVipsMapper> implements Vi
             surplusDay = 0;
         }
         //剩余时间
-        String surplusTime = "剩余观赛时间："+surplusDay+"比赛日 ";
+        String surplusTime = "剩余观赛时间："+surplusDay+" 个比赛日 ";
         return surplusTime;
     }
 

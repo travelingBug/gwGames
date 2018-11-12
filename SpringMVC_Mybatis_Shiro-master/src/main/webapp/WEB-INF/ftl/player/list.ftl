@@ -24,7 +24,7 @@
                     $("#val2").val(val2);
                 }
 
-                <@shiro.hasAnyRoles name='888888,100004'>
+                <@shiro.hasAnyRoles name='888888,100004,900001'>
                 $("#uploadPlayerBtn").unbind("click").bind("click", function() {
                     $("#uploadPlayerFile").click();
                 });
@@ -148,7 +148,7 @@
                 $("#player_details_capital").val(capital);
             }
 
-            <@shiro.hasAnyRoles name='888888,100004'>
+            <@shiro.hasAnyRoles name='888888,100004,900001'>
 
             function replaceupdateBatchFile(){
                 $('#updateBatchFile').remove();
@@ -319,7 +319,7 @@
 					      </div>
 					     <span> <#--pull-right -->
 				         	<button type="submit" class="btn btn-primary">查询</button>
-                            <@shiro.hasAnyRoles name='888888,100004'>
+                            <@shiro.hasAnyRoles name='888888,100004,900001'>
                              <button type="button" id="addPlayerBtn" onclick="_add();" class="btn btn-primary">新增</button>
 							 <form enctype="multipart/form-data" id="excelForm"   method="post" >
 								<button class="btn btn-success" id="uploadPlayerBtn"  type="button" >
