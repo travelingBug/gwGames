@@ -30,7 +30,8 @@
       d.DEL_FLAG = 0
       <if test="findContent != null and findContent !=''">
         and (d.name like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%'))
-        or u.email like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%')))
+        or u.email like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%'))
+        or d.phone = #{findContent,jdbcType=VARCHAR})
       </if>
       <if test="parentId != null and parentId !='' " >
         and PARENT_ID = #{parentId}
@@ -60,6 +61,8 @@
   </select>
   <select id="findCount" resultMap="dealerResultMap" >
  	 select count(d.id) from  tb_dealer d
+      LEFT JOIN u_user u
+      ON u.id = d.FK_USER_ID
   	<include refid="dealer_where_all" />
   </select>
 

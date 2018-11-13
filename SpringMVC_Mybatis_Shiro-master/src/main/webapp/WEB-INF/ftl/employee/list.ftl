@@ -148,7 +148,7 @@
 						<div clss="well">
 					      <div class="form-group">
 					        <input type="text" class="form-control" style="width: 300px;" value="${findContent?default('')}" 
-					        			name="findContent" id="findContent" placeholder="输入名称">
+					        			name="findContent" id="findContent" placeholder="输入名称 / 手机号码">
 					      </div>
 							<div class="form-group">
 								<input type="text" class="form-control" style="width: 100px;" value="${dGroup?default('')}"

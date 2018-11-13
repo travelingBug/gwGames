@@ -743,7 +743,7 @@
             return;
         } else {
             $('#sendSmsCode').html("获取验证码(" + countdown + "s)");
-            smsCodeFlag = false;
+//            smsCodeFlag = false;
             countdown--;
         }
         setTimeout(function() {

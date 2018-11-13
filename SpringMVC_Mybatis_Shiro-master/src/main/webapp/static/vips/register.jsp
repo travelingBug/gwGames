@@ -495,7 +495,7 @@
         if(s){
             $(obj).siblings(".icon-vali").append("<i class='fas fa-check-circle pass'></i>");
         }else{
-            $(obj).siblings(".icon-vali").append("<i class='fas fa-times-circle fail' title='"+msg+"'></i>");
+            $(obj).siblings(".icon-vali").append("<i class='fas fa-times-circle fail' title='"+msg+"'></i>   "+msg);
         }
     }
 </script>
