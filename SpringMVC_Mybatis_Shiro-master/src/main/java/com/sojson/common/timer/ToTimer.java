@@ -52,7 +52,7 @@ public class ToTimer{
 	}
 
 	@Scheduled(cron = "00 01 00 * * ?")
-//	@Scheduled(cron = "00 44 22 * * ?")
+//	@Scheduled(cron = "00 50 00 * * ?")
 	public void changeVip() {
 
 		//判断是周末不进行日期的减少

@@ -74,4 +74,11 @@ public class PlayerMoneyController extends BaseController {
         return new ModelAndView("playerMoney/list");
     }
 
+
+    @RequestMapping(value="reComplate")
+    @ResponseBody
+    public ResultMessage reComplate(){
+        return playerMoneyService.reComplate();
+    }
+
 }
