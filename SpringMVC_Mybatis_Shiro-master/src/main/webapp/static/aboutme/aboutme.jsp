@@ -23,6 +23,12 @@
             /*text-indent:2em;*/
         }
 
+        .zt3 {
+            font-family:"微软雅黑";
+            font-size:20px;
+            /*text-indent:2em;*/
+        }
+
         .js {
             font-family:"微软雅黑";
             font-size:14px;
@@ -122,6 +128,16 @@
                     <p class="zt1">服务</p>
 
                     <p class="js"  style="margin-top: 8px;">学会本身是一个服务机构，必须脚踏实地做好自己的服务工作，工作中注重稳健、严谨、实效、适用。</p>
+                </div>
+
+            </div>
+            <div class="content">
+                <br/>
+                <div class="tab1" style="margin-top: 30px;">
+                </div>
+                <div  style="float: left;width: 700px;height: 100px;margin-top: 20px;">
+                    <span class="bt">协办单位</span>
+                    <p class="js"  style="margin-top: 20px;">华林证券&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;天风证券&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;万和证券四川分公司&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;万和证券股份有限公司成都通盈街营业部</p>
                 </div>
             </div>
             <div style="height:50px;"></div>

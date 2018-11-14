@@ -191,7 +191,7 @@
                 <p>本次大赛为实盘炒股大赛，选手自愿参加，自行交易，自负盈亏，所有交易活动均须遵守《股票发行与交易管理暂行条例》和国家相关法律法规、证券交易所交易规则及指定交易商（证券公司）的管理规定。交易品种可选择包括A股、证券投资基金、债券等上市品种进行交易买卖，允许申购新股。假设参赛选手违反上述规定，将视为自行退赛，主办方将取消该选手的比赛成绩和比赛资格。比赛成绩以举办单位严格的统计公布为准。选手须在本次活动指定营业部开立证券股票账户，并自带参赛资金或者股票，参赛资格为账户金融资产不得低于30万，报名的投资者为符合法规规定具有证券投资入市条件的自然人或法人。本次大赛主办方将本着勤勉尽职的态度竭力保证大赛的顺利进行，但对于不可抗力的因素或非主办方所能控制的情况所导致的风险、系统故障或由于网络问题导致的系统故障等原因对参赛选手收益率及排名产生的影响不做担保。参赛选手必须保护好自己的相关密码，如因为密码丢失或被破解所导致的账户被窃而造成损失的，大赛主办方和指定交易商不负任何责任。</p>
             </div>
         </div>
-        <div class="btn" id="closeReadContent"><a href="javascript:;">已阅参赛须知</a></div>
+        <div class="btn" id="closeReadContent"><a href="javascript:;" id="hasRead">已阅参赛须知</a></div>
     </div>
 </div>
 
@@ -269,6 +269,11 @@
 
     $("#readText").click(function(){
         readTextFlag = true;
+        $('#readerContent').css('display','block');
+        $('body,html').animate({
+            scrollTop: 0
+        }, 500);
+        bindClose();
         canSubmit();
     });
 
@@ -422,7 +427,6 @@
             $("#verfiCodeId").after('<span class="link tip-wrong"><i class="icon icon-wrong"></i>请输入6位验证码</span>');
             return;
         }
-        debugger
         var data =$('#addForm').serializeArray();
         data.push({name:'inviteNum',value:inviteNum});
         $.ajax({
@@ -546,6 +550,7 @@
         $('body,html').animate({
             scrollTop: 0
         }, 500);
+        bindClose();
     });
 
 
@@ -558,10 +563,29 @@
     $('#gameIntroductionClose').click(function(){
         $('#gameIntroductionDiv').css('display','none');
     });
-    $('#closeReadContent').click(function(){
-        $('#readerContent').css('display','none');
-        $('body,html').animate({
-            scrollTop: 700
-        }, 500);
-    });
+
+
+    var closeCount=10;
+    function bindClose(){
+        $('#closeReadContent').unbind("click");
+        if (closeCount == 0) {
+            $('#hasRead').html("已阅参赛须知");
+            $('#hasRead').css('color','#dca54b');
+            closeCount = 10;
+            $('#closeReadContent').click(function(){
+                $('#readerContent').css('display','none');
+                $('body,html').animate({
+                    scrollTop: 700
+                }, 500);
+            });
+            return;
+        } else {
+            $('#hasRead').css('color','#5e5e5e');
+            $('#hasRead').html("已阅参赛须知(" + closeCount + "s)");
+            closeCount--;
+        }
+        setTimeout(function() {
+                bindClose() }
+            ,1000)
+    }
 </script>

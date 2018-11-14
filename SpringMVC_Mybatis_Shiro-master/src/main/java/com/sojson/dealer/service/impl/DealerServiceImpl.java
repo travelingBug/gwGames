@@ -310,15 +310,17 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
                                     dealerCountVo.setVipAMoneyCount(new BigDecimal(dealerCountVo.getVipAMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
                                     dealerCountVo.setVipACount(dealerCountVo.getVipACount() + 1);
                                     total.setVipAMoneyCount(new BigDecimal(total.getVipAMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
-
+                                    total.setVipACount(total.getVipACount() + 1);
                                 } else if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_B.v) {
                                     dealerCountVo.setVipBMoneyCount(new BigDecimal(dealerCountVo.getVipBMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
                                     dealerCountVo.setVipBCount(dealerCountVo.getVipBCount() + 1);
                                     total.setVipBMoneyCount(new BigDecimal(total.getVipBMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
+                                    total.setVipBCount(total.getVipBCount() + 1);
                                 } else if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_C.v) {
                                     dealerCountVo.setVipCMoneyCount(new BigDecimal(dealerCountVo.getVipCMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
                                     dealerCountVo.setVipCCount(dealerCountVo.getVipCCount() + 1);
                                     total.setVipCMoneyCount(new BigDecimal(total.getVipCMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
+                                    total.setVipCCount(total.getVipCCount() + 1);
                                 }
                                 dealerCountVo.setVipMoneyCount(new BigDecimal(dealerCountVo.getVipMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
                                 total.setVipMoneyCount(new BigDecimal(total.getVipMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
