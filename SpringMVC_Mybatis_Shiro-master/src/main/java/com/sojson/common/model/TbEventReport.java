@@ -41,6 +41,16 @@ public class TbEventReport implements Serializable {
      */
     private Integer volume;
 
+    private String crtTimeStr;
+
+    public String getCrtTimeStr() {
+        return crtTimeStr;
+    }
+
+    public void setCrtTimeStr(String crtTimeStr) {
+        this.crtTimeStr = crtTimeStr;
+    }
+
     public String getId() {
         return id;
     }

@@ -3,10 +3,12 @@ package com.sojson.playermoney.service;
 
 import com.sojson.common.ResultMessage;
 import com.sojson.common.model.TbPlayerMoney;
+import com.sojson.common.model.dto.PlayerTopInfo;
 import com.sojson.common.model.vo.TbPlayerMoneyVo;
 import com.sojson.core.mybatis.page.Pagination;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,4 +53,11 @@ public interface PlayerMoneyService {
      * @return
      */
     public ResultMessage reComplate();
+
+    /**
+     * 获取排名信息
+     * @param param
+     * @return
+     */
+    public List<PlayerTopInfo> getTop(Map<String,Object> param);
 }

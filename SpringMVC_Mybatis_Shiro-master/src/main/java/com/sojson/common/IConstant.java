@@ -108,6 +108,23 @@ public interface IConstant {
     }
 
     /**
+     * 排行榜类型
+     * 0、总收益率排行榜
+     * 1、月收益率排行榜
+     */
+    public enum TOP_TYPE {
+        /** 月收益率排行榜 */
+        MONTH((byte)1),
+        /** 总收益率排行榜 */
+        ALL((byte)0);
+
+        public byte v;
+        private TOP_TYPE(byte v) {
+            this.v = v;
+        }
+    }
+
+    /**
      * 默认key
      */
     String key = "tJjwxDz4WF0Sf9JT";

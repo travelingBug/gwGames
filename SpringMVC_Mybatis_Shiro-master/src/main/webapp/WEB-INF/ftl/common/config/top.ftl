@@ -86,6 +86,9 @@
 							  <@shiro.hasPermission name="/playerMoney/list.shtml">
                                   <li><a href="${basePath}/playerMoney/list.shtml">参赛资金</a></li>
 							  </@shiro.hasPermission>
+                              <@shiro.hasPermission name="/playerMoney/topList.shtml">
+                                  <li><a href="${basePath}/playerMoney/topList.shtml">选手排行榜</a></li>
+                              </@shiro.hasPermission>
                           </ul>
                       </li>
 				  </@shiro.hasAnyRoles>

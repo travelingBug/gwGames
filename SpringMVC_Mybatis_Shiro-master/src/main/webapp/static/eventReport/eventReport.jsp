@@ -45,7 +45,8 @@
                         html += '<img src="'+reportData[i].cover+'"/>';
                         html += '<div class="text">';
                         html += '<h3><a href="/static/eventReport/eventReportDetail.jsp?id='+reportData[i].id+'">'+reportData[i].title+'</a></h3>';
-                        html += '<p>'+reportData[i].described+'<a href="/static/eventReport/eventReportDetail.jsp?id='+reportData[i].id+'">查看更多</a></p>';
+                        html += '<p>'+reportData[i].described+'</p>';
+                        html += '<p><span style="font-size:6px;">' + reportData[i].crtTimeStr + '</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/static/eventReport/eventReportDetail.jsp?id='+reportData[i].id+'">查看更多</a></p>'
                         html += '</div></div>';
                         $('#eventReport').append(html);
                     }

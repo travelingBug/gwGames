@@ -98,7 +98,13 @@
                     </a>
                 </li>
 			</@shiro.hasPermission>
-
+			<@shiro.hasPermission name="/player/topList.shtml">
+                <li class="${(index==4)?string('active',' ')}">
+                    <a href="${basePath}/player/topList.shtml?">
+                        <i class="glyphicon glyphicon-chevron-right"></i>选手排行榜
+                    </a>
+                </li>
+			</@shiro.hasPermission>
             <#--<li class="${(index==2)?string('active',' ')} dropdown">-->
                 <#--<a href="${basePath}/member/online.shtml">-->
                     <#--<i class="glyphicon glyphicon-chevron-right"></i>在线用户-->

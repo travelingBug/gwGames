@@ -184,6 +184,12 @@
       <if test="groupName != null and groupName != '' " >
         and d.D_GROUP like LOWER(CONCAT('%',#{groupName,jdbcType=VARCHAR},'%'))
       </if>
+      <if test="fname != null and fname != '' " >
+        and ( d.name like LOWER(CONCAT('%',#{fname,jdbcType=VARCHAR},'%')) or d.PARENT_ID in (select x.FK_USER_ID from tb_dealer x where x.name like LOWER(CONCAT('%',#{fname,jdbcType=VARCHAR},'%')) and x.PARENT_ID = 0))
+      </if>
+      <if test="fgroupName != null and fgroupName != '' " >
+        and ( d.D_GROUP like LOWER(CONCAT('%',#{fgroupName,jdbcType=VARCHAR},'%')) or d.PARENT_ID in (select x.FK_USER_ID from tb_dealer x where x.D_GROUP like LOWER(CONCAT('%',#{fgroupName,jdbcType=VARCHAR},'%')) and x.PARENT_ID = 0))
+      </if>
     </where>
   </sql>
 
