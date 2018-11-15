@@ -70,7 +70,7 @@
   <select id="findAll" resultMap="PlayerMoneyResultMap" >
   	select
     <include refid="PlayerMoney_Column_List" />
-    from tb_player_money t LEFT JOIN tb_player  p ON t.ACCOUNT = p.ACCOUNT
+    from tb_player_money t LEFT JOIN tb_player  p ON t.ACCOUNT = p.ACCOUNT  and p.DEL_FLAG = 0
     <include refid="where_all"/>
     <include refid="order_all"/>
     <include refid="limit_sql" />
@@ -85,7 +85,7 @@
   </select>
 
   <select id="findCount" resultMap="PlayerMoneyResultMap" >
- 	 select count(t.id) from  tb_player_money t LEFT JOIN tb_player  p ON t.ACCOUNT = p.ACCOUNT
+ 	 select count(t.id) from  tb_player_money t LEFT JOIN tb_player  p ON t.ACCOUNT = p.ACCOUNT  and p.DEL_FLAG = 0
   	<include refid="where_all" />
   </select>
 
@@ -142,12 +142,12 @@
 
   <select id="findTopForAll" resultMap="PlayerMoneyResultMap" >
     select  <include refid="PlayerMoney_Column_List" />,p.CAPITAL from tb_player_money t LEFT join  tb_player p ON t.ACCOUNT = p.ACCOUNT where not exists(select 1 from tb_player_money t2  where t2.ACCOUNT= t.ACCOUNT
-    and t.BUSINESS_TIME &lt;  t2.BUSINESS_TIME)
+    and t.BUSINESS_TIME &lt;  t2.BUSINESS_TIME) and p.DEL_FLAG = 0
   </select>
 
   <select id="findTopByMonth" resultMap="PlayerMoneyResultMap"  >
 
     select  <include refid="PlayerMoney_Column_List" />,p.CAPITAL from tb_player_money t LEFT join  tb_player p ON t.ACCOUNT = p.ACCOUNT where date_format(t.BUSINESS_TIME, '%Y-%m') = #{currDate} and  not exists(select 1 from tb_player_money t2  where t2.ACCOUNT= t.ACCOUNT
-    and date_format(t2.BUSINESS_TIME, '%Y-%m') = #{currDate} and t.BUSINESS_TIME &lt;  t2.BUSINESS_TIME)
+    and date_format(t2.BUSINESS_TIME, '%Y-%m') = #{currDate} and t.BUSINESS_TIME &lt;  t2.BUSINESS_TIME) and p.DEL_FLAG = 0
   </select>
 </mapper>

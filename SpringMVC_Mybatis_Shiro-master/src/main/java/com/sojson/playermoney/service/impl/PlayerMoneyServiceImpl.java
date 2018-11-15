@@ -165,15 +165,6 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
             tbPlayerMoney.setModTime(new Date());
             uTbPlayerMoneyMapper.updateByPrimaryKeySelective(tbPlayerMoney);
         }
-        //重新计算排名
-        getTopResultForAll();
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
-        Calendar cal=Calendar.getInstance();
-        String currDate = formatter.format(cal.getTime());
-        cal.add(Calendar.MONTH,-1);
-        String preDate = formatter.format(cal.getTime());
-        findTopByMonth(currDate,preDate);
         return msg;
     }
 
@@ -365,5 +356,19 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
             palyerTopMonthInfos.get(i).setRank(i+1);
         }
 		GainsInfoCache.putTopForMonth(palyerTopMonthInfos);
+    }
+
+    @Override
+    public ResultMessage reComplate(){
+        //重新计算排名
+        getTopResultForAll();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
+        Calendar cal=Calendar.getInstance();
+        String currDate = formatter.format(cal.getTime());
+        cal.add(Calendar.MONTH,-1);
+        String preDate = formatter.format(cal.getTime());
+        findTopByMonth(currDate,preDate);
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
 }

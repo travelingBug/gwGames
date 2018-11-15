@@ -45,4 +45,10 @@ public interface PlayerMoneyService {
      * @param preDate
      */
     public void findTopByMonth(String currDate,String preDate);
+
+    /**
+     * 重新计算排名
+     * @return
+     */
+    public ResultMessage reComplate();
 }

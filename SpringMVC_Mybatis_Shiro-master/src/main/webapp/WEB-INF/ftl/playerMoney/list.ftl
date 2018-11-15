@@ -44,6 +44,32 @@
                     format:'YYYY-MM-DD hh:mm:ss'
                 });
 
+                $('#reComplate').click(function(){
+                    $("#contentDiv").mask("计算排名中，请稍后...");
+                    $.ajax({
+                        type: "POST",
+                        url: "/playerMoney/reComplate.shtml",
+                        data: [],
+                        dataType: "json",
+                        success: function(result) {
+                            $("#contentDiv").unmask();
+                            if (result && result.level != 1) {
+                                msg(result.messageText);
+                            } else {
+                                layer.msg('排名计算成功！');
+                                $('#playerMoney_edit-remove').click();
+                                $('#formId').submit();
+                            }
+                        },
+                        error: function(data) {
+                            $("#contentDiv").unmask();
+                            layer.alert('系统错误，请联系管理员！', {
+                                icon: 2,
+                                skin: 'layui-layer-lan'
+                            });
+                        }
+                    });
+                });
                 $('#playerMoney_edit_submit').click(function(){
                     var flag = validEditForm();
                     if (!flag) {
@@ -331,12 +357,13 @@
                             </div>
 						</div>
 						<div class="col-sm-12" style="margin-top: 10px;margin-bottom: 20px;">
-                            <div class="form-group col-sm-8" form-inline>
+                            <div class="form-group col-sm-7" form-inline>
                             </div>
-                            <div class="form-group  col-sm-4">
+                            <div class="form-group  col-sm-5">
                                 <span class=""> <#--pull-right -->
                                     <button type="submit" class="btn btn-primary">查询</button>
                                     <a class="btn btn-success" onclick="$('#playerMoneyAddModal').modal();">添加</a>
+                                    <button type="button" class="btn btn-primary" id="reComplate">计算排名</button>
                                     <form enctype="multipart/form-data" id="excelForm"   method="post" >
                                         <button class="btn btn-primary" id="uploadEventBtn"  type="button" >
                                             导入
