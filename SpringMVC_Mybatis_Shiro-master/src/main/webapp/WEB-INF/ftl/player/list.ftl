@@ -308,7 +308,7 @@
 						<div clss="well">
 					      <div class="form-group">
 					        <input type="text" class="form-control" style="width: 300px;" value="${findContent?default('')}" 
-					        			name="findContent" id="findContent" placeholder="输入昵称 / 帐号 / 手机号码">
+					        			name="findContent" id="findContent" placeholder="输入昵称 / 帐号 / 手机号码 / 资金账号">
 							<select name="auditFlag" id="val2" class="form-control">
                                 <option value="">全部</option>
                                 <option value="0">待审核</option>

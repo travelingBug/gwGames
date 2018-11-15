@@ -20,10 +20,10 @@ public class SendMsgUtil {
         String user = IConfig.get("user");
         String key = IConfig.get("key");
         String msg_1 = "";
-        String msg_2 = "";
+        String msg_4 = "";
         try {
             msg_1 = new String(IConfig.get("msg_1").getBytes("iso-8859-1"),"utf-8");
-            msg_2 = new String(IConfig.get("msg_2").getBytes("iso-8859-1"),"utf-8");
+            msg_4 = new String(IConfig.get("msg_4").getBytes("iso-8859-1"),"utf-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -31,7 +31,7 @@ public class SendMsgUtil {
 //        RedisUtil redisUtil = RedisUtil.getRedis();
         RedisUtil.save(phone, code+","+ new Date().getTime());
 
-        String msg = msg_1 + code + msg_2;
+        String msg = msg_1 + code + msg_4;
 
         HttpClient client = new HttpClient();
         PostMethod post = new PostMethod("http://utf8.api.smschinese.cn");
