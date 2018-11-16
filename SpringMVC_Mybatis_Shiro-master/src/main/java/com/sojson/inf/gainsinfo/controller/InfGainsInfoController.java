@@ -207,4 +207,17 @@ public class InfGainsInfoController extends BaseController {
 		phone = IConfig.get("qrCode_path")+phone+".png";
 		return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v,"获取成功",phone);
 	}
+
+
+	@RequestMapping(value="getLastTopMonth",method=RequestMethod.POST)
+	@ResponseBody
+	public List<PlayerTopInfo> getLastTopMonth(int size)throws Exception{
+		return infGainsInfoService.getLastTopMonth(size);
+	}
+
+	@RequestMapping(value="getLastTopAll",method=RequestMethod.POST)
+	@ResponseBody
+	public List<PlayerTopInfo> getLastTopAll(int size)throws Exception{
+		return infGainsInfoService.getLastTopAll(size);
+	}
 }

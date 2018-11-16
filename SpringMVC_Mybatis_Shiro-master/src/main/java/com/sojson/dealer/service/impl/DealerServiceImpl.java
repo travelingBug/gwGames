@@ -238,8 +238,8 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
         }
         //查询出所有的经销商
         Map<String,Object> dealerParam = new HashMap<String,Object>();
-        dealerParam.put("name",param.get("name"));
-        dealerParam.put("groupName",param.get("groupName"));
+        dealerParam.put("fname",param.get("name"));
+        dealerParam.put("fgroupName",param.get("groupName"));
         List<TbDealer> dealers = uTbDealerMapper.findDealerIds(dealerParam);
         //将经销商进行分组
         //key是员工邀请码，value是父类

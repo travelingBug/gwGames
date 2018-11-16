@@ -371,4 +371,27 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
         findTopByMonth(currDate,preDate);
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
+
+    @Override
+    public List<PlayerTopInfo> getTop(Map<String,Object> param){
+        List<PlayerTopInfo> data = new ArrayList<PlayerTopInfo>();
+        List<PlayerTopInfo> list = null;
+        if (Byte.parseByte(param.get("topType").toString()) == IConstant.TOP_TYPE.MONTH.v) {
+            list = GainsInfoCache.getTopMonthForSize(10000);
+        } else {
+            list = GainsInfoCache.getTopAllForSize(10000);
+        }
+
+        if (param.get("accountName") != null) {
+            String accountName = param.get("accountName").toString();
+            for (PlayerTopInfo playerTopInfo : list) {
+                if (playerTopInfo.getAccountName().indexOf(accountName) >= 0) {
+                    data.add(playerTopInfo);
+                }
+            }
+        } else {
+            data.addAll(list);
+        }
+        return data;
+    }
 }

@@ -242,8 +242,8 @@
                         }
                         html += '<div class="img" style="width: 14%;height: 4%;"><img  class="imgylclass" src="'+reportData[i].cover+'"/></div>';
                         html += '<div class="text">';
-                        html += '<div class="tit"><h3>'+reportData[i].title+'</h3>'+more+'</div>';
-                        html += '<p>'+reportData[i].described+'</p>';
+                        html += '<div class="tit"><h3>'+reportData[i].title +'</h3>' +more+'</div>';
+                        html += '<p>'+reportData[i].described+ '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:6px;">' + reportData[i].crtTimeStr + '</span>' + '</p>';
                         html += '</div></div>';
                         $('#eventReport').append(html);
                         $('#'+reportData[i].id ).click(function(){

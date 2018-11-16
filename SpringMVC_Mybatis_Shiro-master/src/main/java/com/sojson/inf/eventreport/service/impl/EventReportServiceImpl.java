@@ -11,6 +11,7 @@ import com.sojson.inf.eventreport.service.EventReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,8 +30,10 @@ public class EventReportServiceImpl extends BaseMybatisDao<UTbEventReportMapper>
         Map<String,Object> resultMap = new HashMap<String,Object>();
         Pagination<TbEventReport> page = super.findPage(resultMap, pageNo, pageSize);
         if (page.getList() != null && page.getList().size() > 0) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             for (TbEventReport vo : page.getList()  ) {
                 vo.setCover(IConfig.get("eventReport_path") + vo.getCover());
+                vo.setCrtTimeStr(sdf.format(vo.getCrtTime()));
             }
         }
 

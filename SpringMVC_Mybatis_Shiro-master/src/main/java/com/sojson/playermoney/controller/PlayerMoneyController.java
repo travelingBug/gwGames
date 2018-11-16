@@ -1,8 +1,10 @@
 package com.sojson.playermoney.controller;
 
+import com.sojson.common.IConstant;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.controller.BaseController;
 import com.sojson.common.model.TbPlayerMoney;
+import com.sojson.common.model.dto.PlayerTopInfo;
 import com.sojson.common.model.vo.TbPlayerMoneyVo;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.playermoney.service.PlayerMoneyService;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -81,4 +84,19 @@ public class PlayerMoneyController extends BaseController {
         return playerMoneyService.reComplate();
     }
 
+    /**
+     * 参赛选手排名
+     * @return
+     */
+    @RequestMapping(value="topList")
+    public ModelAndView topList(Integer pageNo, ModelMap modelMap,@RequestParam Map<String,Object> map){
+
+        if(map.get("topType") == null) {
+            map.put("topType", IConstant.TOP_TYPE.ALL.v);
+        }
+        List<PlayerTopInfo> page = playerMoneyService.getTop(map);
+        modelMap.put("page", page);
+        modelMap.putAll(map);
+        return new ModelAndView("playerMoney/topList");
+    }
 }

@@ -206,4 +206,42 @@ public class InfGainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> 
 		return page;
 	}
 
+
+	@Override
+	public List<PlayerTopInfo> getLastTopMonth(int size){
+		List<PlayerTopInfo> last = new ArrayList<PlayerTopInfo>();
+		List<PlayerTopInfo> data = GainsInfoCache.getLastTopMonthSize(size);
+
+		int frist = 166;
+		//顺序倒着获取
+		for (int i = data.size() - 1; i >= 0; i--) {
+			PlayerTopInfo playerTopInfo = data.get(i).clone();
+			playerTopInfo.setRank(frist);
+			playerTopInfo.setAccount("******");
+			playerTopInfo.setAccountName("****");
+			last.add(playerTopInfo);
+			frist ++;
+		}
+
+		return last;
+	}
+
+	@Override
+	public List<PlayerTopInfo> getLastTopAll(int size){
+		List<PlayerTopInfo> last = new ArrayList<PlayerTopInfo>();
+		List<PlayerTopInfo> data = GainsInfoCache.getLastTopAllForSize(size);
+
+		int frist = 166;
+		//顺序倒着获取
+		for (int i = data.size() - 1; i >= 0; i--) {
+			PlayerTopInfo playerTopInfo = data.get(i).clone();
+			playerTopInfo.setRank(frist);
+			playerTopInfo.setAccount("******");
+			playerTopInfo.setAccountName("****");
+			last.add(playerTopInfo);
+			frist ++;
+		}
+
+		return last;
+	}
 }

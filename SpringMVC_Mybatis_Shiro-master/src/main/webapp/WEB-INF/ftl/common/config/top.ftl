@@ -86,6 +86,9 @@
 							  <@shiro.hasPermission name="/playerMoney/list.shtml">
                                   <li><a href="${basePath}/playerMoney/list.shtml">参赛资金</a></li>
 							  </@shiro.hasPermission>
+                              <@shiro.hasPermission name="/playerMoney/topList.shtml">
+                                  <li><a href="${basePath}/playerMoney/topList.shtml">选手排行榜</a></li>
+                              </@shiro.hasPermission>
                           </ul>
                       </li>
 				  </@shiro.hasAnyRoles>
@@ -109,7 +112,7 @@
 				  </@shiro.hasAnyRoles>
 
 			  		<#--拥有 角色200001（经销商）-->
-				  <@shiro.hasAnyRoles name='200001,100004,100005,100006,888888,900001'>
+				  <@shiro.hasAnyRoles name='200001,100004,100005,100006,888888'>
                       <li class="dropdown ${(index==6)?string('active','')}">
                           <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="${basePath}/dealer/employeeList.shtml?parentId=${userId}">
                               员工管理<span class="caret"></span>

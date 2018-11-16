@@ -95,7 +95,7 @@
   <select id="findAll" resultMap="GainsInfoResultMap" >
   	select
     <include refid="GainsInfo_Column_List" />
-    from tb_gains_info t LEFT JOIN tb_player  p ON t.ACCOUNT = p.ACCOUNT
+    from tb_gains_info t LEFT JOIN tb_player  p ON t.ACCOUNT = p.ACCOUNT and p.DEL_FLAG = 0
     <include refid="where_all"/>
     <include refid="order_all"/>
     <include refid="limit_sql" />
@@ -110,7 +110,7 @@
   </select>
 
   <select id="findCount" resultMap="GainsInfoResultMap" >
- 	 select count(t.id) from  tb_gains_info t LEFT JOIN tb_player  p ON t.ACCOUNT = p.ACCOUNT
+ 	 select count(t.id) from  tb_gains_info t LEFT JOIN tb_player  p ON t.ACCOUNT = p.ACCOUNT  and p.DEL_FLAG = 0
   	<include refid="where_all" />
   </select>
 

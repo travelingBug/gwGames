@@ -79,6 +79,8 @@
 <script>
     var continueLoad = true;
     var continueLoadMonth = true;
+    var loadLast = false;
+    var loadLastMonth = false;
     $(function() {
         goPageByAjax(1,20);
         goPageByAjax2(1,20);
@@ -144,13 +146,18 @@
 //                            $("#readAll").unbind('click').click(function () {
 //                                goPageByAjax(result.pageNo + 1,20);
 //                            });
+                            if (loadLast) {
+                                getLastTopAll();
+                            }
                             if (continueLoad) {
                                 continueLoad = false
                                 $("#readAll").unbind('click').click(function () {
                                     goPageByAjax(3,10);
+                                    loadLast = true;
                                 });
                             } else {
                                 $("#readAll").unbind('click');
+                                $("#readAll").css('display','none');
                             }
                         } else {
                             $("#readAll").css('display','none');
@@ -164,6 +171,55 @@
         });
     }
 
+    function getLastTopAll(){
+        $.ajax({
+            type: "POST",
+            url: "interface/gainsInfo/getLastTopAll.shtml",
+            data: {size: 3},
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (result) {
+                var topAllData = result;
+                if (topAllData != null && topAllData.length > 0) {
+                    for (var i = 0; i < 3; i++) {
+                        var showTop = '<td>.</td>';
+                        var bg = "";
+                        if (i % 2 == 1) {
+                            bg = "class='bg'";
+                        }
+                        var topAllHtml = '<tr ' + bg + '>';
+                        topAllHtml += showTop;
+                        topAllHtml += '<td>.....</td>';
+                        topAllHtml += '<td>.....</td>';
+                        topAllHtml += '<td >.....</td>';
+                        topAllHtml += '<td>.....</td>';
+
+                        $('#topAll').append(topAllHtml);
+
+                    }
+
+                    for (var i = 0; i < topAllData.length; i++) {
+                        var showTop = '<td>' + topAllData[i].rank + '</td>';
+                        var bg = "";
+                        if (i % 2 == 1) {
+                            bg = "class='bg'";
+                        }
+                        var topAllHtml = '<tr ' + bg + '>';
+                        topAllHtml += showTop;
+                        topAllHtml += '<td>' + topAllData[i].accountName + '</td>';
+                        topAllHtml += '<td>' + topAllData[i].yieldRate + '%</td>';
+                        topAllHtml += '<td >' + topAllData[i].buyForALLRate + '%</td>';
+                        topAllHtml += '<td><a class="red" href="/static/gains/strategy.jsp?account=' + $.trim(topAllData[i].account) + '">观赛</a></td>';
+
+                        $('#topAll').append(topAllHtml);
+
+                    }
+                }
+            }
+        });
+    }
     function goPageByAjax2(pageNo,pageSize) {
         //获取交易明细
         $.ajax({
@@ -211,10 +267,14 @@
 //                        $("#readMonth").unbind('click').click(function () {
 //                            goPageByAjax2(result.pageNo + 1,20);
 //                        });
+                        if (loadLastMonth) {
+                            getLastTopMonth();
+                        }
                         if (continueLoadMonth) {
                             continueLoadMonth = false
                             $("#readMonth").unbind('click').click(function () {
                                 goPageByAjax2(3,10);
+                                loadLastMonth = true;
                             });
                         } else {
                             $("#readMonth").unbind('click');
@@ -225,6 +285,56 @@
 //                    $('#topMonthTable').after(result.portalPageHtml2);
                 } else {
                     $('#topMonth').append('<tr><td  colspan="6">暂无数据</td></tr>');
+                }
+            }
+        });
+    }
+
+    function getLastTopMonth(){
+        $.ajax({
+            type: "POST",
+            url: "interface/gainsInfo/getLastTopMonth.shtml",
+            data: {size: 3},
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (result) {
+                var topAllData = result;
+                if (topAllData != null && topAllData.length > 0) {
+                    for (var i = 0; i < 3; i++) {
+                        var showTop = '<td>.</td>';
+                        var bg = "";
+                        if (i % 2 == 1) {
+                            bg = "class='bg'";
+                        }
+                        var topMonthHtml = '<tr ' + bg + '>';
+                        topMonthHtml += showTop;
+                        topMonthHtml += '<td>.....</td>';
+                        topMonthHtml += '<td>.....</td>';
+                        topMonthHtml += '<td >.....</td>';
+                        topMonthHtml += '<td>.....</td>';
+
+                        $('#topMonth').append(topMonthHtml);
+
+                    }
+
+                    for (var i = 0; i < topAllData.length; i++) {
+                        var showTop = '<td>' + topAllData[i].rank + '</td>';
+                        var bg = "";
+                        if (i % 2 == 1) {
+                            bg = "class='bg'";
+                        }
+                        var topAllHtml = '<tr ' + bg + '>';
+                        topAllHtml += showTop;
+                        topAllHtml += '<td>' + topAllData[i].accountName + '</td>';
+                        topAllHtml += '<td>' + topAllData[i].yieldRate + '%</td>';
+                        topAllHtml += '<td >' + topAllData[i].buyForALLRate + '%</td>';
+                        topAllHtml += '<td><a class="red" href="/static/gains/strategy.jsp?account=' + $.trim(topAllData[i].account) + '">观赛</a></td>';
+
+                        $('#topMonth').append(topAllHtml);
+
+                    }
                 }
             }
         });
