@@ -1410,7 +1410,7 @@ select.width-240 { width: 260px!important;}
 }
 .select-box .one-area p {
 	border-top: 1px solid #eeeeee;
-	line-height: 60px;
+	line-height: 30px;
 	text-align: center;
 	margin: 20px;
 	font-size: 14px;
@@ -2077,6 +2077,33 @@ select.width-240 { width: 260px!important;}
 }
 .list_phone{
 	width: 100px;
+}
+#pay_main_div #readText{
+	float: left;
+}
+#pay_main_div .pay_read{
+	line-height: 30px;
+}
+.pay_read_table th,td{
+	padding:5px;
+	text-align: center;
+}
+.pay_read_table,.pay_read_table tr th, .pay_read_table tr td { border:1px solid #c3c3c3; }
+
+.recharge .float-div .title {
+	margin: 20px 25px 0 25px;
+	padding-bottom: 15px;
+	font-size: 16px;
+	border-bottom: 1px solid #e0e0e0;
+}
+.pay_readCon .float-div {
+	top:50%;
+}
+.pay_readCon .float-div .title1 {
+	margin: 20px 25px 0 25px;
+	padding-bottom: 15px;
+	font-size: 16px;
+	border-bottom: 1px solid #e0e0e0;
 }
 
 

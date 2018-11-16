@@ -35,29 +35,163 @@
                         <span class="L"></span>
                         <span class="R"></span>
                     </div>
-                    <p>前20名选手早盘午盘实盘赛况</p>
+                    <p>可观看本平台公布的比赛排名前20名参赛选手T日实盘赛况（T日指比赛当日）</p>
                 </div>
                 <div class="one-area">
                     <div class="img-area img-b">
                         <span class="L"></span>
                         <span class="R"></span>
                     </div>
-                    <p>前20名选手24小时实盘赛况</p>
+                    <p>可观看本平台公布的比赛排名前20名参赛选手T-1日实盘赛况（T日指比赛当日）</p>
                 </div>
                 <div class="one-area">
                     <div class="img-area img-c">
                         <span class="L"></span>
                         <span class="R"></span>
                     </div>
-                    <p>前20名选手48小时实盘赛况</p>
+                    <p>可观看本平台公布的比赛排名前20名参赛选手T-2日实盘赛况（T日指比赛当日）</p>
                 </div>
                 <input type="hidden" id="pay_ticket"/>
+            </div>
+            <div class="pay-tips" style="color: #e33434;">
+                注：1、比赛日当日大赛赛况更新两次，分别为13点和17点，购买A类票的客户可随时看到T日赛况。
+                2、大赛提及所有观赛日和可观看比赛日时间均为沪深交易日，不包含周六日和法定节假日。资产和持仓均为T-1日，策略为T日。
             </div>
             <div class="select-box">
                 <p class="title-style">选择方式：</p>
                 <div class="select-cont">
                     <a class="select-btn on"><i class="icon-on"></i>购票</a>
                 </div>
+            </div>
+            <div>
+                <table class="table1">
+                    <tr>
+                        <th>银行</th>
+                        <th>业务类型</th>
+                        <th>借贷记类型</th>
+                        <th>单笔最高限额（元）</th>
+                        <th>日累计限额（元）</th>
+                    </tr>
+                    <tr>
+                        <td>邮储银行</td>
+                        <td>快捷支付</td>
+                        <td>借记卡</td>
+                        <td>5000</td>
+                        <td>5000</td>
+                    </tr>
+                    <tr>
+                        <td>工商银行</td>
+                        <td>快捷支付</td>
+                        <td>借记卡</td>
+                        <td>50000</td>
+                        <td>50000</td>
+                    </tr>
+                    <tr>
+                        <td>农业银行</td>
+                        <td>快捷支付</td>
+                        <td>借记卡</td>
+                        <td>5000</td>
+                        <td>5000</td>
+                    </tr>
+                    <tr>
+                        <td>中国银行</td>
+                        <td>快捷支付</td>
+                        <td>借记卡</td>
+                        <td>5000</td>
+                        <td>10000</td>
+                    </tr>
+                    <tr>
+                        <td>中国建设银行</td>
+                        <td>快捷支付</td>
+                        <td>借记卡</td>
+                        <td>50000</td>
+                        <td>100000</td>
+                    </tr>
+                    <tr>
+                        <td>交通银行</td>
+                        <td>快捷支付</td>
+                        <td>借记卡</td>
+                        <td>10000</td>
+                        <td>10000</td>
+                    </tr>
+                    <tr>
+                        <td>中信银行</td>
+                        <td>快捷支付</td>
+                        <td>借记卡</td>
+                        <td>5000</td>
+                        <td>5000</td>
+                    </tr>
+                    <tr>
+                        <td>光大银行</td>
+                        <td>快捷支付</td>
+                        <td>借记卡</td>
+                        <td>50000</td>
+                        <td>50000</td>
+                    </tr>
+                    <tr>
+                        <td>广发银行</td>
+                        <td>快捷支付</td>
+                        <td>借记卡</td>
+                        <td>50000</td>
+                        <td>100000</td>
+                    </tr>
+                    <tr>
+                        <td>平安银行</td>
+                        <td>快捷支付</td>
+                        <td>借记卡</td>
+                        <td>50000</td>
+                        <td>50000</td>
+                    </tr>
+                    <tr>
+                        <td>招商银行</td>
+                        <td>快捷支付</td>
+                        <td>借记卡</td>
+                        <td>800</td>
+                        <td>5000</td>
+                    </tr>
+                    <tr>
+                        <td>兴业银行</td>
+                        <td>快捷支付</td>
+                        <td>借记卡</td>
+                        <td>50000</td>
+                        <td>50000</td>
+                    </tr>
+                    <tr>
+                        <td>浦发银行</td>
+                        <td>快捷支付</td>
+                        <td>借记卡</td>
+                        <td>50000</td>
+                        <td>50000</td>
+                    </tr>
+                    <tr>
+                        <td>浙商银行</td>
+                        <td>快捷支付</td>
+                        <td>借记卡</td>
+                        <td>20000</td>
+                        <td>20000</td>
+                    </tr>
+                    <tr>
+                        <td>上海银行</td>
+                        <td>快捷支付</td>
+                        <td>借记卡</td>
+                        <td>50000</td>
+                        <td>100000</td>
+                    </tr>
+                    <tr>
+                        <td>北京银行</td>
+                        <td>快捷支付</td>
+                        <td>借记卡</td>
+                        <td>500</td>
+                        <td>20000</td>
+                    </tr>
+                    <tr>
+                        <td>民生银行</td>
+                        <td>快捷支付</td>
+                        <td>借记卡</td>
+                        <td>600</td>
+                        <td>20000</td>
+                    </tr>
+                </table>
             </div>
             <div class="select-box">
                 <p class="title-style">支付方式：</p>
@@ -80,6 +214,7 @@
                     <p class="tip">请输入验证码</p>
                 </div>
             </div>
+            <div class="select-box" style="padding-left: 70px;"><input type="radio" value="1" id="readText" class="radio-style"/><p class="pay_read">阅读并同意<a href="javascript:;" id="readContentButton">观赛须知</a></p></div>
             <a class="btn-zf" id="pay_zf" onclick="pay();">确认支付</a>
         </div>
     </div>
@@ -203,6 +338,94 @@
         </div>
     </div>
 </div>
+
+<div class="overlay layer-big pay_readCon" id="readerContent" style="display: none;">
+    <div class="overlay-bg"></div>
+    <div class="float-div">
+        <h3 class="title1">购票须知</h3>
+        <div class="content">
+            <div class="one-area">
+                <h3 class="title" style="width: 100%">注册观众：</h3>
+                <p>
+                    1.注册观众必须填写推荐票务代理服务中心推荐码注册（由票务代理中心所属二维码扫描或超级链接点击进入注册页面的邀请码会自动填写）。
+                </p>
+                <p>
+                    2.观众注册必须绑定手机进行手机短信验证。
+                </p>
+            </div>
+            <div class="one-area">
+                <h3 class="title" style="width: 100%">观众购票：</h3>
+                <p>1.观众注册后选择方便的观赛平台（网站、微信公众号、微信小程序及App），点击观赛，即可选择相应门票进行线上购买，观众权益购票后即时生效。</p>
+                <p>2.门票分为A类票（月费5000元）、B类票（月费2000元）、C类票（月费500元）三类，一次购票可享受22个比赛日（比赛日即为沪深两市交易日）对应观众权利。</p>
+                <p>3.月票为22个比赛日倒计时，遇沪深两市停盘日即为非比赛日，倒计时暂停！</p>
+                <p>4.门票升级：</p>
+                <p>观众购C类或B类票后要升级为B类或A类月票，其原票残值核算为升级月票的比赛日加入到升级后月票的比赛日内！（观赛时间即为22个比赛日+原残值核算后比赛日）</p>
+                <p>例如：C类票观众看了十个比赛日后升级为A类票，其核算完后他的A类票可观看的比赛日为：23个比赛日</p>
+                <p>公式：原票残值= 原月票价值÷22天 ×（22天 - 已观比赛日）升级后比赛日天数（小数点后四舍五入）=原票残值÷（升级月票价值÷22天）</p>
+            </div>
+            <div class="one-area">
+                <h3 class="title" style="width: 100%">观众权益一览表：</h3>
+                <table class="pay_read_table" border="1" cellspacing="0">
+                    <tr>
+                        <th style="width:15%;">服务或权利</th>
+                        <th style="width:20%;">A类门票</th>
+                        <th style="width:20%;">B类门票</th>
+                        <th style="width:20%;">C类门票</th>
+                        <th>未购票观众</th>
+                    </tr>
+                    <tr>
+                        <td>行业新闻</td>
+                        <td>YES</td>
+                        <td>YES</td>
+                        <td>YES</td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td>场内资讯</td>
+                        <td>YES</td>
+                        <td>YES</td>
+                        <td>YES</td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td>花絮报道</td>
+                        <td>YES</td>
+                        <td>YES</td>
+                        <td>YES</td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td>大赛总榜排名查询</td>
+                        <td>YES</td>
+                        <td>YES</td>
+                        <td>YES</td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td>大赛月榜排名查询</td>
+                        <td>YES</td>
+                        <td>YES</td>
+                        <td>YES</td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td>前二十名持仓及持仓变动</td>
+                        <td>可观看本平台公布的比赛前20名选手T日实盘赛况；（T日指比赛当日）</td>
+                        <td>可观看本平台公布的比赛前20名选手T-1日实盘赛况；（T日指比赛当日）</td>
+                        <td>可观看本平台公布的比赛前20名选手T-2日实盘赛况；（T日指比赛当日）</td>
+                        <td>NO</td>
+                    </tr>
+                </table>
+                <p style="color: #e33434;">注：1、比赛日当日大赛赛况更新两次，分别为13点和17点，购买A类票的客户可随时看到T日赛况。2、大赛提及所有观赛日和可观看比赛日时间均为沪深交易日，不包含周六日和法定节假日。资产和持仓均为T-1日，策略为T日。</p>
+                <p>观赛举例说明：2018年11月15日（T日）A类票可观看11月15日（T日）赛况。B类票仅能看2018年11月14日（T-1日）赛况。C类票仅能看2018年11月13日（T-2日）赛况。</p>
+            </div>
+            <div class="one-area">
+                <p>购票即视为已经完全知晓购买大赛观赛门票所有权益，和所购门票可以观赛的时间规则，该操作是本人完全同意并自愿购买使用。</p>
+            </div>
+        </div>
+        <div class="btn" id="closeReadContent"><a href="javascript:;" id="hasRead">同意购票须知</a></div>
+    </div>
+</div>
 </body>
 <script>
     $(function() {
@@ -237,12 +460,28 @@
             $(this).siblings().find("input[type='radio']").removeAttr("checked");
             $(this).find("input[type='radio']").attr("checked","checked");
         });
+
+        $('#readContentButton').click(function(){
+            $('#readerContent').css('display','block');
+            $('body,html').animate({
+                scrollTop: 1350
+            }, 1350);
+            bindClose();
+        });
+
+        $("#readText").change(function(){
+            if($(this).is(":checked")){
+                reader = true;
+            }
+            canPay();
+        });
     });
 
     var smsCodeFlag = false;
     var payFlag = false;
     var p1 = false;
     var cardSmsCodeFlag = false;
+    var reader = false;
 
     function canSendSmsCode() {
         valiParams();
@@ -267,7 +506,7 @@
 
     function canPay() {
         valiPay();
-        if (payFlag && smsCodeFlag && p1) {
+        if (payFlag && smsCodeFlag && p1 && reader) {
             $('#pay_zf').removeAttr('disabled');
             $('#pay_zf').attr('class', 'btn-zf');
         } else {
@@ -626,10 +865,7 @@
                     if (result.data == "bind") {
                         openFirstyzm();
                     }else {
-//                        layer.alert(result.messageText, {
-//                            icon: 0,
-//                            skin: 'layui-layer-lan'
-//                        });
+                        layer.alert(result.messageText, {icon: 0,skin: 'layui-layer-lan'});
                         sessionStorage.setItem("orderNo", result.data);
                         p1 = true;
                     }
@@ -1062,6 +1298,31 @@
                 }
             });
         }
+    }
+
+    var closeCount=10;
+    function bindClose(){
+        $('#closeReadContent').unbind("click");
+        if (closeCount == 0) {
+            $('#hasRead').html("同意观赛须知");
+            $('#hasRead').css('color','#dca54b');
+            closeCount = 10;
+            $('#closeReadContent').click(function(){
+                $("#readText").attr("checked", "checked");
+                $('#readerContent').css('display','none');
+                $('body,html').animate({
+                    scrollTop: 1350
+                }, 1350);
+            });
+            return;
+        } else {
+            $('#hasRead').css('color','#5e5e5e');
+            $('#hasRead').html("同意观赛须知(" + closeCount + "s)");
+            closeCount--;
+        }
+        setTimeout(function() {
+                    bindClose() }
+                ,1000)
     }
 
 </script>

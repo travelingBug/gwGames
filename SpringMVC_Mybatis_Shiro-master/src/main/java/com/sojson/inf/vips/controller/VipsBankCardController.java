@@ -144,6 +144,9 @@ public class VipsBankCardController extends BaseController {
                     order.setOrderNo(orderNo);
                     order.setOrderDate(orderDate);
                 }else{
+                    if(order.getOrderNo().equals("undefined") || order.getOrderNo().equals("")){
+                        return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "支付验证码输入错误");
+                    }
                     String orderDate = order.getOrderNo().substring(0,8);
                     order.setOrderDate(orderDate);
                 }
