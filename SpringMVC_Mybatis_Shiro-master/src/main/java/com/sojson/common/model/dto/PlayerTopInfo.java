@@ -1,5 +1,7 @@
 package com.sojson.common.model.dto;
 
+import com.sojson.common.IConstant;
+
 /**
  * @ClassName:PlayerTopInfo
  * @Description:用户排行榜信息
@@ -53,6 +55,16 @@ public class PlayerTopInfo implements Comparable<PlayerTopInfo>,Cloneable {
      * 排名
      */
     private Integer rank;
+
+    /**
+     * 是否为最新标记
+     */
+    private Byte isNewFlag = IConstant.YES_OR_NO.NO.v;
+
+    /**
+     * 数据日期
+     */
+    private String dataTime;
 
     public String getAccountName() {
         return accountName;
@@ -126,6 +138,22 @@ public class PlayerTopInfo implements Comparable<PlayerTopInfo>,Cloneable {
 
     public void setRank(Integer rank) {
         this.rank = rank;
+    }
+
+    public Byte getIsNewFlag() {
+        return isNewFlag;
+    }
+
+    public void setIsNewFlag(Byte isNewFlag) {
+        this.isNewFlag = isNewFlag;
+    }
+
+    public String getDataTime() {
+        return dataTime;
+    }
+
+    public void setDataTime(String dataTime) {
+        this.dataTime = dataTime;
     }
 
     @Override
