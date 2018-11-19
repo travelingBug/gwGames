@@ -4,6 +4,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>天下股神实盘大赛</title>
     <%@include file="../head.jsp" %>
+    <style>
+        .jb_img {
+            width: 18px;
+            height: 12px;
+            margin-left: 10px;
+            margin-top: 7px;
+            position:absolute;
+        }
+    </style>
 </head>
 <body>
 <%@include file="../float.jsp" %>
@@ -107,15 +116,19 @@
                                    if (data.length % 2 == 1) {
                                        trClass = '';
                                    }
-                                   var showTop= '<td>'+(i+1)+'</td>';
+                                   var newFlag = '';
+                                   if (data[i].isNewFlag == 1) {
+                                       newFlag = '<img src="/images/new.png" class="jb_img"/>';
+                                   }
+                                   var showTop= '<td>'+(i+1)+newFlag+'</td>';
                                    if (i == 0) {
-                                       var showTop= '<td><em class="icon-one">'+(i+1)+'</em></td>';
+                                       var showTop= '<td><em class="icon-one">'+(i+1)+newFlag+'</em></td>';
                                    }
                                    if (i == 1) {
-                                       var showTop= '<td><em class="icon-two">'+(i+1)+'</em></td>';
+                                       var showTop= '<td><em class="icon-two">'+(i+1)+newFlag+'</em></td>';
                                    }
                                    if (i == 2) {
-                                       var showTop= '<td><em class="icon-three">'+(i+1)+'</em></td>';
+                                       var showTop= '<td><em class="icon-three">'+(i+1)+newFlag+'</em></td>';
                                    }
                                    var html = '<tr class="'+trClass+'" id="trId'+i+'">';
                                    html += showTop;

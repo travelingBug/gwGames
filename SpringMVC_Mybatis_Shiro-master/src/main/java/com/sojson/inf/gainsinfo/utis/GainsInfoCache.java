@@ -254,5 +254,28 @@ public class GainsInfoCache {
     }
 
 
+    /**
+     * 更新new标记
+     * @param accounts 需要更新的账户信息
+     */
+    public static void updateNewFlag(List<String> accounts){
+        synchronized (lock) {
+            for (PlayerTopInfo playerTopInfo : topForAll) {
+                for (String account : accounts) {
+                    if (account.equals(playerTopInfo.getAccount())) {
+                        playerTopInfo.setIsNewFlag(IConstant.YES_OR_NO.YES.v);
+                    }
+                }
+            }
+
+            for (PlayerTopInfo playerTopInfo : topForMonth) {
+                for (String account : accounts) {
+                    if (account.equals(playerTopInfo.getAccount())) {
+                        playerTopInfo.setIsNewFlag(IConstant.YES_OR_NO.YES.v);
+                    }
+                }
+            }
+        }
+    }
 
 }

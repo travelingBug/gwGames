@@ -369,6 +369,12 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
         cal.add(Calendar.MONTH,-1);
         String preDate = formatter.format(cal.getTime());
         findTopByMonth(currDate,preDate);
+        //获取当天有策略的信息
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Map<String,Object> param = new HashMap<String,Object>();
+        param.put("currDate",sdf.format(new Date()));
+        List<String> accounts = uTbPlayerMoneyMapper.getNewAccounts(param);
+        GainsInfoCache.updateNewFlag(accounts);
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
 

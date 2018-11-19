@@ -51,4 +51,11 @@ public interface UTbPlayerMoneyMapper {
     List<TbPlayerMoneyVo>  findTopByMonth(Map<String,Object> param);
 
     List<TbPlayerMoneyVo>  findAll(Object param);
+
+    /**
+     * 获取当天有更新的资金账户
+     * @param param
+     * @return
+     */
+    List<String> getNewAccounts(Object param);
 }
