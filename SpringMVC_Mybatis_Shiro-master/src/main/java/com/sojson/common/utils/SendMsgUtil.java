@@ -139,7 +139,7 @@ public class SendMsgUtil {
         return result;
     }
 
-    public static String sendDealerMsg(String phone, String seatNum, String loginName) {
+    public static String sendDealerMsg(String phone, String seatNum, String loginName, String pwd) {
 
         String user = IConfig.get("user");
         String key = IConfig.get("key");
@@ -154,7 +154,7 @@ public class SendMsgUtil {
         int code = (int)((Math.random()*9+1)*100000);
         RedisUtil.save(phone, code+","+ new Date().getTime());
 
-        String msg = msg_5+ "席位号："+seatNum+" ，登录账号："+loginName+ msg_6;
+        String msg = msg_5+ "席位号："+seatNum+" ，登录账号："+loginName + "，登录密码：" + pwd + msg_6;
 
         HttpClient client = new HttpClient();
         PostMethod post = new PostMethod("http://utf8.api.smschinese.cn");

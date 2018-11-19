@@ -76,13 +76,13 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
         try {
             String fee = entity.getFee();
             if ("3".equals(fee)) {
-//                entity.setFee("500");
+                entity.setFee("500");
             } else if ("2".equals(fee)) {
-//                entity.setFee("2000");
+                entity.setFee("2000");
             } else if ("1".equals(fee)) {
-//                entity.setFee("5000");
+                entity.setFee("5000");
             }
-            entity.setFee("0.5");
+//            entity.setFee("0.5");
 
             if("p1".equals(entity.getStep()) && !entity.getSmsCode().equals("")){
                 entity.setStatus(0);
@@ -115,7 +115,7 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
                 if (obj.getString("PayStatus") != null && obj.getString("PayStatus").equals("BIND_VALIDATE")) {
                     return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "首次快捷支付验证", "bind");
                 }else if(obj.getString("PayStatus") != null && obj.getString("PayStatus").equals("PAY_VALIDATE")){
-                    return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "成功开通快捷支付，现已成功发送支付验证码，请再次输入收到的支付验证码", entity.getOrderNo());
+                    return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "现已成功发送支付验证码，请输入收到的支付验证码", entity.getOrderNo());
                 }else{
                     return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, obj.getString("msg"), "bind");
                 }

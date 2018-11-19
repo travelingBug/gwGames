@@ -1308,7 +1308,7 @@
             $('#hasRead').css('color','#dca54b');
             closeCount = 10;
             $('#closeReadContent').click(function(){
-                $("#readText").attr("checked", "checked");
+                $("#readText").click();
                 $('#readerContent').css('display','none');
                 $('body,html').animate({
                     scrollTop: 1350

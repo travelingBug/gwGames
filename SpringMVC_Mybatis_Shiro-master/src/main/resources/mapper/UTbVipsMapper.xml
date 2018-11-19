@@ -32,7 +32,7 @@
       <if test="findContent != null and findContent !=''">
         and (d.NICKNAME like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%'))
         or d.PHONE like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%'))
-        or d.INVITAION_CODE like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%')))
+        or v.NAME = #{findContent,jdbcType=VARCHAR})
       </if>
       <if test="inviteCode != null and inviteCode !='' " >
         and d.INVITAION_CODE = #{inviteCode}
@@ -209,7 +209,7 @@
       and v.fk_user_id = #{parentId}
     </if>
     <include refid="vips_order_all"/>
-    <include refid="vips_limit_sql" />
+    LIMIT #{start},#{pageSize}
   </select>
 
   <select id="findByPageEmployeeCount" parameterType="map" resultType="int">

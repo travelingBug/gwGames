@@ -92,7 +92,9 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
         Date date = new Date();
         userEntity.setCreateTime(date);
         userEntity.setLastLoginTime(date);
-        userEntity.setPswd("123456");
+        String pwd = StringUtils.getRandom(6);
+        userEntity.setPswd(pwd);
+//        userEntity.setPswd("123456");
         userEntity.setNickname(entity.getName());
         //把密码md5
         userEntity = UserManager.md5Pswd(userEntity);
@@ -118,7 +120,7 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
         entity.setInviteNum(inviteNum);
         uTbDealerMapper.insert(entity);
         userService.addRole2User(userEntity.getId(),entity.getRoleId());
-        SendMsgUtil.sendDealerMsg(entity.getPhone(),entity.getSeatNum(), entity.getLoginName());
+        SendMsgUtil.sendDealerMsg(entity.getPhone(),entity.getSeatNum(), entity.getLoginName(), pwd);
 
         /**
          * 用户注册链接
