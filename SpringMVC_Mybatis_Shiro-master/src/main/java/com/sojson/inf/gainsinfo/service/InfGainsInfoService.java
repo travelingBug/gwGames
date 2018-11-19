@@ -24,6 +24,7 @@ public interface InfGainsInfoService {
     public List<PlayerTopInfo> getTopAllByMoney(int size);
 
     public Collection<TbGainsInfoVo> getStrategy(String account, String endTime);
+    public ResultMessage getPlayerInfo(String account,String dataTime);
 
     public Pagination<TbGainsInfoVo> getTransactionInfo(String account, String endTime, Integer pageNo, Integer pageSize);
 

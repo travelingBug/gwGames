@@ -193,6 +193,19 @@ public class InfGainsInfoController extends BaseController {
 		return infGainsInfoService.getTopAllByAccount(phone,pageSize,pageNo);
 	}
 
+	@RequestMapping(value="getPlayerInfo",method=RequestMethod.POST)
+	@ResponseBody
+	public ResultMessage getPlayerInfo(HttpServletRequest request,String account) throws Exception{
+		String dataTime = commonService.getTimeByToken(request);
+		if (dataTime == null) {
+			return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"您还未购买观赛券，请购买后再进行观赛!");
+		} else {
+			return infGainsInfoService.getPlayerInfo(account, dataTime);
+		}
+	}
+
+
+
 	@RequestMapping(value="getNickName",method=RequestMethod.POST)
 	@ResponseBody
 	public ResultMessage getNickName(HttpServletRequest request) throws Exception{

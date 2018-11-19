@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import com.sojson.common.IConstant;
 import com.sojson.common.model.TbStopDate;
 import com.sojson.common.utils.LoggerUtils;
+import com.sojson.inf.gainsinfo.utis.GainsInfoCache;
 import com.sojson.inf.vips.service.VipsService;
 import com.sojson.playermoney.service.PlayerMoneyService;
 import com.sojson.stopdate.service.StopDateService;
@@ -96,5 +97,14 @@ public class ToTimer{
 		}
 	}
 
+
+	@Scheduled(cron = "00 00 00 * * ?")
+//	@Scheduled(cron = "00 50 00 * * ?")
+	public void clearNew() {
+		LoggerUtils.fmtDebug(getClass(),"开始清理最新标记！");
+		GainsInfoCache.clearTopAllNewFlag();
+		GainsInfoCache.clearTopMonthNewFlag();;
+		LoggerUtils.fmtDebug(getClass(),"清理最新标记结束！");
+	}
 
 }

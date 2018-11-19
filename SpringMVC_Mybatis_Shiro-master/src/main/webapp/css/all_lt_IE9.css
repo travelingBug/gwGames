@@ -2181,3 +2181,30 @@ select.width-240 { width: 260px!important;}
 	background-color: red;
 	margin-top: 40px;
 }
+
+/*——————————————————————修改——————————————————————*/
+
+
+
+
+.head-cont-box .text-area .L-2 {
+	float: left;
+	padding: 0 20px;
+	margin-left: 20px;
+}
+.head-cont-box .text-area .L-2 {
+	border-right: 1px solid #dadada;
+	padding-left: 0!important;
+}
+
+.L .numb {
+	font-weight: bold;
+	color: #e33434!important;
+	font-size: 22px!important;
+}
+
+
+
+.L .title {
+	margin-right: 20px;
+}

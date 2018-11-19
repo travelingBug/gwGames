@@ -1,5 +1,6 @@
 package com.sojson.inf.gainsinfo.utis;
 
+import com.sojson.common.IConstant;
 import com.sojson.common.model.dto.PlayerTopInfo;
 
 import java.util.ArrayList;
@@ -99,6 +100,17 @@ public class GainsInfoCache {
             }
         }
         return topForYour;
+    }
+
+    /**
+     * 清理是否为新的标记
+     */
+    public static void  clearTopAllNewFlag(){
+        synchronized (lock) {
+             for (PlayerTopInfo playerTopInfo : topForAll) {
+                 playerTopInfo.setIsNewFlag(IConstant.YES_OR_NO.NO.v);
+             }
+        }
     }
 
     /**
@@ -213,5 +225,34 @@ public class GainsInfoCache {
         }
         return topForYour;
     }
+
+    /**
+     *
+     * @param account
+     * @return
+     */
+    public static PlayerTopInfo  getPlayer4account(String account){
+        synchronized (lock) {
+            for (PlayerTopInfo playerTopInfo : topForAll){
+                if (playerTopInfo.getAccount().equals(account)) {
+                    return playerTopInfo;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 清理是否为新的标记
+     */
+    public static void  clearTopMonthNewFlag(){
+        synchronized (lock) {
+            for (PlayerTopInfo playerTopInfo : topForMonth) {
+                playerTopInfo.setIsNewFlag(IConstant.YES_OR_NO.NO.v);
+            }
+        }
+    }
+
+
 
 }

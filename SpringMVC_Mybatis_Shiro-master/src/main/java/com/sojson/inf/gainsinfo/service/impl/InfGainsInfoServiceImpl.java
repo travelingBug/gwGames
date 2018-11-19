@@ -74,6 +74,19 @@ public class InfGainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> 
 	}
 
 	@Override
+	public ResultMessage getPlayerInfo(String account,String dataTime){
+		ResultMessage msg = new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
+		PlayerTopInfo playerTopInfo = GainsInfoCache.getPlayer4account(account);
+		if (playerTopInfo == null){
+			return new ResultMessage(ResultMessage.MSG_LEVEL.HINT.v,"错误的选手信息!");
+		}
+		playerTopInfo.setDataTime(dataTime);
+		msg.setData(playerTopInfo);
+
+		return msg;
+	}
+
+	@Override
 	public Collection<TbGainsInfoVo> getStrategy(String account, String endTime){
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("account",account);
