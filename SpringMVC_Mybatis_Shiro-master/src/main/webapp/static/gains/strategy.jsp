@@ -166,15 +166,19 @@
                                    if (data.length % 2 == 1) {
                                        trClass = '';
                                    }
-                                   var showTop= '<td>'+(i+1)+'</td>';
+                                   var newFlag = '';
+                                   if (data[i].isNewFlag == 1) {
+                                       newFlag = '<img src="/images/new.png" class="jb_img"/>';
+                                   }
+                                   var showTop= '<td>'+(i+1)+newFlag+'</td>';
                                    if (i == 0) {
-                                       var showTop= '<td><em class="icon-one">'+(i+1)+'</em></td>';
+                                       var showTop= '<td><em class="icon-one">'+(i+1)+newFlag+'</em></td>';
                                    }
                                    if (i == 1) {
-                                       var showTop= '<td><em class="icon-two">'+(i+1)+'</em></td>';
+                                       var showTop= '<td><em class="icon-two">'+(i+1)+newFlag+'</em></td>';
                                    }
                                    if (i == 2) {
-                                       var showTop= '<td><em class="icon-three">'+(i+1)+'</em></td>';
+                                       var showTop= '<td><em class="icon-three">'+(i+1)+newFlag+'</em></td>';
                                    }
                                    var html = '<tr class="'+trClass+'" id="trMonthId'+i+'">';
                                    html += showTop;
@@ -183,7 +187,7 @@
                                    html += '<td>'+data[i].buyForALLRate+'%</td>';
                                    html += '<td>'+data[i].totalMoney+'</td>';
                                    html += '<td name="account" style="display: none">'+data[i].account+'</td>';
-                                   html += '<td><a class="red" href="strategy_detail.jsp?account='+data[i].account+'">详细</a></td>';
+                                   html += '<td><a class="red" href="/static/gains/strategy_detail.jsp?account='+data[i].account+'">详细</a></td>';
                                    html += '</tr>';
                                    $('#topMonth').append(html);
 
