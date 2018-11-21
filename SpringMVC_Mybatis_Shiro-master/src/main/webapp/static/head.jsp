@@ -135,6 +135,8 @@
             return "基金申购";
         }else if (flag == 3) {
             return "基金赎回";
+        }else if (flag == 4) {
+            return "融券回购";
         }
         return "";
     }

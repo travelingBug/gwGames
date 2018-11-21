@@ -201,7 +201,7 @@ public class GainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> imp
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"股票名称格式错误！");
         }
         //买卖标志
-        if (tbGainsInfo.getBusinessFlag() == null || !(tbGainsInfo.getBusinessFlag() <= 3 && tbGainsInfo.getBusinessFlag() >= 0)) {
+        if (tbGainsInfo.getBusinessFlag() == null || !(tbGainsInfo.getBusinessFlag() <= 4 && tbGainsInfo.getBusinessFlag() >= 0)) {
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"买卖标志错误！");
         }
         //成交数量
