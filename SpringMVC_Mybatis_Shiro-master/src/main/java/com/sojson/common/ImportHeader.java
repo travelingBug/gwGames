@@ -59,7 +59,7 @@ public class ImportHeader {
     static{
         playerMoneyHeadReal.put("时间","businessTime");
         playerMoneyHeadReal.put("资金账号","account");
-        playerMoneyHeadReal.put("资金余额","balanceMoney");
+        playerMoneyHeadReal.put("股票市值","sharesMoney");
         playerMoneyHeadReal.put("总资产","totalMoney");
 
     }
@@ -68,7 +68,7 @@ public class ImportHeader {
 
     public static LinkedHashMap<String,IFormatExcel> getPlayerMoneyHeadFormat(){
         if (playerMoneyHeadFormat.size() < 1) {
-            playerMoneyHeadFormat.put("balanceMoney",new IFormatExcel(){
+            playerMoneyHeadFormat.put("sharesMoney",new IFormatExcel(){
                 public Object format(String key){
                     BigDecimal bg = new BigDecimal(key);
                     return new DecimalFormat("#.00").format(bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );

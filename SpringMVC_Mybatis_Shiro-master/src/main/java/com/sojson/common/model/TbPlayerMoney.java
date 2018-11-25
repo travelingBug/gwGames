@@ -44,6 +44,11 @@ public class TbPlayerMoney implements Serializable {
      */
     private Date modTime;
 
+    /**
+     * 股票市值，用于计算持仓比
+     */
+    private String sharesMoney;
+
     public String getId() {
         return id;
     }
@@ -98,5 +103,13 @@ public class TbPlayerMoney implements Serializable {
 
     public void setModTime(Date modTime) {
         this.modTime = modTime;
+    }
+
+    public String getSharesMoney() {
+        return sharesMoney;
+    }
+
+    public void setSharesMoney(String sharesMoney) {
+        this.sharesMoney = sharesMoney;
     }
 }

@@ -13,13 +13,20 @@
     <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
     <result column="MOD_TIME" property="modTime" jdbcType="TIMESTAMP" />
     <result column="CAPITAL" property="capital" jdbcType="VARCHAR" />
+    <result column="SHARES_MONEY" property="sharesMoney" jdbcType="VARCHAR" />
+
 
   </resultMap>
+
+  <resultMap id="TransCountResultMap" type="com.sojson.common.model.vo.PlayerTransVo" >
+    <result column="ACCOUNT" property="account" jdbcType="VARCHAR" />
+    <result column="transCount" property="transCount" jdbcType="INTEGER" />
+  </resultMap>
   <sql id="PlayerMoney_Column_List" >
-    t.ID,t.ACCOUNT,t.TOTAL_MONEY,t.BUSINESS_TIME,p.ACCOUNT_NAME,p.NAME,(DATE_FORMAT(t.BUSINESS_TIME,'%Y-%m-%d %H:%i:%S')) BUSINESS_TIME_STR,t.CRT_TIME,t.MOD_TIME,t.BALANCE_MONEY
+    t.ID,t.ACCOUNT,t.TOTAL_MONEY,t.BUSINESS_TIME,p.ACCOUNT_NAME,p.NAME,(DATE_FORMAT(t.BUSINESS_TIME,'%Y-%m-%d %H:%i:%S')) BUSINESS_TIME_STR,t.CRT_TIME,t.MOD_TIME,t.BALANCE_MONEY,t.SHARES_MONEY
   </sql>
   <sql id="PlayerMoney_Simple_Column_List" >
-    t.ID,t.ACCOUNT,t.TOTAL_MONEY,t.BUSINESS_TIME,(DATE_FORMAT(t.BUSINESS_TIME,'%Y-%m-%d %H:%i:%S')) BUSINESS_TIME_STR,t.CRT_TIME,t.MOD_TIME,t.BALANCE_MONEY
+    t.ID,t.ACCOUNT,t.TOTAL_MONEY,t.BUSINESS_TIME,(DATE_FORMAT(t.BUSINESS_TIME,'%Y-%m-%d %H:%i:%S')) BUSINESS_TIME_STR,t.CRT_TIME,t.MOD_TIME,t.BALANCE_MONEY,t.SHARES_MONEY
   </sql>
   <sql id="limit_sql">
   	   <if test="page_sql != null and page_sql != ''">
@@ -97,8 +104,8 @@
   </select>
 
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.sojson.common.model.TbGainsInfo" >
-    insert into tb_player_money (ACCOUNT,BALANCE_MONEY,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME)
-    values ( #{account,jdbcType=VARCHAR},#{balanceMoney,jdbcType=VARCHAR}, #{totalMoney,jdbcType=VARCHAR}, #{businessTime,jdbcType=TIMESTAMP}, #{crtTime,jdbcType=TIMESTAMP}
+    insert into tb_player_money (ACCOUNT,SHARES_MONEY,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME)
+    values ( #{account,jdbcType=VARCHAR},#{sharesMoney,jdbcType=VARCHAR}, #{totalMoney,jdbcType=VARCHAR}, #{businessTime,jdbcType=TIMESTAMP}, #{crtTime,jdbcType=TIMESTAMP}
       )
   </insert>
 
@@ -118,8 +125,8 @@
       <if test="businessTime != null and businessTime != ''" >
         BUSINESS_TIME = #{businessTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="balanceMoney != null and balanceMoney != ''" >
-        BALANCE_MONEY = #{balanceMoney,jdbcType=VARCHAR},
+      <if test="sharesMoney != null and sharesMoney != ''" >
+        SHARES_MONEY = #{sharesMoney,jdbcType=VARCHAR},
       </if>
 
     </set>
@@ -127,9 +134,9 @@
   </update>
 
   <insert id="insertBatch" parameterType="java.util.List">
-    insert into tb_player_money (ACCOUNT,BALANCE_MONEY,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME) values
+    insert into tb_player_money (ACCOUNT,SHARES_MONEY,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME) values
     <foreach collection="list" item="item" index="index" separator=",">
-      ( #{item.account,jdbcType=VARCHAR},#{item.balanceMoney,jdbcType=VARCHAR}, #{item.totalMoney,jdbcType=VARCHAR}, #{item.businessTime,jdbcType=TIMESTAMP}, #{item.crtTime,jdbcType=TIMESTAMP}
+      ( #{item.account,jdbcType=VARCHAR},#{item.sharesMoney,jdbcType=VARCHAR}, #{item.totalMoney,jdbcType=VARCHAR}, #{item.businessTime,jdbcType=TIMESTAMP}, #{item.crtTime,jdbcType=TIMESTAMP}
       )
     </foreach>
   </insert>
@@ -153,5 +160,23 @@
 
   <select id="getNewAccounts"  resultType="String">
     SELECT ACCOUNT FROM tb_gains_info t where date_format(t.BUSINESS_TIME, '%Y-%m-%d') = #{currDate}
+  </select>
+
+  <select id="getTransCount"  resultMap="TransCountResultMap">
+    select t.ACCOUNT,count(1) transCount from tb_gains_info t
+    <include refid="where_count"/>
+     GROUP BY t.ACCOUNT
+  </select>
+
+  <sql id="where_count">
+    <where>
+      <if test="currDate != null and currDate !=''">
+        and date_format(t.BUSINESS_TIME, '%Y-%m') = #{currDate}
+      </if>
+    </where>
+  </sql>
+
+  <select id="getLastDate"  resultType="String">
+    SELECT date_format(t.BUSINESS_TIME, '%Y-%m-%d')  FROM tb_player_money t ORDER BY t.BUSINESS_TIME desc LIMIT 1
   </select>
 </mapper>

@@ -233,4 +233,10 @@ public class InfGainsInfoController extends BaseController {
 	public List<PlayerTopInfo> getLastTopAll(int size)throws Exception{
 		return infGainsInfoService.getLastTopAll(size);
 	}
+
+	@RequestMapping(value="getLastDate",method=RequestMethod.POST)
+	@ResponseBody
+	public ResultMessage getLastDate(HttpServletRequest request) throws Exception{
+		return infGainsInfoService.getLastDate();
+	}
 }

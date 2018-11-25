@@ -44,4 +44,6 @@ public interface InfGainsInfoService {
     public List<PlayerTopInfo> getLastTopMonth(int size);
 
     public List<PlayerTopInfo> getLastTopAll(int size);
+
+    public ResultMessage getLastDate();
 }

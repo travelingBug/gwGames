@@ -5,6 +5,7 @@ package com.sojson.core.init;/**
  **/
 
 import com.sojson.common.dao.UTbPlayerMoneyMapper;
+import com.sojson.common.model.vo.PlayerTransVo;
 import com.sojson.common.utils.RedisUtil;
 import com.sojson.inf.gainsinfo.service.InfGainsInfoService;
 import com.sojson.inf.gainsinfo.utis.GainsInfoCache;
@@ -45,9 +46,17 @@ public class TestInit {
 
         //获取当天有策略的信息
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String nowDate = sdf.format(new Date());
         Map<String,Object> param = new HashMap<String,Object>();
-        param.put("currDate",sdf.format(new Date()));
+        param.put("currDate",nowDate);
         List<String> accounts = uTbPlayerMoneyMapper.getNewAccounts(param);
         GainsInfoCache.updateNewFlag(accounts);
+
+        //获取当月的交易数量
+        nowDate = nowDate.substring(0,7);
+        param.put("currDate",nowDate);
+        List<PlayerTransVo> playerTransVos = uTbPlayerMoneyMapper.getTransCount(param);
+        GainsInfoCache.updateTransCount(playerTransVos);
+
     }
 }

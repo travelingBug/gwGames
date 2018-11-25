@@ -9,6 +9,7 @@ import com.sojson.common.model.TbPlayerMoney;
 import com.sojson.common.model.TbPlayer;
 import com.sojson.common.model.dto.PlayerTopInfo;
 import com.sojson.common.model.dto.TbPlayerDto;
+import com.sojson.common.model.vo.PlayerTransVo;
 import com.sojson.common.model.vo.TbGainsInfoVo;
 import com.sojson.common.model.vo.TbPlayerMoneyVo;
 import com.sojson.common.utils.ExcelToBeanUtil;
@@ -194,9 +195,9 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
         }
 
 
-        //剩余资金
-        if (StringUtils.isBlank(tbPlayerMoney.getBalanceMoney()) || !tbPlayerMoney.getBalanceMoney().toString().matches(RegConstant.moneyReg)) {
-            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"剩余资金只能为数字且最多包含2位小数！");
+        //股票市值
+        if (StringUtils.isBlank(tbPlayerMoney.getSharesMoney()) || !tbPlayerMoney.getSharesMoney().toString().matches(RegConstant.moneyReg)) {
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"股票市值只能为数字且最多包含2位小数！");
         }
 
         //总资产
@@ -266,7 +267,7 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
             //持仓比
 
             //计算剩余金额
-            double buyMoney = totleDou - Double.parseDouble(String.valueOf(topInfo.getBalanceMoney()));
+            double buyMoney =Double.parseDouble(String.valueOf(topInfo.getSharesMoney()));
             bg = new BigDecimal(buyMoney * 100/totleDou);
             rate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
             playerTopInfo.setBuyForALLRate(rate);
@@ -343,7 +344,7 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
             //持仓比
 
             //计算剩余金额
-            double buyMoney = totleDou - Double.parseDouble(String.valueOf(cuurTopInfo.getBalanceMoney()));
+            double buyMoney = totleDou - Double.parseDouble(String.valueOf(cuurTopInfo.getSharesMoney()));
             bg = new BigDecimal(buyMoney * 100/totleDou);
             rate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
             playerTopInfo.setBuyForALLRate(rate);
@@ -375,6 +376,15 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
         param.put("currDate",sdf.format(new Date()));
         List<String> accounts = uTbPlayerMoneyMapper.getNewAccounts(param);
         GainsInfoCache.updateNewFlag(accounts);
+
+        //重新计算数量
+        Map<String,Object> paramObj = new HashMap<String,Object>();
+        SimpleDateFormat sdfDay = new SimpleDateFormat("yyyy-MM");
+        //获取当月的交易数量
+        paramObj.put("currDate",sdfDay.format(new Date()));
+        List<PlayerTransVo> playerTransVos = uTbPlayerMoneyMapper.getTransCount(paramObj);
+        GainsInfoCache.updateTransCount(playerTransVos);
+
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
     }
 

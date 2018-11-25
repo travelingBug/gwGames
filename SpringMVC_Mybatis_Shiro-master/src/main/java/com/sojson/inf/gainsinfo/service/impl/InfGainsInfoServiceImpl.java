@@ -11,6 +11,7 @@ import com.sojson.common.model.TbVipFollowPlayer;
 import com.sojson.common.model.dto.PlayerTopInfo;
 import com.sojson.common.model.vo.TbGainsInfoVo;
 import com.sojson.common.model.vo.TbPlayerMoneyVo;
+import com.sojson.common.utils.StringUtils;
 import com.sojson.core.mybatis.BaseMybatisDao;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.gainsinfo.service.GainsInfoService;
@@ -256,5 +257,17 @@ public class InfGainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> 
 		}
 
 		return last;
+	}
+
+
+	@Override
+	public ResultMessage getLastDate(){
+		ResultMessage msg = new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
+		String lastDate = uTbPlayerMoneyMapper.getLastDate();
+		if (StringUtils.isBlank(lastDate)) {
+			return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"没有数据");
+		}
+		msg.setData(lastDate);
+		return msg;
 	}
 }

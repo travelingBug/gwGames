@@ -4,10 +4,12 @@ import com.sojson.common.ImportHeader;
 import com.sojson.common.RegConstant;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.dao.UTbGainsInfoMapper;
+import com.sojson.common.dao.UTbPlayerMoneyMapper;
 import com.sojson.common.model.TbGainsInfo;
 import com.sojson.common.model.TbPlayer;
 import com.sojson.common.model.dto.TbGainsInfoDto;
 import com.sojson.common.model.dto.TbPlayerDto;
+import com.sojson.common.model.vo.PlayerTransVo;
 import com.sojson.common.model.vo.TbGainsInfoVo;
 import com.sojson.common.utils.*;
 import com.sojson.core.config.IConfig;
@@ -40,6 +42,9 @@ public class GainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> imp
 
     @Resource
     PlayerService playerService;
+
+    @Resource
+    UTbPlayerMoneyMapper uTbPlayerMoneyMapper;
 
     /**
      * 导入参赛选手数据
@@ -94,6 +99,14 @@ public class GainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> imp
                         }
                         uTbGainsInfoMapper.insertBatch(succList);
                         succCount = succList.size();
+
+
+                        Map<String,Object> paramObj = new HashMap<String,Object>();
+                        SimpleDateFormat sdfDay = new SimpleDateFormat("yyyy-MM");
+                        //获取当月的交易数量
+                        paramObj.put("currDate",sdfDay.format(new Date()));
+                        List<PlayerTransVo> playerTransVos = uTbPlayerMoneyMapper.getTransCount(paramObj);
+                        GainsInfoCache.updateTransCount(playerTransVos);
                     }
                     if (failList.size() > 0) {
                         failCount = failList.size();

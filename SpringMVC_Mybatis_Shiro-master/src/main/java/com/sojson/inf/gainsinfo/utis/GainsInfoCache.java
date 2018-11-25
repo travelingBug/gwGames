@@ -2,6 +2,7 @@ package com.sojson.inf.gainsinfo.utis;
 
 import com.sojson.common.IConstant;
 import com.sojson.common.model.dto.PlayerTopInfo;
+import com.sojson.common.model.vo.PlayerTransVo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -278,4 +279,32 @@ public class GainsInfoCache {
         }
     }
 
+
+    /**
+     * 更新当月交易条数
+     * @param playerTransVos 需要更新的账户信息
+     */
+    public static void updateTransCount(List<PlayerTransVo> playerTransVos){
+        synchronized (lock) {
+            if (playerTransVos != null && playerTransVos.size() > 0) {
+                for (PlayerTopInfo playerTopInfo : topForAll) {
+                    for (PlayerTransVo playerTransVo : playerTransVos) {
+                        if (playerTransVo.getAccount().equals(playerTopInfo.getAccount())) {
+                            playerTopInfo.setTransCountForMonth(playerTransVo.getTransCount());
+                            break;
+                        }
+                    }
+                }
+
+                for (PlayerTopInfo playerTopInfo : topForMonth) {
+                    for (PlayerTransVo playerTransVo : playerTransVos) {
+                        if (playerTransVo.getAccount().equals(playerTopInfo.getAccount())) {
+                            playerTopInfo.setTransCountForMonth(playerTransVo.getTransCount());
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
