@@ -99,137 +99,148 @@ public class Test
 //        String pwd = String.format("%s#%s","123","123");
 //        pwd = MathUtil.getMD5(pwd);
 //        System.out.println(pwd);
-String[] accountArr = {"5788158","5737087","5717756","5775945","5735530","5771978","5760065","5781504","5772176","5702997","5785716","5759258","5772377","5719671","5747333","5785374","5719976","5740511","5761283","5718463","5784304","5708334","5702702","5721883","5722977","5745732","5752033","5716834","5776277","5796003","5780083","30401342","5767462","5751541","30407693","5764456","50091836","5705693","5739980","5738202","5780386","5736295","5703249","5710715","5789596","30400668","5778847","5768403","5773127","5753291"};
-        FileOutputStream fos=new FileOutputStream(new File("D:/12.sql"));
-        OutputStreamWriter osw=new OutputStreamWriter(fos, "UTF-8");
-        BufferedWriter bw=new BufferedWriter(osw);
-        String player = "insert into tb_player (ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,CRT_TIME,ACCOUNT,CAPITAL) values (";
-        List<Integer> idCards = new ArrayList<Integer>();
-        Map<Integer,Double> playerMoney = new HashMap<Integer,Double>();
-        Map<Integer,Double> balanceMoneyMap = new HashMap<Integer,Double>();
+//String[] accountArr = {"5788158","5737087","5717756","5775945","5735530","5771978","5760065","5781504","5772176","5702997","5785716","5759258","5772377","5719671","5747333","5785374","5719976","5740511","5761283","5718463","5784304","5708334","5702702","5721883","5722977","5745732","5752033","5716834","5776277","5796003","5780083","30401342","5767462","5751541","30407693","5764456","50091836","5705693","5739980","5738202","5780386","5736295","5703249","5710715","5789596","30400668","5778847","5768403","5773127","5753291"};
+//        FileOutputStream fos=new FileOutputStream(new File("D:/12.sql"));
+//        OutputStreamWriter osw=new OutputStreamWriter(fos, "UTF-8");
+//        BufferedWriter bw=new BufferedWriter(osw);
+//        String player = "insert into tb_player (ID,ACCOUNT_NAME,NAME,ID_CARD,TEL_PHONE,DEL_FLAG,AUDIT_FLAG,CRT_TIME,ACCOUNT,CAPITAL) values (";
+//        List<Integer> idCards = new ArrayList<Integer>();
+//        Map<Integer,Double> playerMoney = new HashMap<Integer,Double>();
+//        Map<Integer,Double> balanceMoneyMap = new HashMap<Integer,Double>();
+//
+//        //插入300个参赛选手
+//        for (int i = 0; i < 50 ; i++) {
+//            idCards.add(i);
+//            String playerData = player + "'"+ StringUtils.getUUID32()+"',";
+//            playerData += "'测试账号A"+i+"',";
+//            playerData += "'测试账号"+i+"',";
+//            playerData += "'"+i+"',";
+//            playerData += "'"+i+"',";
+//            playerData += "0,";
+//            playerData += "1,";
+//            playerData += "'2018-09-21 00:00:00',"+accountArr[i]+",'300000');";
+//            bw.write(playerData+"\t\n");
+//            playerMoney.put(i,300000d);
+//            balanceMoneyMap.put(i,300000d);
+//            System.out.println(playerData);
+//        }
+//
+//
+//        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+//
+//        Date today = f.parse("2018-10-01");
+//
+//        //股票
+//        List<String> gp = new ArrayList<>();
+//        //股票名称
+//        List<String> gpName = new ArrayList<>();
+//        //股票价格
+//        List<Double> gpMoney1 = new ArrayList<>();
+//
+//        List<Double> gpMoney2 = new ArrayList<>();
+//        for (int i = 0 ; i < 20 ; i++){
+//            gp.add("股票代码"+i);
+//            gpName.add("股票名称"+i);
+//            gpMoney1.add(i+0.12);
+//            gpMoney2.add((30-i)+0.25);
+//        }
+//        Random random = new Random();
+//        String gainsInfo = "insert into tb_gains_info (ACCOUNT,SHARES_CODE,SHARES_NAME,BUSINESS_FLAG,VOLUME,PRICE,BALANCE_MONEY,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME,AMOUNT) values (";
+//
+//
+//        //简写如下：
+//        //BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+//        //        new FileOutputStream(new File("E:/phsftp/evdokey/evdokey_201103221556.txt")), "UTF-8"));
+//
+//
+//
+//        for (int i = 0; i < 300 ; i++) { //IDCARD
+//            Calendar c = Calendar.getInstance();
+//            c.setTime(today);
+//            for (int j = 0; j < 310; j++) { //天数
+//
+//
+//                String gainsInfoData = gainsInfo + "'"+i+"',";
+//                int a = random.nextInt(20);
+//                gainsInfoData +="'"+gp.get(a)+"',";
+//                gainsInfoData +="'"+gpName.get(a)+"',";
+//                int b = random.nextInt(2);
+//                gainsInfoData +="'"+ b +"',";
+//                int volume = random.nextInt(101);
+//                gainsInfoData +="'"+ volume +"',";
+//                int a2 = random.nextInt(2);
+//                double money = 0;
+//                if (a2 == 0) {
+//                    gainsInfoData +="'"+gpMoney1.get(a)+"',";
+//                    money = gpMoney1.get(a);
+//
+//                }else {
+//                    gainsInfoData +="'"+gpMoney2.get(a)+"',";
+//                    money = gpMoney2.get(a);
+//                }
+//
+//                int balanceMoney = 0;
+//
+//
+//                BigDecimal bg = new BigDecimal(random.nextInt(5000) + random.nextDouble());
+//                if (b == 0) {
+//                    BigDecimal xx1 = new BigDecimal((balanceMoneyMap.get(i) + volume * money));
+//                    gainsInfoData +="'"+  xx1.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue()+"',";
+//
+//
+//                    int jiajian = random.nextInt(2);
+//                    double nn =bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+//                    double total = playerMoney.get(i);
+//                    if (jiajian == 0) {
+//                        total = total + nn;
+//                    } else {
+//                        total = total - nn;
+//                    }
+//                    BigDecimal xx = new BigDecimal(total);
+//                    gainsInfoData +="'"+  xx.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() +"',";
+//                    playerMoney.put(i,total);
+//                }else {
+//                    BigDecimal xx1 = new BigDecimal((balanceMoneyMap.get(i) + volume * money));
+//                    gainsInfoData +="'"+ xx1.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() +"',";
+//
+//                    int jiajian = random.nextInt(2);
+//                    double nn = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+//                    double total = playerMoney.get(i);
+//                    if (jiajian == 0) {
+//                        total = total + nn;
+//                    } else {
+//                        total = total - nn;
+//                    }
+//                    BigDecimal xx = new BigDecimal(total);
+//                    gainsInfoData +="'"+ xx.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() +"',";
+//                    playerMoney.put(i,total);
+//                }
+//
+//                gainsInfoData +="'"+f.format(c.getTime())+" 00:00:00',";
+//                gainsInfoData +="'"+f.format(c.getTime())+" 00:00:00',";
+//                BigDecimal tt = new BigDecimal(volume*money);
+//                gainsInfoData +="'"+  tt.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() +"');";
+//                c.add(Calendar.DAY_OF_MONTH, 1);// 今天+i天
+//                bw.write(gainsInfoData+"\t\n");
+//            }
+//        }
+//
+//
+//        //注意关闭的先后顺序，先打开的后关闭，后打开的先关闭
+//        bw.close();
+//        osw.close();
+//        fos.close();
 
-        //插入300个参赛选手
-        for (int i = 0; i < 50 ; i++) {
-            idCards.add(i);
-            String playerData = player + "'"+ StringUtils.getUUID32()+"',";
-            playerData += "'测试账号A"+i+"',";
-            playerData += "'测试账号"+i+"',";
-            playerData += "'"+i+"',";
-            playerData += "'"+i+"',";
-            playerData += "0,";
-            playerData += "1,";
-            playerData += "'2018-09-21 00:00:00',"+accountArr[i]+",'300000');";
-            bw.write(playerData+"\t\n");
-            playerMoney.put(i,300000d);
-            balanceMoneyMap.put(i,300000d);
-            System.out.println(playerData);
-        }
+//        File f = new File("D:/test/");
+//        File[] ff = f.listFiles();
+//        for (File file : ff) {
+//            String fileName = file.getName();
+//            if (fileName.startsWith("qrCode")) {
+//                file.renameTo(new File("D:/test/"+fileName.replace("qrCode","")));
+//            }
+//        }
 
-
-        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-
-        Date today = f.parse("2018-10-01");
-
-        //股票
-        List<String> gp = new ArrayList<>();
-        //股票名称
-        List<String> gpName = new ArrayList<>();
-        //股票价格
-        List<Double> gpMoney1 = new ArrayList<>();
-
-        List<Double> gpMoney2 = new ArrayList<>();
-        for (int i = 0 ; i < 20 ; i++){
-            gp.add("股票代码"+i);
-            gpName.add("股票名称"+i);
-            gpMoney1.add(i+0.12);
-            gpMoney2.add((30-i)+0.25);
-        }
-        Random random = new Random();
-        String gainsInfo = "insert into tb_gains_info (ACCOUNT,SHARES_CODE,SHARES_NAME,BUSINESS_FLAG,VOLUME,PRICE,BALANCE_MONEY,TOTAL_MONEY,BUSINESS_TIME,CRT_TIME,AMOUNT) values (";
-
-
-        //简写如下：
-        //BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-        //        new FileOutputStream(new File("E:/phsftp/evdokey/evdokey_201103221556.txt")), "UTF-8"));
-
-
-
-        for (int i = 0; i < 300 ; i++) { //IDCARD
-            Calendar c = Calendar.getInstance();
-            c.setTime(today);
-            for (int j = 0; j < 310; j++) { //天数
-
-
-                String gainsInfoData = gainsInfo + "'"+i+"',";
-                int a = random.nextInt(20);
-                gainsInfoData +="'"+gp.get(a)+"',";
-                gainsInfoData +="'"+gpName.get(a)+"',";
-                int b = random.nextInt(2);
-                gainsInfoData +="'"+ b +"',";
-                int volume = random.nextInt(101);
-                gainsInfoData +="'"+ volume +"',";
-                int a2 = random.nextInt(2);
-                double money = 0;
-                if (a2 == 0) {
-                    gainsInfoData +="'"+gpMoney1.get(a)+"',";
-                    money = gpMoney1.get(a);
-
-                }else {
-                    gainsInfoData +="'"+gpMoney2.get(a)+"',";
-                    money = gpMoney2.get(a);
-                }
-
-                int balanceMoney = 0;
-
-
-                BigDecimal bg = new BigDecimal(random.nextInt(5000) + random.nextDouble());
-                if (b == 0) {
-                    BigDecimal xx1 = new BigDecimal((balanceMoneyMap.get(i) + volume * money));
-                    gainsInfoData +="'"+  xx1.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue()+"',";
-
-
-                    int jiajian = random.nextInt(2);
-                    double nn =bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-                    double total = playerMoney.get(i);
-                    if (jiajian == 0) {
-                        total = total + nn;
-                    } else {
-                        total = total - nn;
-                    }
-                    BigDecimal xx = new BigDecimal(total);
-                    gainsInfoData +="'"+  xx.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() +"',";
-                    playerMoney.put(i,total);
-                }else {
-                    BigDecimal xx1 = new BigDecimal((balanceMoneyMap.get(i) + volume * money));
-                    gainsInfoData +="'"+ xx1.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() +"',";
-
-                    int jiajian = random.nextInt(2);
-                    double nn = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-                    double total = playerMoney.get(i);
-                    if (jiajian == 0) {
-                        total = total + nn;
-                    } else {
-                        total = total - nn;
-                    }
-                    BigDecimal xx = new BigDecimal(total);
-                    gainsInfoData +="'"+ xx.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() +"',";
-                    playerMoney.put(i,total);
-                }
-
-                gainsInfoData +="'"+f.format(c.getTime())+" 00:00:00',";
-                gainsInfoData +="'"+f.format(c.getTime())+" 00:00:00',";
-                BigDecimal tt = new BigDecimal(volume*money);
-                gainsInfoData +="'"+  tt.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() +"');";
-                c.add(Calendar.DAY_OF_MONTH, 1);// 今天+i天
-                bw.write(gainsInfoData+"\t\n");
-            }
-        }
-
-
-        //注意关闭的先后顺序，先打开的后关闭，后打开的先关闭
-        bw.close();
-        osw.close();
-        fos.close();
-
+        String a ="2018-11-10";
+System.out.println(a.substring(0,7));
     }
 }

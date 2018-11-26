@@ -1,6 +1,7 @@
 package com.sojson.common.dao;
 
 import com.sojson.common.model.TbPlayerMoney;
+import com.sojson.common.model.vo.PlayerTransVo;
 import com.sojson.common.model.vo.TbGainsInfoVo;
 import com.sojson.common.model.vo.TbPlayerMoneyVo;
 
@@ -51,4 +52,24 @@ public interface UTbPlayerMoneyMapper {
     List<TbPlayerMoneyVo>  findTopByMonth(Map<String,Object> param);
 
     List<TbPlayerMoneyVo>  findAll(Object param);
+
+    /**
+     * 获取当天有更新的资金账户
+     * @param param
+     * @return
+     */
+    List<String> getNewAccounts(Object param);
+
+    /**
+     * 获取每个选手当月的交易数量
+     * @param param
+     * @return
+     */
+    List<PlayerTransVo> getTransCount(Object param);
+
+    /**
+     * 获取最后日期
+     * @return
+     */
+    String getLastDate();
 }

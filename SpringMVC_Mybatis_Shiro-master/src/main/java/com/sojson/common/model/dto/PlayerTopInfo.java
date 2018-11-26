@@ -66,6 +66,11 @@ public class PlayerTopInfo implements Comparable<PlayerTopInfo>,Cloneable {
      */
     private String dataTime;
 
+    /**
+     * 当月交易条数
+     */
+    private Integer transCountForMonth = 0;
+
     public String getAccountName() {
         return accountName;
     }
@@ -154,6 +159,14 @@ public class PlayerTopInfo implements Comparable<PlayerTopInfo>,Cloneable {
 
     public void setDataTime(String dataTime) {
         this.dataTime = dataTime;
+    }
+
+    public Integer getTransCountForMonth() {
+        return transCountForMonth;
+    }
+
+    public void setTransCountForMonth(Integer transCountForMonth) {
+        this.transCountForMonth = transCountForMonth;
     }
 
     @Override

@@ -77,7 +77,7 @@ public class TopByMonthServiceImpl extends BaseMybatisDao<UTbTopByMonthMapper> i
             //持仓比
 
             //计算剩余金额
-            double buyMoney = totleDou - Double.parseDouble(String.valueOf(cuurTopInfo.getBalanceMoney()));
+            double buyMoney = Double.parseDouble(String.valueOf(cuurTopInfo.getSharesMoney()));
             playerTopInfo.setBuyMoney(new BigDecimal(buyMoney).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() + "");
             bg = new BigDecimal(buyMoney * 100/totleDou);
             rate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();

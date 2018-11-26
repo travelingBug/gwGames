@@ -4,13 +4,16 @@ package com.sojson.core.init;/**
  * @Date:${Time} ${Date}
  **/
 
+import com.sojson.common.dao.UTbPlayerMoneyMapper;
+import com.sojson.common.model.vo.PlayerTransVo;
 import com.sojson.common.utils.RedisUtil;
 import com.sojson.inf.gainsinfo.service.InfGainsInfoService;
+import com.sojson.inf.gainsinfo.utis.GainsInfoCache;
 import com.sojson.playermoney.service.PlayerMoneyService;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.*;
 
 /**
  * @ClassName:TestInit
@@ -23,6 +26,9 @@ public class TestInit {
 
     @Resource
     PlayerMoneyService playerMoneyService;
+
+    @Resource
+    UTbPlayerMoneyMapper uTbPlayerMoneyMapper;
 
 
     public void init(){
@@ -37,5 +43,20 @@ public class TestInit {
         cal.add(Calendar.MONTH,-1);
         String preDate = formatter.format(cal.getTime());
         playerMoneyService.findTopByMonth(currDate,preDate);
+
+        //获取当天有策略的信息
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String nowDate = sdf.format(new Date());
+        Map<String,Object> param = new HashMap<String,Object>();
+        param.put("currDate",nowDate);
+        List<String> accounts = uTbPlayerMoneyMapper.getNewAccounts(param);
+        GainsInfoCache.updateNewFlag(accounts);
+
+        //获取当月的交易数量
+        nowDate = nowDate.substring(0,7);
+        param.put("currDate",nowDate);
+        List<PlayerTransVo> playerTransVos = uTbPlayerMoneyMapper.getTransCount(param);
+        GainsInfoCache.updateTransCount(playerTransVos);
+
     }
 }

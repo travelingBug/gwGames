@@ -4,16 +4,19 @@ import com.sojson.common.ImportHeader;
 import com.sojson.common.RegConstant;
 import com.sojson.common.ResultMessage;
 import com.sojson.common.dao.UTbGainsInfoMapper;
+import com.sojson.common.dao.UTbPlayerMoneyMapper;
 import com.sojson.common.model.TbGainsInfo;
 import com.sojson.common.model.TbPlayer;
 import com.sojson.common.model.dto.TbGainsInfoDto;
 import com.sojson.common.model.dto.TbPlayerDto;
+import com.sojson.common.model.vo.PlayerTransVo;
 import com.sojson.common.model.vo.TbGainsInfoVo;
 import com.sojson.common.utils.*;
 import com.sojson.core.config.IConfig;
 import com.sojson.core.mybatis.BaseMybatisDao;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.gainsinfo.service.GainsInfoService;
+import com.sojson.inf.gainsinfo.utis.GainsInfoCache;
 import com.sojson.player.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.sojson.common.RegConstant.moneyReg;
@@ -39,6 +43,9 @@ public class GainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> imp
     @Resource
     PlayerService playerService;
 
+    @Resource
+    UTbPlayerMoneyMapper uTbPlayerMoneyMapper;
+
     /**
      * 导入参赛选手数据
      * @param file 参赛选手EXCEL
@@ -49,7 +56,7 @@ public class GainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> imp
     public ResultMessage importGainsExcel(MultipartFile file) {
         ResultMessage msg = beforeImport(file);
         if (msg.getLevel() == ResultMessage.MSG_LEVEL.SUCC.v ) { //验证正确则继续处理后续文件操作
-
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             //新文件名称
             String newFileName = StringUtils.getUUID32() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
            //文件保存地址
@@ -76,11 +83,30 @@ public class GainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> imp
                     //处理正确的数据
                     if (succList.size() > 0) {
                         Date now = new Date();
+                        //需要被改变的网页策略
+                        List<String> accounts = new ArrayList<String>();
                         for (TbGainsInfo gainsInfo : succList) {
                             gainsInfo.setCrtTime(now);
+                            //判断用户策略是否被更新
+                            if (sdf.format(gainsInfo.getBusinessTime()).equals(sdf.format(now))) {
+                                if (!accounts.contains(gainsInfo.getAccount())) {
+                                    accounts.add(gainsInfo.getAccount());
+                                }
+                            }
+                        }
+                        if (accounts != null && accounts.size() > 0) {
+                            GainsInfoCache.updateNewFlag(accounts);
                         }
                         uTbGainsInfoMapper.insertBatch(succList);
                         succCount = succList.size();
+
+
+                        Map<String,Object> paramObj = new HashMap<String,Object>();
+                        SimpleDateFormat sdfDay = new SimpleDateFormat("yyyy-MM");
+                        //获取当月的交易数量
+                        paramObj.put("currDate",sdfDay.format(new Date()));
+                        List<PlayerTransVo> playerTransVos = uTbPlayerMoneyMapper.getTransCount(paramObj);
+                        GainsInfoCache.updateTransCount(playerTransVos);
                     }
                     if (failList.size() > 0) {
                         failCount = failList.size();
@@ -188,7 +214,7 @@ public class GainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> imp
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"股票名称格式错误！");
         }
         //买卖标志
-        if (tbGainsInfo.getBusinessFlag() == null || !(tbGainsInfo.getBusinessFlag() <= 3 && tbGainsInfo.getBusinessFlag() >= 0)) {
+        if (tbGainsInfo.getBusinessFlag() == null || !(tbGainsInfo.getBusinessFlag() <= 4 && tbGainsInfo.getBusinessFlag() >= 0)) {
             return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v,"买卖标志错误！");
         }
         //成交数量

@@ -107,6 +107,10 @@ public class WechatSecurity  {
         node.put("type","view");
         node.put("url",IConfig.get("httpUrl_path")+"/static/wx/index.html?t=2&p=1");
         gResBut1.add(node);
+        node.put("name","官网链接");
+        node.put("type","view");
+        node.put("url",IConfig.get("httpUrl_path"));
+        gResBut1.add(node);
 
         JSONObject node1 = new JSONObject();
         node1.put("name","主页");

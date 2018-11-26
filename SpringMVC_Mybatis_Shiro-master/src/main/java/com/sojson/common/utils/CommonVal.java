@@ -16,5 +16,6 @@ public class CommonVal {
         BUSINESS_FLAG.put("证券卖出",(byte)1);
         BUSINESS_FLAG.put("基金申购",(byte)2);
         BUSINESS_FLAG.put("基金赎回",(byte)3);
+        BUSINESS_FLAG.put("融券回购",(byte)4);
     }
 }

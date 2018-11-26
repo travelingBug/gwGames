@@ -203,14 +203,14 @@
                     layer.close(index);
                 });
             }
-			function _update(id,accountName,name,account,businessTimeStr,totalMoney,balanceMoney){
+			function _update(id,accountName,name,account,businessTimeStr,totalMoney,sharesMoney){
 				$("#playerMoney_id").val(id);
                 $("#player_accountName").val(accountName);
                 $("#player_name").val(name);
                 $("#playerMoney_account").val(account);
                 $("#playerMoney_businessTime").val(businessTimeStr);
                 $("#playerMoney_totalMoney").val(totalMoney);
-                $("#playerMoney_balanceMoney").val(balanceMoney);
+                $("#playerMoney_sharesMoney").val(sharesMoney);
 			}
 
             function getDate(strDate) {
@@ -240,8 +240,8 @@
                     msg('时间不能为空！');
                     return false;
                 }
-                if ($("#playerMoney_balanceMoney").val() == null || $("#playerMoney_balanceMoney").val() == '') {
-                    msg('资金余额不能为空！');
+                if ($("#playerMoney_sharesMoney").val() == null || $("#playerMoney_sharesMoney").val() == '') {
+                    msg('股票市值不能为空！');
                     return false;
                 }
                 if ($("#playerMoney_totalMoney").val() == null || $("#playerMoney_totalMoney").val() == '') {
@@ -262,8 +262,8 @@
                 }
 
 
-                if ($("#playerMoney_balanceMoney_add").val() == null || $("#playerMoney_balanceMoney_add").val() == '') {
-                    msg('资金余额不能为空！');
+                if ($("#playerMoney_sharesMoney_add").val() == null || $("#playerMoney_sharesMoney_add").val() == '') {
+                    msg('股票市值不能为空！');
                     return false;
                 }
                 if ($("#playerMoney_totalMoney_add").val() == null || $("#playerMoney_totalMoney_add").val() == '') {
@@ -382,7 +382,7 @@
 							<th width="100">姓名</th>
 							<th width="100">资金账号</th>
                             <th width="100">时间</th>
-                            <th width="100">资金余额</th>
+                            <th width="100">股票市值</th>
                             <th width="100">总资产</th>
                             <th width="80">操作</th>
 						</tr>
@@ -394,11 +394,11 @@
 									<td>${it.name!''}</td>
 									<td>${it.account!''}</td>
 									<td>${it.businessTimeStr!''}</td>
-                                    <td>${it.balanceMoney!''}</td>
+                                    <td>${it.sharesMoney!''}</td>
                                     <td>${it.totalMoney!''}</td>
 									<td>
 										<#--<@shiro.hasPermission name="/playerMoney/updateById.shtml">-->
-											<a href="javascript:_update('${it.id}','${it.accountName}','${it.name}','${it.account}','${it.businessTimeStr}','${it.totalMoney}','${it.balanceMoney}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#playerMoneyEditModal"></i></a>
+											<a href="javascript:_update('${it.id}','${it.accountName}','${it.name}','${it.account}','${it.businessTimeStr}','${it.totalMoney}','${it.sharesMoney!'0'}');"><i class="fas fa-edit normal" title="编辑" data-toggle="modal" data-target="#playerMoneyEditModal"></i></a>
 										<#--</@shiro.hasPermission>-->
 										<#--<@shiro.hasPermission name="/playerMoney/delById.shtml">-->
                                             	<a href="javascript:_del('${it.id}');"><i class="glyphicon glyphicon-remove" title="删除"></i></a>
@@ -455,9 +455,9 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="playerMoney_balanceMoney" class="col-md-2 control-label">资金余额</label>
+                                            <label for="playerMoney_sharesMoney" class="col-md-2 control-label">股票市值</label>
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" name="balanceMoney" id="playerMoney_balanceMoney"  />
+                                                <input type="text" class="form-control" name="sharesMoney" id="playerMoney_sharesMoney"  />
                                             </div>
                                             <label for="playerMoney_totalMoney" class="col-md-2 control-label">总资产</label>
                                             <div class="col-md-4">
@@ -510,9 +510,9 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="playerMoney_balanceMoney_add" class="col-md-2 control-label">资金余额</label>
+                                            <label for="playerMoney_sharesMoney_add" class="col-md-2 control-label">股票市值</label>
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" name="balanceMoney" id="playerMoney_balanceMoney_add"  />
+                                                <input type="text" class="form-control" name="sharesMoney" id="playerMoney_sharesMoney_add"  />
                                             </div>
                                             <label for="playerMoney_totalMoney_add" class="col-md-2 control-label">总资产</label>
                                             <div class="col-md-4">

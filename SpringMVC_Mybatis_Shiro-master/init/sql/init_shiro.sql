@@ -391,3 +391,6 @@ CREATE TABLE `tb_dealer_bank_card` (
   `FK_DEALER_ID` varchar(32) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
+
+ALTER TABLE tb_player_money ADD SHARES_MONEY VARCHAR(20) comment '股票市值' NOT NULL DEFAULT  0;
+ALTER TABLE tb_player_money modify column   BALANCE_MONEY varchar(20)  comment '资金余额';

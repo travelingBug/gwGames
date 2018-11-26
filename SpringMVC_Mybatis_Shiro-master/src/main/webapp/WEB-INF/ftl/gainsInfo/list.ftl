@@ -478,6 +478,8 @@
                                             基金申购
                                         <#elseif it.businessFlag==3>
                                             基金赎回
+                                        <#elseif it.businessFlag==4>
+                                            融券回购
 										</#if>
 									</td>
                                     <td>${it.volume!''}</td>
@@ -562,6 +564,7 @@
                                                     <option value="1">证券卖出</option>
                                                     <option value="2">基金申购</option>
                                                     <option value="3">基金赎回</option>
+                                                    <option value="4">融券回购</option>
                                                 </select>
                                             </div>
 
@@ -650,6 +653,7 @@
                                                     <option value="1">证券卖出</option>
                                                     <option value="2">基金申购</option>
                                                     <option value="3">基金赎回</option>
+                                                    <option value="4">融券回购</option>
                                                 </select>
                                             </div>
 

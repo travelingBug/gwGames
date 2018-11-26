@@ -36,8 +36,8 @@
                         <p class="title">收益率</p>
                     </div>
                     <div class="R">
-                        <p class="numb" id="buyForALLRate"></p>
-                        <p class="title">持仓比</p>
+                        <p class="numb" id="transCountForMonth"></p>
+                        <p class="title">月交易次数</p>
                     </div>
 
 
@@ -115,7 +115,7 @@
                                 $('#rank').html(result.rank);
                                $('#totalMoney').html(result.totalMoney+" 元");
                                $('#yieldRate').html(result.yieldRate + " %");
-                               $('#buyForALLRate').html(result.buyForALLRate + " %");
+                               $('#transCountForMonth').html(result.transCountForMonth);
                                $('#dataTime').html("数据日期：" + result.dataTime);
                            } else {
                                warnMsg(data.messageText);

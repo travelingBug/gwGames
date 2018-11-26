@@ -71,6 +71,7 @@ public class PlayerMoneyController extends BaseController {
     @RequestMapping(value="list")
     public ModelAndView list(Integer pageNo, ModelMap modelMap,@RequestParam Map<String,Object> map){
 
+
         Pagination<TbPlayerMoneyVo> page = playerMoneyService.findByPage(map,pageNo,pageSize);
         modelMap.put("page", page);
         modelMap.putAll(map);

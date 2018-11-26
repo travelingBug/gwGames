@@ -4,6 +4,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>天下股神实盘大赛</title>
     <%@include file="../head.jsp" %>
+    <style>
+        .jb_img {
+            width: 18px;
+            height: 12px;
+            margin-left: 10px;
+            margin-top: 5px;
+            position:absolute;
+        }
+    </style>
 </head>
 <body>
 <%@include file="../float.jsp" %>
@@ -39,7 +48,7 @@
                         <th>排名</th>
                         <th>选手</th>
                         <th>总收益</th>
-                        <th>持仓比</th>
+                        <th>月交易次数</th>
                         <th>总资产</th>
                         <th>操作</th>
                     </tr>
@@ -55,7 +64,7 @@
                         <th>排名</th>
                         <th>选手</th>
                         <th>总收益</th>
-                        <th>持仓比</th>
+                        <th>月交易次数</th>
                         <th>总资产</th>
                         <th>操作</th>
                     </tr>
@@ -107,6 +116,10 @@
                                    if (data.length % 2 == 1) {
                                        trClass = '';
                                    }
+                                   var newFlag = '';
+                                   if (data[i].isNewFlag == 1) {
+                                       newFlag = '<img src="/images/new.png" class="jb_img"/>';
+                                   }
                                    var showTop= '<td>'+(i+1)+'</td>';
                                    if (i == 0) {
                                        var showTop= '<td><em class="icon-one">'+(i+1)+'</em></td>';
@@ -121,10 +134,10 @@
                                    html += showTop;
                                    html += '<td>'+data[i].accountName+'</td>';
                                    html += '<td class="red">'+data[i].yieldRate+'%</td>';
-                                   html += '<td>'+data[i].buyForALLRate+'%</td>';
+                                   html += '<td>'+data[i].transCountForMonth+'</td>';
                                    html += '<td>'+data[i].totalMoney+'</td>';
                                    html += '<td name="account" style="display: none">'+data[i].account+'</td>';
-                                   html += '<td><a class="red" href="/static/gains/strategy_detail.jsp?account='+data[i].account+'">详细</a></td>';
+                                   html += '<td><a class="red" href="/static/gains/strategy_detail.jsp?account='+data[i].account+'">详细</a>'+newFlag+'</td>';
                                    html += '</tr>';
                                    $('#topAll').append(html);
 
@@ -153,6 +166,10 @@
                                    if (data.length % 2 == 1) {
                                        trClass = '';
                                    }
+                                   var newFlag = '';
+                                   if (data[i].isNewFlag == 1) {
+                                       newFlag = '<img src="/images/new.png" class="jb_img"/>';
+                                   }
                                    var showTop= '<td>'+(i+1)+'</td>';
                                    if (i == 0) {
                                        var showTop= '<td><em class="icon-one">'+(i+1)+'</em></td>';
@@ -167,10 +184,10 @@
                                    html += showTop;
                                    html += '<td>'+data[i].accountName+'</td>';
                                    html += '<td class="red">'+data[i].yieldRate+'%</td>';
-                                   html += '<td>'+data[i].buyForALLRate+'%</td>';
+                                   html += '<td>'+data[i].transCountForMonth+'</td>';
                                    html += '<td>'+data[i].totalMoney+'</td>';
                                    html += '<td name="account" style="display: none">'+data[i].account+'</td>';
-                                   html += '<td><a class="red" href="strategy_detail.jsp?account='+data[i].account+'">详细</a></td>';
+                                   html += '<td><a class="red" href="/static/gains/strategy_detail.jsp?account='+data[i].account+'">详细</a>'+newFlag+'</td>';
                                    html += '</tr>';
                                    $('#topMonth').append(html);
 

@@ -33,7 +33,7 @@ export function bankCardAttribution(bankCard): CardInfo {
     }
     return undefined;
   }
-  let bankcardList = [{
+  var bankcardList = [{
     bankName: "中国邮政储蓄银行",
     bankCode: "PSBC",
     patterns: [{
@@ -258,8 +258,8 @@ export function bankCardAttribution(bankCard): CardInfo {
       cardType: "CC"
     }]
   }, {
-    bankName: "深发/平安银行",
-    bankCode: "SPABANK",
+    bankName: "平安银行",
+    bankCode: "PINGANBK",
     patterns: [{
       reg: /^(621626|623058)\d{13}$/g,
       cardType: "DC"
@@ -294,7 +294,7 @@ export function bankCardAttribution(bankCard): CardInfo {
     }]
   }, {
     bankName: "上海银行",
-    bankCode: "SHBANK",
+    bankCode: "BKSH",
     patterns: [{
       reg: /^(621050|622172|622985|622987|620522|622267|622278|622279|622468|622892|940021)\d{12}$/g,
       cardType: "DC"
@@ -326,7 +326,7 @@ export function bankCardAttribution(bankCard): CardInfo {
     }]
   }, {
     bankName: "广发银行",
-    bankCode: "GDB",
+    bankCode: "CGB",
     patterns: [{
       reg: /^(622516|622517|622518|622521|622522|622523|984301|984303|621352|621793|621795|621796|621351|621390|621792|621791)\d{10}$/g,
       cardType: "DC"
@@ -610,7 +610,7 @@ export function bankCardAttribution(bankCard): CardInfo {
     }]
   }, {
     bankName: "浙商银行",
-    bankCode: "CZBANK",
+    bankCode: "CZB",
     patterns: [{
       reg: /^(621019|622309|621019)\d{13}$/g,
       cardType: "DC"
@@ -1503,4 +1503,4 @@ export function bankCardAttribution(bankCard): CardInfo {
   return _getBankInfoByCardNo(bankCard) as any;
 }
 
-// console.log( bankCardAttribution('6217001210024455220') )
+// // console.log( bankCardAttribution('6217001210024455220') )

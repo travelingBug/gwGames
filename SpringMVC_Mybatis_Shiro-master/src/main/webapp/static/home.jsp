@@ -58,7 +58,7 @@
         <div class="title"><div class="title-1"></div></div>
         <div class="content">
             <div class="floatL table-area">
-                <h3>收益率排行</h3>
+                <h3 id="sylphb">收益率排行</h3>
                 <table class="table1">
                     <tbody id="topAllByMoney">
                     <tr>
@@ -91,7 +91,7 @@
                 <a class="link" href="/static/rank/ranking.jsp">查看更多</a>
             </div>
             <div class="table-area1" id="allShow">
-                <h3><i class="icon icon-ranking"></i>首届股神大赛总收益率排行</h3>
+                <h3 id="zphb"><i class="icon icon-ranking"></i>首届股神大赛总收益率排行</h3>
                 <table class="table1">
                     <tbody  id="topAll">
                     <tr>
@@ -107,7 +107,7 @@
                 </table>
             </div>
             <div class="table-area1" style="display: none;" id="monthShow">
-                <h3><i class="icon icon-ranking"></i>首届股神大赛月排行</h3>
+                <h3 id="yphb"><i class="icon icon-ranking"></i>首届股神大赛月排行</h3>
                 <table class="table1">
                     <tbody  id="topMonth">
                     <tr>
@@ -302,6 +302,26 @@
                 window.location.href = "/static/vips/register.jsp";
             }
         });
+
+
+        $.ajax({
+            type: "POST",
+            url: "interface/gainsInfo/getLastDate.shtml",
+            data: {},
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (data) {
+                if (data.level == 1){
+                    $('#sylphb').html('收益率排行<span style="font-size: smaller;color: #888888">(数据日期：'+data.data+')</span>');
+                    $('#zphb').html('<i class="icon icon-ranking"></i>首届股神大赛总收益率排行<span style="font-size: smaller;color: #888888">(数据日期：'+data.data+')</span>');
+                    $('#yphb').html('<i class="icon icon-ranking"></i>首届股神大赛月排行<span style="font-size: smaller;color: #888888">(数据日期：'+data.data+')</span>');
+                }
+
+            }
+        });
+
 
         $.ajax({
             type: "POST",
