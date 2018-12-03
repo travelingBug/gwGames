@@ -37,18 +37,19 @@ public class ToTimer{
 	@Resource
 	VipsService vipsService;
 
-	@Scheduled(cron = "00 00 01 01 * ? ")
-//@Scheduled(cron = "00 42 10 * * ? ")
+	@Scheduled(cron = "00 00 01 13 * ? ")
+//@Scheduled(cron = "00 49 22 03 * ? ")
 	public void run() {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
 		Calendar cal=Calendar.getInstance();
+		Date currEndDate = cal.getTime();
         cal.add(Calendar.MONTH,-1);
-		String currDate = formatter.format(cal.getTime());
+		Date currBgnDate= cal.getTime();
+		Date preEndDate = cal.getTime();
 		cal.add(Calendar.MONTH,-1);
-		String preDate = formatter.format(cal.getTime());
-		logger.info("开始插入月度比赛排名("+currDate+")");
+		Date preBgnDate = cal.getTime();
+		logger.info("开始插入月度比赛排名");
 
-		topByMonthService.insertTopMonth(currDate,preDate);
+		topByMonthService.insertTopMonth(currBgnDate,currEndDate,preBgnDate,preEndDate);
 		logger.info("月度比赛排名排名完毕");
 	}
 

@@ -131,6 +131,14 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
             cal.add(Calendar.MONTH,-1);
             String preDate = formatter.format(cal.getTime());
             findTopByMonth(currDate,preDate);
+
+            //重新计算数量
+            Map<String,Object> paramObj = new HashMap<String,Object>();
+            SimpleDateFormat sdfDay = new SimpleDateFormat("yyyy-MM");
+            //获取当月的交易数量
+            paramObj.put("currDate",sdfDay.format(new Date()));
+            List<PlayerTransVo> playerTransVos = uTbPlayerMoneyMapper.getTransCount(paramObj);
+            GainsInfoCache.updateTransCount(playerTransVos);
         }
         return msg;
     }
@@ -301,10 +309,13 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
      */
     @Override
     public void findTopByMonth(String currDate,String preDate){
+        Map<String,Date> dateParam = complateMonthDate();
 		Map<String,Object> param = new HashMap<String,Object>();
-		param.put("currDate",currDate);
+		param.put("bgnDate",dateParam.get("cuurBgnDate"));
+        param.put("endDate",dateParam.get("cuurEndDate"));
 		List<TbPlayerMoneyVo> cuurTopInfos = uTbPlayerMoneyMapper.findTopByMonth(param);
-		param.put("currDate",preDate);
+        param.put("bgnDate",dateParam.get("preBgnDate"));
+        param.put("endDate",dateParam.get("preEndDate"));
 		List<TbPlayerMoneyVo> preTopInfos = uTbPlayerMoneyMapper.findTopByMonth(param);
 		//根据身份证统计每个人的信息
 		List<PlayerTopInfo> palyerTopMonthInfos = new ArrayList<PlayerTopInfo>();
@@ -344,7 +355,7 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
             //持仓比
 
             //计算剩余金额
-            double buyMoney = totleDou - Double.parseDouble(String.valueOf(cuurTopInfo.getSharesMoney()));
+            double buyMoney = Double.parseDouble(String.valueOf(cuurTopInfo.getSharesMoney()));
             bg = new BigDecimal(buyMoney * 100/totleDou);
             rate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
             playerTopInfo.setBuyForALLRate(rate);
@@ -409,5 +420,44 @@ public class PlayerMoneyServiceImpl extends BaseMybatisDao<UTbPlayerMoneyMapper>
             data.addAll(list);
         }
         return data;
+    }
+
+    private  Map<String,Date> complateMonthDate(){
+        Map<String,Date> dateParam = new HashMap<String,Date>();
+        try {
+            SimpleDateFormat sdfDay = new SimpleDateFormat("dd");
+            SimpleDateFormat sdfMonth = new SimpleDateFormat("yyyy-MM");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            int day = Integer.parseInt(sdfDay.format(new Date()));
+            Calendar cal = Calendar.getInstance();
+            //判断当前时间是否超过13号。好统计时间
+            if (day >= 13) {
+                Date cuurBgnDate = sdf.parse(sdfMonth.format(cal.getTime()) + "-13");
+                cal.add(Calendar.MONTH,1);
+                Date cuurEndDate = sdf.parse(sdfMonth.format(cal.getTime()) + "-13");
+                Date preEndDate = cuurBgnDate;
+                cal.add(Calendar.MONTH,-2);
+                Date preBgnDate = sdf.parse(sdfMonth.format(cal.getTime()) + "-13");
+                dateParam.put("cuurBgnDate",cuurBgnDate);
+                dateParam.put("cuurEndDate",cuurEndDate);
+                dateParam.put("preEndDate",preEndDate);
+                dateParam.put("preBgnDate",preBgnDate);
+            } else {
+                cal.add(Calendar.MONTH,-1);
+                Date cuurBgnDate = sdf.parse(sdfMonth.format(cal.getTime()) + "-13");
+                cal.add(Calendar.MONTH,1);
+                Date cuurEndDate = sdf.parse(sdfMonth.format(cal.getTime()) + "-13");
+                Date preEndDate = cuurBgnDate;
+                cal.add(Calendar.MONTH,-2);
+                Date preBgnDate = sdf.parse(sdfMonth.format(cal.getTime()) + "-13");
+                dateParam.put("cuurBgnDate",cuurBgnDate);
+                dateParam.put("cuurEndDate",cuurEndDate);
+                dateParam.put("preEndDate",preEndDate);
+                dateParam.put("preBgnDate",preBgnDate);
+            }
+        }catch (Exception e){
+
+        }
+        return dateParam;
     }
 }

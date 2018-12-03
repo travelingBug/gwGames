@@ -137,7 +137,7 @@
                 </div>
                 <div  style="float: left;width: 700px;height: 100px;margin-top: 20px;">
                     <span class="bt">协办单位</span>
-                    <p class="js"  style="margin-top: 20px;">华林证券&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;天风证券&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;万和证券四川分公司&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;万和证券股份有限公司成都通盈街营业部</p>
+                    <p class="js"  style="margin-top: 20px;">华林证券&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;天风证券&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;万和证券四川分公司&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;万和证券股份有限公司成都五福桥营业部、通盈街营业部</p>
                 </div>
             </div>
             <div style="height:50px;"></div>

@@ -241,6 +241,7 @@ public class Test
 //        }
 
         String a ="2018-11-10";
-System.out.println(a.substring(0,7));
+        SimpleDateFormat sdf = new SimpleDateFormat("d");
+System.out.println(Integer.parseInt(sdf.format(new Date())));
     }
 }
