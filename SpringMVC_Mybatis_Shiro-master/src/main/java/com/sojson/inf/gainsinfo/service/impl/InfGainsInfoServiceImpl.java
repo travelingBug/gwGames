@@ -12,6 +12,7 @@ import com.sojson.common.model.dto.PlayerTopInfo;
 import com.sojson.common.model.vo.TbGainsInfoVo;
 import com.sojson.common.model.vo.TbPlayerMoneyVo;
 import com.sojson.common.utils.StringUtils;
+import com.sojson.core.config.IConfig;
 import com.sojson.core.mybatis.BaseMybatisDao;
 import com.sojson.core.mybatis.page.Pagination;
 import com.sojson.gainsinfo.service.GainsInfoService;
@@ -226,7 +227,7 @@ public class InfGainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> 
 		List<PlayerTopInfo> last = new ArrayList<PlayerTopInfo>();
 		List<PlayerTopInfo> data = GainsInfoCache.getLastTopMonthSize(size);
 
-		int frist = 166;
+		int frist = Integer.parseInt(IConfig.get("last_rank"));
 		//顺序倒着获取
 		for (int i = data.size() - 1; i >= 0; i--) {
 			PlayerTopInfo playerTopInfo = data.get(i).clone();
@@ -245,7 +246,7 @@ public class InfGainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> 
 		List<PlayerTopInfo> last = new ArrayList<PlayerTopInfo>();
 		List<PlayerTopInfo> data = GainsInfoCache.getLastTopAllForSize(size);
 
-		int frist = 166;
+		int frist = Integer.parseInt(IConfig.get("last_rank"));
 		//顺序倒着获取
 		for (int i = data.size() - 1; i >= 0; i--) {
 			PlayerTopInfo playerTopInfo = data.get(i).clone();

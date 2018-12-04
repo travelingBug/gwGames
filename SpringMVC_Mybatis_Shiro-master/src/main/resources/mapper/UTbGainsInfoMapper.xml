@@ -131,6 +131,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.sojson.common.model.TbGainsInfo" >
     update tb_gains_info
     <set >
+      <if test="amount != null and amount !=''" >
+        AMOUNT = #{amount,jdbcType=VARCHAR},
+      </if>
       <if test="price != null and price !=''" >
         PRICE = #{price,jdbcType=VARCHAR},
       </if>

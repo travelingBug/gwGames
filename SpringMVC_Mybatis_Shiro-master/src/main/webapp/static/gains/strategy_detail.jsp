@@ -152,7 +152,7 @@
 
                                    }
                                } else {
-                                   strategyHtml += '<tr><td colspan="3">暂无数据<td></tr>';
+                                   strategyHtml += '<tr><td colspan="3">空仓<td></tr>';
                                }
 
                                $("#playerStrategy").append(strategyHtml);

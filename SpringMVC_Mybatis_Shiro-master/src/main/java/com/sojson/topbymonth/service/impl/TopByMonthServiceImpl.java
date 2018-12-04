@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -33,11 +34,13 @@ public class TopByMonthServiceImpl extends BaseMybatisDao<UTbTopByMonthMapper> i
 
 
     @Override
-    public void insertTopMonth(String currDate,String preDate){
+    public void insertTopMonth(Date currBgnDate,Date currEndDate,Date preBgnDate,Date preEndDate){
         Map<String,Object> param = new HashMap<String,Object>();
-        param.put("currDate",currDate);
+        param.put("bgnDate",currBgnDate);
+        param.put("endDate",currEndDate);
         List<TbPlayerMoneyVo> cuurTopInfos = uTbPlayerMoneyMapper.findTopByMonth(param);
-        param.put("currDate",preDate);
+        param.put("bgnDate",preBgnDate);
+        param.put("endDate",preEndDate);
         List<TbPlayerMoneyVo> preTopInfos = uTbPlayerMoneyMapper.findTopByMonth(param);
         //根据身份证统计每个人的信息
         List<TbTopByMonth> palyerTopMonthInfos = new ArrayList<TbTopByMonth>();
@@ -87,6 +90,8 @@ public class TopByMonthServiceImpl extends BaseMybatisDao<UTbTopByMonthMapper> i
         }
         Collections.sort(palyerTopMonthInfos,Collections.reverseOrder());
         //设置时间和排名
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        String currDate = sdf.format(new Date());
         int i = 1 ;
         for (TbTopByMonth tbTopByMonth : palyerTopMonthInfos) {
             tbTopByMonth.setMonth(currDate);
