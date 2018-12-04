@@ -270,10 +270,10 @@ public class DealerController extends BaseController {
 
     @RequestMapping(value = "vipsRecordList")
     public ModelAndView vipsRecordList(ModelMap map, Integer pageNo, Integer pageSize,
-                                 String userId, String startDate, String endDate) {
+                                 String userId, String startDate, String endDate,String findContent) {
 
         Pagination<TbVipRecord> page = null;
-
+        map.put("findContent", findContent);
         TbDealer dealer = dealerService.queryByUserId(userId);
         if(null!=dealer){
             if("0".equals(dealer.getParentId())){

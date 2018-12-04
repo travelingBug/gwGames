@@ -64,6 +64,10 @@
   </sql>
 
     <sql id="where_record">
+        <if test="findContent != null and findContent !=''">
+            and (d.NICKNAME like LOWER(CONCAT('%',#{findContent,jdbcType=VARCHAR},'%'))
+            OR d.PHONE = #{findContent})
+        </if>
         <if test="startDate != null and startDate !=''">
             and r.CRT_TIME &gt;= #{startDate}
         </if>

@@ -33,13 +33,14 @@
                     locale: moment.locale('zh-cn')
                 });
 
-				$("#resetRecord").click(function(){
-                    $("#startDate").reset();
-                    $("#endDate").reset();
-				});
+//				$("#resetRecord").click(function(){
+//                    $("#startDate").val("");
+//                    $("#endDate").val("");
+//					$("#findContent").val("");
+//				});
 
-                $("#submitRecord").click(function(){
-                });
+//                $("#submitRecord").click(function(){
+//                });
 
             });
 
@@ -59,10 +60,13 @@
 					      <div class="form-group">
                               <input type='text' class="form-control" id='startDate' value="${startDate?default('')}" name="startDate"/>
                               <input type='text' class="form-control" id='endDate' value="${endDate?default('')}" name="endDate"/>
+
+                              <input type="text" class="form-control" style="width: 300px;" value="${findContent?default('')}"
+                                     name="findContent" id="findContent" placeholder="输入昵称/手机号码">
 					      </div>
 					     <span class=""> <#--pull-right -->
 				         	<button type="submit" id="submitRecord" class="btn btn-primary">查询</button>
-							<button type="reset" id="resetRecord" class="btn btn-primary">重置</button>
+							<#--<button type="reset" id="resetRecord" class="btn btn-primary">重置</button>-->
 				         </span>
 				        </div>
                         <div id="div_total">
