@@ -229,7 +229,7 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
             if (StringUtils.isNotBlank(param.get("endTime"))) {
                 Date endTime = formatter.parse(param.get("endTime").toString());
                 endTimeVal = endTime.getTime();
-                paramDate.put("endTimeVal",endTime);
+                paramDate.put("endTime",endTime);
             } else {
                 endTimeVal = new Date().getTime();
             }
@@ -308,17 +308,17 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
                         for (TbVipRecord vipRecord : vipRecords) {
                             if (vipRecord.getVipId().intValue() == vip.getId().intValue()) {
                                 Double money = Double.parseDouble(vipRecord.getAmount());
-                                if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_A.v) {
+                                if (vipRecord.getLevel() == IConstant.VIP_LEVEL.VIP_A.v) {
                                     dealerCountVo.setVipAMoneyCount(new BigDecimal(dealerCountVo.getVipAMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
                                     dealerCountVo.setVipACount(dealerCountVo.getVipACount() + 1);
                                     total.setVipAMoneyCount(new BigDecimal(total.getVipAMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
                                     total.setVipACount(total.getVipACount() + 1);
-                                } else if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_B.v) {
+                                } else if (vipRecord.getLevel() == IConstant.VIP_LEVEL.VIP_B.v) {
                                     dealerCountVo.setVipBMoneyCount(new BigDecimal(dealerCountVo.getVipBMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
                                     dealerCountVo.setVipBCount(dealerCountVo.getVipBCount() + 1);
                                     total.setVipBMoneyCount(new BigDecimal(total.getVipBMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
                                     total.setVipBCount(total.getVipBCount() + 1);
-                                } else if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_C.v) {
+                                } else if (vipRecord.getLevel() == IConstant.VIP_LEVEL.VIP_C.v) {
                                     dealerCountVo.setVipCMoneyCount(new BigDecimal(dealerCountVo.getVipCMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
                                     dealerCountVo.setVipCCount(dealerCountVo.getVipCCount() + 1);
                                     total.setVipCMoneyCount(new BigDecimal(total.getVipCMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
@@ -440,17 +440,17 @@ public class DealerServiceImpl extends BaseMybatisDao<UTbDealerMapper> implement
                         for (TbVipRecord vipRecord : vipRecords) {
                             if (vipRecord.getVipId().intValue() == vip.getId().intValue()) {
                                 Double money = Double.parseDouble(vipRecord.getAmount());
-                                if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_A.v) {
+                                if (vipRecord.getLevel() == IConstant.VIP_LEVEL.VIP_A.v) {
                                     dealerCountVo.setVipAMoneyCount(new BigDecimal(dealerCountVo.getVipAMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
                                     dealerCountVo.setVipACount(dealerCountVo.getVipACount() + 1);
                                     total.setVipAMoneyCount(new BigDecimal(total.getVipAMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
                                     total.setVipACount(total.getVipACount() + 1);
-                                } else if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_B.v) {
+                                } else if (vipRecord.getLevel() == IConstant.VIP_LEVEL.VIP_B.v) {
                                     dealerCountVo.setVipBMoneyCount(new BigDecimal(dealerCountVo.getVipBMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
                                     dealerCountVo.setVipBCount(dealerCountVo.getVipBCount() + 1);
                                     total.setVipBMoneyCount(new BigDecimal(total.getVipBMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
                                     total.setVipBCount(total.getVipBCount() + 1);
-                                } else if (vip.getLevel().intValue() == IConstant.VIP_LEVEL.VIP_C.v) {
+                                } else if (vipRecord.getLevel() == IConstant.VIP_LEVEL.VIP_C.v) {
                                     dealerCountVo.setVipCMoneyCount(new BigDecimal(dealerCountVo.getVipCMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );
                                     dealerCountVo.setVipCCount(dealerCountVo.getVipCCount() + 1);
                                     total.setVipCMoneyCount(new BigDecimal(total.getVipCMoneyCount() + money).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue() );

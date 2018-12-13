@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -125,6 +126,13 @@ public class InfGainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> 
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("account",account);
 		param.put("endTime",endTime);
+		//只查询10天以内的数据
+		Calendar calendar1 = Calendar.getInstance();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		calendar1.add(Calendar.DATE, -10);
+		String bgnTime = sdf1.format(calendar1.getTime());
+		param.put("bgnTime",bgnTime);
+
 		return gainsInfoService.findByPage(param,pageNo,pageSize);
 	}
 
