@@ -41,7 +41,7 @@
   </sql>
 
   <sql id="vips_order_all">
-    ORDER BY d.crt_time
+    ORDER BY d.crt_time DESC
   </sql>
   <select id="findAll" resultMap="vipsResultMap" >
   	select
