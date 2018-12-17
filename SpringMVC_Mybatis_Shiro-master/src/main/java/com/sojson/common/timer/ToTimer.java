@@ -37,7 +37,10 @@ public class ToTimer{
 	@Resource
 	VipsService vipsService;
 
-	@Scheduled(cron = "00 00 01 13 * ? ")
+	@Resource
+	PlayerMoneyService playerMoneyService;
+
+	@Scheduled(cron = "00 15 00 13 * ? ")
 //@Scheduled(cron = "00 49 22 03 * ? ")
 	public void run() {
 		Calendar cal=Calendar.getInstance();
@@ -51,6 +54,8 @@ public class ToTimer{
 
 		topByMonthService.insertTopMonth(currBgnDate,currEndDate,preBgnDate,preEndDate);
 		logger.info("月度比赛排名排名完毕");
+
+		playerMoneyService.findTopByMonth("","");
 	}
 
 	@Scheduled(cron = "00 01 00 * * ?")
