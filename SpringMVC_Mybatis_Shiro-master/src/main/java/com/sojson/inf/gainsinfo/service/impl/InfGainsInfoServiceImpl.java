@@ -127,13 +127,31 @@ public class InfGainsInfoServiceImpl extends BaseMybatisDao<UTbGainsInfoMapper> 
 		param.put("account",account);
 		param.put("endTime",endTime);
 		//只查询10天以内的数据
-		Calendar calendar1 = Calendar.getInstance();
+//		Calendar calendar1 = Calendar.getInstance();
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-		calendar1.add(Calendar.DATE, -10);
-		String bgnTime = sdf1.format(calendar1.getTime());
+//		calendar1.add(Calendar.DATE, -10);
+		String bgnTime = sdf1.format(getTenDay());
 		param.put("bgnTime",bgnTime);
 
 		return gainsInfoService.findByPage(param,pageNo,pageSize);
+	}
+
+	//获取前10个工作日
+	public Date getTenDay(){
+		Calendar cal = Calendar.getInstance();
+
+		for ( int i = 0 ; i < 10 ;) {
+			boolean flag = true;
+			if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){
+				flag = false;
+			}
+			if (flag) {
+				i++;
+			}
+			cal.add(Calendar.DATE, -1);
+		}
+
+		return cal.getTime();
 	}
 
 	@Override

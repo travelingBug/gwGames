@@ -40,7 +40,7 @@ public class ToTimer{
 	@Resource
 	PlayerMoneyService playerMoneyService;
 
-	@Scheduled(cron = "00 15 00 13 * ? ")
+	@Scheduled(cron = "00 15 00 14 * ? ")
 //@Scheduled(cron = "00 49 22 03 * ? ")
 	public void run() {
 		Calendar cal=Calendar.getInstance();

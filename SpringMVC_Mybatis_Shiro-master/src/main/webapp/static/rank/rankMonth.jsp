@@ -90,7 +90,7 @@
         $.ajax({
             type: "POST",
             url: "interface/gainsInfo/getTopMonthHisByPage.shtml",
-            data: {month:month,pageNo:pageNo,pageSize:30},
+            data: {month:month,pageNo:pageNo,pageSize:3},
             dataType: "json",
             beforeSend: function (request) {
                 request.setRequestHeader("Authorization", getAuthorization());
