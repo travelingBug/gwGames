@@ -61,6 +61,17 @@ public class TbVipsOrder {
 
     private String step;
 
+    //微信支付1：扫码，2：app，3：公众号，4：小程序
+    private String t;
+
+    public String getT() {
+        return t;
+    }
+
+    public void setT(String t) {
+        this.t = t;
+    }
+
     public String getStep() {
         return step;
     }

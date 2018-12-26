@@ -59,11 +59,12 @@
             </div>
             <div class="select-box">
                 <p class="title-style">选择方式：</p>
-                <div class="select-cont">
-                    <a class="select-btn on"><i class="icon-on"></i>购票</a>
+                <div class="select-cont" id="checkWay">
+                    <a class="select-btn on"><i class="icon-on"></i>银行卡支付</a>
+                    <a class="select-btn"><i></i>微信支付</a>
                 </div>
             </div>
-            <div>
+            <div class="bankPay">
                 <table class="table1">
                     <tr>
                         <th>银行</th>
@@ -193,12 +194,12 @@
                     </tr>
                 </table>
             </div>
-            <div class="select-box">
+            <div class="select-box bankPay">
                 <p class="title-style">支付方式：</p>
                 <div class="select-cont" id="pay_list">
                 </div>
             </div>
-            <div class="select-box" id="pay_yzm">
+            <div class="select-box bankPay" id="pay_yzm">
                 <p class="title-style">验证码：</p>
                 <div class="select-cont">
                     <div class="input-numb">
@@ -216,6 +217,7 @@
             </div>
             <div class="select-box" style="padding-left: 70px;"><input type="radio" value="1" id="readText" class="radio-style"/><p class="pay_read">阅读并同意<a href="javascript:;" id="readContentButton">观赛须知</a></p></div>
             <a class="btn-zf" id="pay_zf" onclick="pay();">确认支付</a>
+            <a class="btn-zf" id="wxPayBtn" onclick="">确认支付</a>
         </div>
     </div>
     <%@include file="../bottom.jsp" %>
@@ -474,7 +476,10 @@
                 reader = true;
             }
             canPay();
+            canPay2();
         });
+
+        checkPayWay();
     });
 
     var smsCodeFlag = false;
@@ -482,6 +487,7 @@
     var p1 = false;
     var cardSmsCodeFlag = false;
     var reader = false;
+    var checkFee = false;
 
     function canSendSmsCode() {
         valiParams();
@@ -760,6 +766,7 @@
         canSendSmsCode();
 
         canPay();
+        canPay2();
 
     }
 
@@ -792,6 +799,7 @@
             $(this).prepend('<i class="icon-on"></i>');
 
             canSendSmsCode();
+            canPay2();
         });
     }
 
@@ -1323,6 +1331,76 @@
         setTimeout(function() {
                     bindClose() }
                 ,1000)
+    }
+
+    function checkPayWay(){
+        $("#checkWay a").each(function(){
+            $(this).click(function(){
+                $(this).addClass("on");
+                $(this).find("i").addClass("icon-on");
+                $(this).siblings().removeClass("on");
+                $(this).siblings().find("i").removeClass("icon-on");
+
+                var index = $("#checkWay a").index(this);
+                if(index==1){
+                    $(".bankPay").hide();
+                    $("#pay_zf").hide();
+                    $("#wxPayBtn").show();
+                }else{
+                    $(".bankPay").show();
+                    $("#pay_zf").show();
+                    $("#wxPayBtn").hide();
+                }
+            });
+        });
+    }
+
+    function canPay2() {
+        var fee = $("#pay_ticket").val();
+
+        if (fee != 0 && fee != "" && reader) {
+            $('#wxPayBtn').removeAttr('disabled');
+            $('#wxPayBtn').attr('class', 'btn-zf');
+
+            $("#wxPayBtn").attr("onclick","clickPay2();");
+        } else {
+            $('#wxPayBtn').attr('disabled', 'disabled');
+            $('#wxPayBtn').attr('class', 'btn-zf-disable');
+
+            $("#wxPayBtn").removeAttr("onclick");
+        }
+    }
+
+    function clickPay2(){
+        var fee = $("#pay_ticket").val();
+
+        getUpay(fee);
+    }
+
+    function getUpay(fee){
+        var order = {
+            "t":"1",
+            "fee":fee
+        }
+        $.ajax({
+            type: "POST",
+            url: "interface/vipsBankCard/uPay.shtml",
+            data: order,
+            dataType: "json",
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", getAuthorization());
+            },
+            success: function (result) {
+                if(result.level==1) {
+                    window.location.href = result.data;
+                }else{
+                    layer.alert(result.messageText, {icon: 0,skin: 'layui-layer-lan'});
+                }
+            }, error: function (result) {
+
+            }
+
+        });
     }
 
 </script>

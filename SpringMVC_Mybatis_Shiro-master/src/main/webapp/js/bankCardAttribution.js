@@ -257,8 +257,8 @@ function bankCardAttribution(bankCard){
             cardType: "CC"
         }]
     }, {
-        bankName: "深发/平安银行",
-        bankCode: "SPABANK",
+        bankName: "平安银行",
+        bankCode: "PINGANBK",
         patterns: [{
             reg: /^(621626|623058)\d{13}$/g,
             cardType: "DC"
@@ -293,7 +293,7 @@ function bankCardAttribution(bankCard){
         }]
     }, {
         bankName: "上海银行",
-        bankCode: "SHBANK",
+        bankCode: "BKSH",
         patterns: [{
             reg: /^(621050|622172|622985|622987|620522|622267|622278|622279|622468|622892|940021)\d{12}$/g,
             cardType: "DC"
@@ -325,7 +325,7 @@ function bankCardAttribution(bankCard){
         }]
     }, {
         bankName: "广发银行",
-        bankCode: "GDB",
+        bankCode: "CGB",
         patterns: [{
             reg: /^(622516|622517|622518|622521|622522|622523|984301|984303|621352|621793|621795|621796|621351|621390|621792|621791)\d{10}$/g,
             cardType: "DC"
@@ -609,7 +609,7 @@ function bankCardAttribution(bankCard){
         }]
     }, {
         bankName: "浙商银行",
-        bankCode: "CZBANK",
+        bankCode: "CZB",
         patterns: [{
             reg: /^(621019|622309|621019)\d{13}$/g,
             cardType: "DC"

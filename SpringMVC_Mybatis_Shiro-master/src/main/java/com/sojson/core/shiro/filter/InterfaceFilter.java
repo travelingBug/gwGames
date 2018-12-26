@@ -28,6 +28,10 @@ public class InterfaceFilter extends AccessControlFilter {
 		 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // 支持HTTP 1.1.
 		 response.setHeader("Pragma", "no-cache"); // 支持HTTP 1.0. response.setHeader("Expires", "0");
 
+		String url = req.getRequestURL().toString();
+		if(url.indexOf("interface/vipsBankCard/orderInfo")>-1){
+			return Boolean.TRUE;
+		}
 		String token = req.getHeader("Authorization");
 		if (StringUtils.hasText(token)) {
 			String content = EncryptUtils.aesDecrypt(token, IConstant.key);

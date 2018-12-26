@@ -25,4 +25,8 @@ public interface VipsBankCardService {
     List<TbVipRecord> findRecord(Map<String,Object> map);
 
     ResultMessage sendBankSmsCode(TbVipsCard entity);
+
+    ResultMessage insertUpay(TbVipsOrder entity, HttpServletRequest req);
+
+    ResultMessage insertUpaySuccess(String orderNo, String orderMoney, HttpServletRequest req);
 }

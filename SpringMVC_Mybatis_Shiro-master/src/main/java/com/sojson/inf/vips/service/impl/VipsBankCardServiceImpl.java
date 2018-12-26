@@ -252,4 +252,109 @@ public class VipsBankCardServiceImpl implements VipsBankCardService{
 
         return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "请输入开通快捷支付验证码", 1);
     }
+    @Transactional(readOnly=false)
+    @Override
+    public ResultMessage insertUpay(TbVipsOrder entity, HttpServletRequest req) {
+        Map<String,String> map = new HashMap<String,String>();
+        String fee = entity.getFee();
+        if ("3".equals(fee)) {
+            entity.setFee("50000");
+//            entity.setFee("110");
+            map.put("level","level3");
+        } else if ("2".equals(fee)) {
+//            entity.setFee("200000");
+            entity.setFee("120");
+            map.put("level","level2");
+        } else if ("1".equals(fee)) {
+//            entity.setFee("500000");
+            entity.setFee("130");
+            map.put("level","level1");
+        }
+
+        String t = entity.getT();
+        if("1".equals(t)){
+            entity.setIdNo("32");//网页
+//            map.put("backurl","http://2v316q1656.iok.la:53323/static/vips/vips_center.jsp");
+            map.put("backurl","http://zhgs.vips/static/vips/vips_center.jsp");
+        }else if("2".equals(t)){
+            entity.setIdNo("41");//app
+//            map.put("backurl","http://2v316q1656.iok.la:53323/static/wx/index.html");
+            map.put("backurl","http://zhgs.vips/static/wx/index.html");
+        }else if("3".equals(t)){
+            entity.setIdNo("51");//公众号
+//            map.put("backurl","http://2v316q1656.iok.la:53323/static/wx/index.html");
+            map.put("backurl","http://zhgs.vips/static/wx/index.html");
+        }else if("4".equals(t)){
+            entity.setIdNo("66");//小程序
+//            map.put("backurl","http://2v316q1656.iok.la:53323/static/wx/index.html");
+            map.put("backurl","http://zhgs.vips/static/wx/index.html");
+        }
+
+        entity.setStatus(0);
+        entity.setCardNo(entity.getIdNo());
+        int id = uTbVipsOrderMapper.insert(entity);
+
+        map.put("amount",entity.getFee());
+        map.put("cardno", entity.getIdNo());
+        map.put("orderNo", entity.getOrderNo());
+
+        String msg = HttpClientUtils.pay(map);
+        if(msg.length()>30 && msg.indexOf("<script>")>-1) {
+            msg = msg.substring(30, msg.indexOf("'</script>"));
+        }
+
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v, "支付链接", msg);
+    }
+    @Transactional(readOnly=false)
+    @Override
+    public ResultMessage insertUpaySuccess(String orderNo, String orderMoney, HttpServletRequest req) {
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("orderNo",orderNo);
+        List<TbVipsOrder> orderList = uTbVipsOrderMapper.findList(map);
+        if(orderList!=null) {
+            TbVipsOrder order = orderList.get(0);
+            if(order.getStatus()==0) {
+                TbVips vip = new TbVips();
+                vip.setPhone(order.getPhone());
+                TbVips curVip = uTbVipsMapper.findUserByPhone(vip);
+
+                String fee = order.getFee();
+                if ("110".equals(fee)) {
+                    vip.setEndTime(DateUtil.getDate(22));
+                    vip.setLevel(IConstant.VIP_LEVEL.VIP_C.v);
+                    vip.setSurplusDay(22);
+                } else if ("120".equals(fee)) {
+                    if (curVip.getLevel().toString().equals("0")) {
+                        vip.setEndTime(DateUtil.getDate(22));
+                        vip.setSurplusDay(22);
+                    } else if (curVip.getLevel().toString().equals("3")) {
+                        vip.setSurplusDay(upgrade(curVip.getSurplusDay(), "3", "2"));
+                    }
+                    vip.setLevel(IConstant.VIP_LEVEL.VIP_B.v);
+                } else if ("130".equals(fee)) {
+                    if (curVip.getLevel().toString().equals("0")) {
+                        vip.setEndTime(DateUtil.getDate(22));
+                        vip.setSurplusDay(22);
+                    } else if (curVip.getLevel().toString().equals("3")) {
+                        vip.setSurplusDay(upgrade(curVip.getSurplusDay(), "3", "1"));
+                    } else if (curVip.getLevel().toString().equals("2")) {
+                        vip.setSurplusDay(upgrade(curVip.getSurplusDay(), "2", "1"));
+                    }
+                    vip.setLevel(IConstant.VIP_LEVEL.VIP_A.v);
+                }
+
+                TbVipRecord record = new TbVipRecord();
+                record.setLevel(vip.getLevel());
+                record.setVipId(curVip.getId());
+                record.setAmount(order.getFee());
+                uTbVipRecordMapper.addRecord(record);
+                uTbVipsMapper.update(vip);
+                uTbVipsOrderMapper.update(order);
+            }
+        }
+
+        return new ResultMessage(ResultMessage.MSG_LEVEL.SUCC.v);
+    }
+
+
 }

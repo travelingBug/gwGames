@@ -42,6 +42,9 @@ public class VipsBankCardController extends BaseController {
     @Autowired
     CommonService commonService;
 
+    @Autowired
+    VipsService vipsService;
+
     /**
      * 新增
      *
@@ -180,5 +183,48 @@ public class VipsBankCardController extends BaseController {
         return list;
     }
 
+    @RequestMapping(value = "orderInfo", method = RequestMethod.GET)
+    public String orderInfo(HttpServletRequest req) {
+        String state = req.getParameter("state");
+        String sdcustomno = req.getParameter("sdcustomno");
+        String orderMoney = req.getParameter("orderMoney");
+        if(state.equals("1")){
+            vipsBankCardService.insertUpaySuccess(sdcustomno, orderMoney, req);
+        }
+
+//        return "redirect: http://zhgs.vip/static/vips/vips_center.jsp";
+        return null;
+//        return "redirect: http://2v316q1656.iok.la:53323/static/vips/vips_center.jsp";
+    }
+
+    @RequestMapping(value = "uPay", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultMessage uPay(TbVipsOrder order, HttpServletRequest req){
+        ResultMessage msg = null;
+        try {
+            String phone = commonService.getUserPhone(req);
+            TbVips vip = vipsService.queryVipsInfo(phone);
+            if(phone!=null && !phone.equals("")) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSSSS");
+                Date date = new Date();
+                String orderNo = sdf.format(date);
+                order.setOrderNo(orderNo);
+                String orderDate = order.getOrderNo().substring(0,8);
+                order.setOrderDate(orderDate);
+                order.setPhone(phone);
+                order.setOrderTitle("购票");
+                order.setBankCode("uPay");
+                order.setCardName("优付");
+                order.setVipId(vip.getId()+"");
+                msg = vipsBankCardService.insertUpay(order,req);
+            }else{
+                return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "登录异常");
+            }
+        }catch (Exception e){
+            e.getStackTrace();
+            return new ResultMessage(ResultMessage.MSG_LEVEL.FAIL.v, "支付异常");
+        }
+        return msg;
+    }
 
 }
